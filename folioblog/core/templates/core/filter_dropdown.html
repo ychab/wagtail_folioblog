@@ -1,0 +1,25 @@
+{% load i18n wagtailcore_tags %}
+<div id="{{ wrapper_id }}" class="d-flex justify-content-center my-4">
+    <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle p-4" type="button" id="dropdownFilter"
+                data-bs-toggle="dropdown" aria-expanded="false">
+            {{ title }}
+        </button>
+        <ul id="filters-dropdown" class="dropdown-menu w-100 text-center" aria-labelledby="dropdownFilter">
+            <li>
+                <a href="{% pageurl page %}" data-filter="*"
+                   class="dropdown-item{% if not filter_query %} active{% endif %}">
+                    {% trans 'Tout' %}
+                </a>
+            </li>
+            {% for filter in filters %}
+            <li>
+                <a href="{% pageurl page %}?{{ filter_name }}={{ filter.value }}" data-filter="{{ filter_name }}-{{ filter.value }}"
+                   class="dropdown-item{% if filter_query == filter.value %} active{% endif %}">
+                    {{ filter.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

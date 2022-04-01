@@ -1,0 +1,64 @@
+{% load i18n wagtailcore_tags %}
+{% trans 'Rechercher' as search_text %}
+
+{% if form.errors %}
+{% for field, field_errors in form.errors.items %}
+<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+    <h4 class="alert-heading">{% trans "Hack me I'm famous!" %}</h4>
+    <strong>{%  trans 'Hey, tu essayes de me hacker petit filou ??' %}</strong>
+    <ul class="list-group list-group-flush list-group-numbered">
+    {% for error in field_errors %}
+        <li class="list-group-item list-group-item-danger">{{ error }}</li>
+    {% endfor %}
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% trans 'Fermer' %}"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="accordion mb-5" id="search-form">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="searchFiltersHeading">
+            <button class="accordion-button bg-white " type="button" data-bs-toggle="collapse" data-bs-target="#searchFiltersCollapse" aria-expanded="true" aria-controls="searchFiltersCollapse">
+                <div class="align-self-center ms-auto">{% trans 'Filtrer la recherche' %}</div>
+            </button>
+        </h2>
+        <div id="searchFiltersCollapse" class="accordion-collapse collapse{% if not count %} show{% endif %}" aria-labelledby="searchFiltersHeading" data-bs-parent="#search-form">
+            <div class="accordion-body">
+                <div class="row d-flex flex-column align-items-center pb-0">
+                    <div class="col-md-10">
+
+                        <form action="{% pageurl self %}" method="get">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="input-group mt-4">
+                                    <input id="search-query" name="query" class="form-control" type="search" placeholder="{{ search_text }}"
+                                           spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off"
+                                           aria-label="{{ search_text }}"{% if form.query.value %} value="{{ form.query.value }}"{% endif %}>
+                                    <span class="input-group-text py-3"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                </div>
+                                <div id="autocomplete-results" class="align-self-start w-100"></div>
+
+                                <div class="input-group mt-4">
+                                    <input name="tags" class="form-control" type="text" placeholder="{% trans 'Saisir des tags' %}" aria-label="{% trans 'Étiquettes' %}">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-tags"></i>
+                                    </span>
+                                </div>
+
+                                <div class="btn-group btn-toolbar mt-4 mb-2" role="group" aria-label="{% trans 'Liste des catégories' %}">
+                                    {% for cat in category_options %}
+                                    <input type="checkbox" class="btn-check" name="categories" value="{{ cat.slug }}"
+                                           id="cat-{{ cat.slug }}" autocomplete="off" {% if cat.slug in form.categories.value %} checked{% endif %}>
+                                    <label class="btn btn-outline-secondary py-3" for="cat-{{ cat.slug }}">{{ cat }}</label>
+                                    {% endfor %}
+                                </div>
+
+                                <button class="search-button btn btn-primary mt-3" type="submit">{% trans 'Rechercher' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

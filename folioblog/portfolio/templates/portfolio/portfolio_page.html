@@ -1,0 +1,17 @@
+{% extends "agency/base.html" %}
+{% load i18n static wagtailcore_tags %}
+
+{% block content %}
+    <!-- Services -->
+    {% include_block page.services %}
+    <!-- Skills -->
+    {% include_block page.skills %}
+    <!-- CV -->
+    {% include_block page.cv_experiences %}
+    <!-- Team -->
+    {% include_block page.team_members %}
+    <!-- About -->
+    {% include 'portfolio/about.html' %}
+    <!-- Contact -->
+    {% include 'portfolio/contact.html' %}
+{% endblock %}

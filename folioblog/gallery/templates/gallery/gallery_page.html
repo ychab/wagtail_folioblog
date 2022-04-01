@@ -1,0 +1,49 @@
+{% extends "cleanblog/base.html" %}
+{% load i18n static wagtailcore_tags wagtailimages_tags folioblog %}
+
+{% block extra_css_library %}
+<link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js_library %}
+<script src="{% static 'draggabilly/draggabilly.pkgd.js' %}"></script>
+<script src="{% static 'packery/packery.pkgd.js' %}"></script>
+<script src="{% static 'glightbox/glightbox.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'gallery/js/gallery.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="gallery-section mt-4 text-center">
+        <h2 class="display-5">{{ page.gallery_title }}</h2>
+        <div class="gallery-text caption text-muted fs-6 p-0">{{ page.gallery_text|richtext }}</div>
+    </div>
+
+    {% trans 'Filtrer par albums' as filter_title %}
+    {% filter_dropdown wrapper_id='gallery-filters' filter_name='collection' title=filter_title page=self filter_query=collection_filter filters=collection_filters %}
+
+    <div class="gallery-checker mx-auto text-center my-4">
+        <button id="button-shuffle" class="btn btn-primary">{% trans 'Mélanger' %}</button>
+    </div>
+
+    <div id="gallery-packery" class="container-fluid">
+        <div class="grid clearfix">
+            <div class="grid-sizer"></div>
+            <div class="gutter-sizer"></div>
+            {% include 'gallery/gallery_page_ajax.html' with images=images %}
+        </div>
+    </div>
+
+    <div id="grid-button-action" class="position-fixed bottom-0 end-0 bg-dark text-white m-2 p-3">
+        <form>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="draggable-switch">
+                <label class="form-check-label" for="draggable-switch">{% trans 'Déplacer' %}</label>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

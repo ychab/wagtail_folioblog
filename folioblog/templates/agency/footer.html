@@ -1,0 +1,9 @@
+{% load i18n wagtailcore_tags %}
+{% wagtail_site as current_site %}
+<footer class="footer py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">Copyright &copy; {{ current_site.site_name }} {% now 'Y' %}, {% trans 'conception avec le CMS' %} <a href="https://wagtail.org/" target="_blank">Wagtail</a></div>
+        </div>
+    </div>
+</footer>

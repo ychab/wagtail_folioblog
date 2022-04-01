@@ -1,0 +1,39 @@
+name: precommit
+
+on:
+  - push
+  - pull_request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  precommit:
+    name: precommit
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10"]
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Update pip and install dependencies
+        run: |
+          pip install --upgrade pip setuptools wheel
+          pip install pre-commit
+
+      - name: Update pip and install dependencies
+        run: |
+          pip install --upgrade pip setuptools wheel
+          pip install tox
+
+      - name: Run tox precommit
+        run: tox -e precommit

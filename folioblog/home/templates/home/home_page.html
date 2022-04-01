@@ -1,0 +1,26 @@
+{% extends "cleanblog/base.html" %}
+{% load i18n static wagtailcore_tags folioblog blog video %}
+
+{% block extra_css_library %}
+<link href="{% static 'flickity/flickity.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js_library %}
+<script src="{% static 'flickity/flickity.pkgd.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'video/js/youtube.js' %}"></script>
+<script src="{% static 'home/js/home.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Promoted posts -->
+    {% if blog_snippet %}
+    {% blog_promoted blog_snippet %}
+    {% endif %}
+    <!-- Promoted videos -->
+    {% if video_snippet %}
+    {% video_promoted video_snippet %}
+    {% endif %}
+{% endblock %}

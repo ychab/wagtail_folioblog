@@ -1,0 +1,71 @@
+SECRET_KEY = '<SECRET_KEY>'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'folioblog',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
+}
+
+LANGUAGE_CODE = 'fr-fr'
+
+# Wagtail settings
+
+# WAGTAIL_SITE_NAME = "<MY_SITE_NAME>"
+# WAGTAILADMIN_BASE_URL = 'http://127.0.0.1:8000'
+# WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
+
+######
+# Test
+######
+
+# DEBUG_LOG = True
+
+############
+# Production
+############
+
+# ALLOWED_HOSTS = []
+# ADMINS = ()
+# MANAGERS = ADMINS
+
+# STATIC_ROOT = ''
+# MEDIA_ROOT = ''
+
+# DEFAULT_FROM_EMAIL = ''
+# EMAIL_HOST = ''
+# EMAIL_PORT = ''
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+#         'LOCATION': 'unix:/var/run/memcached/memcached.sock',
+#         'KEY_PREFIX': 'folioblog',
+#         'TIMEOUT': 60 * 60 * 24,
+#     },
+#     # In theory, maybe useful only if "cache per site" is disabled
+#     'renditions': {
+#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+#         'LOCATION': 'unix:/var/run/memcached/memcached.sock',
+#         'KEY_PREFIX': 'folioblog-renditions',
+#         'TIMEOUT': 60 * 60 * 24,
+#     }
+# }
+# CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24
+# CACHE_MIDDLEWARE_ALIAS = "default"
+
+# Same idea: MAYBE useful if cache per page is disabled
+# @see https://docs.djangoproject.com/en/4.1/ref/templates/api/#django.template.loaders.cached.Loader
+# TEMPLATES[0]['OPTIONS']['loaders'] = [
+#     ('django.template.loaders.cached.Loader', [
+#         'django.template.loaders.filesystem.Loader',
+#         'django.template.loaders.app_directories.Loader',
+#         'path.to.custom.Loader',
+#     ]),
+# ]

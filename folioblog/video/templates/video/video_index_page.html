@@ -1,0 +1,33 @@
+{% extends "cleanblog/base.html" %}
+{% load i18n static wagtailcore_tags folioblog %}
+
+{% block extra_js_library %}
+<script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'video/js/youtube.js' %}"></script>
+<script src="{% static 'video/js/video.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Filters -->
+            {% trans 'Filtrer par catégories' as filter_title %}
+            {% filter_dropdown wrapper_id='video-filter-category' filter_name='category' title=filter_title page=self filter_query=category_query filters=category_filters %}
+            <!-- Videos listing -->
+            <div id="videos-container" class="mt-3">
+                {% include 'video/video_index_grid_item.html' with videos=videos %}
+            </div>
+            <!-- Spinners -->
+            {% include 'cleanblog/spinner.html' %}
+            <!-- Pagination -->
+            {% if videos and videos.paginator.num_pages > 1 %}
+            {% include 'cleanblog/pager.html' with page=videos %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

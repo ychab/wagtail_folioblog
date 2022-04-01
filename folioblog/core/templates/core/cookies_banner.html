@@ -1,0 +1,20 @@
+{% load i18n static wagtailcore_tags %}
+<div id="cookies-eu-banner" class="cookie-banner alert alert-dismissible fade show text-white text-center mb-0 fixed-bottom" role="alert" style="display: none;">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <h5 class="alert-heading">{{ settings.cookie_banner_title }} <i class="fa-solid fa-cookie"></i></h5>
+    <p class="mb-0 fs-6">{{ settings.cookie_banner_text|safe }}</p>
+    {% if settings.cookie_banner_link_page %}
+    <a id="cookies-eu-more" href="{% pageurl settings.cookie_banner_link_page %}">
+        {{ settings.cookie_banner_link_text }}
+    </a>
+    {% endif %}
+    <hr>
+    <button id="cookies-eu-reject" class="card-link btn btn-sm btn-light">
+        {% trans 'Non' as cookie_ko %}
+        {{ settings.cookie_banner_button_cancel_text|default:cookie_ko }}
+    </button>
+    <button id="cookies-eu-accept" class="card-link btn btn-sm btn-primary">
+        {% trans 'Ok' as cookie_ok %}
+        {{ settings.cookie_banner_button_accept_text|default:cookie_ok }}
+    </button>
+</div>

@@ -1,0 +1,17 @@
+<div class="service-item col-md-4 mb-2 d-flex flex-column align-items-center">
+    <span class="fa-stack fa-4x">
+        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+        <i class="fas {{ value.icon }} fa-stack-1x fa-inverse"></i>
+    </span>
+    <h4 class="service-name my-3">{{ value.name }}</h4>
+    {% if value.text %}
+    <p class="service-text text-muted">{{ value.text }}</p>
+    {% endif %}
+    {% if value.items %}
+    <ul class="service-items list-unstyled text-muted text-start">
+        {% for item in value.items %}
+        <li><i class="fa-solid fa-check"></i> {{ item }}</li>
+        {% endfor  %}
+    </ul>
+    {% endif %}
+</div>

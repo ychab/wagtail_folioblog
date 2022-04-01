@@ -1,0 +1,44 @@
+{% load i18n wagtailcore_tags folioblog %}
+{% wagtail_site as current_site %}
+
+<footer>
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="{{ settings.core.FolioBlogSettings.linkedin_url }}" alt="{% trans 'Voir sur Linkedin' %}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin-in fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <span class="visually-hidden">{% trans 'Compte Linkedin' %}</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{{ settings.core.FolioBlogSettings.github_url }}" alt="{% trans 'Voir sur Github' %}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <span class="visually-hidden">{% trans 'Compte gitHub' %}</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{{ settings.core.FolioBlogSettings.instagram_url }}" alt="{% trans 'Voir sur Instagram' %}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <span class="visually-hidden">{% trans 'Compte Instagram' %}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="small text-center text-muted fst-italic">
+                    Copyright &copy; {% now 'Y' %} {{ current_site.site_name }}<br />
+                    {% photo_credits %}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,31 @@
+{% load i18n wagtailcore_tags wagtailimages_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% wagtail_site as current_site %}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    {% autoescape off %}
+    <channel>
+        <title>{{ feed_title }}</title>
+        <copyright>Copyright {% now 'Y' %}, {{ current_site.site_name }}</copyright>
+        <link>{{ current_site.root_url }}</link>
+        <description>{{ feed_description }}</description>
+        <language>{{ LANGUAGE_CODE }}</language>
+        <pubDate>{% now 'r' %}</pubDate>
+        {% for item in feed_items %}
+        {% image item.image max-400x400 format-jpeg as image %}
+        <item>
+            <title>{{ item.title }}</title>
+            <link>{{ item.link }}</link>
+            <description>{{ item.description }}</description>
+            <pubDate>{{ item.date|date:"D, d M Y" }} 00:00:00 +0000</pubDate>
+            <enclosure>
+                <url>{{ current_site.root_url }}{{ image.url }}</url>
+                <length>{{ item.image.file_size }}</length>
+                <type>image/jpeg</type>
+            </enclosure>
+            <category>{{ item.category }}</category>
+        </item>
+        {% endfor %}
+    </channel>
+    {% endautoescape %}
+</rss>

@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+section#contact {
+  background-image: url("../assets/map-image.webp");
+}
+
+@media (min-width: 992px) {
+    #navbarResponsive li > a {
+        font-weight: bold;
+    }
+}
+
+.portfolio-modal .modal-content p {
+    margin-bottom: 0.75rem;
+}
+
+#contact .section-subheading {
+    color: white !important;
+}
+
+.cookie-banner {
+    background-color: rgba(var(--bs-dark-rgb), 1);
+}
+
+/* Youtube player */
+.video-youtube-thumbnail .youtube-player-button {
+    margin-left: -55px;
+    margin-top: -50px;
+}
+@media (min-width: 576px) {
+    .video-youtube-thumbnail .youtube-player-button {
+        margin-left: -50px;
+        margin-top: -40px;
+    }
+}

@@ -1,0 +1,7 @@
+{% load gallery %}
+<div class="grid-items">
+    {% for image in images %}
+    {% cycle '' '' '' '' '' '' '' ' grid-item--width2' as extra_class silent %}
+    {% gallery_grid_item image extra_class %}
+    {% endfor %}
+</div>

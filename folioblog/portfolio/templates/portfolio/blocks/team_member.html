@@ -1,0 +1,15 @@
+{% load wagtailimages_tags %}
+<div class="col-lg-4">
+    <div class="team-member">
+        {% image value.photo fill-208x208 as img_lg_1x %}
+        {% image value.photo fill-624x624 as img_xs_3x %}
+        <img src="{{ img_lg_1x.url }}"
+             srcset="{{ img_lg_1x.url }} 1x, {{ img_xs_3x.url }} 3x"
+             alt="{{ value.photo_alt|default:img_lg_1x.alt }}"
+             width="{{ img_lg_1x.width }}"
+             height="{{ img_lg_1x.height }}"
+             class="mx-auto rounded-circle" />
+        <h4 class="team-member-name">{{ value.name }}</h4>
+        <p class="team-member-job text-muted">{{ value.job }}</p>
+    </div>
+</div>

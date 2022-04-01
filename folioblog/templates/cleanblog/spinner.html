@@ -1,0 +1,14 @@
+{% load i18n %}
+<div class="page-load-status d-flex justify-content-center my-5" style="display: none !important;">
+    <div class="loader-ellips infinite-scroll-request">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">{% trans 'Chargement...' %}</span>
+        </div>
+    </div>
+    <div class="infinite-scroll-last alert alert-primary" role="alert">
+        {% trans "Oh non, c'est déjà fini !!" %}
+    </div>
+    <div class="infinite-scroll-error alert alert-danger" role="alert">
+        {% trans "Oups ! On dirait bien qu'il y a un bug :/" %}
+    </div>
+</div>

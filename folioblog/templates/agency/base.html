@@ -1,0 +1,55 @@
+{% load i18n static wagtailuserbar wagtailimages_tags compress folioblog %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE|language_bidi %}dir="rtl"{% endif %}>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="index, follow, archive">
+        <meta name="description" content="{{ self.search_description }}">
+        <meta name="author" content="Yannick Chabbert">
+        {% block meta_og %}{% og_meta page image=page.header_slide embed=page.about_video.embed %}{% endblock %}
+        {% block meta_twitter %}{% twitter_card page %}{% endblock %}
+        <title>{{ self.seo_title|default:self.title }}</title>
+        <!-- Favicon -->
+        <link href="{% static 'folioblog/assets/favicon.ico' %}" rel="icon" type="image/x-icon">
+        <!-- RSS -->
+        <link rel="alternate" type="application/rss+xml" href="{% url 'rss' %}">
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        {% compress css file portfolio %}
+        <link href="{% static 'agency/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'folioblog/css/agency.css' %}" rel="stylesheet">
+        {% endcompress %}
+        {% background_style page.header_slide xs_3x_spec='fill-1080x1626' lg_1x_spec='fill-1905x745' %}
+    </head>
+
+    <body id="page-top">
+        <!-- Cookie banner -->
+        {% cookies_banner %}
+        {% wagtailuserbar %}
+        <!-- Navigation -->
+        {% include 'agency/navbar.html' %}
+        <!-- Header -->
+        {% include 'agency/header.html' %}
+        <!-- Main content -->
+        {% block content %}{% endblock %}
+        <!-- Footer -->
+        {% include 'agency/footer.html' %}
+        <!-- JS inline -->
+        {{ settings.core.folioblogsettings.google_analytics_id|json_script:'google-analytics-id' }}
+        {% compress js file portfolio %}
+        <!-- Bootstrap core JS-->
+        <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'agency/js/scripts.js' %}"></script>
+        <script src="{% static 'cookies-eu-banner/cookies-eu-banner.js' %}"></script>
+        <script src="{% static 'core/js/googleanalytics.js' %}"></script>
+        <script src="{% static 'video/js/youtube.js' %}"></script>
+        <script src="{% static 'portfolio/js/portfolio.js' %}"></script>
+        <script src="{% static 'core/js/cookies_banner.js' %}"></script>
+        {% endcompress %}
+    </body>
+</html>

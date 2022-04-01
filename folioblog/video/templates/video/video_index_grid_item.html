@@ -1,0 +1,23 @@
+{% load i18n wagtailcore_tags folioblog video %}
+
+{% for video in videos %}
+    <div class="video-item">
+        <hr class="mt-2 mb-4"/>
+        <div class="post-preview d-flex flex-column align-items-center">
+            <span class="btn btn-secondary btn-sm video-category">{{ video.category }}</span>
+            <a href="{% pageurl video %}" class="video-link">
+                <h2 class="video-title text-center mt-3 text-decoration-underline">{{ video.title }}</h2>
+                <h3 class="video-subtitle fs-5 text-center mt-3">{{ video.subheading }}</h3>
+            </a>
+            <p class="text-start text-sm-center mb-3 video-intro">{{ video.intro }}</p>
+            <div class="w-100">
+                {% youtube_player video %}
+            </div>
+            <div class="video-tags mt-4 mb-4 text-center">
+                {% for tag in video.tags.all %}
+                    <span class="badge rounded bg-primary p-2 mb-1"><i class="fa fa-tag"></i> {{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

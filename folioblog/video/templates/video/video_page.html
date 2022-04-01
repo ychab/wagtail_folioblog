@@ -1,0 +1,56 @@
+{% extends "cleanblog/base.html" %}
+{% load i18n static wagtailcore_tags wagtailimages_tags wagtailembeds_tags folioblog video %}
+
+{% block extra_js %}
+<script src="{% static 'video/js/youtube.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+<header class="masthead">
+    <div class="page-heading">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <div class="mb-3 pb-5 fs-4">
+                            <span class="badge bg-secondary pb-2"><i class="fa-light fa-folder-bookmark"></i>{{ page.category }}</span>
+                        </div>
+                        <h1>{{ page.title }}</h1>
+                        <h2 class="subheading mt-4">{{ page.subheading }}</h2>
+                        <div class="mt-2 pt-2 mb-4">
+                            {% for tag in page.tags.all %}
+                            <span class="badge rounded-pill bg-primary"><i class="fa-solid fa-tag"></i> {{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="meta">
+                            {% trans 'Posté le' %} {{ page.date|date:"SHORT_DATE_FORMAT" }}
+                        </div>
+                        {% social_links page %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+    <article>
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="d-flex flex-column align-items-center">
+                        <p class="page-intro lead fst-italic text-muted">{{ page.intro }}</p>
+                        <div class="w-100">
+                            {% youtube_player page %}
+                        </div>
+                        <div class="page-body-text">
+                            {{ page.body|richtext }}
+                        </div>
+                    </div>
+                    {% related_page page %}
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load i18n wagtailimages_tags %}
+
+{% image page.thumbnail fill-940x710 format-webp as thumbnail_xs %}
+{% image page.thumbnail fill-700x530 format-webp as thumbnail_lg %}
+
+<div class="video-youtube-thumbnail position-relative mx-auto mt-3" data-video-id="{{ page.video_id }}">
+    <img src="{{ thumbnail_xs.url }}"
+         srcset="{{ thumbnail_lg.url }} 700w, {{ thumbnail_xs.url }} 940w"
+         sizes="(max-width: 576px) and (min-resolution: 288dpi) 940px, 700px"
+         class="img-fluid w-100 mx-auto"
+         alt="{{ thumbnail_xs.alt }}"
+         width="{{ thumbnail_xs.width }}"
+         height="{{ thumbnail_xs.height }}">
+
+    <div class="youtube-cookies-consent position-absolute top-0 start-0 end-0 bg-dark mx-4 p-2">
+        <p class="m-0 py-1 text-center text-white">
+            {% trans "Pour voir cette vidéo, merci de vendre un peu de vos données en acceptant les cookies !" %}
+        </p>
+        <button type="button" class="btn btn-primary btn-sm d-block mx-auto" aria-label="{% trans 'Accepter les cookies' %}" onclick="cookiesBannerAccept(true);">
+            {% trans "Bon ok j'accepte !" %}
+        </button>
+    </div>
+    <button type="button" class="youtube-player-button btn btn-primary rounded border-0 position-absolute top-50 start-50" aria-label="{% trans 'Lancer la vidéo' %}">
+        <i class="fa-brands fa-youtube fa-4x"></i>
+    </button>
+</div>
+
+<div class="video-youtube-player-wrapper ratio ratio-4x3"
+     style="display: none"
+     data-video-id="{{ page.video_id }}"
+     data-video-width="{{ thumbnail.width }}"
+     data-video-height="{{ thumbnail.height }}"
+     data-video-lang="{{ lang }}">
+</div>

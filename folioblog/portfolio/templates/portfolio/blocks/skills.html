@@ -1,0 +1,19 @@
+{% load i18n wagtailcore_tags %}
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">{% trans 'Expertises' %}</h2>
+            <h3 class="section-subheading text-muted">{{ page.skill_subheading }}</h3>
+        </div>
+        <div class="row">
+        {% for skill in page.skills %}
+            {% include_block skill with index=forloop.counter %}
+        {% endfor  %}
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Modals -->
+{% for skill in page.skills %}
+{% include 'portfolio/blocks/skill_modal.html' with skill=skill.value index=forloop.counter %}
+{% endfor %}

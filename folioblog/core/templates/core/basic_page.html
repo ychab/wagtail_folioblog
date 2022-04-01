@@ -1,0 +1,59 @@
+{% extends "cleanblog/base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags folioblog %}
+
+{% block extra_css_library %}
+<link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js_library %}
+<script src="{% static 'glightbox/glightbox.js' %}"></script>
+{% endblock %}
+
+{% block extra_js_inline %}
+<script type="text/javascript">
+    (() => {
+        window.addEventListener('DOMContentLoaded', () => {
+            let lightbox = GLightbox();
+        });
+    })();
+</script>
+{% endblock %}
+
+{% block content %}
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <p class="page-intro lead fst-italic text-muted">{{ self.intro }}</p>
+                    <div class="page-body-text">
+                        {{ self.body|richtext }}
+                    </div>
+                    {% image page.image width-700 as image_lg_1x %}
+                    {% image page.image width-940 as image_xs_3x %}
+                    {% image page.image width-1920 format-jpeg as image_full %}
+                    <div class="position-relative page-image{% if page.image.is_portrait %} image-portrait{% endif %}">
+                        <figure class="figure d-block">
+
+                            <a href="{{ image_full.url }}"
+                               class="glightbox"
+                               data-glightbox="type: image; description: .custom-desc; alt: {{ page.caption }};">
+
+                                <img
+                                    src="{{ image_lg_1x.url }}"
+                                    srcset="{{ image_lg_1x.url }} 700w, {{ image_xs_3x.url }} 940w"
+                                    sizes="(max-width: 576px) and (min-resolution: 288dpi) 940px, 700px"
+                                    alt="{{ page.caption }}"
+                                    width="{{ image_lg_1x.width }}"
+                                    height="{{ image_lg_1x.height }}"
+                                    class="figure-img img-fluid rounded" />
+                            </a>
+                            <figcaption class="caption figure-caption">{% figcaption page %}</figcaption>
+                            <div class="glightbox-desc custom-desc">{% figcaption page %}</div>
+                        </figure>
+                    </div>
+                    {% related_page page %}
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}

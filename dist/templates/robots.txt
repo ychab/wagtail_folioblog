@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /django-admin/
+Disallow: /jsi18n/
+
+Sitemap: https://{{ hostname }}/sitemap.xml

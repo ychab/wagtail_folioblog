@@ -1,0 +1,28 @@
+{% extends "cleanblog/base.html" %}
+{% load i18n static folioblog %}
+
+{% block extra_js_library %}
+<script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'blog/js/blogindex.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Filters -->
+    {% trans 'Filtrer par catégories' as filter_title %}
+    {% filter_dropdown wrapper_id='blog-filter-category' filter_name='category' title=filter_title page=self filter_query=category_query filters=category_filters %}
+    <!-- Basic Grid -->
+    <div id="blog-index" class="container-fluid mt-5">
+        <div class="grid row">
+            {% include 'blog/blog_index_item.html' with blogpages=blogpages %}
+        </div>
+    </div>
+    <!-- Spinners -->
+    {% include 'cleanblog/spinner.html' %}
+    <!-- Pagination -->
+    {% if blogpages and blogpages.paginator.num_pages > 1 %}
+    {% include 'cleanblog/pager.html' with page=blogpages %}
+    {% endif %}
+{% endblock %}

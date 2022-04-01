@@ -1,0 +1,17 @@
+{% load wagtailcore_tags folioblog %}
+<section class="page-section" id="contact">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">{{ self.contact_heading }}</h2>
+            <h3 class="section-subheading text-muted">{{ self.contact_subheading }}</h3>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <a class="btn btn-light btn-social mx-2 phone-number" href="" data-phone="{{ settings.core.folioblogsettings.phone|base64 }}" aria-label="Phone"><i class="fa-solid fa-phone"></i></a>
+                <a class="btn btn-light btn-social mx-2 email-mailto" href="" data-email="{{ settings.core.folioblogsettings.email|base64 }}" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a class="btn btn-light btn-social mx-2" href="{{ settings.core.FolioBlogSettings.linkedin_url }}" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-light btn-social mx-2" href="{{ settings.core.FolioBlogSettings.github_url }}" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+</section>

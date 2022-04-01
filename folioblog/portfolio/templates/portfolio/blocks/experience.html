@@ -1,0 +1,13 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<li class="experience-item{% if index|divisibleby:2 %} timeline-inverted{% endif %}">
+    <div class="timeline-image">{% image value.photo fill-156x156 class="rounded-circle img-fluid" %}</div>
+    <div class="timeline-panel">
+        <div class="timeline-heading">
+            <h4 class="experience-date">{{ value.date }}</h4>
+            <h4 class="experience-company subheading">{{ value.company }}</h4>
+        </div>
+        <div class="experience-text timeline-body">
+            {{ self.text|richtext }}
+        </div>
+    </div>
+</li>

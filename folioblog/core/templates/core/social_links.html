@@ -1,0 +1,21 @@
+{% load i18n social_share %}
+{% if reddit_url or twitter_url or facebook_url or linkedin_url %}
+<div class="social-links mt-4">
+    <a href="{{ reddit_url }}" class="p-2" alt="{% trans 'Partager sur Reddit' %}" target="_blank">
+        <i class="fa-brands fa-reddit fs-2 text-white"></i>
+        <span class="visually-hidden">{% trans 'Partager sur Reddit' %}</span>
+    </a>
+    <a href="{{ twitter_url }}" class="p-2" alt="{% trans 'Partager sur Twitter' %}" target="_blank">
+        <i class="fa-brands fa-twitter fs-2 text-white"></i>
+        <span class="visually-hidden">{% trans 'Partager sur Twitter' %}</span>
+    </a>
+    <a href="{{ facebook_url }}" class="p-2" alt="{% trans 'Partager sur Facebook' %}" target="_blank">
+        <i class="fa-brands fa-facebook fs-2 text-white"></i>
+        <span class="visually-hidden">{% trans 'Partager sur Facebook' %}</span>
+    </a>
+    <a href="{{ linkedin_url }}" class="p-2" alt="{% trans 'Partager sur Linkedin' %}" target="_blank">
+        <i class="fa-brands fa-linkedin fs-2 text-white"></i>
+        <span class="visually-hidden">{% trans 'Partager sur Linkedin' %}</span>
+    </a>
+</div>
+{% endif %}

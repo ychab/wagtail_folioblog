@@ -1,0 +1,23 @@
+{% load i18n static wagtailcore_tags %}
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="#page-top">{% trans 'Portfolio' %}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            {% trans 'Menu' %}
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#services">{% trans 'Services' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">{% trans 'Expertises' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#cv">{% trans 'CV' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#team">{% trans 'Équipe' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">{% trans 'À propos' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">{% trans 'Contact' %}</a></li>
+                {% if menu_homepage %}
+                <li class="nav-item"><a class="nav-link" href="{% pageurl menu_homepage %}">{{ menu_homepage }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,61 @@
+{% load i18n wagtailcore_tags folioblog %}
+
+<div class="grid-item float-start{{ extra_class }}">
+    <picture>
+        <source media="(min-width: 576px)"
+                srcset="{{ image_lg.url }}"
+                width="{{ image_lg.width }}"
+                height="{{ image_lg.height }}"
+                data-img-lg="{{ image_lg_1x.url }}"
+                data-img-lg-width="{{ image_lg_1x.width }}"
+                data-img-lg-height="{{ image_lg_1x.height }}"
+                data-img-zoom-lg="{{ image_lg_1x_zoom.url }}"
+                data-img-zoom-lg-width="{{ image_lg_1x_zoom.width }}"
+                data-img-zoom-lg-height="{{ image_lg_1x_zoom.height }}">
+
+        <img class="img-fluid"
+             alt="{% if image.page %}{{ image.page.caption }}{% else %}{{ image.default_alt_text }}{% endif %}"
+             src="{{ image_xs.url }}"
+             width="{{ image_xs.width }}"
+             height="{{ image_xs.height }}"
+             data-img-xs="{{ image_xs_3x.url }}"
+             data-img-xs-width="{{ image_xs_3x.width }}"
+             data-img-xs-height="{{ image_xs_3x.height }}"
+             data-img-zoom-xs="{{ image_xs_3x_zoom.url }}"
+             data-img-zoom-xs-width="{{ image_xs_3x_zoom.width }}"
+             data-img-zoom-xs-height="{{ image_xs_3x_zoom.height }}">
+    </picture>
+
+    {% if image.page %}
+    <div class="grid-item-link position-absolute top-0 start-0 end-0">
+        <a href="{% pageurl image.page %}" alt="{{ image.page.title }}"
+           class="post-link text-center p-1 p-sm-3 text-white">
+            <h5 class="post-title d-none d-sm-block fw-normal" data-post-title="{{ image.page.title }}">
+                {{ image.page.title }} <i class="fa-solid fa-link"></i>
+            </h5>
+            <i class="fa-solid fa-link d-sm-none"></i>
+        </a>
+    </div>
+    {% endif %}
+
+    <div class="grid-item-zoom position-absolute bottom-0 end-0">
+        <button type="button" class="grid-item-zoom-button btn rounded-start text-white py-0 px-2 py-sm-2 px-sm-3">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+        </button>
+    </div>
+
+    <div class="grid-item-lightbox position-absolute bottom-0 start-0">
+        <a href="{{ image_full.url }}"
+           data-glightbox="type: image; description: .custom-desc-{{ image_full.pk }}; alt: {{ image_full.alt }};"
+           class="glightbox btn-link text-white py-0 px-2 py-sm-2 px-sm-3">
+            <i class="fa-solid fa-maximize"></i>
+        </a>
+        <div class="glightbox-desc custom-desc-{{ image_full.pk }}">
+            {% if image.page %}
+            {% figcaption image.page %} - <a href="{{ image.page.url }}" class="text-decoration-underline">{% trans "Voir l'article" %}</a>
+            {% else %}
+            {% figcaption image_full.image %}
+            {% endif %}
+        </div>
+    </div>
+</div>

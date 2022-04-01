@@ -1,0 +1,48 @@
+{% load i18n wagtailcore_tags wagtailimages_tags video %}
+
+<h2 class="text-center display-6 mt-5 mb-3 bg-light py-3">{{ snippet.title }}</h2>
+
+<div class="videos-promoted container-fluid my-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-sm-6 col-lg-4 text-center">
+            {% if snippet.first_video %}
+            {% with video=snippet.first_video %}
+            <a href="{% pageurl video %}" class="video-title-link">
+                <h3 class="text-primary fw-normal">{{ video.title }}</h3>
+            </a>
+            {% endwith %}
+            {% youtube_player snippet.first_video %}
+            <div class="carousel-videos mt-3">
+                {% for link in snippet.related_links.all|dictsort:"sort_order" %}
+                {% with page=link.related_page %}
+                <div class="carousel-cell me-2">
+                    {% image page.thumbnail fill-80x80 format-webp as thumbnail_preview %}
+                    {% image page.thumbnail fill-940x710 format-webp as thumbnail_xs %}
+                    {% image page.thumbnail fill-700x530 format-webp as thumbnail_lg %}
+
+                    <a href="{% pageurl page %}"
+                       class="carousel-video-item d-block"
+                       data-video-id="{{ page.video_id }}"
+                       data-page-title="{{ page.title }}"
+                       data-page-url="{% pageurl page %}"
+                       data-img-xs-url="{{ thumbnail_xs.url }}"
+                       data-img-lg-url="{{ thumbnail_lg.url }}"
+                       alt="{% trans 'Carousel video item' %}">
+
+                        <img src="{{ thumbnail_preview.url }}" class="img-fluid" alt="{{ thumbnail_preview.alt }}" width="{{ thumbnail_preview.width }}" height="{{ thumbnail_preview.height }}">
+                    </a>
+                </div>
+                {% endwith %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if menu_links.videos %}
+    <div id="videos-more-link" class="row my-4">
+        <div class="text-center">
+            <a href="{% pageurl menu_links.videos %}" class="btn btn-primary">{{ snippet.link_more }}</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
