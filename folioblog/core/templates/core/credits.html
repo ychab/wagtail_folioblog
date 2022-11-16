@@ -7,6 +7,6 @@
     {% else %}
     {{ photographer }}
     {% endif %}
-    {% if not loop.last %}, {% endif %}
+    {% if not forloop.last %}, {% endif %}
 {% endfor %}
 {% endif %}
