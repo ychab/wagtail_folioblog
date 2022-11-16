@@ -6,8 +6,8 @@ from wagtail.models import Site
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        parser.add_argument('--hostname', default='127.0.0.1')
-        parser.add_argument('--port', default=80)
+        parser.add_argument('--hostname', default='127.0.0.1', required=True)
+        parser.add_argument('--port', default=8000, required=True)
 
     def handle(self, *args, **options):
         site = Site.objects.get(is_default_site=True)

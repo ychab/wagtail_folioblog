@@ -39,6 +39,8 @@ restore_db:
 	gunzip *.sql.gz
 	mv *.sql latest.sql
 	psql -U postgres -d folioblog < latest.sql
+	python manage.py createadmin --password=admin --update
+	python manage.py updatesite --hostname=127.0.0.1 --port 8000
 	rm -f *.sql
 
 restore_media:

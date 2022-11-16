@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import TestCase
 
+from folioblog.user.factories import UserFactory
+
 User = get_user_model()
 
 
@@ -26,3 +28,22 @@ class CreateUserCommandTestCase(TestCase):
         self.assertEqual(user.email, extra_fields['email'])
         self.assertTrue(user.check_password(extra_fields['password']))
         self.assertTrue(user.is_superuser)
+
+    def test_update_superuser(self):
+        out = StringIO()
+
+        user = UserFactory(
+            username='admin',
+            email='admin@example.com',
+        )
+        new_passwd = 'bar'
+
+        extra_fields = {
+            'password': new_passwd,
+            'update': True,
+        }
+        call_command('createadmin', stdout=out, **extra_fields)
+        user.refresh_from_db()
+
+        self.assertTrue(user.check_password(new_passwd))
+        self.assertIn('Superuser updated successfully.', out.getvalue())
