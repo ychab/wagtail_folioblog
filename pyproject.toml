@@ -19,19 +19,21 @@ django-compressor = "^4.1"
 redis = "^4.3.4"
 hiredis = "^2.0.0"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.group.test.dependencies]
 isort = "^5.10.1"
 tblib = "^1.7.0"
 factory-boy = "^3.2.1"
 wagtail-factories = "^3.1.0"
 requests-mock = "^1.10.0"
 selenium = "^4.5.0"
-django-extensions = "^3.2.1"
-django-debug-toolbar = "^3.7.0"
-pre-commit = "^2.20.0"
 tox = "^3.26.0"
 coverage = {extras = ["toml"], version = "^6.5.0"}
 pylama = {extras = ["toml"], version = "^8.4.1"}
+
+[tool.poetry.group.dev.dependencies]
+django-extensions = "^3.2.1"
+django-debug-toolbar = "^3.7.0"
+pre-commit = "^2.20.0"
 
 [tool.pylama]
 skip = "*/migrations/*,*/settings/*,*/static/*"

@@ -21,11 +21,15 @@ repos:
       - id: poetry-lock
       - id: poetry-export
         name: poetry-export-prod
-        args: [ "-f", "requirements.txt", "-o", "requirements/prod.txt" ]
+        args: [ "-f", "requirements.txt", "--only", "main", "-o", "requirements/prod.txt" ]
+        verbose: true
+      - id: poetry-export
+        name: poetry-export-test
+        args: [ "-f", "requirements.txt", "--with", "test", "-o", "requirements/test.txt" ]
         verbose: true
       - id: poetry-export
         name: poetry-export-dev
-        args: [ "-f", "requirements.txt", "--with", "dev", "-o", "requirements/dev.txt" ]
+        args: [ "-f", "requirements.txt", "--with", "test,dev", "-o", "requirements/dev.txt" ]
         verbose: true
 
   - repo: https://github.com/klen/pylama
