@@ -39,7 +39,6 @@ repos:
         args: [ "folioblog" ]
         additional_dependencies:
           - toml
-          - types-toml
 
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
