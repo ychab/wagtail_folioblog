@@ -1,0 +1,43 @@
+name: NPM deps
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  npm_deps:
+    name: NPM deps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install NPM dependencies first
+        run: npm ci
+
+      - name: Check dependencies
+        uses: MeilCli/npm-update-check-action@v4
+        id: outdated
+        with:
+          output_text_style: 'short'
+
+      - name: Make NPM deps badges
+        uses: action-badges/core@0.2.2
+        with:
+          label: NPM deps
+          message: ${{ steps.outdated.outputs.has_npm_update == 'true' && 'outdated' || 'updated' }}
+          message-color: ${{ steps.outdated.outputs.has_npm_update == 'true' && 'red' || 'brightgreen' }}
+          file-name: npm-dependencies.svg
+          style: flat
+          badge-branch: badges
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
