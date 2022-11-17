@@ -1,4 +1,5 @@
 [![build](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml)
+[![lint](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml)
 [![precommit](https://github.com/ychab/wagtail_folioblog/actions/workflows/precommit.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/precommit.yaml)
 [![coverage](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/coverage.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/coverage.yaml)
 [![NPM deps](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/npm-dependencies.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/npm.yaml)

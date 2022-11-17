@@ -1,5 +1,3 @@
-# Want to use poetry instead of pip + requirements.txt ?
-# @see https://github.com/marketplace/actions/install-poetry-action
 name: Coverage
 
 on:
