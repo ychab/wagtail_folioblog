@@ -1027,7 +1027,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a208ebd0af44f75d932a08f929f5613d5edce612d1d7c994ed221d1068ad1883"
+content-hash = "992b210d11187371406be7b6fd7efe999de6b96c5e3a301561b713e9c1b03ace"
 
 [metadata.files]
 anyascii = [
