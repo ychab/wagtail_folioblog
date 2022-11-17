@@ -53,6 +53,13 @@ header.masthead {
     text-align: center;
 }
 
+/* Video post */
+.video-post h3,
+.video-post h4,
+.video-post h5 {
+    text-align: center;
+}
+
 /* Autocomplete search page */
 #autocomplete-results li {
     cursor: pointer;
