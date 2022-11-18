@@ -37,6 +37,14 @@ header.masthead {
     text-decoration: underline;
 }
 
+/* Page body title (WYSIWYG) */
+.page-body-text h3,
+.page-body-text h4,
+.page-body-text h5,
+.page-body-text h6 {
+    text-align: center;
+}
+
 /* Blog post */
 .image-switch {
     cursor: pointer;
@@ -50,13 +58,6 @@ header.masthead {
 }
 
 .gslide-desc {
-    text-align: center;
-}
-
-/* Video post */
-.video-post h3,
-.video-post h4,
-.video-post h5 {
     text-align: center;
 }
 
