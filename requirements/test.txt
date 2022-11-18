@@ -165,9 +165,9 @@ django-permissionedforms==0.1 ; python_version >= "3.10" and python_version < "4
 django-social-share==2.3.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:13d0a1fbb2a90e3a6e7eb556315ececd1e93a906574a3284affbe2f43e2f7398 \
     --hash=sha256:37844f3b4f88a2008604ece7eaedd52fd5914f111f13525200ce1101b750757f
-django-taggit==3.0.0 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:ca2df20399a11321db75988404afb640a08eff61e52bde35f6c16f307004ec9e \
-    --hash=sha256:e645b8e3dd4f85989d5ef5c5a3d5ebbe5badf5d1e51b53e42d0af726240b00b9
+django-taggit==3.1.0 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:543218ac346fbe02a65733e0341c91b57a3e0f7a41568966b26f1cea9edc4805 \
+    --hash=sha256:c8f2e4eae387939089b3d75d1d8649e008880970c068ce9d0e82f87fd5e29508
 django-treebeard==4.5.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:7c2b1cdb1e9b46d595825186064a1228bc4d00dbbc186db5b0b9412357fba91c \
     --hash=sha256:80150017725239702054e5fa64dc66e383dc13ac262c8d47ee5a82cb005969da
