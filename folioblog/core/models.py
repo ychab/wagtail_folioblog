@@ -3,6 +3,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.utils.cache import add_never_cache_headers, patch_cache_control
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -55,6 +56,19 @@ class FolioImage(AbstractImage):
     @property
     def default_alt_text(self):
         return self.caption or self.title
+
+    def figcaption(self, alt_text=None):
+        alt_text = alt_text or self.default_alt_text
+
+        output = f'<cite>{alt_text}</cite>'
+        if self.photographer:
+            output += ' - &copy; '
+            if self.photographer.website:
+                output += f'<a href="{self.photographer.website}" target="_blank">{self.photographer}</a>'
+            else:
+                output += f'{self.photographer}'
+
+        return mark_safe(output)
 
     def save(self, *args, **kwargs):
         original = self._meta.model.objects.get(pk=self.pk) if self.pk else None

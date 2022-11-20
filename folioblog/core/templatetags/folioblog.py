@@ -38,6 +38,13 @@ def query_string(context, key, value):
 
 
 @register.simple_tag
+def figcaption(image_or_page):
+    page = image_or_page if isinstance(image_or_page, Page) else None
+    image = page.image if page else image_or_page
+    return image.figcaption(page.caption if page else image.default_alt_text)
+
+
+@register.simple_tag
 def image_404(title):
     return Image.objects.filter(title=title).first()
 
@@ -61,17 +68,6 @@ def background_style(image, xs_3x_spec='fill-1080x1380', lg_1x_spec='fill-1905x5
 def photo_credits():
     return {
         'photographers': Photographer.objects.all(),
-    }
-
-
-@register.inclusion_tag('core/figcaption.html')
-def figcaption(image_or_page):
-    page = image_or_page if isinstance(image_or_page, Page) else None
-    image = page.image if page else image_or_page
-
-    return {
-        'image': image,
-        'alt': page.caption if page else image.default_alt_text,
     }
 
 
