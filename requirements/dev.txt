@@ -252,9 +252,9 @@ hiredis==2.0.0 ; python_version >= "3.10" and python_version < "4.0" \
 html5lib==1.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d \
     --hash=sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f
-identify==2.5.8 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:48b7925fe122720088aeb7a6c34f17b27e706b72c61070f27fe3789094233440 \
-    --hash=sha256:7a214a10313b9489a0d61467db2856ae8d0b8306fc923e03a9effa53d8aedc58
+identify==2.5.9 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:906036344ca769539610436e40a684e170c3648b552194980bb7b617a8daeb9f \
+    --hash=sha256:a390fb696e164dbddb047a0db26e57972ae52fbd037ae68797e5ae2f4492485d
 idna==3.4 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
@@ -547,9 +547,9 @@ rjsmin==1.2.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:e18fe1a610fb105273bb369f61c2b0bd9e66a3f0792e27e4cac44e42ace1968b
 selenium==4.6.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:3f1999875ef487ae676a254e7293a68041f1f1ec76be81402d8a1cd5a481bf3b
-setuptools==65.5.1 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:d0b9a8433464d5800cbe05094acf5c6d52a91bfac9b52bcfc4d41382be5d5d31 \
-    --hash=sha256:e197a19aa8ec9722928f2206f8de752def0e4c9fc6953527360d1c36d94ddb2f
+setuptools==65.6.0 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:6211d2f5eddad8757bd0484923ca7c0a6302ebc4ab32ea5e94357176e0ca0840 \
+    --hash=sha256:d1eebf881c6114e51df1664bc2c9133d022f78d12d5f4f665b9191f084e2862d
 six==1.16.0 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
