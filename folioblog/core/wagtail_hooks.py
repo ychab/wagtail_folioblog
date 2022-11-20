@@ -20,19 +20,6 @@ from folioblog.blog.models import BlogTag
 from folioblog.video.models import VideoTag
 
 
-@hooks.register('construct_page_action_menu')
-def make_publish_default_action(menu_items, request, context):
-    """
-    @see https://docs.wagtail.org/en/stable/reference/hooks.html#construct-page-action-menu
-    """
-    for (index, item) in enumerate(menu_items):  # pragma: no branch
-        if item.name == 'action-publish':
-            # move to top of list
-            menu_items.pop(index)
-            menu_items.insert(0, item)
-            break
-
-
 @hooks.register('register_rich_text_features')
 def register_keyboard_feature(features):
     # Just mimic wagtail.admin.wagtail_hooks.register_core_features()

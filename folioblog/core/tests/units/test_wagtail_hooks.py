@@ -2,7 +2,7 @@ import logging
 import os
 from html import unescape
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.urls import reverse
 
 from wagtail.models import Site
@@ -11,29 +11,6 @@ from bs4 import BeautifulSoup
 
 from folioblog.user.factories import UserFactory
 from folioblog.video.factories import VideoPageFactory
-
-
-class MenuActionWagtailHookTestCase(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = UserFactory(is_superuser=True, is_staff=True)
-        cls.url = reverse('wagtailadmin_pages:edit', kwargs={'page_id': 2})
-
-    @override_settings(LANGUAGE_CODE='fr-fr')
-    def test_publish_action_first(self):
-        self.client.force_login(self.user)
-
-        # Turn off logging due to django.template errors with wagtail!
-        logging.disable(logging.DEBUG)
-        response = self.client.get(self.url)
-        logging.disable(logging.NOTSET)
-
-        self.assertEqual(response.status_code, 200)
-        html = unescape(response.content.decode())
-        soup = BeautifulSoup(html, features='html.parser')
-        button = soup.find(attrs={'name': 'action-publish'})
-        self.assertEqual(button.find('em').text, 'Publier')
 
 
 class EmbedAdminViewTestCase(TestCase):
