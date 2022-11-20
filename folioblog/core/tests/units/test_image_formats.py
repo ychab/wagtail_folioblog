@@ -51,12 +51,13 @@ class CreditLightboxImageFormatTestCase(TestCase):
 
         cls.image = ImageFactory()
         cls.rendition = cls.image.get_rendition('width-940')
+        cls.rendition_full = cls.image.get_rendition('width-1920|format-jpeg')
 
-        alt_text = 'Test text alt'
-        cls.alt_text_html = unescape(cls.image.figcaption(alt_text))
+        cls.alt_text = 'Test text alt'
+        cls.alt_text_html = unescape(cls.image.figcaption(cls.alt_text))
 
         text = fake.text()
-        text += f'<embed alt="{alt_text}" embedtype="image" format="creditlightbox" id="{cls.image.pk}"/>'
+        text += f'<embed alt="{cls.alt_text}" embedtype="image" format="creditlightbox" id="{cls.image.pk}"/>'
 
         cls.page = BasicPageFactory(parent=cls.site.root_page, body=RichText(text))
 
@@ -74,7 +75,18 @@ class CreditLightboxImageFormatTestCase(TestCase):
 
         self.assertIn(f'<figcaption class="caption figure-caption">{self.alt_text_html}</figcaption>', html)
 
-    def test_image_lightbox(self):
+    def test_image_lightbox_link(self):
+        response = self.client.get(self.page.url)
+        self.assertEqual(response.status_code, 200)
+        html = unescape(response.content.decode())
+
+        self.assertIn(f'<a href="{self.rendition_full.url}"', html)
+        self.assertIn(
+            f'data-glightbox="type: image; description: .custom-desc-{self.image.pk}; alt: {self.alt_text};">',
+            html,
+        )
+
+    def test_image_lightbox_description(self):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
         html = unescape(response.content.decode())

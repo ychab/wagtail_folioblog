@@ -1,8 +1,7 @@
 from django.utils.html import format_html
 
 from wagtail.images.formats import Format, register_image_format
-
-from bs4 import BeautifulSoup
+from wagtail.images.shortcuts import get_rendition_or_not_found
 
 
 class BodyFullImageFormat(Format):
@@ -17,12 +16,12 @@ class CreditLightboxImageFormat(Format):
 
     def image_to_html(self, image, alt_text, extra_attributes=None):
         img_html = super().image_to_html(image, alt_text, extra_attributes)
-        img_src = BeautifulSoup(img_html, features='html.parser').find('img')['src']  # Prevent rendition query again
+        rendition_full = get_rendition_or_not_found(image, 'width-1920|format-jpeg')
         alt_text_html = image.figcaption(alt_text)
 
         html = f"""
             <figure class="figure d-block">
-                <a href="{img_src}"
+                <a href="{rendition_full.url}"
                    class="glightbox"
                    data-glightbox="type: image; description: .custom-desc-{image.pk}; alt: {alt_text};">
                     {img_html}
