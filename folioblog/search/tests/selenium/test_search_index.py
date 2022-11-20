@@ -138,7 +138,8 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def test_tag_autocomplete(self):
         self.webpage.scroll_to_form()
 
-        items = self.webpage.tag_autocomplete('pyth')
+        self.webpage.tag_autocomplete('pyth')
+        items = self.webpage.get_tag_items()
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]['value'], self.tags[0].slug)
 
@@ -150,7 +151,8 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def test_tag_autocomplete_keys(self):
         self.webpage.scroll_to_form()
 
-        items = self.webpage.tag_autocomplete('pyth')
+        self.webpage.tag_autocomplete('pyth')
+        items = self.webpage.get_tag_items()
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]['value'], self.tags[0].slug)
 

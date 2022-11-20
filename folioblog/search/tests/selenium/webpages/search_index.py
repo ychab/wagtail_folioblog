@@ -84,16 +84,21 @@ class SearchIndexWebPage(BaseIndexWebPage):
         input.clear()
         input.send_keys(text)
 
-        WebDriverWait(self.selenium, 5).until(
+        return WebDriverWait(self.selenium, 5).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'tagify__dropdown')),
         )
 
-        return self.get_tag_items()
-
     def tag_autocomplete_select(self, elem):
         elem.click()
-        return WebDriverWait(self.selenium, 5).until(
-            EC.visibility_of_element_located((By.CLASS_NAME, 'tagify__tag-text')),
+        # @TODO - @FIXME since tagify 4.17.0, we obvisouly need to wait for an
+        # another stuff... but what?? Waste 3hrs and didn't find anything...
+        import time; time.sleep(0.1)
+
+        return WebDriverWait(self.selenium, 5, 1).until(
+            all_of(
+                EC.invisibility_of_element_located((By.CLASS_NAME, 'tagify__dropdown')),
+                EC.visibility_of_element_located((By.CLASS_NAME, 'tagify__tag-text')),
+            )
         )
 
     def tag_autocomplete_select_keys(self, count, expected_value):
@@ -121,7 +126,9 @@ class SearchIndexWebPage(BaseIndexWebPage):
         return items
 
     def filter_tag(self, category):
-        items = self.tag_autocomplete(category)
+        self.tag_autocomplete(category)
+
+        items = self.get_tag_items()
         self.tag_autocomplete_select(items[0]['elem'])
 
         self.submit_form()
