@@ -1,44 +1,29 @@
 import logging
 
 from django.db import connection
+from django.middleware.cache import (
+    FetchFromCacheMiddleware, UpdateCacheMiddleware,
+)
 
 
-class PatchVaryMiddleware:
-    """
-    Ignore HTTP_COOKIE header for building cache key.
-    Indeed, having cookies doesn't matter for public page (everyone should have
-    the same.Well no in fact, they must!).
+class AnonymousUpdateCacheMiddleware(UpdateCacheMiddleware):
 
-    For instance, AuthenticationMiddleware try to load user. To do so, it will
-    try to access the session and if the session is accessed, the middleware
-    SessionMiddleware will add a Vary Cookie header! So in other word, we have
-    a Vary Cookie for every requests! Why?
-    @see https://code.djangoproject.com/ticket/29971#comment:4
-
-    As a consequence, cache key will be build with the content of ALL
-    cookies. And unfortunetly with GA cookie, its value change for EVERY
-    requests and thus, create a new entry cache every time because cache_key is
-    never the same value...
-
-    One approach could be to remove the GA cookie on server side. However, this
-    is definitively NOT an elegant at all (I have tried, trust me!).
-
-    An another approach is just to remove the Vary header... And hoping it won't
-    broke some stuff!
-    """
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-
-        # For public page marked as cacheable, remove the Vary cookie header to
-        # have a unique version of the cached page for everyone!
-        if 'public' in response.get("Cache-Control", ()):
+    def process_response(self, request, response):
+        # If we don't have the user, maybe we got a redirect or something else.
+        if hasattr(request, 'user') and request.user.is_anonymous:
+            # Remove Vary (Cookie) added by AuthenticationMiddleware
+            # @see https://code.djangoproject.com/ticket/29971#comment:4
             response.headers.pop('Vary', None)
+            return super().process_response(request, response)
 
         return response
+
+
+class AnonymousFetchCacheMiddleware(FetchFromCacheMiddleware):
+
+    def process_request(self, request):
+        if request.user.is_anonymous:
+            return super().process_request(request)
 
 
 class CountQueriesMiddleware:

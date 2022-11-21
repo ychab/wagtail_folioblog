@@ -11,10 +11,10 @@ from folioblog.core.factories import ImageFactory
 
 
 @modify_settings(MIDDLEWARE={
-    'prepend': ['django.middleware.cache.UpdateCacheMiddleware'],
-    'append': ['django.middleware.cache.FetchFromCacheMiddleware'],
+    'prepend': ['folioblog.core.middleware.AnonymousUpdateCacheMiddleware'],
+    'append': ['folioblog.core.middleware.AnonymousFetchCacheMiddleware'],
 })
-class PageCacheTestCase(TestCase):
+class ResetCacheTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -39,14 +39,14 @@ class PageCacheTestCase(TestCase):
         cache.clear()
 
     def test_cache_page(self):
-        # No cache
+        # Not cached yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
-        # Has cache
+        # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
@@ -54,14 +54,14 @@ class PageCacheTestCase(TestCase):
         self.assertEqual(count, 0)
 
     def test_cache_clear_page(self):
-        # No cache
+        # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
-        # Has cache
+        # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
@@ -78,14 +78,14 @@ class PageCacheTestCase(TestCase):
         self.assertGreater(count, 0)
 
     def test_cache_clear_snippet(self):
-        # No cache
+        # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
-        # Has cache
+        # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
@@ -102,14 +102,14 @@ class PageCacheTestCase(TestCase):
         self.assertGreater(count, 0)
 
     def test_cache_clear_tag(self):
-        # No cache
+        # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
-        # Has cache
+        # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
@@ -126,14 +126,14 @@ class PageCacheTestCase(TestCase):
         self.assertGreater(count, 0)
 
     def test_cache_clear_image(self):
-        # No cache
+        # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
-        # Has cache
+        # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
         count = len([q['sql'] for q in cm.captured_queries])

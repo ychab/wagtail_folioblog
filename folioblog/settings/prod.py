@@ -13,9 +13,8 @@ SECURE_SSL_REDIRECT = True  # Just in case, should be done by webserver instead
 COMPRESS_ENABLED = True
 
 # Cache per site: will cache all pages by their full GET url
-MIDDLEWARE.insert(0, 'folioblog.core.middleware.PatchVaryMiddleware')  # Must be AFTER UpdateCacheMiddleware
-MIDDLEWARE.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')  # Must be FIRST to be latest!
-MIDDLEWARE.append('django.middleware.cache.FetchFromCacheMiddleware')
+MIDDLEWARE.insert(0, 'folioblog.core.middleware.AnonymousUpdateCacheMiddleware')  # Must be FIRST to be latest!
+MIDDLEWARE.append('folioblog.core.middleware.AnonymousFetchCacheMiddleware')
 
 # By default, all children of 'django' logger will inherit the handlers
 # console + mail_admins. However, console is not enable if DEBUG = False!

@@ -1,8 +1,6 @@
 import os
 
-from django.conf import settings
 from django.db import models
-from django.utils.cache import add_never_cache_headers, patch_cache_control
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -134,26 +132,7 @@ class BaseIndexManager(PageManager):
             .prefetch_related('image__renditions')
 
 
-class PageCacheMixin:
-
-    def serve(self, request, *args, **kwargs):
-        response = super().serve(request, *args, **kwargs)
-
-        if request.user.is_authenticated:
-            add_never_cache_headers(response)
-        elif (
-            request.method in ['GET', 'HEAD']
-            and request.user.is_anonymous
-            and response.status_code in [200, 304]
-            and 'max-age' not in response.get('Cache-Control', ())
-        ):
-            patch_cache_control(
-                response, max_age=settings.CACHE_MIDDLEWARE_SECONDS, public=True)
-
-        return response
-
-
-class BaseIndexPage(PageCacheMixin, Page):
+class BaseIndexPage(Page):
     subheading = models.CharField(max_length=512, blank=True, default='')
 
     image = models.ForeignKey(

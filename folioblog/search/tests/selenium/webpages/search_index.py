@@ -92,7 +92,7 @@ class SearchIndexWebPage(BaseIndexWebPage):
         elem.click()
         # @TODO - @FIXME since tagify 4.17.0, we obvisouly need to wait for an
         # another stuff... but what?? Waste 3hrs and didn't find anything...
-        import time; time.sleep(0.1)
+        import time; time.sleep(0.1)  # noqa
 
         return WebDriverWait(self.selenium, 5, 1).until(
             all_of(

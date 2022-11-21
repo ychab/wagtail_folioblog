@@ -6,7 +6,6 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.images import get_image_model
 from wagtail.models import Page
 
-from folioblog.core.models import PageCacheMixin
 from folioblog.portfolio.blocks import (
     ExperiencesBlock, ServicesBlock, SkillsBlock, TeamMembersBlock,
 )
@@ -14,7 +13,7 @@ from folioblog.portfolio.blocks import (
 Image = get_image_model()
 
 
-class PortfolioPage(PageCacheMixin, Page):
+class PortfolioPage(Page):
 
     # Header
     header_heading = models.CharField(
