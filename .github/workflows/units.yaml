@@ -1,4 +1,4 @@
-name: Coverage
+name: Units
 
 on:
   - push
@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  coverage:
-    name: coverage
+  units:
+    name: units
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -58,10 +58,10 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
 
-      - name: Make Coverage Badge
+      - name: Make Units Badge
         uses: action-badges/cobertura-coverage-xml-badges@0.2.1
         with:
-          file-name: coverage.svg
+          file-name: units.svg
           badge-branch: badges
           github-token: '${{ secrets.GITHUB_TOKEN }}'
-          coverage-file-name: ./coverage.xml
+          coverage-file-name: ./units.xml
