@@ -7,14 +7,14 @@
         </button>
         <ul id="filters-dropdown" class="dropdown-menu w-100 text-center" aria-labelledby="dropdownFilter">
             <li>
-                <a href="{% pageurl page %}" data-filter="*"
+                <a href="{% pageurl page %}?ajax=1" data-filter="*"
                    class="dropdown-item{% if not filter_query %} active{% endif %}">
                     {% trans 'Tout' %}
                 </a>
             </li>
             {% for filter in filters %}
             <li>
-                <a href="{% pageurl page %}?{{ filter_name }}={{ filter.value }}" data-filter="{{ filter_name }}-{{ filter.value }}"
+                <a href="{% pageurl page %}?ajax=1&{{ filter_name }}={{ filter.value }}" data-filter="{{ filter_name }}-{{ filter.value }}"
                    class="dropdown-item{% if filter_query == filter.value %} active{% endif %}">
                     {{ filter.name }}
                 </a>

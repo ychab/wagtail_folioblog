@@ -1,11 +1,11 @@
 [![build](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml)
 [![lint](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml)
-[![precommit](https://github.com/ychab/wagtail_folioblog/actions/workflows/precommit.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/precommit.yaml)
 [![units](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/units.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/units.yaml)
+[![poetry](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml)
 [![NPM deps](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/npm-dependencies.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/npm.yaml)
-![licence](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-license.svg)
-![folioblog version](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-version.svg)
 ![wagtail version](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-wagtail-version.svg)
+
+[//]: # ([![end2end]&#40;https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/selenium.svg&#41;]&#40;https://github.com/ychab/wagtail_folioblog/actions/workflows/selenium.yaml&#41;)
 
 # FolioBlog, a Wagtail portfolio / blog demo
 
@@ -95,10 +95,19 @@ That's it!
 
 but hope this is for good reasons huh!!
 
-### Selenium (testing)
+### Selenium (end2end tests)
 
-For end2end tests, download at least Chrome, its Chrome drivers and put it into
-your PATH. For more details, [read the doc](https://selenium-python.readthedocs.io/installation.html#drivers).
+For end2end tests, download at least Chrome, which is the only one browser
+supported for now.
+
+Thanks to webdriver-manager python package installed with
+test dependencies, you don't have to take about its chrome webdriver binary. So
+in other words, it should work out-of-the-box!
+
+For more details, see:
+* [selenium doc](https://www.selenium.dev/documentation/)
+* [selenium python doc](https://selenium-python.readthedocs.io/installation.html)
+* [webdriver-manager doc](https://pypi.org/project/webdriver-manager/)
 
 ## Get started
 

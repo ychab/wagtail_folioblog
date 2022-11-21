@@ -7,7 +7,7 @@
     let infScroll;
 
     function getPath() {
-        let href = '?page=' + (this.pageIndex + 1);
+        let href = '?ajax=1&page=' + (this.pageIndex + 1);
         let cat = document.querySelector('#filters-dropdown .active').getAttribute('data-filter');
         if (cat !== '*') {
             href = href.concat('&category=', cat.substring('category-'.length));
@@ -32,11 +32,10 @@
         filters.addEventListener('click', function (event) {
             event.preventDefault();
 
-            let url = '?page=1';
+            let url = '?ajax=1&page=1';
             let category = event.target.getAttribute('data-filter');
-            category = category.substring('category-'.length);
             if (category !== '*') {
-                url = url + '&category=' + category;
+                url = url + '&category=' + category.substring('category-'.length);
             }
 
             if (window.fetch) {

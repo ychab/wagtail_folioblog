@@ -14,8 +14,7 @@ class VideoPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.page = VideoPageFactory(parent=self.index, tags__number=2, related_pages__number=1)
 
         self.webpage = VideoWebPage(self.selenium)
-        self.webpage.fetch_page(f'{self.live_server_url}{self.page.url}')
-        self.webpage.cookies_accept()
+        self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
         spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'
@@ -58,7 +57,7 @@ class CookieBannerVideoPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.page = VideoPageFactory(parent=self.index)
 
         self.webpage = VideoWebPage(self.selenium)
-        self.webpage.fetch_page(f'{self.live_server_url}{self.page.url}')
+        self.webpage.fetch_page(self.page.full_url, force_consent=False)
 
     def tearDown(self):
         self.webpage.cookie_consent_reset()

@@ -1,4 +1,4 @@
-from folioblog.core.utils.units import BaseHTMLPage
+from folioblog.core.utils.tests.units import BaseHTMLPage
 
 
 class VideoHTMLPage(BaseHTMLPage):

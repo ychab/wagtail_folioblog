@@ -10,6 +10,7 @@ from requests import RequestException
 
 from folioblog.blog.models import BlogCategory, BlogPage
 from folioblog.core.models import FolioBlogSettings
+from folioblog.video.models import VideoCategory, VideoPage
 
 
 class Command(BaseCommand):
@@ -39,27 +40,33 @@ class Command(BaseCommand):
             if page.slug == 'root':
                 continue
 
+            # Request page without parameters.
             self.request_page(page.full_url)
 
-            if page.slug == 'gallery':
-                self.request_filtering_collection(page.full_url)
-            elif page.slug in ['posts', 'videos']:
+            # Request pages with pagination only.
+            if page.slug in ['posts', 'videos']:
                 limit = folio_settings.video_pager_limit if page.slug == 'videos' else folio_settings.blog_pager_limit
                 self.request_pagination(page, limit)
 
+            # Request pages with pagination AND filtering.
             if page.slug == 'posts':
                 self.request_filtering_blog_category(page, limit)
+            if page.slug == 'videos':
+                self.request_filtering_video_category(page, limit)
+            elif page.slug == 'gallery':
+                self.request_filtering_collection(page.full_url)
 
         # Don't forgot 404 page for renditions only (dummy url + not a 200 code)
         self.request_page(f'{site.root_url}/givemea404please', status=404)
 
         self.stdout.write(self.style.SUCCESS('\nAll page cache loaded.'))
 
-    def request_page(self, full_url, status=None):
+    def request_page(self, full_url, status=None, **kwargs):
         self.stdout.write(f'Requesting: "{full_url}"')
 
+        requests_kwargs = self.requests_kwargs | kwargs
         try:
-            response = requests.get(full_url, **self.requests_kwargs)
+            response = requests.get(full_url, **requests_kwargs)
         except RequestException as e:
             self.stdout.write(self.style.ERROR(f'Error on page {full_url} with exc {e}\n'))
         else:
@@ -69,22 +76,40 @@ class Command(BaseCommand):
     def request_pagination(self, page, limit):
         total = Page.objects.child_of(page).live().count()
         num_pages = math.ceil(total / limit)
-        for i in range(1, num_pages):
-            self.request_page(f'{page.full_url}?page={i + 1}')
+        for i in range(0, num_pages):
+            self.request_page(f'{page.full_url}?ajax=1&page={i + 1}', headers={
+                'X-Requested-With': 'XMLHttpRequest',
+            })
 
     def request_filtering_collection(self, full_url):
         root_collection = Collection.objects.get(name='Gallery')
         collections = Collection.objects.child_of(root_collection)
 
         for collection in collections:
-            self.request_page(f'{full_url}?collection={collection.pk}')
+            self.request_page(f'{full_url}?ajax=1&collection={collection.pk}', headers={
+                'X-Requested-With': 'XMLHttpRequest',
+            })
 
     def request_filtering_blog_category(self, page, limit):
         categories = BlogCategory.objects.all()
-        for category in categories:
-            self.request_page(f'{page.full_url}?category={category.slug}')
 
+        for category in categories:
             total = BlogPage.objects.child_of(page).live().filter(category=category).count()
             num_pages = math.ceil(total / limit)
-            for i in range(1, num_pages):
-                self.request_page(f'{page.full_url}?category={category.slug}&page={i + 1}')
+
+            for i in range(0, num_pages):
+                self.request_page(f'{page.full_url}?ajax=1&page={i + 1}&category={category.slug}', headers={
+                    'X-Requested-With': 'XMLHttpRequest',
+                })
+
+    def request_filtering_video_category(self, page, limit):
+        categories = VideoCategory.objects.all()
+
+        for category in categories:
+            total = VideoPage.objects.child_of(page).live().filter(category=category).count()
+            num_pages = math.ceil(total / limit)
+
+            for i in range(0, num_pages):
+                self.request_page(f'{page.full_url}?ajax=1&page={i + 1}&category={category.slug}', headers={
+                    'X-Requested-With': 'XMLHttpRequest',
+                })

@@ -9,8 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.expected_conditions import all_of
 from selenium.webdriver.support.wait import WebDriverWait
 
-from folioblog.core.utils.selenium import is_document_ready
-from folioblog.core.utils.selenium.conditions import (
+from folioblog.core.utils.tests.selenium import is_document_ready
+from folioblog.core.utils.tests.selenium.conditions import (
     has_active_class, is_not_obstructed, is_scroll_finished,
     is_visible_in_viewport, videos_stopped,
 )
@@ -23,29 +23,26 @@ class BaseIndexWebPage:
     def __init__(self, selenium: RemoteWebDriver) -> None:
         self.selenium: RemoteWebDriver = selenium
 
-    def fetch_page(self, url, timeout=2, max_retry=3, skip_check_url=False):
-        attempt = 0
-        while attempt < max_retry:  # pragma: no branch
+    def fetch_page(self, url, timeout=2, skip_check_url=False, force_consent=True):
+        # First of all, fetch the page
+        self.selenium.get(url)
 
-            # First of all, fetch the page until we don't got a 500 error!
-            self.selenium.get(url)
+        # Then do implicit wait manually to don't mix with explicit wait.
+        # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
+        conditions = [
+            EC.invisibility_of_element_located((By.ID, 'page-500-body')),  # check for 500 page
+            is_document_ready(),
+        ]
+        if not skip_check_url:
+            conditions.append(EC.url_to_be(url))
 
-            # Then do implicit wait manually to don't mix with explicit wait.
-            # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
-            conditions = [
-                EC.invisibility_of_element_located((By.ID, 'page-500-body')),  # check for 500 page
-                is_document_ready(),
-            ]
-            if not skip_check_url:
-                conditions.append(EC.url_to_be(url))
+        is_fetched = WebDriverWait(self.selenium, timeout).until(all_of(*conditions))
 
-            try:
-                WebDriverWait(self.selenium, timeout).until(all_of(*conditions))
-            except TimeoutException:  # pragma: no cover
-                attempt += 1
-                logger.debug(f'Another try for url {url}')
-            else:
-                break
+        # First time browser hit a page, se we needs to refresh it for new cookie.
+        if is_fetched and force_consent:
+            self.cookies_accept()
+
+        return is_fetched
 
     def cookies_accept(self):
         if self.has_cookie_consent():

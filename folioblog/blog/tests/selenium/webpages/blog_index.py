@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from folioblog.core.utils.selenium import BaseIndexWebPage
+from folioblog.core.utils.tests.selenium import BaseIndexWebPage
 
 
 class BlogIndexWebPage(BaseIndexWebPage):

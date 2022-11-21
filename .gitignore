@@ -5,6 +5,8 @@ __pycache__
 .tox
 .coverage
 coverage.xml
+units.xml
+selenium.xml
 /htmlcov
 geckodriver.log
 /docs/_build/

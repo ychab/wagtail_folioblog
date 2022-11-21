@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from folioblog.core.utils.selenium import (
+from folioblog.core.utils.tests.selenium import (
     BaseIndexWebPage, has_count_expected, has_css_class,
 )
 from folioblog.gallery.tests.selenium.conditions import is_checked

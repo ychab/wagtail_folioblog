@@ -17,8 +17,9 @@ AUTOCOMPLETE_PATH=${PROJECT_PATH}/node_modules/@tarekraafat/autocomplete.js
 GLIGHTBOX_PATH=${PROJECT_PATH}/node_modules/glightbox
 
 prepare() {
-    echo ">>> Override colors"
-    cp $PROJECT_PATH/dist/build/scripts/_colors.scss $THEME_FOLIO_PATH/src/scss/variables/
+    echo ">>> Override SCSS variables"
+    cp $PROJECT_PATH/dist/build/scss/variables/_colors.scss $THEME_FOLIO_PATH/src/scss/variables/
+    cp $PROJECT_PATH/dist/build/scss/components/_navbar.scss $THEME_FOLIO_PATH/src/scss/components/
 }
 
 build_folio() {

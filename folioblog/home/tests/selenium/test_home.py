@@ -27,8 +27,7 @@ class HomePageLiveTestCase(FolioBlogSeleniumServerTestCase):
             self.videos.append(VideoPageFactory(parent=self.index_video, promoted=True))
 
         self.webpage = HomeWebPage(self.selenium)
-        self.webpage.fetch_page(f'{self.live_server_url}{self.page.url}')
-        self.webpage.cookies_accept()
+        self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
         spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'

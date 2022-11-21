@@ -1,4 +1,4 @@
-name: precommit
+name: Poetry Deps
 
 on:
   - push
@@ -9,12 +9,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  precommit:
-    name: precommit
+  poetry:
+    name: poetry
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: ["3.10"]
 
     steps:
       - name: Check out repository code
@@ -23,17 +20,12 @@ jobs:
       - name: Setup Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python }}
-
-      - name: Update pip and install dependencies
-        run: |
-          pip install --upgrade pip setuptools wheel
-          pip install pre-commit
+          python-version: '3.10'
 
       - name: Update pip and install dependencies
         run: |
           pip install --upgrade pip setuptools wheel
           pip install tox
 
-      - name: Run tox precommit
-        run: tox -e precommit
+      - name: Run tox poetry
+        run: tox -e poetry

@@ -12,8 +12,7 @@ class BlogPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.page = BlogPageFactory(parent=self.index, related_pages__number=1)
 
         self.webpage = BlogPostWebPage(self.selenium)
-        self.webpage.fetch_page(f'{self.live_server_url}{self.page.url}')
-        self.webpage.cookies_accept()
+        self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
         spec = 'fill-1080x2300' if self.is_mobile else 'fill-1905x830'

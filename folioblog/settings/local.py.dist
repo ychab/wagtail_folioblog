@@ -1,4 +1,6 @@
-SECRET_KEY = '<SECRET_KEY>'
+import os
+
+SECRET_KEY = os.getenv('FOLIOBLOG_SECRET_KEY', '')
 
 DATABASES = {
     'default': {
@@ -25,6 +27,7 @@ TIME_ZONE = 'Europe/Paris'
 ######
 
 # DEBUG_LOG = True
+TEST_SELENIUM_HUB = os.getenv('FOLIOBLOG_TEST_SELENIUM_HUB', None)
 
 ############
 # Production

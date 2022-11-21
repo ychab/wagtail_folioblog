@@ -23,6 +23,8 @@ WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 DEBUG_TEST = True
 DEBUG_LOG = False
 
+TEST_SELENIUM_HUB = False
+
 try:
     from .local import *
 except ImportError:  # pragma: no cover

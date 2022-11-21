@@ -4,7 +4,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.expected_conditions import all_of
 from selenium.webdriver.support.wait import WebDriverWait
 
-from folioblog.core.utils.selenium import BaseIndexWebPage, is_scroll_finished
+from folioblog.core.utils.tests.selenium import (
+    BaseIndexWebPage, is_scroll_finished,
+)
 from folioblog.search.tests.selenium.conditions import is_autocompleted
 
 

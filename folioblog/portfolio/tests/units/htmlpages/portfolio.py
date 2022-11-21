@@ -1,4 +1,4 @@
-from folioblog.core.utils.units import BaseIndexHTMLPage
+from folioblog.core.utils.tests.units import BaseIndexHTMLPage
 
 
 class PortFolioHTMLPage(BaseIndexHTMLPage):

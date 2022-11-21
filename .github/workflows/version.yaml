@@ -17,22 +17,6 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
 
-      - name: Make package version Badge
-        uses: action-badges/poetry-badges@0.2.2
-        with:
-          file-name: poetry-version.svg
-          badge-branch: badges
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-          integration: version
-
-      - name: Make license badge
-        uses: action-badges/poetry-badges@0.2.2
-        with:
-          file-name: poetry-license.svg
-          badge-branch: badges
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-          integration: license
-
       - name: Make wagtail version badge
         uses: action-badges/poetry-badges@0.2.2
         with:

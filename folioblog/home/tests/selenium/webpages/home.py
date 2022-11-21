@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.expected_conditions import all_of
 from selenium.webdriver.support.wait import WebDriverWait
 
-from folioblog.core.utils.selenium import BaseIndexWebPage
+from folioblog.core.utils.tests.selenium import BaseIndexWebPage
 from folioblog.home.tests.selenium.conditions import (
     player_link_match, player_thumbnail_match,
 )

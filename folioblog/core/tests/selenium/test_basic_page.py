@@ -13,8 +13,7 @@ class BasicPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.page = BasicPageFactory(parent=self.site.root_page, related_pages__number=1)
 
         self.webpage = BasicWebPage(self.selenium)
-        self.webpage.fetch_page(f'{self.live_server_url}{self.page.url}')
-        self.webpage.cookies_accept()
+        self.webpage.fetch_page(self.page.full_url)
 
     @skip_mobile()
     def test_title(self):

@@ -15,7 +15,7 @@ class NotFoundPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         url = f'{self.live_server_url}/givemea404please'
         self.webpage = NotFoundWebPage(self.selenium)
-        self.webpage.fetch_page(url, skip_check_url=True)
+        self.webpage.fetch_page(url, skip_check_url=True, force_consent=False)
 
     def test_masthead_image(self):
         spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'

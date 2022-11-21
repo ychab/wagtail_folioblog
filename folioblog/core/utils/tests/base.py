@@ -8,7 +8,12 @@ from django.test.selenium import SeleniumTestCase, SeleniumTestCaseBase
 
 from wagtail.models import Locale, Site
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
 from wagtail_factories import SiteFactory
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 
 
 def skip_mobile(msg=''):
@@ -30,6 +35,9 @@ class MetaSeleniumTestCase(SeleniumTestCaseBase):
 
     def __new__(cls, name, bases, attrs):
         test_class = super().__new__(cls, name, bases, attrs)
+
+        # Set hub from settings
+        test_class.selenium_hub = settings.TEST_SELENIUM_HUB
 
         # Skip base classes (no test methods except mobile which inherit)
         has_tests = any([attr for attr in attrs if attr.startswith('test_')])
@@ -67,6 +75,39 @@ class MetaSeleniumTestCase(SeleniumTestCaseBase):
 
         return test_class
 
+    def create_webdriver(self):
+        if not self.selenium_hub and self.browser in ['chrome', 'chromium']:  # pragma: no branch
+            chrome_type = ChromeType.CHROMIUM if self.browser == 'chromium' else ChromeType.GOOGLE
+            driver_path = ChromeDriverManager(chrome_type=chrome_type).install()
+
+            return webdriver.Chrome(
+                service=ChromeService(driver_path),
+                options=self.create_options(),
+            )
+
+        return super().create_webdriver()
+
+    def create_options(self):
+        if self.browser in ['chrome', 'chromium']:  # pragma: no branch
+            # Without some of those options, it could be VERY VERY slow!!
+            options = [
+                "--disable-gpu",
+                "--window-size=1920,1200",
+                "--ignore-certificate-errors",
+                "--disable-extensions",
+                "--no-sandbox",  # Obvisouly, required if run as root
+                "--disable-dev-shm-usage"
+            ]
+            if self.headless:
+                options.insert(0, '--headless')
+
+            chrome_options = ChromeOptions()
+            for option in options:
+                chrome_options.add_argument(option)
+            return chrome_options
+
+        return super().create_options()
+
 
 @tag('selenium', 'slow')
 class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase, metaclass=MetaSeleniumTestCase):  # pragma: no cover # noqa
@@ -84,7 +125,7 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
     def setUpClass(cls):
         super().setUpClass()
 
-        if cls.is_mobile and cls.browser == 'chrome':
+        if cls.is_mobile and cls.browser in ['chrome', 'chromium']:
             cls.selenium.execute_cdp_cmd('Emulation.setDeviceMetricsOverride', {
                 'width': 360,
                 'height': 780,
@@ -95,7 +136,7 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
             # Default profile is 800x600, which:
             # - is not the reality
             # - make some troubles with viewport
-            cls.selenium.set_window_size('1920', '1080')
+            cls.selenium.set_window_size('1920', '1200')
 
             # Maximize the windows to don't have weird viewport errors!
             cls.selenium.maximize_window()
