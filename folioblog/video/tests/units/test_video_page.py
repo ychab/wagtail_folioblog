@@ -2,6 +2,7 @@ from html import unescape
 
 from django.test import TestCase
 from django.utils.formats import date_format
+from django.utils.timezone import localtime
 from django.utils.translation import gettext
 
 from wagtail_factories import CollectionFactory
@@ -104,7 +105,7 @@ class VideoPageHTMLTestCase(TestCase):
         self.assertEqual(meta['og:video:type'], 'text/html')
         self.assertEqual(int(meta['og:video:width']), embed.width)
         self.assertEqual(int(meta['og:video:height']), embed.height)
-        self.assertEqual(meta['video:release_date'], date_format(self.page.first_published_at, 'c'))
+        self.assertEqual(meta['video:release_date'], date_format(localtime(self.page.first_published_at), 'c'))
         self.assertListEqual(
             sorted(meta['video:tag']),
             sorted([str(self.page.category)] + [t.slug for t in self.page.tags.all()]),

@@ -12,6 +12,7 @@ DATABASES = {
 }
 
 LANGUAGE_CODE = 'fr-fr'
+TIME_ZONE = 'Europe/Paris'
 
 # Wagtail settings
 

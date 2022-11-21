@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils.formats import date_format
+from django.utils.timezone import localtime
 from django.utils.translation import gettext
 
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
@@ -84,8 +85,8 @@ class BlogPageHTMLTestCase(TestCase):
         self.assertEqual(int(meta['og:image:height']), rendition.height)
         self.assertEqual(meta['og:image:alt'], self.page.caption)
 
-        self.assertEqual(meta['article:published_time'], date_format(self.page.first_published_at, 'c'))
-        self.assertEqual(meta['article:modified_time'], date_format(self.page.last_published_at, 'c'))
+        self.assertEqual(meta['article:published_time'], date_format(localtime(self.page.first_published_at), 'c'))
+        self.assertEqual(meta['article:modified_time'], date_format(localtime(self.page.last_published_at), 'c'))
         self.assertEqual(meta['article:section'], str(self.page.category))
         self.assertListEqual(
             sorted(meta['article:tag']),
