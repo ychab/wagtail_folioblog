@@ -1,41 +1,31 @@
-# @see https://github.com/jsoma/selenium-github-actions
 name: Selenium
 
 on:
-  - push
-  - pull_request
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  DISPLAY: :1
-  FOLIOBLOG_SECRET_KEY: Mo4ocFeHT5Yi0hRyodrO
-  FOLIOBLOG_TEST_SELENIUM_HUB: ''
-  GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-  WDM_LOG: '0'
-
 jobs:
   selenium:
     name: selenium
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
         ports:
-          # Maps tcp port 5432 on service container to the host
           - 5432:5432
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -45,14 +35,26 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install system dependencies
+      - name: Install ChromeDriver
         run: |
-          sudo apt remove -y google-chrome-stable xvfb
-          sudo apt autoremove -y
-          sudo apt update -y
-          sudo apt install -y google-chrome-stable xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric
+          CHROME_VERSION=$(google-chrome --version | cut -f 3 -d ' ' | cut -d '.' -f 1)
+          CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
+          curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_RELEASE/chromedriver_linux64.zip"
+          unzip /tmp/chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
 
-      - name: Update pip and install dependencies
+      - name: Install Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install NPM dependencies and build dist
+        run: |
+          npm ci
+          npm run dist
+
+      - name: Update pip and install Tox
         run: |
           pip install --upgrade pip setuptools wheel
           pip install tox
@@ -60,14 +62,10 @@ jobs:
       - name: Copy django settings
         run: cp folioblog/settings/local.py.dist folioblog/settings/local.py
 
-      - name: Start Xvbf
-        run: Xvfb $DISPLAY -screen 0 1920x1200x24 &
-
-      - name: Run tox selenium
-        run: tox -e report_selenium
+      - name: Run all test
+        run: tox -e report_all
         env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
+          FOLIOBLOG_SECRET_KEY: Mo4ocFeHT5Yi0hRyodrO
 
       - name: Make Selenium Badge
         uses: action-badges/cobertura-coverage-xml-badges@0.2.1
@@ -76,4 +74,10 @@ jobs:
           file-name: selenium.svg
           badge-branch: badges
           github-token: '${{ secrets.GITHUB_TOKEN }}'
-          coverage-file-name: ./selenium.xml
+          coverage-file-name: ./coverage.xml
+
+      - name: Archive HTML coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: htmlcoverage
+          path: htmlcov

@@ -11,9 +11,8 @@ class CookieBannerLiveTestCase(FolioBlogSeleniumServerTestCase):
         super().setUp()
 
         self.page = BasicPageFactory(parent=self.site.root_page)
-        self.url = f'{self.live_server_url}{self.page.url}'
         self.webpage = BasicWebPage(self.selenium)
-        self.webpage.fetch_page(self.url, force_consent=False)
+        self.webpage.fetch_page(self.page.full_url, force_consent=False)
 
     def tearDown(self):
         self.webpage.cookie_consent_reset()
@@ -56,11 +55,11 @@ class CookieBannerLiveTestCase(FolioBlogSeleniumServerTestCase):
 
     @skip_mobile()
     def test_banner_invisible_consent(self):
-        self.webpage.fetch_page(self.url, force_consent=True)
+        self.webpage.fetch_page(self.page.full_url, force_consent=True)
         self.assertFalse(self.webpage.has_cookie_banner())
 
     @skip_mobile()
     def test_banner_invisible_rejected(self):
         self.webpage.force_cookie_consent(value='false')
-        self.webpage.fetch_page(self.url, force_consent=False)
+        self.webpage.fetch_page(self.page.full_url, force_consent=False)
         self.assertFalse(self.webpage.has_cookie_banner())

@@ -23,8 +23,6 @@ WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 DEBUG_TEST = True
 DEBUG_LOG = False
 
-TEST_SELENIUM_HUB = False
-
 try:
     from .local import *
 except ImportError:  # pragma: no cover
@@ -32,7 +30,7 @@ except ImportError:  # pragma: no cover
 
 if DEBUG_LOG:  # pragma: no cover
     for logger in LOGGING['loggers'].values():
-        logger['handlers'] = ['debug_file']
+        logger['handlers'] = ['debug_file', 'stream']
         logger['level'] = 'DEBUG'
     # Anyway, remove logging for migrations
     LOGGING['loggers']['django.db.backends.schema'] = {

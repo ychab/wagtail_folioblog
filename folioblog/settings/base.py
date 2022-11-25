@@ -200,6 +200,10 @@ LOGGING['handlers']['debug_file'] = {
 LOGGING['handlers']['null'] = {
     'class': 'logging.NullHandler',
 }
+LOGGING['handlers']['stream'] = {
+    'level': 'INFO',
+    'class': 'logging.StreamHandler',
+}
 LOGGING['loggers']['folioblog'] = {
     'handlers': ['console', 'mail_admins'],
     'level': 'INFO',

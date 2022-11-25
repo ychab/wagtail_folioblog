@@ -26,8 +26,8 @@ TIME_ZONE = 'Europe/Paris'
 # Test
 ######
 
-# DEBUG_LOG = True
-TEST_SELENIUM_HUB = os.getenv('FOLIOBLOG_TEST_SELENIUM_HUB', None)
+# DEBUG = bool(int(os.getenv('FOLIOBLOG_DEBUG', 0)))
+# DEBUG_LOG = bool(int(os.getenv('FOLIOBLOG_DEBUG_LOG', 0)))
 
 ############
 # Production

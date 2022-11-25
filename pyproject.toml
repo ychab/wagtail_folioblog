@@ -29,7 +29,6 @@ selenium = "^4.5.0"
 tox = "^3.26.0"
 coverage = {extras = ["toml"], version = "^6.5.0"}
 pylama = {extras = ["toml"], version = "^8.4.1"}
-webdriver-manager = "^3.8.5"
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.1"

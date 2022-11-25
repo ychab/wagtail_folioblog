@@ -639,17 +639,6 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 six = ">=1.5"
 
 [[package]]
-name = "python-dotenv"
-version = "0.21.0"
-description = "Read key-value pairs from a .env file and set them as environment variables"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-cli = ["click (>=5.0)"]
-
-[[package]]
 name = "pytz"
 version = "2022.6"
 description = "World timezone definitions, modern and historical"
@@ -733,7 +722,7 @@ python-versions = "*"
 
 [[package]]
 name = "selenium"
-version = "4.6.0"
+version = "4.6.1"
 description = ""
 category = "dev"
 optional = false
@@ -864,23 +853,6 @@ docs = ["pygments-github-lexers (>=0.0.5)", "sphinx (>=2.0.0)", "sphinxcontrib-a
 testing = ["flaky (>=3.4.0)", "freezegun (>=0.3.11)", "pathlib2 (>=2.3.3)", "psutil (>=5.6.1)", "pytest (>=4.0.0)", "pytest-cov (>=2.5.1)", "pytest-mock (>=1.10.0)", "pytest-randomly (>=1.0.0)"]
 
 [[package]]
-name = "tqdm"
-version = "4.64.1"
-description = "Fast, Extensible Progress Meter"
-category = "dev"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["py-make (>=0.1.0)", "twine", "wheel"]
-notebook = ["ipywidgets (>=6)"]
-slack = ["slack-sdk"]
-telegram = ["requests"]
-
-[[package]]
 name = "trio"
 version = "0.22.0"
 description = "A friendly Python library for async concurrency and I/O"
@@ -937,7 +909,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "virtualenv"
-version = "20.16.7"
+version = "20.17.0"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -1000,20 +972,6 @@ docs = ["sphinx (>=1.4.0)"]
 test = ["coverage (==6.0)", "flake8 (==4.0.0)", "flake8-blind-except (==0.1.1)", "flake8-debugger (==4.1.2)", "isort (==5.10.0)", "psycopg2 (>=2.3.1)", "pytest (==6.2.5)", "pytest-cov (==3.0.0)", "pytest-django (==4.5.0)", "pytest-pythonpath (==0.7.3)"]
 
 [[package]]
-name = "webdriver-manager"
-version = "3.8.5"
-description = "Library provides the way to automatically manage drivers for different browsers"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-packaging = "*"
-python-dotenv = "*"
-requests = "*"
-tqdm = "*"
-
-[[package]]
 name = "webencodings"
 version = "0.5.1"
 description = "Character encoding aliases for legacy web content"
@@ -1046,7 +1004,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d6cce28997a09d7a72632eabdc57e8ba6c0874b4399cb0803e7a1f9accc2173f"
+content-hash = "992b210d11187371406be7b6fd7efe999de6b96c5e3a301561b713e9c1b03ace"
 
 [metadata.files]
 anyascii = [
@@ -1555,10 +1513,6 @@ python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
-python-dotenv = [
-    {file = "python-dotenv-0.21.0.tar.gz", hash = "sha256:b77d08274639e3d34145dfa6c7008e66df0f04b7be7a75fd0d5292c191d79045"},
-    {file = "python_dotenv-0.21.0-py3-none-any.whl", hash = "sha256:1684eb44636dd462b66c3ee016599815514527ad99965de77f43e0944634a7e5"},
-]
 pytz = [
     {file = "pytz-2022.6-py2.py3-none-any.whl", hash = "sha256:222439474e9c98fced559f1709d89e6c9cbf8d79c794ff3eb9f8800064291427"},
     {file = "pytz-2022.6.tar.gz", hash = "sha256:e89512406b793ca39f5971bc999cc538ce125c0e51c27941bef4568b460095e2"},
@@ -1662,7 +1616,7 @@ rjsmin = [
     {file = "rjsmin-1.2.0.tar.gz", hash = "sha256:6c529feb6c400984452494c52dd9fdf59185afeacca2afc5174a28ab37751a1b"},
 ]
 selenium = [
-    {file = "selenium-4.6.0-py3-none-any.whl", hash = "sha256:3f1999875ef487ae676a254e7293a68041f1f1ec76be81402d8a1cd5a481bf3b"},
+    {file = "selenium-4.6.1-py3-none-any.whl", hash = "sha256:2384829279d41c7f5b338ce87453cc4e120099b6c093318207376c19f5d2c254"},
 ]
 setuptools = [
     {file = "setuptools-65.6.3-py3-none-any.whl", hash = "sha256:57f6f22bde4e042978bcd50176fdb381d7c21a9efa4041202288d3737a0c6a54"},
@@ -1712,10 +1666,6 @@ tox = [
     {file = "tox-3.27.1-py2.py3-none-any.whl", hash = "sha256:f52ca66eae115fcfef0e77ef81fd107133d295c97c52df337adedb8dfac6ab84"},
     {file = "tox-3.27.1.tar.gz", hash = "sha256:b2a920e35a668cc06942ffd1cf3a4fb221a4d909ca72191fb6d84b0b18a7be04"},
 ]
-tqdm = [
-    {file = "tqdm-4.64.1-py2.py3-none-any.whl", hash = "sha256:6fee160d6ffcd1b1c68c65f14c829c22832bc401726335ce92c52d395944a6a1"},
-    {file = "tqdm-4.64.1.tar.gz", hash = "sha256:5f4f682a004951c1b450bc753c710e9280c5746ce6ffedee253ddbcbf54cf1e4"},
-]
 trio = [
     {file = "trio-0.22.0-py3-none-any.whl", hash = "sha256:f1dd0780a89bfc880c7c7994519cb53f62aacb2c25ff487001c0052bd721cdf0"},
     {file = "trio-0.22.0.tar.gz", hash = "sha256:ce68f1c5400a47b137c5a4de72c7c901bd4e7a24fbdebfe9b41de8c6c04eaacf"},
@@ -1733,8 +1683,8 @@ urllib3 = [
     {file = "urllib3-1.26.13.tar.gz", hash = "sha256:c083dd0dce68dbfbe1129d5271cb90f9447dea7d52097c6e0126120c521ddea8"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.16.7-py3-none-any.whl", hash = "sha256:efd66b00386fdb7dbe4822d172303f40cd05e50e01740b19ea42425cbe653e29"},
-    {file = "virtualenv-20.16.7.tar.gz", hash = "sha256:8691e3ff9387f743e00f6bb20f70121f5e4f596cae754531f2b3b3a1b1ac696e"},
+    {file = "virtualenv-20.17.0-py3-none-any.whl", hash = "sha256:40a7e06a98728fd5769e1af6fd1a706005b4bb7e16176a272ed4292473180389"},
+    {file = "virtualenv-20.17.0.tar.gz", hash = "sha256:7d6a8d55b2f73b617f684ee40fd85740f062e1f2e379412cb1879c7136f05902"},
 ]
 wagtail = [
     {file = "wagtail-4.1.1-py3-none-any.whl", hash = "sha256:fe164fa5bb5f62fa8fa35cb456d523b3f263b6bcc0a5e0b688e2c6c1760bc095"},
@@ -1743,10 +1693,6 @@ wagtail = [
 wagtail-factories = [
     {file = "wagtail_factories-3.1.0-py2.py3-none-any.whl", hash = "sha256:26b42998420005ab556f714e72e4a53427aac59ae595c66d1379a2c141f92be5"},
     {file = "wagtail_factories-3.1.0.tar.gz", hash = "sha256:ea366dc1d399e9c24218366fc80a104f51c3f18469ed19c576e15023a226c942"},
-]
-webdriver-manager = [
-    {file = "webdriver_manager-3.8.5-py2.py3-none-any.whl", hash = "sha256:2d807ec270d2d990022b86efabd4096053e0a1e7a34c6174f9937320dfdc6826"},
-    {file = "webdriver_manager-3.8.5.tar.gz", hash = "sha256:e671f3b738af52351341d6df6674c2f0b959db0fe978e9a7135cfa36d1ad9560"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},

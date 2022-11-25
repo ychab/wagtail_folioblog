@@ -1,8 +1,10 @@
 name: Units
 
 on:
-  - push
-  - pull_request
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -57,6 +59,7 @@ jobs:
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
+          FOLIOBLOG_SECRET_KEY: Mo4ocFeHT5Yi0hRyodrO
 
       - name: Make Units Badge
         uses: action-badges/cobertura-coverage-xml-badges@0.2.1

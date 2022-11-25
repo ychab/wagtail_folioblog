@@ -1,11 +1,10 @@
 [![build](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml)
 [![lint](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml)
 [![units](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/units.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/units.yaml)
+[![end2end](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/selenium.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/selenium.yaml)
 [![poetry](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml)
 [![NPM deps](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/npm-dependencies.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/npm.yaml)
 ![wagtail version](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-wagtail-version.svg)
-
-[//]: # ([![end2end]&#40;https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/selenium.svg&#41;]&#40;https://github.com/ychab/wagtail_folioblog/actions/workflows/selenium.yaml&#41;)
 
 # FolioBlog, a Wagtail portfolio / blog demo
 
@@ -97,17 +96,12 @@ but hope this is for good reasons huh!!
 
 ### Selenium (end2end tests)
 
-For end2end tests, download at least Chrome, which is the only one browser
-supported for now.
-
-Thanks to webdriver-manager python package installed with
-test dependencies, you don't have to take about its chrome webdriver binary. So
-in other words, it should work out-of-the-box!
+For end2end tests, download at least Chrome and its chromedriver (to put in PATH),
+which is the only one browser supported for now.
 
 For more details, see:
 * [selenium doc](https://www.selenium.dev/documentation/)
 * [selenium python doc](https://selenium-python.readthedocs.io/installation.html)
-* [webdriver-manager doc](https://pypi.org/project/webdriver-manager/)
 
 ## Get started
 
