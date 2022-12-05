@@ -1,6 +1,10 @@
 {% extends "cleanblog/base.html" %}
 {% load i18n static wagtailcore_tags wagtailimages_tags folioblog %}
 
+{% block extra_link %}
+<link rel="canonical" href="{{ page.full_url }}" />
+{% endblock %}
+
 {% block extra_css_library %}
 <link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
 {% endblock %}

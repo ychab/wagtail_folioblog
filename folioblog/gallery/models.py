@@ -32,6 +32,11 @@ class GalleryPage(BaseIndexPage):
     parent_page_types = ['portfolio.PortfolioPage']
     subpage_types = []
 
+    def serve(self, request, *args, **kwargs):
+        response = super().serve(request, *args, **kwargs)
+        response.headers['Link'] = f'<{self.get_full_url(request)}>; rel="canonical"'
+        return response
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
