@@ -1,5 +1,6 @@
 from html import unescape
 
+from django.conf import settings
 from django.test import TestCase, override_settings
 from django.utils.html import escape
 
@@ -11,6 +12,7 @@ from folioblog.blog.factories import (
     BlogCategoryFactory, BlogIndexPageFactory, BlogPageFactory, BlogTagFactory,
 )
 from folioblog.blog.models import BlogCategory, BlogPage
+from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.search.factories import SearchIndexPageFactory
@@ -39,7 +41,7 @@ class SearchIndexPageTestCase(TestCase):
         BlogCategory.objects.all().delete()
         Tag.objects.all().delete()
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_page_initial(self):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
@@ -70,7 +72,7 @@ class SearchIndexPageTestCase(TestCase):
             sorted([c.pk for c in [c1, c2]]),
         )
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_result_none(self):
         BlogPageFactory(parent=self.index, title='foo', subheading='', intro='', body='')
         BlogPageFactory(parent=self.index, title='bar', subheading='', intro='', body='')
@@ -105,7 +107,7 @@ class SearchIndexPageTestCase(TestCase):
         self.assertFalse(response.context['has_filters'])
         self.assertTrue(response.context['form'].errors['categories'])
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_invalid_page_not_integer(self):
         p1 = BlogPageFactory(parent=self.index, title='foo', subheading='', intro='', body='')
         p2 = BlogPageFactory(parent=self.index, title='foo bar', subheading='', intro='', body='')
@@ -123,7 +125,7 @@ class SearchIndexPageTestCase(TestCase):
         )
         self.assertEqual(response.context['search_results'].number, 1)
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_invalid_page_search(self):
         BlogPageFactory(parent=self.index, title='foo', subheading='', intro='', body='')
         BlogPageFactory(parent=self.index, title='bar', subheading='', intro='', body='')
@@ -136,7 +138,7 @@ class SearchIndexPageTestCase(TestCase):
         self.assertFalse(response.context['search_results'])
         self.assertNotContains(response, escape('résultat'))
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_invalid_page_filter(self):
         cat = BlogCategoryFactory(name='tech')
         BlogPageFactory(parent=self.index, category=cat, title='foo', subheading='', intro='', body='')
@@ -161,7 +163,7 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(len(response.context['search_results']), 1)
         self.assertEqual(response.context['search_results'][0].pk, p1.pk)
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_filter_query(self):
         p1 = BlogPageFactory(parent=self.index, title='foo', subheading='', intro='', body='')
         BlogPageFactory(parent=self.index, title='bar', subheading='', intro='', body='')
@@ -175,7 +177,7 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(response.context['search_results'][0].pk, p1.pk)
         self.assertIn('1 résultat', html)
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_filter_query_multiple(self):
         p1 = BlogPageFactory(parent=self.index, title='green lantern 1', subheading='', intro='', body='')
         p2 = BlogPageFactory(parent=self.index, title='green lantern 2', subheading='', intro='', body='')
@@ -307,6 +309,90 @@ class SearchIndexPageTestCase(TestCase):
         self.assertIn(response.context['search_results'][1].pk, posts)
 
 
+class SearchIndexI18nPageTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        locale_fr = LocaleFactory(language_code='fr')
+        locale_en = LocaleFactory(language_code='en')
+
+        site = Site.objects.get(is_default_site=True)
+        cls.index_fr = BlogIndexPageFactory(
+            parent=site.root_page,
+            locale=locale_fr,
+        )
+
+        cls.categories_fr = [
+            BlogCategoryFactory(locale=locale_fr, name='Humour'),
+            BlogCategoryFactory(locale=locale_fr, name='Cinéma'),
+            BlogCategoryFactory(locale=locale_fr, name='Tutoriel'),
+        ]
+        for i in range(0, 3):
+            post_fr = BlogPageFactory(
+                parent=cls.index_fr,
+                category=cls.categories_fr[i],
+                locale=locale_fr,
+                title='titre',
+                slug=f'titre_{i}',
+            )
+            if i == 0:
+                category_en = cls.categories_fr[i].copy_for_translation(locale_en)
+                category_en.name = 'Comedy'
+                category_en.save()
+
+                post_en = post_fr.copy_for_translation(
+                    locale=locale_en,
+                    copy_parents=True,
+                    alias=True,
+                )
+                post_en.title = 'title'
+                post_en.slug = 'title_0'
+                post_en.category = category_en
+                post_en.save()
+
+        cls.page_fr = SearchIndexPageFactory(
+            parent=site.root_page,
+            locale=locale_fr,
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_filter_language_fr(self):
+        url = self.page_fr.url
+
+        response = self.client.get(url, data={'query': 'titre'})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn('/fr/', response.context['autocomplete_url'])
+        self.assertNotIn('/en/', response.context['autocomplete_url'])
+
+        self.assertEqual(response.context['search_counter'], 3)
+        self.assertListEqual(
+            list(set(p.locale.language_code for p in response.context['search_results'])),
+            ['fr'],
+        )
+        self.assertEqual(len(response.context['category_options']), 3)
+        self.assertListEqual(
+            list(set(c.locale.language_code for c in response.context['category_options'])),
+            ['fr'],
+        )
+
+    def test_filter_language_en(self):
+        url = self.page_en.url
+
+        response = self.client.get(url, data={'query': 'title'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('/en/', response.context['autocomplete_url'])
+
+        self.assertEqual(response.context['search_counter'], 1)
+        self.assertEqual(response.context['search_results'][0].locale.language_code, 'en')
+
+        self.assertEqual(len(response.context['category_options']), 1)
+        self.assertEqual(response.context['category_options'][0].locale.language_code, 'en')
+
+
 class SearchIndexHTMLTestCase(TestCase):
 
     @classmethod
@@ -343,3 +429,45 @@ class SearchIndexHTMLTestCase(TestCase):
     def test_meta_twitter(self):
         meta = self.htmlpage.get_meta_twitter()
         self.assertEqual(meta['twitter:card'], 'summary')
+
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
+
+class SearchIndexHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.page_fr = SearchIndexPageFactory(
+            locale=LocaleFactory(language_code='fr'),
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=LocaleFactory(language_code='en'),
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = SearchIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = SearchIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = SearchIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = SearchIndexHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

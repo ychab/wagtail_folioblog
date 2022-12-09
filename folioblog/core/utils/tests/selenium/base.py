@@ -86,7 +86,7 @@ class MetaSeleniumTestCase(SeleniumTestCaseBase):
 
 
 @tag('selenium', 'slow')
-class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase, metaclass=MetaSeleniumTestCase):  # pragma: no cover # noqa
+class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase, metaclass=MetaSeleniumTestCase):
     # Mixin implicit and explicit wait is not recommended:
     # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
     implicit_wait = 0
@@ -102,7 +102,7 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
         super().setUpClass()
 
         if cls.is_mobile:
-            if cls.browser in ['chrome', 'chromium']:
+            if cls.browser in ['chrome', 'chromium']:  # pragma: no branch
                 # Without this emulation, mobile mode is not on...!
                 cls.selenium.execute_cdp_cmd('Emulation.setDeviceMetricsOverride', {
                     'width': 360,
@@ -120,7 +120,7 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
     @classmethod
     def tearDownClass(cls):
         # @see SeleniumTestCase._tearDownClassInternal()
-        if hasattr(cls, "selenium"):
+        if hasattr(cls, "selenium"):  # pragma: no branch
             cls.selenium.quit()
         super().tearDownClass()
 
@@ -128,7 +128,7 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
         super().setUp()
 
         # Be sure local exists (i.e: not after first flush)
-        Locale.objects.get_or_create(language_code=settings.LANGUAGE_CODE[:2])
+        Locale.objects.get_or_create(language_code=settings.LANGUAGE_CODE)
 
         # Delete initial migration data site if any (i.e: before first flush).
         Site.objects.all().delete()

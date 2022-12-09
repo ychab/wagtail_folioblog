@@ -39,6 +39,6 @@ class CoreConfig(AppConfig):
             providers_locale = {
                 'fr': [FolioBlogProviderFr],
             }
-            providers = providers_locale.get(current_locale[:2], providers_default)
+            providers = providers_locale.get(current_locale, providers_default)
             for provider in providers:
                 factory.Faker.add_provider(provider, locale=current_locale)

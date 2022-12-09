@@ -6,6 +6,8 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.images import get_image_model
 from wagtail.models import Page
 
+from folioblog.core.managers import I18nPageManager
+from folioblog.core.sitemap import SitemapPageMixin
 from folioblog.portfolio.blocks import (
     ExperiencesBlock, ServicesBlock, SkillsBlock, TeamMembersBlock,
 )
@@ -13,7 +15,7 @@ from folioblog.portfolio.blocks import (
 Image = get_image_model()
 
 
-class PortfolioPage(Page):
+class PortfolioPage(SitemapPageMixin, Page):
 
     # Header
     header_heading = models.CharField(
@@ -142,6 +144,8 @@ class PortfolioPage(Page):
         blank=True,
         default='',
     )
+
+    objects = I18nPageManager()
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(

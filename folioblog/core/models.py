@@ -1,30 +1,31 @@
 import os
 
+from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language, gettext_lazy as _
 
 from wagtail.admin.panels import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
-    TabbedInterface,
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface,
 )
 from wagtail.contrib.settings.models import BaseGenericSetting
 from wagtail.contrib.settings.registry import register_setting
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.images.models import (
     AbstractImage, AbstractRendition, Image, ImageQuerySet,
 )
-from wagtail.models import Orderable, Page, PageManager
+from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-
-class ImageManager(models.Manager):
-    def get_queryset(self):
-        return self._queryset_class(self.model).select_related('photographer')
+from folioblog.core.blocks import CookieBannersBlock, RssFeedsBlock
+from folioblog.core.managers import (
+    I18nIndexPageManager, I18nManager, ImageManager,
+)
+from folioblog.core.sitemap import SitemapPageMixin
 
 
 @register_snippet
@@ -53,14 +54,19 @@ class FolioImage(AbstractImage):
 
     @property
     def default_alt_text(self):
-        return self.caption or self.title
+        # @todo - @fixme - unfortunetly, image translation is not supported yet...
+        language_code = get_language()
+        if language_code == settings.LANGUAGE_CODE:
+            return self.caption or self.title
+        else:
+            return ''
 
     def figcaption(self, alt_text=None):
         alt_text = alt_text or self.default_alt_text
 
-        output = f'<cite>{alt_text}</cite>'
+        output = f'<cite>{alt_text}</cite> - ' if alt_text else ''
         if self.photographer:
-            output += ' - &copy; '
+            output += '&copy; '
             if self.photographer.website:
                 output += f'<a href="{self.photographer.website}" target="_blank">{self.photographer}</a>'
             else:
@@ -103,17 +109,22 @@ class FolioRendition(AbstractRendition):
         return os.path.join('images', slugify(self.image.collection), spec, filename)
 
 
-class BaseCategory(models.Model):
+class BaseCategory(TranslatableMixin, models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
 
     panels = [
         FieldPanel('name'),
         FieldPanel('slug'),
     ]
 
-    class Meta:
+    objects = I18nManager()
+
+    class Meta(TranslatableMixin.Meta):
         abstract = True
+        unique_together = TranslatableMixin.Meta.unique_together + [
+            ('translation_key', 'locale', 'slug'),  # Stupid check don't allow us to override it!
+        ]
 
     def __str__(self):
         return self.name
@@ -124,15 +135,7 @@ class BaseCategory(models.Model):
         super().save(*args, **kwargs)
 
 
-class BaseIndexManager(PageManager):
-
-    def get_queryset(self):
-        return self._queryset_class(self.model)\
-            .select_related('image__photographer')\
-            .prefetch_related('image__renditions')
-
-
-class BaseIndexPage(Page):
+class BaseIndexPage(SitemapPageMixin, Page):
     subheading = models.CharField(max_length=512, blank=True, default='')
 
     image = models.ForeignKey(
@@ -142,7 +145,7 @@ class BaseIndexPage(Page):
         related_name="%(app_label)s_%(class)s_+",
         related_query_name="%(app_label)s_%(class)ss",
     )
-    image_alt = models.CharField(max_length=512, default='')
+    image_alt = models.CharField(max_length=512, blank=True, default='')
 
     content_panels = Page.content_panels + [
         FieldPanel('subheading'),
@@ -155,7 +158,7 @@ class BaseIndexPage(Page):
         ),
     ]
 
-    objects = BaseIndexManager()
+    objects = I18nIndexPageManager()
 
     class Meta:
         abstract = True
@@ -167,6 +170,15 @@ class BaseIndexPage(Page):
     @property
     def seo_description(self):
         return self.search_description
+
+    def get_translations(self, inclusive=False):
+        # Translation queryset would be later chained with .only / .defer() and
+        # thus, will break because we massively inject select_related() + prefetch_related()
+        # in custom manager (i.e: I18nIndexPageManager).
+        qs = super().get_translations(inclusive=inclusive)
+        qs = qs.select_related(None)
+        qs = qs.prefetch_related(None)
+        return qs
 
 
 class BasePage(BaseIndexPage):
@@ -237,22 +249,19 @@ class FolioBlogSettings(BaseGenericSetting):
     )
     phone = models.CharField(max_length=128, blank=True, default='')
 
-    cookie_banner_title = models.CharField(max_length=255, default='')
-    cookie_banner_text = models.TextField()
-    cookie_banner_link_page = models.ForeignKey(
-        'wagtailcore.Page',
+    cookie_banner = StreamField(
+        CookieBannersBlock(),
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
-        related_name='page_link',
+        use_json_field=True,
     )
-    cookie_banner_link_text = models.CharField(max_length=255, default='', blank=True,)
-    cookie_banner_button_cancel_text = models.CharField(max_length=255)
-    cookie_banner_button_accept_text = models.CharField(max_length=255, default='')
 
-    rss_title = models.CharField(max_length=255, default='')
-    rss_description = models.TextField(default='', blank=True)
-    rss_limit = models.PositiveSmallIntegerField(default=15)
+    rss_feed = StreamField(
+        RssFeedsBlock(),
+        null=True,
+        blank=True,
+        use_json_field=True,
+    )
 
     blog_pager_limit = models.PositiveSmallIntegerField(default=8)
     video_pager_limit = models.PositiveSmallIntegerField(default=10)
@@ -296,32 +305,10 @@ class FolioBlogSettings(BaseGenericSetting):
         FieldPanel('search_operator'),
     ]
     cookie_panels = [
-        FieldPanel('cookie_banner_title'),
-        FieldPanel('cookie_banner_text'),
-        FieldRowPanel(
-            [
-                FieldPanel('cookie_banner_link_page'),
-                FieldPanel('cookie_banner_link_text'),
-            ],
-            heading=_("Link"),
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel('cookie_banner_button_accept_text'),
-                FieldPanel('cookie_banner_button_cancel_text'),
-            ],
-            heading=_('Buttons'),
-        ),
+        FieldPanel('cookie_banner'),
     ]
     rss_panels = [
-        MultiFieldPanel(
-            [
-                FieldPanel('rss_title'),
-                FieldPanel('rss_description'),
-                FieldPanel('rss_limit'),
-            ],
-            heading=_('RSS'),
-        ),
+        FieldPanel('rss_feed'),
     ]
 
     edit_handler = TabbedInterface([
@@ -340,15 +327,23 @@ class FolioBlogSettings(BaseGenericSetting):
 
 
 @register_snippet
-class Menu(ClusterableModel):
+class Menu(TranslatableMixin, ClusterableModel):
     name = models.CharField(max_length=255)
-    homepage = ParentalKey(Page, related_name='menu_home')
+    homepage = ParentalKey(
+        Page,
+        on_delete=models.PROTECT,
+        related_name='menu_home',
+        null=True,
+        blank=True,
+    )
 
     panels = [
         FieldPanel('name'),
         FieldPanel('homepage'),
         InlinePanel('links', label=_('Links')),
     ]
+
+    objects = I18nManager()
 
     def __str__(self):
         return self.name

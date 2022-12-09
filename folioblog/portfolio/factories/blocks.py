@@ -45,10 +45,6 @@ class ServicesBlockFactory(wagtail_factories.StreamBlockFactory):
 
 
 class SkillLinkBlockFactory(wagtail_factories.StructBlockFactory):
-    """
-    @FIXME - this factory class could not be used anymore with ListBlockFactory??
-    @see https://github.com/wagtail/wagtail-factories/issues/65
-    """
 
     class Meta:
         model = SkillLinkBlock
@@ -67,17 +63,7 @@ class SkillBlockFactory(wagtail_factories.StructBlockFactory):
     subheading = factory.Faker('sentence', nb_words=5, locale=current_locale)
     intro = factory.Faker('sentence', nb_words=8, locale=current_locale)
     text = factory.LazyFunction(lambda: RichText(fake.text()))  # @todo use RichTextBlockFactory
-    # @fixme - ListBlockFactory is not working while Wagtail 4.1 (working with 4.0.4)
-    # links = wagtail_factories.ListBlockFactory(SkillLinkBlockFactory)
-    links = factory.LazyFunction(
-        lambda: ListValue(ListBlock(SkillLinkBlock()), values=[
-            {
-                'title': fake.sentence(nb_words=3),
-                'caption': fake.sentence(nb_words=5),
-                'page': wagtail_factories.PageChooserBlockFactory(),
-            },
-        ])
-    )
+    links = wagtail_factories.ListBlockFactory(SkillLinkBlockFactory)
     image = factory.SubFactory(FolioBlogImageChooserBlockFactory)
 
 

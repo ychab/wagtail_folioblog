@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.test import TestCase
 
 from wagtail.models import Site
 
-from folioblog.core.factories import BasicPageFactory
+from folioblog.core.factories import BasicPageFactory, LocaleFactory
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.core.tests.units.htmlpages import BasicHTMLPage
 
@@ -71,6 +72,10 @@ class BasicPageHTMLTestCase(TestCase):
         meta = self.htmlpage.get_meta_twitter()
         self.assertEqual(meta['twitter:card'], 'summary')
 
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
     def test_intro(self):
         intro = self.htmlpage.get_intro()
         self.assertEqual(self.page.intro, intro)
@@ -78,3 +83,43 @@ class BasicPageHTMLTestCase(TestCase):
     def test_body(self):
         body = self.htmlpage.get_body()
         self.assertIn(self.page.body.replace('\n', ''), body.replace('\n', ''))
+
+
+class BasicPageHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        site = Site.objects.get(is_default_site=True)
+        cls.page_fr = BasicPageFactory(
+            parent=site.root_page,
+            locale=LocaleFactory(language_code='fr'),
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=LocaleFactory(language_code='en'),
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = BasicHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = BasicHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = BasicHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = BasicHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

@@ -32,11 +32,6 @@ class GalleryPage(BaseIndexPage):
     parent_page_types = ['portfolio.PortfolioPage']
     subpage_types = []
 
-    def serve(self, request, *args, **kwargs):
-        response = super().serve(request, *args, **kwargs)
-        response.headers['Link'] = f'<{self.get_full_url(request)}>; rel="canonical"'
-        return response
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
@@ -59,13 +54,13 @@ class GalleryPage(BaseIndexPage):
             .order_by('?')  # just for fun, will be cached in production
 
         # For each images, try to attach its page if any (that's the ugly part):
-        # - fetching related pages is not possible (i.e related_name='+' due to abstract)
+        # - fetching related pages is not possible (i.e related_name='+' due to abstract=True)
         # - using Image.get_usage() in loop is just a performance killer
         # ... so we do it manually in that ugly way!
         # @Note: if BaseIndexPage is not abstract, we could do BaseIndexPage.objects.live()...
-        image_pages = {p.image_id: p for p in BasicPage.objects.live()}  # 1 query
-        image_pages.update({p.image_id: p for p in BlogPage.objects.live()})  # 2 query
-        image_pages.update({p.image_id: p for p in VideoPage.objects.live()})  # never 2 without 3!
+        image_pages = {p.image_id: p for p in BasicPage.objects.live().filter_language()}
+        image_pages.update({p.image_id: p for p in BlogPage.objects.live().filter_language()})
+        image_pages.update({p.image_id: p for p in VideoPage.objects.live().filter_language()})
 
         images = []
         for image in image_qs:
@@ -74,7 +69,7 @@ class GalleryPage(BaseIndexPage):
 
         context.update({
             'images': images,
-            'collection_filters': [{'name': str(c), 'value': c.pk} for c in collection_qs],
+            'collection_options': [{'name': _(str(c)), 'value': c.pk} for c in collection_qs],  # ugly trad on the fly
             'collection_filter': collection_filter,
         })
         return context

@@ -13,10 +13,22 @@
         <title>{{ self.seo_title|default:self.title }}</title>
         <!-- Favicon -->
         <link href="{% static 'folioblog/assets/favicon.ico' %}" rel="icon" type="image/x-icon">
-        <!-- RSS -->
-        <link rel="alternate" type="application/rss+xml" href="{% url 'rss' %}">
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <!-- Canonical Links -->
+        {% block canonical_links %}
+        <link rel="canonical" href="{{ page.full_url }}" />
+        {% endblock %}
+        <!-- RSS -->
+        <link rel="alternate" type="application/rss+xml" href="{% url 'rss' %}">
+        <!-- Alternative link -->
+        {% block alternative_links %}
+        {% for translation in page|page_translations %}
+        {% language translation.locale.language_code %}
+        <link rel="alternate" hreflang="{{ translation.locale.language_code }}" href="{{ translation.full_url }}" />
+        {% endlanguage %}
+        {% endfor %}
+        {% endblock %}
         <!-- Core theme CSS (includes Bootstrap)-->
         {% compress css file portfolio %}
         <link href="{% static 'agency/css/styles.css' %}" rel="stylesheet">

@@ -1,10 +1,6 @@
 {% extends "cleanblog/base.html" %}
 {% load i18n static wagtailcore_tags folioblog %}
 
-{% block extra_link %}
-<link rel="canonical" href="{{ page.full_url }}" />
-{% endblock %}
-
 {% block extra_js_library %}
 <script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
 {% endblock %}

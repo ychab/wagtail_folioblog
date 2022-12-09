@@ -15,7 +15,7 @@ class UserFactory(DjangoModelFactory):
         django_get_or_create = ('username',)
 
     username = factory.Sequence(lambda n: 'user_{n}'.format(n=n))
-    email = factory.LazyAttribute(lambda o: 'test+{o.username}@laposte.fake'.format(o=o))
+    email = factory.LazyAttribute(lambda o: 'test+{o.username}@yannickchabbert.fr'.format(o=o))
     password = factory.PostGenerationMethodCall('set_password', 'test')
     first_name = factory.Faker('first_name', locale=current_locale)
     last_name = factory.Faker('last_name', locale=current_locale)

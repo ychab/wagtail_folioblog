@@ -1,9 +1,13 @@
 from html import unescape
 
+from django.conf import settings
 from django.test import TestCase
 
 from wagtail.models import Site
 
+from wagtail_factories import PageFactory
+
+from folioblog.core.factories import LocaleFactory
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.home.factories import HomePageFactory
 from folioblog.portfolio.factories import PortfolioPageFactory
@@ -28,7 +32,7 @@ class PortfolioPageTestCase(TestCase):
         cls.page = PortfolioPageFactory(
             parent=None,
             services__0='service',
-            skills__0='skill',
+            skills__0__skill__links__0__page=PageFactory(),
             cv_experiences__0='experience',
             team_members__0='member',
         )
@@ -172,3 +176,70 @@ class PortFolioHTMLTestCase(TestCase):
     def test_meta_twitter(self):
         meta = self.htmlpage.get_meta_twitter()
         self.assertEqual(meta['twitter:card'], 'summary')
+
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
+
+class HomeHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        site = Site.objects.get(is_default_site=True)
+        locale_fr = LocaleFactory(language_code='fr')
+        locale_en = LocaleFactory(language_code='en')
+
+        # First create required links and their translations
+        homepage_fr = HomePageFactory(locale=locale_fr)
+        homepage_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+        video_fr = VideoPageFactory(parent=site.root_page, locale=locale_fr)
+        video_en = video_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+
+        # Then create portfolio pages
+        cls.page_fr = PortfolioPageFactory(
+            parent=site.root_page,
+            locale=locale_fr,
+            about_video=video_fr,
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+        cls.page_en.about_video = video_en
+        cls.page_en.save()
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = PortFolioHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = PortFolioHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = PortFolioHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = PortFolioHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

@@ -51,6 +51,19 @@ class BaseIndexHTMLPage:
 
         return props
 
+    def get_canonical_href(self):
+        return self.soup.find(name='link', attrs={'rel': 'canonical'}).attrs['href']
+
+    def get_meta_lang(self):
+        return self.soup.html['lang']
+
+    def get_meta_alternates(self):
+        return [
+            elem.attrs['href']
+            for elem in self.soup.find_all(name='link', attrs={'rel': 'alternate'})
+            if elem.attrs.get('hreflang')
+        ]
+
     def get_filter_categories(self):
         filters = {}
 

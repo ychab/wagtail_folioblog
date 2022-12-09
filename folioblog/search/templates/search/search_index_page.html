@@ -8,6 +8,7 @@
 {% block extra_js_inline %}
 {{ form.tags.value|json_script:'tags-defaults' }}
 {{ tag_options|json_script:'tags-options' }}
+{{ autocomplete_url|json_script:'autocomplete-url' }}
 {% endblock %}
 
 {% block extra_js_library %}
