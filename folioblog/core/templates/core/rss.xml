@@ -7,23 +7,24 @@
     <channel>
         <title>{{ feed_title }}</title>
         <copyright>Copyright {% now 'Y' %}, {{ current_site.site_name }}</copyright>
-        <link>{{ current_site.root_url }}</link>
+        <link>{{ current_site.root_url }}{{ blog_index.url }}</link>
         <description>{{ feed_description }}</description>
-        <language>{{ LANGUAGE_CODE }}</language>
+        <language>{{ LANGUAGE_CODE|slice:":2" }}</language>
         <pubDate>{% now 'r' %}</pubDate>
-        {% for item in feed_items %}
-        {% image item.image max-400x400 format-jpeg as image %}
+        {% for post in feed_items %}
+        {% image post.image max-400x400 format-jpeg as image %}
         <item>
-            <title>{{ item.title }}</title>
-            <link>{{ item.link }}</link>
-            <description>{{ item.description }}</description>
-            <pubDate>{{ item.date|date:"D, d M Y" }} 00:00:00 +0000</pubDate>
+            <guid isPermaLink="false">{{ post.pk }}</guid>
+            <title>{{ post.title }}</title>
+            <link>{{ current_site.root_url }}{{ post.url }}</link>
+            <description>{{ post.description }}</description>
+            <pubDate>{{ post.date|date:"D, d M Y" }} 00:00:00 +0000</pubDate>
             <enclosure>
                 <url>{{ current_site.root_url }}{{ image.url }}</url>
-                <length>{{ item.image.file_size }}</length>
+                <length>{{ post.image.file_size }}</length>
                 <type>image/jpeg</type>
             </enclosure>
-            <category>{{ item.category }}</category>
+            <category>{{ post.category }}</category>
         </item>
         {% endfor %}
     </channel>

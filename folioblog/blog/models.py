@@ -1,10 +1,9 @@
-from django import forms
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images import get_image_model
-from wagtail.models import Orderable, Page
+from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
@@ -13,6 +12,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, TaggedItemBase
 
+from folioblog.core.managers import I18nManager
 from folioblog.core.models import (
     BaseCategory, BaseIndexPage, BasePage, FolioBlogSettings,
 )
@@ -27,26 +27,21 @@ class BlogIndexPage(BaseIndexPage):
     parent_page_types = ['portfolio.PortfolioPage']
     subpage_types = ['blog.BlogPage']
 
-    def serve(self, request, *args, **kwargs):
-        response = super().serve(request, *args, **kwargs)
-        response.headers['Link'] = f'<{self.get_full_url(request)}>; rel="canonical"'
-        return response
-
     def get_context(self, request, *args, **kwargs):
         folio_settings = FolioBlogSettings.load(request_or_site=request)
         context = super().get_context(request, *args, **kwargs)
 
-        categories = BlogCategory.objects.all().order_by('slug')
+        categories = BlogCategory.objects.filter_language().order_by('slug')
         context['categories'] = categories
         context['category_filters'] = [{'name': str(c), 'value': c.slug} for c in categories]
         context['category_query'] = request.GET.get('category', '')
 
-        qs = BlogPage.objects.live()
+        qs = BlogPage.objects.live().filter_language()
+        if request.GET.get('category'):
+            qs = qs.filter(category__slug=request.GET['category'])
         qs = qs.select_related('category', 'image')
         qs = qs.prefetch_related('image__renditions')
         qs = qs.order_by('-date', '-pk')
-        if request.GET.get('category'):
-            qs = qs.filter(category__slug=request.GET['category'])
 
         paginator = FolioBlogPaginator(qs, folio_settings.blog_pager_limit)
         context['blogpages'] = paginator.get_page(request.GET.get('page'))
@@ -66,7 +61,7 @@ class BlogPageTag(TaggedItemBase):
 @register_snippet
 class BlogCategory(BaseCategory):
 
-    class Meta:
+    class Meta(BaseCategory.Meta):
         verbose_name_plural = 'blog categories'
 
 
@@ -94,6 +89,7 @@ class BlogPage(BasePage):
         index.SearchField('intro'),
         index.SearchField('body'),
         index.FilterField('category_id'),
+        index.FilterField('locale_id'),
         # Unfortunetly, doesn't work yet for filtering but still indexed
         # @see https://docs.wagtail.org/en/stable/topics/search/indexing.html#index-relatedfields
         index.RelatedFields('tags', [
@@ -106,7 +102,7 @@ class BlogPage(BasePage):
             [
                 FieldPanel('date'),
                 FieldPanel('tags'),
-                FieldPanel('category', widget=forms.Select),
+                FieldPanel('category'),
             ],
             heading=_("Blog information"),
         ),
@@ -146,7 +142,7 @@ class BlogPageRelatedLink(Orderable):
 
 
 @register_snippet
-class BlogPromote(ClusterableModel):
+class BlogPromote(TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
@@ -155,6 +151,8 @@ class BlogPromote(ClusterableModel):
         FieldPanel('link_more'),
         InlinePanel('related_links', label=_('Related links')),
     ]
+
+    objects = I18nManager()
 
     def __str__(self):
         return self.title

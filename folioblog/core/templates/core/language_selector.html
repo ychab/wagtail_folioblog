@@ -1,0 +1,22 @@
+{% load i18n wagtailcore_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% if translations %}
+<li class="nav-item dropdown">
+    <a class="btn btn-sm btn-dark dropdown-toggle" type="button" id="navbar-languages" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-globe"></i> {{ LANGUAGE_CODE|upper|slice:":2" }}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-dark mt-0 text-center" aria-labelledby="navbar-languages">
+        <li><a class="dropdown-item active" href="#">{{ LANGUAGE_CODE|upper|slice:":2" }}</a></li>
+        {% for translation in translations %}
+        {% with lang_code=translation.locale.language_code %}
+        <li>
+            <a class="dropdown-item" href="{% pageurl translation %}" rel="alternate" hreflang="{{ lang_code }}">
+                {{ lang_code|upper }}
+            </a>
+        </li>
+        {% endwith %}
+        {% endfor %}
+    </ul>
+</li>
+{% endif %}

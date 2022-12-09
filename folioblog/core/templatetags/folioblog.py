@@ -14,6 +14,7 @@ from django_social_share.templatetags.social_share import (
 )
 
 from folioblog.core.models import Photographer
+from folioblog.core.utils import get_block_language
 
 register = template.Library()
 Image = get_image_model()
@@ -28,6 +29,11 @@ def base64(value):
 @register.filter
 def mimetype(url):
     return mimetypes.guess_type(url)[0]
+
+
+@register.filter
+def page_translations(page, inclusive=True):
+    return page.get_translations(inclusive=inclusive)
 
 
 @register.simple_tag(takes_context=True)
@@ -51,8 +57,10 @@ def image_404(title):
 
 @register.inclusion_tag('core/cookies_banner.html', takes_context=True)
 def cookies_banner(context):
+    langcode = context['LANGUAGE_CODE']
+    settings = get_block_language(context['settings']['core']['folioblogsettings'].cookie_banner, langcode)
     return {
-        'settings': context['settings']['core']['folioblogsettings'],
+        'settings': settings,
     }
 
 
@@ -146,4 +154,13 @@ def related_page(page):
     return {
         # Don't trust deprecated Meta.ordering in Orderable model base.
         'related_links': page.related_links.all().order_by('sort_order'),
+    }
+
+
+@register.inclusion_tag('core/language_selector.html')
+def language_selector(page):
+    translations = page.get_translations().live().all()
+
+    return {
+        'translations': translations,
     }

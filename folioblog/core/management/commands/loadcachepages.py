@@ -40,26 +40,29 @@ class Command(BaseCommand):
             if page.slug == 'root':
                 continue
 
-            # Request page without parameters.
-            self.request_page(page.full_url)
-
-            # Request pages with pagination only.
-            if page.slug in ['posts', 'videos']:
-                limit = folio_settings.video_pager_limit if page.slug == 'videos' else folio_settings.blog_pager_limit
-                self.request_pagination(page, limit)
-
-            # Request pages with pagination AND filtering.
-            if page.slug == 'posts':
-                self.request_filtering_blog_category(page, limit)
-            if page.slug == 'videos':
-                self.request_filtering_video_category(page, limit)
-            elif page.slug == 'gallery':
-                self.request_filtering_collection(page.full_url)
+            self.process_page(page, folio_settings)
 
         # Don't forgot 404 page for renditions only (dummy url + not a 200 code)
         self.request_page(f'{site.root_url}/givemea404please', status=404)
 
         self.stdout.write(self.style.SUCCESS('\nAll page cache loaded.'))
+
+    def process_page(self, page, folio_settings):
+        # Request page without parameters.
+        self.request_page(page.full_url)
+
+        # Request pages with pagination only.
+        if page.slug in ['posts', 'videos']:
+            limit = folio_settings.video_pager_limit if page.slug == 'videos' else folio_settings.blog_pager_limit
+            self.request_pagination(page, limit)
+
+        # Request pages with pagination AND filtering.
+        if page.slug == 'posts':
+            self.request_filtering_blog_category(page, limit)
+        if page.slug == 'videos':
+            self.request_filtering_video_category(page, limit)
+        elif page.slug == 'gallery':
+            self.request_filtering_collection(page)
 
     def request_page(self, full_url, status=None, **kwargs):
         self.stdout.write(f'Requesting: "{full_url}"')
@@ -81,12 +84,12 @@ class Command(BaseCommand):
                 'X-Requested-With': 'XMLHttpRequest',
             })
 
-    def request_filtering_collection(self, full_url):
+    def request_filtering_collection(self, page):
         root_collection = Collection.objects.get(name='Gallery')
         collections = Collection.objects.child_of(root_collection)
 
         for collection in collections:
-            self.request_page(f'{full_url}?ajax=1&collection={collection.pk}', headers={
+            self.request_page(f'{page.full_url}?ajax=1&collection={collection.pk}', headers={
                 'X-Requested-With': 'XMLHttpRequest',
             })
 

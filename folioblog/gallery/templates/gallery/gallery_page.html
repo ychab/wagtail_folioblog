@@ -1,10 +1,6 @@
 {% extends "cleanblog/base.html" %}
 {% load i18n static wagtailcore_tags wagtailimages_tags folioblog %}
 
-{% block extra_link %}
-<link rel="canonical" href="{{ page.full_url }}" />
-{% endblock %}
-
 {% block extra_css_library %}
 <link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
 {% endblock %}
@@ -27,7 +23,7 @@
     </div>
 
     {% trans 'Filtrer par albums' as filter_title %}
-    {% filter_dropdown wrapper_id='gallery-filters' filter_name='collection' title=filter_title page=self filter_query=collection_filter filters=collection_filters %}
+    {% filter_dropdown wrapper_id='gallery-filters' filter_name='collection' title=filter_title page=self filter_query=collection_filter filters=collection_options %}
 
     <div class="gallery-checker mx-auto text-center my-4">
         <button id="button-shuffle" class="btn btn-primary">{% trans 'Mélanger' %}</button>

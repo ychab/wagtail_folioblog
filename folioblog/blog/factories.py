@@ -54,6 +54,8 @@ class BlogPageFactory(BasePageFactory):
     class Meta:
         model = BlogPage
 
+    title = factory.Sequence(lambda n: 'post_{n}'.format(n=n))
+
     date = fuzzy.FuzzyDateTime(timezone.now())
     category = factory.SubFactory(BlogCategoryFactory)
 

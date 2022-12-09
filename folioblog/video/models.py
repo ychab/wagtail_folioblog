@@ -1,7 +1,6 @@
 import logging
 from io import BytesIO
 
-from django import forms
 from django.core.files.images import ImageFile
 from django.db import models
 from django.utils.functional import cached_property
@@ -11,7 +10,7 @@ from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.embeds import embeds
 from wagtail.embeds.exceptions import EmbedException
 from wagtail.images import get_image_model
-from wagtail.models import Collection, Orderable, Page
+from wagtail.models import Collection, Orderable, Page, TranslatableMixin
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 
@@ -21,6 +20,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, TaggedItemBase
 
+from folioblog.core.managers import I18nManager
 from folioblog.core.models import (
     BaseCategory, BaseIndexPage, BasePage, FolioBlogSettings,
 )
@@ -36,17 +36,13 @@ class VideoIndexPage(BaseIndexPage):
     parent_page_types = ['portfolio.PortfolioPage']
     subpage_types = ['video.VideoPage']
 
-    def serve(self, request, *args, **kwargs):
-        response = super().serve(request, *args, **kwargs)
-        response.headers['Link'] = f'<{self.get_full_url(request)}>; rel="canonical"'
-        return response
-
     def get_context(self, request, *args, **kwargs):
         folio_settings = FolioBlogSettings.load(request_or_site=request)
         context = super().get_context(request, *args, **kwargs)
 
         categories = VideoCategory.objects\
             .filter(videopages__isnull=False)\
+            .filter_language()\
             .order_by('slug') \
             .distinct()
         context['categories'] = categories
@@ -56,6 +52,7 @@ class VideoIndexPage(BaseIndexPage):
         qs = VideoPage.objects \
             .child_of(self) \
             .live() \
+            .filter_language()\
             .select_related('category', 'image') \
             .prefetch_related('image__renditions') \
             .order_by('-date', '-pk') \
@@ -72,7 +69,7 @@ class VideoIndexPage(BaseIndexPage):
 @register_snippet
 class VideoCategory(BaseCategory):
 
-    class Meta:
+    class Meta(BaseCategory.Meta):
         verbose_name_plural = 'video categories'
 
 
@@ -117,7 +114,7 @@ class VideoPage(BasePage):
         FieldPanel('subheading'),
         MultiFieldPanel(
             [
-                FieldPanel('category', widget=forms.Select),
+                FieldPanel('category'),
                 FieldPanel('tags'),
             ],
             heading=_("Video information"),
@@ -195,7 +192,7 @@ class VideoPageRelatedLink(Orderable):
 
 
 @register_snippet
-class VideoPromote(ClusterableModel):
+class VideoPromote(TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
@@ -204,6 +201,8 @@ class VideoPromote(ClusterableModel):
         FieldPanel('link_more'),
         InlinePanel('related_links', label=_('Related links')),
     ]
+
+    objects = I18nManager()
 
     def __str__(self):
         return self.title

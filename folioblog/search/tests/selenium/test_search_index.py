@@ -78,7 +78,7 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         items = self.webpage.get_search_results()
         self.assertEqual(len(items), 2)
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_result_item(self):
         done = self.webpage.search('great')
         self.assertTrue(done)

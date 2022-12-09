@@ -81,6 +81,8 @@ class VideoPageFactory(BasePageFactory):
     class Meta:
         model = VideoPage
 
+    title = factory.Sequence(lambda n: 'video_{n}'.format(n=n))
+
     date = fuzzy.FuzzyDateTime(timezone.now())
     category = factory.SubFactory(VideoCategoryFactory)
     video_url = factory.Faker('youtube_url', locale=current_locale)

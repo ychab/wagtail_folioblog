@@ -1,5 +1,6 @@
 from html import unescape
 
+from django.conf import settings
 from django.test import TestCase
 from django.utils.formats import date_format
 from django.utils.timezone import localtime
@@ -7,6 +8,7 @@ from django.utils.translation import gettext
 
 from wagtail_factories import CollectionFactory
 
+from folioblog.core.factories import LocaleFactory
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.video.factories import (
     VideoIndexPageFactory, VideoPageFactory, VideoTagFactory,
@@ -119,6 +121,10 @@ class VideoPageHTMLTestCase(TestCase):
         self.assertEqual(int(meta['twitter:player:width']), embed.width)
         self.assertEqual(int(meta['twitter:player:height']), embed.height)
 
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
     def test_social_links(self):
         elem = self.htmlpage.get_social_links()
         self.assertTrue(elem)
@@ -130,3 +136,41 @@ class VideoPageHTMLTestCase(TestCase):
     def test_body(self):
         body = self.htmlpage.get_body()
         self.assertIn(self.page.body.replace('\n', ''), body.replace('\n', ''))
+
+
+class VideoPageHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.page_fr = VideoIndexPageFactory(
+            locale=LocaleFactory(language_code='fr'),
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=LocaleFactory(language_code='en'),
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = VideoHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

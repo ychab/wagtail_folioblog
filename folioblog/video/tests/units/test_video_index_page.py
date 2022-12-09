@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.test import TestCase
 
 from wagtail.models import Site
 
+from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.video.factories import (
@@ -117,6 +119,72 @@ class VideoIndexPageTestCase(TestCase):
         self.assertEqual(response.context['videos'][0].pk, p1.pk)
 
 
+class VideoIndexI18nPageTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        locale_fr = LocaleFactory(language_code='fr')
+        locale_en = LocaleFactory(language_code='en')
+
+        cls.page_fr = VideoIndexPageFactory(
+            locale=locale_fr,
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+
+        cls.categories_fr = [
+            VideoCategoryFactory(locale=locale_fr, name='Humour'),
+            VideoCategoryFactory(locale=locale_fr, name='Cinéma'),
+            VideoCategoryFactory(locale=locale_fr, name='Tutoriel'),
+        ]
+
+        for i in range(0, 3):
+            video_fr = VideoPageFactory(
+                parent=cls.page_fr,
+                category=cls.categories_fr[i],
+                locale=locale_fr,
+            )
+            if i == 0:
+                category_en = cls.categories_fr[i].copy_for_translation(locale_en)
+                category_en.save()
+
+                video_en = video_fr.copy_for_translation(
+                    locale=locale_en,
+                    copy_parents=True,
+                    alias=True,
+                )
+                video_en.category = category_en
+                video_en.save()
+
+    def test_filter_language_fr(self):
+        response = self.client.get(self.page_fr.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.context['videos']), 3)
+        self.assertListEqual(
+            list(set(v.locale.language_code for v in response.context['videos'])),
+            ['fr'],
+        )
+        self.assertEqual(len(response.context['categories']), 3)
+        self.assertListEqual(
+            list(set(c.locale.language_code for c in response.context['categories'])),
+            ['fr'],
+        )
+
+    def test_filter_language_en(self):
+        response = self.client.get(self.page_en.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.context['videos']), 1)
+        self.assertEqual(response.context['videos'][0].locale.language_code, 'en')
+
+        self.assertEqual(len(response.context['categories']), 1)
+        self.assertEqual(response.context['categories'][0].locale.language_code, 'en')
+
+
 class VideoIndexHTMLTestCase(TestCase):
 
     @classmethod
@@ -162,6 +230,10 @@ class VideoIndexHTMLTestCase(TestCase):
         meta = self.htmlpage.get_meta_twitter()
         self.assertEqual(meta['twitter:card'], 'summary')
 
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
     def test_categories_used(self):
         filters = self.htmlpage.get_filter_categories()
         self.assertEqual(len(filters), 2)
@@ -169,3 +241,41 @@ class VideoIndexHTMLTestCase(TestCase):
         slugs = filters.keys()
         self.assertIn(self.categories[0].slug, slugs)
         self.assertIn(self.categories[1].slug, slugs)
+
+
+class VideoIndexHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.page_fr = VideoIndexPageFactory(
+            locale=LocaleFactory(language_code='fr'),
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=LocaleFactory(language_code='en'),
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = VideoIndexHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = VideoIndexHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

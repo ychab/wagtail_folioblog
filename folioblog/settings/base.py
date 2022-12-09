@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # @see https://docs.wagtail.org/en/stable/advanced_topics/customisation/custom_user_models.html#custom-user-models
     'folioblog.user',
 
+    'wagtail.contrib.simple_translation',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -82,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -138,7 +140,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 # Yeah mama, I don't want to do "frenglish" so I keep FR as source language ;-)
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGES = [
+    ('en', "English"),
+    ('fr', "French"),
+]
+LANGUAGE_CODE = 'fr'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
@@ -195,6 +201,7 @@ LOGGING['handlers']['debug_file'] = {
     'level': 'DEBUG',
     'class': 'logging.FileHandler',
     'filename': os.path.join(gettempdir(), 'folioblog-debug.log'),
+    'delay': True,
     'formatter': 'debug',
 }
 LOGGING['handlers']['null'] = {
@@ -251,6 +258,9 @@ WAGTAILIMAGES_FORMAT_CONVERSIONS = {
     'webp': 'webp',  # be player! better quality and very lighter than PNG!!
 }
 WAGTAIL_USAGE_COUNT_ENABLED = True
+
+WAGTAIL_I18N_ENABLED = True
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES
 
 WAGTAIL_DATE_FORMAT = '%d/%m/%Y'
 WAGTAIL_DATETIME_FORMAT = '%d/%m/%Y %H:%M'

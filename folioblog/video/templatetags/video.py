@@ -6,7 +6,7 @@ from django.utils.translation import get_language
 def youtube_player(page):
     return {
         'page': page,
-        'lang': get_language()[:2],
+        'lang': get_language(),
     }
 
 

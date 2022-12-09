@@ -1,3 +1,8 @@
+from .blocks import (  # noqa
+    CookieBannerBlockFactory, CookieBannersBlockFactory, RssFeedBlockFactory,
+    RssFeedsBlockFactory,
+)
+from .core import FolioBlogSettingsFactory, LocaleFactory  # noqa
 from .images import ImageFactory  # noqa
 from .pages import (  # noqa
     BaseIndexPageFactory, BasePageFactory, BasicPageFactory,

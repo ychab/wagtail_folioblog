@@ -20,6 +20,8 @@
     }
 
     function initAutocomplete() {
+        let autocompleteUrl = JSON.parse(document.getElementById('autocomplete-url').textContent);
+
         autoCompleteJS = new autoComplete({
             selector: () => {
                 return queryElem;
@@ -31,7 +33,7 @@
             data: {
                 src: async (query) => {
                     try {
-                        const source = await fetch(`/search-autocomplete/${query}/`);
+                        const source = await fetch(autocompleteUrl.replace('__QUERY__', query));
                         const data = await source.json();
                         return data;
                     } catch (error) {

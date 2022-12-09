@@ -13,6 +13,7 @@ class HomePage(BaseIndexPage):
         context = super().get_context(request, *args, **kwargs)
 
         context['blog_snippet'] = BlogPromote.objects \
+            .filter_language()\
             .prefetch_related(
             Prefetch('related_links', queryset=BlogPromoteLink.objects
                      .filter(related_page__live=True)
@@ -22,6 +23,7 @@ class HomePage(BaseIndexPage):
             .first()
 
         context['video_snippet'] = VideoPromote.objects \
+            .filter_language() \
             .prefetch_related(
             Prefetch('related_links', queryset=VideoPromoteLink.objects
                      .filter(related_page__live=True)

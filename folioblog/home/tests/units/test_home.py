@@ -1,13 +1,19 @@
+from django.conf import settings
 from django.test import TestCase
 
 from wagtail.models import Site
 
-from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
+from folioblog.blog.factories import (
+    BlogIndexPageFactory, BlogPageFactory, BlogPromoteFactory,
+)
 from folioblog.blog.models import BlogPage, BlogPromote
+from folioblog.core.factories import LocaleFactory
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.home.factories import HomePageFactory
 from folioblog.home.tests.units.htmlpages import HomeHTMLPage
-from folioblog.video.factories import VideoIndexPageFactory, VideoPageFactory
+from folioblog.video.factories import (
+    VideoIndexPageFactory, VideoPageFactory, VideoPromoteFactory,
+)
 from folioblog.video.models import VideoPage, VideoPromote
 
 
@@ -70,6 +76,52 @@ class HomePageTestCase(TestCase):
         self.assertListEqual(list(video_ids), [p.pk for p in videos])
 
 
+class HomePageI18nPageTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        site = Site.objects.get(is_default_site=True)
+
+        locale_fr = LocaleFactory(language_code='fr')
+        locale_en = LocaleFactory(language_code='en')
+
+        # Required links
+        BlogIndexPageFactory(parent=site.root_page)
+        VideoIndexPageFactory(parent=site.root_page)
+
+        cls.page_fr = HomePageFactory(
+            parent=site.root_page,
+            locale=locale_fr,
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=locale_en,
+            copy_parents=True,
+            alias=True,
+        )
+
+        blog_promote_fr = BlogPromoteFactory(locale=locale_fr)
+        blog_promote_en = blog_promote_fr.copy_for_translation(locale_en)
+        blog_promote_en.save()
+
+        video_promote_fr = VideoPromoteFactory(locale=locale_fr)
+        video_promote_en = video_promote_fr.copy_for_translation(locale_en)
+        video_promote_en.save()
+
+    def test_filter_language_fr(self):
+        response = self.client.get(self.page_fr.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.context['blog_snippet'].locale.language_code, 'fr')
+        self.assertEqual(response.context['video_snippet'].locale.language_code, 'fr')
+
+    def test_filter_language_en(self):
+        response = self.client.get(self.page_en.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.context['blog_snippet'].locale.language_code, 'en')
+        self.assertEqual(response.context['video_snippet'].locale.language_code, 'en')
+
+
 class HomeHTMLTestCase(TestCase):
 
     @classmethod
@@ -109,3 +161,45 @@ class HomeHTMLTestCase(TestCase):
     def test_meta_twitter(self):
         meta = self.htmlpage.get_meta_twitter()
         self.assertEqual(meta['twitter:card'], 'summary')
+
+    def test_meta_canonical(self):
+        href = self.htmlpage.get_canonical_href()
+        self.assertEqual(href, self.page.full_url)
+
+
+class HomeHTMLi18nTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.page_fr = HomePageFactory(
+            locale=LocaleFactory(language_code='fr'),
+        )
+        cls.page_en = cls.page_fr.copy_for_translation(
+            locale=LocaleFactory(language_code='en'),
+            copy_parents=True,
+            alias=True,
+        )
+
+    def test_lang_default(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = HomeHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), settings.LANGUAGE_CODE)
+
+    def test_lang_fr(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = HomeHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_fr.locale.language_code)
+
+    def test_lang_en(self):
+        response = self.client.get(self.page_en.url)
+        htmlpage = HomeHTMLPage(response)
+        self.assertEqual(htmlpage.get_meta_lang(), self.page_en.locale.language_code)
+
+    def test_alternates(self):
+        response = self.client.get(self.page_fr.url)
+        htmlpage = HomeHTMLPage(response)
+
+        self.assertListEqual(
+            sorted(htmlpage.get_meta_alternates()),
+            sorted([page.full_url for page in [self.page_fr, self.page_en]]),
+        )

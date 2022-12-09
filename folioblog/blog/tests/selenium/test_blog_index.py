@@ -57,7 +57,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(item['intro'], post.intro)
         self.assertEqual(item['img_src'], rendition_url)
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_infinite_scroll(self):
         expected_count = self.foliosettings.blog_pager_limit * 2
         is_scrolled = self.webpage.scroll_down(expected_count)
@@ -85,7 +85,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(category.name, items[0]['category'])
 
-    @override_settings(LANGUAGE_CODE='fr-fr')
+    @override_settings(LANGUAGE_CODE='fr')
     def test_categories_filter_and_scroll(self):
         category = self.categories[0]
 
