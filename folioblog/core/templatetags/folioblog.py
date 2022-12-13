@@ -33,7 +33,7 @@ def mimetype(url):
 
 @register.filter
 def page_translations(page, inclusive=True):
-    return page.get_translations(inclusive=inclusive)
+    return page.get_translations(inclusive=inclusive).live()
 
 
 @register.simple_tag(takes_context=True)
@@ -159,8 +159,6 @@ def related_page(page):
 
 @register.inclusion_tag('core/language_selector.html')
 def language_selector(page):
-    translations = page.get_translations().live().all()
-
     return {
-        'translations': translations,
+        'translations': page.get_translations().live(),
     }
