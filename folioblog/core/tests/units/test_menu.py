@@ -6,7 +6,7 @@ from wagtail_factories import PageFactory
 
 from folioblog.blog.factories import BlogIndexPageFactory
 from folioblog.core.factories import LocaleFactory
-from folioblog.core.factories.snippets import MenuFactory
+from folioblog.core.factories.snippets import MenuFactory, MenuLinkFactory
 
 
 class MenuTestCase(TestCase):
@@ -29,6 +29,18 @@ class MenuTestCase(TestCase):
                 response.context['menu_links'],
                 msg=f'Checking for link {link.pk}',
             )
+
+    def test_menu_links_not_live(self):
+        page = PageFactory(live=False)
+        link = MenuLinkFactory(menu=self.menu, related_page=page)
+        self.menu.links.add(link)
+        self.assertEqual(self.menu.links.count(), 4)
+
+        response = self.client.get(self.index.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['menu_links']), 3)
+
+        self.menu.links.remove(link)
 
 
 class MenuI18nTestCase(TestCase):

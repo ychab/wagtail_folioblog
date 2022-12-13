@@ -23,7 +23,8 @@ def menu(request):
     if menu:
         context['menu_homepage'] = menu.homepage
         context['menu_links'] = OrderedDict([
-            (link.related_page.slug, link.related_page) for link in menu.links.all()
+            (link.related_page.slug, link.related_page)
+            for link in menu.links.filter(related_page__live=True)
         ])
 
     return context

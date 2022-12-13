@@ -27,6 +27,16 @@ class BasicPageTestCase(TestCase):
         self.assertEqual(len(response.context['related_links']), 1)
         self.assertEqual(response.context['related_links'][0].related_page.specific, related_page)
 
+    def test_related_pages_not_live(self):
+        rel1 = BasicPageFactory(parent=self.site.root_page)
+        rel2 = BasicPageFactory(parent=self.site.root_page, live=False)
+        page = BasicPageFactory(parent=self.site.root_page, related_pages=[rel1, rel2])
+        self.assertEqual(page.related_links.count(), 2)
+
+        response = self.client.get(page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['related_links']), 1)
+
     def test_related_pages_multiple(self):
         page = BasicPageFactory(parent=self.site.root_page, related_pages__number=2)
         response = self.client.get(page.url)

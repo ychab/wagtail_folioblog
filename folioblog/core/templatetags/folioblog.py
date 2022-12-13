@@ -153,7 +153,7 @@ def toast(context, title=None, timer=None, text=None):
 def related_page(page):
     return {
         # Don't trust deprecated Meta.ordering in Orderable model base.
-        'related_links': page.related_links.all().order_by('sort_order'),
+        'related_links': page.related_links.filter(related_page__live=True).order_by('sort_order'),
     }
 
 
