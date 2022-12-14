@@ -286,7 +286,7 @@ msgstr "Team"
 
 #: portfolio/models.py:202 templates/agency/navbar.html:15
 msgid "À propos"
-msgstr "Disclaimer"
+msgstr "About"
 
 #: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"

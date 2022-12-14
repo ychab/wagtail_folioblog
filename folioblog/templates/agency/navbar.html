@@ -15,7 +15,11 @@
                 <li class="nav-item"><a class="nav-link" href="#about">{% trans 'À propos' %}</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">{% trans 'Contact' %}</a></li>
                 {% if menu_homepage %}
-                <li class="nav-item"><a class="nav-link" href="{% pageurl menu_homepage %}">{{ menu_homepage }}</a></li>
+                <li class="nav-item">
+                    <span class="badge bg-secondary">
+                        <a class="nav-link" href="{% pageurl menu_homepage %}">{{ menu_homepage }}</a>
+                    </span>
+                </li>
                 {% endif %}
                 {% language_selector page=page %}
             </ul>
