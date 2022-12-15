@@ -62,7 +62,7 @@ msgstr "Filter by categories"
 #: video/templates/video/video_page.html:26
 #: video/tests/units/test_video_page.py:79
 msgid "Posté le"
-msgstr "Published at"
+msgstr "Published on"
 
 #: blog/templates/blog/image_switch.html:49
 msgid "Clique sur l'image, c'est magique !"

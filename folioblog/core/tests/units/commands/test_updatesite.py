@@ -6,7 +6,7 @@ from django.test import TestCase
 
 class UpdateSiteCommandTestCase(TestCase):
 
-    def test_generate_rendition(self):
+    def test_update_site(self):
         host = 'example.fr'
         port = 8080
         out = StringIO()

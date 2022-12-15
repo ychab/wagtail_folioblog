@@ -17,14 +17,16 @@ def menu(request):
         .prefetch_related(
             Prefetch(
                 'links',
-                queryset=MenuLink.objects.select_related('related_page').order_by('sort_order')))\
+                queryset=MenuLink.objects
+                .filter(related_page__live=True)
+                .select_related('related_page')
+                .order_by('sort_order')))\
         .first()
 
     if menu:
         context['menu_homepage'] = menu.homepage
         context['menu_links'] = OrderedDict([
-            (link.related_page.slug, link.related_page)
-            for link in menu.links.filter(related_page__live=True)
+            (link.related_page.slug, link.related_page) for link in menu.links.all()
         ])
 
     return context
