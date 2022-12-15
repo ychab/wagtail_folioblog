@@ -50,7 +50,7 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"                        Published at %(post_date)s\n"
+"                        Published on %(post_date)s\n"
 "                    "
 
 #: blog/templates/blog/blog_index_page.html:14
@@ -70,7 +70,7 @@ msgstr "Click on the image, it's magic!"
 
 #: blog/tests/selenium/test_blog_index.py:52
 msgid "Publié le"
-msgstr "Published at"
+msgstr "Published on"
 
 #: core/models.py:231
 msgid "Google Analytics ID"
