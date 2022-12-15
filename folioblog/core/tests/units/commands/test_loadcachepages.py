@@ -1,8 +1,11 @@
 from io import StringIO
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import TestCase
+from django.urls import reverse
+from django.utils import translation
 
 from wagtail.actions.copy_for_translation import CopyPageForTranslationAction
 from wagtail.images import get_image_model
@@ -127,6 +130,12 @@ class LoadCachePagesCommandTestCase(TestCase):
     def test_load_all_pages(self, m):
         for page in self.pages:
             m.get(page.full_url, text='Ok')
+
+        for lang in dict(settings.LANGUAGES).keys():
+            for view_name in ['javascript-catalog', 'rss']:
+                with translation.override(lang):
+                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+
         m.get(f'{self.site.root_url}/givemea404please', text='Ok')
 
         out = StringIO()
@@ -148,6 +157,11 @@ class LoadCachePagesCommandTestCase(TestCase):
             else:
                 m.get(page.full_url, text='Ok')
 
+        for lang in dict(settings.LANGUAGES).keys():
+            for view_name in ['javascript-catalog', 'rss']:
+                with translation.override(lang):
+                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+
         m.get(f'{self.site.root_url}/givemea404please', text='Ok')
 
         out = StringIO()
@@ -165,6 +179,12 @@ class LoadCachePagesCommandTestCase(TestCase):
                 m.get(url_error, status_code=400)
             else:
                 m.get(page.full_url, text='Ok')
+
+        for lang in dict(settings.LANGUAGES).keys():
+            for view_name in ['javascript-catalog', 'rss']:
+                with translation.override(lang):
+                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+
         m.get(f'{self.site.root_url}/givemea404please', text='Ok')
 
         out = StringIO()

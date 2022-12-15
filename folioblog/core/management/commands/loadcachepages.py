@@ -1,7 +1,10 @@
 import math
 
+from django.conf import settings
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
+from django.urls import reverse
+from django.utils import translation
 
 from wagtail.models import Collection, Page, Site
 
@@ -31,16 +34,26 @@ class Command(BaseCommand):
             self.requests_kwargs['auth'] = (options['auth_user'], options['auth_passwd'])
 
         # First clear the cache before rebuilding it!
-        self.stdout.write(self.style.WARNING('About clearing cache...'))
+        self.stdout.write(self.style.WARNING('WARNING: clearing cache...\n'))
         cache.clear()
 
         # Then fetch pages to build renditions and populate the cache!
+        self.stdout.write(self.style.WARNING('About requesting pages:'))
         qs = Page.objects.live().order_by('pk')
         for page in qs:
             if page.slug == 'root':
                 continue
 
             self.process_page(page, folio_settings)
+
+        # Then fetch views
+        self.stdout.write(self.style.WARNING('\nAbout requesting views:'))
+        views = ['javascript-catalog', 'rss']
+        for lang in dict(settings.LANGUAGES).keys():
+            for view_name in views:
+                with translation.override(lang):
+                    url = reverse(view_name)
+                self.request_page(f'{site.root_url}{url}')
 
         # Don't forgot 404 page for renditions only (dummy url + not a 200 code)
         self.request_page(f'{site.root_url}/givemea404please', status=404)
