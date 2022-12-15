@@ -56,7 +56,7 @@
                         item.innerHTML = `
                             <button type="button" class="btn btn-link btn-sm text-black">${data.value.title}</button>
                              -
-                            <a href="${data.value.href}">${gettext('voir')}</a>`;
+                            <a href="${data.value.href}">${gettext('Voir')}</a>`;
                     }
                 },
                 selected: 'active',

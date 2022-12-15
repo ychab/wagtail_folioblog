@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-08 14:02+0100\n"
+"POT-Creation-Date: 2022-12-15 17:21+0100\n"
 "PO-Revision-Date: 2022-12-08 14:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "Articles"
 msgstr "Posts"
 
-#: blog/models.py:80 video/models.py:95
+#: blog/models.py:69 video/models.py:86
 msgid "Date de publication"
 msgstr "Publication date"
 
-#: blog/models.py:118
+#: blog/models.py:107
 msgid "Blog information"
 msgstr "Blog's data"
 
-#: blog/models.py:129
+#: blog/models.py:118
 msgid "Citation"
 msgstr "Quotation"
 
-#: blog/models.py:137 core/models.py:158 core/models.py:197 video/models.py:138
+#: blog/models.py:126 core/models.py:157 core/models.py:197 video/models.py:129
 msgid "Image"
 msgstr ""
 
-#: blog/models.py:139 blog/models.py:163 core/models.py:214 video/models.py:211
+#: blog/models.py:128 blog/models.py:152 core/models.py:214 video/models.py:202
 msgid "Related links"
 msgstr ""
 
@@ -58,9 +58,9 @@ msgstr ""
 msgid "Filtrer par catégories"
 msgstr "Filter by categories"
 
-#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:65
+#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:67
 #: video/templates/video/video_page.html:26
-#: video/tests/units/test_video_page.py:79
+#: video/tests/units/test_video_page.py:81
 msgid "Posté le"
 msgstr "Published on"
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "RSS"
 msgstr ""
 
-#: core/models.py:337
+#: core/models.py:343
 msgid "Links"
 msgstr ""
 
@@ -163,10 +163,6 @@ msgstr ""
 #: core/templates/core/filter_dropdown.html:12
 msgid "Tout"
 msgstr "All"
-
-#: core/templates/core/language_selector.html:6
-msgid "Langues"
-msgstr "Languages"
 
 #: core/templates/core/related_page.html:6
 msgid "Page liée"
@@ -334,7 +330,7 @@ msgstr "Tags"
 msgid "Liste des catégories"
 msgstr "Categories's list"
 
-#: search/templates/search/search_index_page.html:29
+#: search/templates/search/search_index_page.html:30
 #, python-format
 msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
 msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
@@ -456,11 +452,11 @@ msgstr "Oups! Looks like there is a bug somewhere :/"
 msgid "Vidéos"
 msgstr "Videos"
 
-#: video/models.py:129
+#: video/models.py:120
 msgid "Video information"
 msgstr "Video data"
 
-#: video/models.py:142
+#: video/models.py:133
 msgid "Related pages"
 msgstr ""
 
@@ -487,5 +483,8 @@ msgstr "Well, I accept!"
 msgid "Lancer la vidéo"
 msgstr "Start video"
 
-msgid "Autre"
-msgstr "Other"
+#~ msgid "Langues"
+#~ msgstr "Languages"
+
+#~ msgid "Autre"
+#~ msgstr "Other"

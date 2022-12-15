@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 17:29+0200\n"
+"POT-Creation-Date: 2022-12-15 17:21+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,203 +18,316 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: folioblog/blog/models.py:124
+#: blog/factories.py:39
+msgid "Articles"
+msgstr ""
+
+#: blog/models.py:69 video/models.py:86
 msgid "Date de publication"
 msgstr ""
 
-#: folioblog/blog/models.py:162
+#: blog/models.py:107
 msgid "Blog information"
 msgstr ""
 
-#: folioblog/blog/models.py:173
+#: blog/models.py:118
 msgid "Citation"
 msgstr ""
 
-#: folioblog/blog/models.py:180 folioblog/core/models.py:40
+#: blog/models.py:126 core/models.py:157 core/models.py:197 video/models.py:129
 msgid "Image"
 msgstr ""
 
-#: folioblog/blog/templates/blog/blog_index_page.html:12
-msgid "Filtre de catégories"
+#: blog/models.py:128 blog/models.py:152 core/models.py:214 video/models.py:202
+msgid "Related links"
 msgstr ""
 
-#: folioblog/blog/templates/blog/blog_index_page.html:13
-#: folioblog/blog/templates/blog/blog_tag_index_page.html:40
-msgid "Tout"
-msgstr ""
-
-#: folioblog/blog/templates/blog/blog_index_page.html:28
-msgid "Chargement..."
-msgstr ""
-
-#: folioblog/blog/templates/blog/blog_index_page.html:32
-msgid "Oh non, c'est déjà fini !!"
-msgstr ""
-
-#: folioblog/blog/templates/blog/blog_index_page.html:35
-msgid "Oups ! On dirait bien qu'il y a un bug :/"
-msgstr ""
-
-#: folioblog/blog/templates/blog/blog_index_page_fragment.html:21
+#: blog/templates/blog/blog_index_item.html:26
 #, python-format
 msgid ""
 "\n"
-"                    Publié le %(post_date)s\n"
+"                        Publié le %(post_date)s\n"
 "                    "
 msgstr ""
 
-#: folioblog/blog/templates/blog/blog_page.html:31
+#: blog/templates/blog/blog_index_page.html:14
+#: video/templates/video/video_index_page.html:18
+msgid "Filtrer par catégories"
+msgstr ""
+
+#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:67
+#: video/templates/video/video_page.html:26
+#: video/tests/units/test_video_page.py:81
 msgid "Posté le"
 msgstr ""
 
-#: folioblog/blog/templates/blog/blog_page.html:34
-#, python-format
-msgid "(maj %(revision_date)s)"
+#: blog/templates/blog/image_switch.html:49
+msgid "Clique sur l'image, c'est magique !"
 msgstr ""
 
-#: folioblog/blog/templates/blog/blog_page.html:73
-#: folioblog/core/templates/core/basic_page.html:22
-msgid "Retour"
+#: blog/tests/selenium/test_blog_index.py:52
+msgid "Publié le"
 msgstr ""
 
-#: folioblog/core/models.py:13 folioblog/core/models.py:47
-#: folioblog/portfolio/models.py:108 folioblog/portfolio/models.py:122
-#: folioblog/portfolio/models.py:141 folioblog/portfolio/models.py:155
-#: folioblog/portfolio/models.py:174 folioblog/portfolio/models.py:199
-msgid "Sous-titre"
+#: core/models.py:231
+msgid "Google Analytics ID"
 msgstr ""
 
-#: folioblog/core/models.py:74
-msgid "Navbar title"
-msgstr ""
-
-#: folioblog/core/models.py:81
-msgid "Simple Analytics ID"
-msgstr ""
-
-#: folioblog/core/models.py:93
+#: core/models.py:246
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: folioblog/core/models.py:111
-msgid "In days"
+#: core/models.py:272
+msgid "Or"
 msgstr ""
 
-#: folioblog/core/models.py:139
-msgid "Link"
+#: core/models.py:272
+msgid "And"
 msgstr ""
 
-#: folioblog/core/models.py:149 folioblog/core/models.py:152
-msgid "Buttons"
+#: core/models.py:280
+msgid "LinkedIn"
 msgstr ""
 
-#: folioblog/core/models.py:162 folioblog/core/models.py:171
-msgid "RSS"
+#: core/models.py:281
+msgid "GitHub"
 msgstr ""
 
-#: folioblog/core/models.py:167
-msgid "General"
+#: core/models.py:282
+msgid "Instagram"
 msgstr ""
 
-#: folioblog/core/models.py:168
+#: core/models.py:283
+msgid "Facebook"
+msgstr ""
+
+#: core/models.py:287 core/models.py:288
+msgid "Sans le @"
+msgstr ""
+
+#: core/models.py:290
+msgid "Twitter"
+msgstr ""
+
+#: core/models.py:315
 msgid "SEO"
 msgstr ""
 
-#: folioblog/core/models.py:169
-msgid "Social network"
+#: core/models.py:316
+msgid "Social"
 msgstr ""
 
-#: folioblog/core/models.py:170
-msgid "Cookies banner"
-msgstr ""
-
-#: folioblog/core/models.py:172 folioblog/portfolio/models.py:264
-#: folioblog/templates/agency/navbar.html:16
+#: core/models.py:317 portfolio/models.py:210 templates/agency/navbar.html:16
 msgid "Contact"
 msgstr ""
 
-#: folioblog/portfolio/models.py:87 folioblog/portfolio/models.py:136
-#: folioblog/portfolio/models.py:150 folioblog/portfolio/models.py:169
-#: folioblog/portfolio/models.py:194
-msgid "Titre"
+#: core/models.py:318
+msgid "Blog"
 msgstr ""
 
-#: folioblog/portfolio/models.py:92
-msgid "Slogan"
+#: core/models.py:319
+msgid "Video"
 msgstr ""
 
-#: folioblog/portfolio/models.py:102
-msgid "Slide"
+#: core/models.py:320
+msgid "Search"
 msgstr ""
 
-#: folioblog/portfolio/models.py:186
-msgid "Texte"
+#: core/models.py:321
+msgid "Cookies"
 msgstr ""
 
-#: folioblog/portfolio/models.py:212
-msgid "Entête"
+#: core/models.py:322
+msgid "RSS"
 msgstr ""
 
-#: folioblog/portfolio/models.py:220 folioblog/portfolio/templates/portfolio/services.html:5
-#: folioblog/templates/agency/navbar.html:11
-msgid "Services"
+#: core/models.py:343
+msgid "Links"
 msgstr ""
 
-#: folioblog/portfolio/models.py:228
-msgid "Skills"
+#: core/templates/core/cookies_banner.html:13
+msgid "Non"
 msgstr ""
 
-#: folioblog/portfolio/models.py:237 folioblog/templates/agency/navbar.html:13
-msgid "CV"
+#: core/templates/core/cookies_banner.html:17
+msgid "Ok"
 msgstr ""
 
-#: folioblog/portfolio/models.py:247 folioblog/templates/agency/navbar.html:14
-msgid "Équipe"
+#: core/templates/core/credits.html:3
+msgid "Photos &copy; : "
 msgstr ""
 
-#: folioblog/portfolio/models.py:256 folioblog/templates/agency/navbar.html:15
-msgid "À propos"
+#: core/templates/core/filter_dropdown.html:12
+msgid "Tout"
 msgstr ""
 
-#: folioblog/portfolio/templates/portfolio/blocks/skill_modal.html:6
-msgid "Fermer la fenêtre"
+#: core/templates/core/related_page.html:6
+msgid "Page liée"
+msgid_plural "Pages liées"
+msgstr[0] ""
+msgstr[1] ""
+
+#: core/templates/core/related_page.html:22
+msgid "Voir"
 msgstr ""
 
-#: folioblog/portfolio/templates/portfolio/blocks/skill_modal.html:29
+#: core/templates/core/social_links.html:4
+#: core/templates/core/social_links.html:6
+msgid "Partager sur Reddit"
+msgstr ""
+
+#: core/templates/core/social_links.html:8
+#: core/templates/core/social_links.html:10
+msgid "Partager sur Twitter"
+msgstr ""
+
+#: core/templates/core/social_links.html:12
+#: core/templates/core/social_links.html:14
+msgid "Partager sur Facebook"
+msgstr ""
+
+#: core/templates/core/social_links.html:16
+#: core/templates/core/social_links.html:18
+msgid "Partager sur Linkedin"
+msgstr ""
+
+#: core/templates/core/toast.html:10
+#: portfolio/templates/portfolio/blocks/skill_modal.html:29
+#: search/templates/search/search_form.html:14
 msgid "Fermer"
 msgstr ""
 
-#: folioblog/portfolio/templates/portfolio/cv.html:14
+#: core/wagtail_hooks.py:35
+msgid "Keyboard"
+msgstr ""
+
+#: gallery/factories.py:12
+msgid "Galerie"
+msgstr ""
+
+#: gallery/models.py:28
+msgid "Section"
+msgstr ""
+
+#: gallery/templates/gallery/gallery_grid_item.html:55
+msgid "Voir l'article"
+msgstr ""
+
+#: gallery/templates/gallery/gallery_page.html:25
+msgid "Filtrer par albums"
+msgstr ""
+
+#: gallery/templates/gallery/gallery_page.html:29
+msgid "Mélanger"
+msgstr ""
+
+#: gallery/templates/gallery/gallery_page.html:44
+msgid "Déplacer"
+msgstr ""
+
+#: home/factories.py:12 templates/cleanblog/navbar.html:4
+#: templates/cleanblog/navbar.html:5
+msgid "Accueil"
+msgstr ""
+
+#: portfolio/factories/pages.py:22 templates/agency/navbar.html:4
+msgid "Portfolio"
+msgstr ""
+
+#: portfolio/models.py:22 portfolio/models.py:72 portfolio/models.py:93
+#: portfolio/models.py:112 portfolio/models.py:137
+msgid "Titre"
+msgstr ""
+
+#: portfolio/models.py:27
+msgid "Slogan"
+msgstr ""
+
+#: portfolio/models.py:38
+msgid "Slide"
+msgstr ""
+
+#: portfolio/models.py:44 portfolio/models.py:58 portfolio/models.py:77
+#: portfolio/models.py:98 portfolio/models.py:117 portfolio/models.py:142
+msgid "Sous-titre"
+msgstr ""
+
+#: portfolio/models.py:123
+msgid "Texte"
+msgstr ""
+
+#: portfolio/models.py:157
+msgid "Entête"
+msgstr ""
+
+#: portfolio/models.py:165 portfolio/templates/portfolio/blocks/services.html:5
+#: templates/agency/navbar.html:11
+msgid "Services"
+msgstr ""
+
+#: portfolio/models.py:173
+msgid "Skills"
+msgstr ""
+
+#: portfolio/models.py:182 templates/agency/navbar.html:13
+msgid "CV"
+msgstr ""
+
+#: portfolio/models.py:192 templates/agency/navbar.html:14
+msgid "Équipe"
+msgstr ""
+
+#: portfolio/models.py:202 templates/agency/navbar.html:15
+msgid "À propos"
+msgstr ""
+
+#: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"
 msgstr ""
 
-#: folioblog/portfolio/templates/portfolio/skills.html:5
-#: folioblog/templates/agency/navbar.html:12
+#: portfolio/templates/portfolio/blocks/skill_modal.html:6
+msgid "Fermer la fenêtre"
+msgstr ""
+
+#: portfolio/templates/portfolio/blocks/skills.html:5
+#: templates/agency/navbar.html:12
 msgid "Expertises"
 msgstr ""
 
-#: folioblog/search/templates/search/search_form.html:2
-#: folioblog/templates/cleanblog/navbar.html:18
+#: search/factories.py:12
+msgid "Recherche"
+msgstr ""
+
+#: search/templates/search/search_form.html:2
+#: search/templates/search/search_form.html:56
 msgid "Rechercher"
 msgstr ""
 
-#: folioblog/search/templates/search/search_form.html:8
-msgid "Affiner la recherche"
+#: search/templates/search/search_form.html:7
+msgid "Hack me I'm famous!"
 msgstr ""
 
-#: folioblog/search/templates/search/search_form.html:23
+#: search/templates/search/search_form.html:8
+msgid "Hey, tu essayes de me hacker petit filou ??"
+msgstr ""
+
+#: search/templates/search/search_form.html:23
+msgid "Filtrer la recherche"
+msgstr ""
+
+#: search/templates/search/search_form.html:42
 msgid "Saisir des tags"
 msgstr ""
 
-#: folioblog/search/templates/search/search_form.html:23
+#: search/templates/search/search_form.html:42
 msgid "Étiquettes"
 msgstr ""
 
-#: folioblog/search/templates/search/search_form.html:27
-msgid "Liste des facets"
+#: search/templates/search/search_form.html:48
+msgid "Liste des catégories"
 msgstr ""
 
-#: folioblog/search/templates/search/search_index_page.html:22
+#: search/templates/search/search_index_page.html:30
 #, fuzzy, python-format
 #| msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
 #| msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
@@ -223,62 +336,144 @@ msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
 msgstr[0] "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
 msgstr[1] "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
 
-#: folioblog/search/templates/search/search_results.html:35
+#: search/templates/search/search_results.html:37
 msgid "Ah non... bah pas bonheur"
 msgstr ""
 
-#: folioblog/templates/404.html:10
+#: templates/404.html:23
 msgid "Page introuvable"
 msgstr ""
 
-#: folioblog/templates/404.html:12
-msgid "Soit tu es un robot, soit tu es bien fatigué !"
+#: templates/404.html:25
+msgid "Lien cassé ? Armée de méchants robots zombies ?"
 msgstr ""
 
-#: folioblog/templates/404.html:26
-msgid "\"Tu veux affronter mon gang ? J\\"
+#: templates/404.html:40
+msgid "Cher robot"
 msgstr ""
 
-#: folioblog/templates/agency/header.html:7
+#: templates/404.html:43
+msgid ""
+"\"Tu vois, le monde se divise en deux catégories : ceux qui ont un pistolet "
+"chargé et ceux qui creusent. Toi, tu creuses.\""
+msgstr ""
+
+#: templates/404.html:45
+msgid "Le bon, la brute et le truand"
+msgstr ""
+
+#: templates/404.html:66
+msgid "Retour à l'accueil"
+msgstr ""
+
+#: templates/404.html:71
+msgid "À l'instant..."
+msgstr ""
+
+#: templates/404.html:72
+msgid ""
+"Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de "
+"retourner à l'accueil"
+msgstr ""
+
+#: templates/agency/footer.html:6
+msgid "conception avec le CMS"
+msgstr ""
+
+#: templates/agency/header.html:6
 msgid "Mes services"
 msgstr ""
 
-#: folioblog/templates/agency/navbar.html:6
-#: folioblog/templates/cleanblog/navbar.html:6
+#: templates/agency/navbar.html:6 templates/cleanblog/navbar.html:8
 msgid "Menu"
 msgstr ""
 
-#: folioblog/templates/agency/navbar.html:17
-#: folioblog/templates/cleanblog/navbar.html:4
-msgid "Blog"
+#: templates/cleanblog/footer.html:10
+msgid "Voir sur Linkedin"
 msgstr ""
 
-#: folioblog/templates/cleanblog/navbar.html:11
-msgid "Avant-propos"
+#: templates/cleanblog/footer.html:15
+msgid "Compte Linkedin"
 msgstr ""
 
-#: folioblog/templates/cleanblog/navbar.html:12
-msgid "Présentation"
+#: templates/cleanblog/footer.html:19
+msgid "Voir sur Github"
 msgstr ""
 
-#: folioblog/templates/cleanblog/navbar.html:13
-msgid "Tags"
+#: templates/cleanblog/footer.html:24
+msgid "Compte gitHub"
 msgstr ""
 
-#: folioblog/templates/cleanblog/navbar.html:14
-msgid "PortFolio"
+#: templates/cleanblog/footer.html:28
+msgid "Voir sur Instagram"
 msgstr ""
 
-#: folioblog/templates/cleanblog/pager.html:4
+#: templates/cleanblog/footer.html:33
+msgid "Compte Instagram"
+msgstr ""
+
+#: templates/cleanblog/pager.html:3
 msgid "Navigation des pages"
 msgstr ""
 
-#: folioblog/templates/cleanblog/pager.html:8
-#: folioblog/templates/cleanblog/pager.html:10
+#: templates/cleanblog/pager.html:7 templates/cleanblog/pager.html:9
+msgid "Début"
+msgstr ""
+
+#: templates/cleanblog/pager.html:15 templates/cleanblog/pager.html:17
 msgid "Précédent"
 msgstr ""
 
-#: folioblog/templates/cleanblog/pager.html:21
-#: folioblog/templates/cleanblog/pager.html:23
+#: templates/cleanblog/pager.html:28 templates/cleanblog/pager.html:30
 msgid "Suivant"
+msgstr ""
+
+#: templates/cleanblog/pager.html:37 templates/cleanblog/pager.html:39
+msgid "Fin"
+msgstr ""
+
+#: templates/cleanblog/spinner.html:5
+msgid "Chargement..."
+msgstr ""
+
+#: templates/cleanblog/spinner.html:9
+msgid "Oh non, c'est déjà fini !!"
+msgstr ""
+
+#: templates/cleanblog/spinner.html:12
+msgid "Oups ! On dirait bien qu'il y a un bug :/"
+msgstr ""
+
+#: video/factories.py:31
+msgid "Vidéos"
+msgstr ""
+
+#: video/models.py:120
+msgid "Video information"
+msgstr ""
+
+#: video/models.py:133
+msgid "Related pages"
+msgstr ""
+
+#: video/templates/video/snippets/video_promoted.html:30
+msgid "Carousel video item"
+msgstr ""
+
+#: video/templates/video/youtube_player.html:17
+msgid ""
+"Pour voir cette vidéo, merci de vendre un peu de vos données en acceptant "
+"les cookies !"
+msgstr ""
+
+#: video/templates/video/youtube_player.html:19
+msgid "Accepter les cookies"
+msgstr ""
+
+#: video/templates/video/youtube_player.html:20
+msgid "Bon ok j'accepte !"
+msgstr ""
+
+#: video/templates/video/youtube_player.html:23
+msgid "Lancer la vidéo"
 msgstr ""

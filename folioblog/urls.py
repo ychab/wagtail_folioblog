@@ -13,8 +13,6 @@ from folioblog.core.views import RssView
 from folioblog.search import views as search_views
 
 urlpatterns = [
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-
     path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
 
@@ -49,6 +47,7 @@ if settings.DEBUG or settings.DEBUG_TEST:  # pragma: no branch
 
 # Turn all other patterns into i18n patterns.
 urlpatterns += i18n_patterns(
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('rss.xml', RssView.as_view(), name='rss'),
 
     path('search-autocomplete/<str:query>/', search_views.AutocompleteView.as_view(), name='search-autocomplete'),
