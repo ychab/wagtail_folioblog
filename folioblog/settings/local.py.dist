@@ -48,21 +48,21 @@ TIME_ZONE = 'Europe/Paris'
 
 # CACHES = {
 #     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-#         'LOCATION': 'unix:/var/run/memcached/memcached.sock',
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'unix://var/run/redis/redis-server.sock',
 #         'KEY_PREFIX': 'folioblog',
 #         'TIMEOUT': 60 * 60 * 24,
 #     },
 #     # In theory, maybe useful only if "cache per site" is disabled
 #     'renditions': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-#         'LOCATION': 'unix:/var/run/memcached/memcached.sock',
-#         'KEY_PREFIX': 'folioblog-renditions',
+#         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+#         'LOCATION': 'unix://var/run/redis/redis-server.sock',
+#         'KEY_PREFIX': 'renditions',
 #         'TIMEOUT': 60 * 60 * 24,
-#     }
+#     },
 # }
 # CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24
-# CACHE_MIDDLEWARE_ALIAS = "default"
+# CACHE_MIDDLEWARE_ALIAS = 'default'
 
 # Same idea: MAYBE useful if cache per page is disabled
 # @see https://docs.djangoproject.com/en/4.1/ref/templates/api/#django.template.loaders.cached.Loader

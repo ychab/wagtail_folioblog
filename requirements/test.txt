@@ -290,9 +290,9 @@ html5lib==1.1 ; python_version >= "3.10" and python_version < "4.0" \
 idna==3.4 ; python_version >= "3.10" and python_version < "4" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
-isort==5.11.2 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:dd8bbc5c0990f2a095d754e50360915f73b4c26fc82733eb5bfc6b48396af4d2 \
-    --hash=sha256:e486966fba83f25b8045f8dd7455b0a0d1e4de481e1d7ce4669902d9fb85e622
+isort==5.11.3 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:83155ffa936239d986b0f190347a3f2285f42a9b9e1725c89d865b27dd0627e5 \
+    --hash=sha256:a8ca25fbfad0f7d5d8447a4314837298d9f6b23aed8618584c894574f626b64b
 l18n==2021.3 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1956e890d673d17135cc20913253c154f6bc1c00266c22b7d503cc1a5a42d848 \
     --hash=sha256:78495d1df95b6f7dcc694d1ba8994df709c463a1cbac1bf016e1b9a5ce7280b9

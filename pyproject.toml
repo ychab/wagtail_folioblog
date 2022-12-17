@@ -37,7 +37,7 @@ django-debug-toolbar = "^3.7.0"
 pre-commit = "^2.20.0"
 
 [tool.pylama]
-skip = "*/migrations/*,*/settings/*,*/static/*"
+skip = "*/.tox/*,*/migrations/*,*/settings/*,*/static/*"
 linters = "pycodestyle,pyflakes,mccabe"
 
 [tool.pylama.linter.pycodestyle]
@@ -50,7 +50,7 @@ complexity = 15
 combine_as_imports = true
 multi_line_output = 5
 include_trailing_comma = true
-skip = "migrations,docs,media,static"
+skip = ".tox,migrations,docs,media,static"
 sections = "FUTURE,STDLIB,DJANGO,WAGTAIL,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 known_django = "django"
 known_wagtail = "wagtail"
