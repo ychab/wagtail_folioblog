@@ -49,14 +49,14 @@ TIME_ZONE = 'Europe/Paris'
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-#         'LOCATION': 'unix://var/run/redis/redis-server.sock',
+#         'LOCATION': 'unix://var/run/redis/redis-server.sock?db=0',
 #         'KEY_PREFIX': 'folioblog',
 #         'TIMEOUT': 60 * 60 * 24,
 #     },
 #     # In theory, maybe useful only if "cache per site" is disabled
 #     'renditions': {
 #         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-#         'LOCATION': 'unix://var/run/redis/redis-server.sock',
+#         'LOCATION': 'unix://var/run/redis/redis-server.sock?db=0',
 #         'KEY_PREFIX': 'renditions',
 #         'TIMEOUT': 60 * 60 * 24,
 #     },
