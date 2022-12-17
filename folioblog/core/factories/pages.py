@@ -27,7 +27,6 @@ class BaseIndexPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         abstract = True
-        django_get_or_create = ('slug', 'parent')
 
     parent = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True).root_page)
 
