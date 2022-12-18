@@ -4,6 +4,7 @@ from urllib.parse import parse_qs, urlencode
 
 from django import template
 from django.utils.encoding import force_bytes
+from django.utils.translation import get_language
 
 from wagtail.images import get_image_model
 from wagtail.models import Page, Site
@@ -153,7 +154,10 @@ def toast(context, title=None, timer=None, text=None):
 def related_page(page):
     return {
         # Don't trust deprecated Meta.ordering in Orderable model base.
-        'related_links': page.related_links.filter(related_page__live=True).order_by('sort_order'),
+        'related_links': page.related_links.filter(
+            related_page__live=True,
+            related_page__locale__language_code=get_language())
+        .order_by('sort_order'),
     }
 
 
