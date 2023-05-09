@@ -13,7 +13,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 psycopg2-binary = "^2.9.5"
-wagtail = "^4.1.1"
+wagtail = "^4.2.3"
 django-social-share = "^2.3.0"
 django-compressor = "^4.1"
 redis = "^4.3.4"
@@ -26,14 +26,14 @@ factory-boy = "^3.2.1"
 wagtail-factories = "^4.0.0"
 requests-mock = "^1.10.0"
 selenium = "^4.5.0"
-tox = "^3.26.0"
+tox = "^4.5.1"
 coverage = {extras = ["toml"], version = "^7.2.0"}
 pylama = {extras = ["toml"], version = "^8.4.1"}
 lxml = "^4.9.1"
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.1"
-django-debug-toolbar = "^3.7.0"
+django-debug-toolbar = "^4.0.0"
 pre-commit = "^3.1.1"
 
 [tool.pylama]
