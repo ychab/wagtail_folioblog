@@ -37,8 +37,8 @@ dump_db:
 
 restore_db:
 	scp ${BACKUP_HOST}:${BACKUP_PATH_SQL}/*.sql.gz .
-	gunzip *.sql.gz
-	mv *.sql latest.sql
+	gunzip -f *.sql.gz
+	mv -f *.sql latest.sql
 	psql -U postgres -d folioblog < latest.sql
 	python manage.py createadmin --password=admin --update
 	python manage.py updatesite --hostname=127.0.0.1 --port 8000

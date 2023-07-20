@@ -16,6 +16,7 @@ class PhotographerFactory(DjangoModelFactory):
 
     class Meta:
         model = Photographer
+        skip_postgeneration_save = True
 
     name = factory.Faker('name', locale=current_locale)
     website = factory.Faker('url', locale=current_locale)
@@ -25,6 +26,9 @@ class ImageFactory(wagtail_factories.ImageFactory):
     file = factory.django.ImageField(filename='fake-image.webp', format='WEBP')
     caption = factory.Faker('sentence', nb_words=5, variable_nb_words=False, locale=current_locale)
     photographer = factory.SubFactory(PhotographerFactory)
+
+    class Meta:
+        skip_postgeneration_save = True
 
     @factory.post_generation
     def tags(obj, create, extracted, **kwargs):

@@ -20,6 +20,7 @@ class LocaleFactory(DjangoModelFactory):
     class Meta:
         model = Locale
         django_get_or_create = ('language_code',)
+        skip_postgeneration_save = True
 
     language_code = fuzzy.FuzzyChoice(list(dict(settings.LANGUAGES).keys()))
 
@@ -28,6 +29,7 @@ class FolioBlogSettingsFactory(DjangoModelFactory):
 
     class Meta:
         model = FolioBlogSettings
+        skip_postgeneration_save = True
 
     cookie_banner = wagtail_factories.StreamFieldFactory(CookieBannersBlockFactory)
     rss_feed = wagtail_factories.StreamFieldFactory(RssFeedsBlockFactory)

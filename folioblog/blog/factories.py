@@ -44,6 +44,7 @@ class BlogPageRelatedLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = BlogPageRelatedLink
+        skip_postgeneration_save = True
 
     page = factory.SubFactory('folioblog.blog.factories.BlogPageFactory')
     related_page = factory.SubFactory(PageFactory)
@@ -102,6 +103,7 @@ class BlogPageTagFactory(DjangoModelFactory):
     class Meta:
         model = BlogPageTag
         django_get_or_create = ('tag', 'content_object')
+        skip_postgeneration_save = True
 
     tag = factory.SubFactory(BlogTagFactory)
     content_object = factory.SubFactory(BlogPageFactory)
@@ -112,6 +114,7 @@ class BlogPromoteFactory(DjangoModelFactory):
     class Meta:
         model = BlogPromote
         django_get_or_create = ('title',)  # just for reuse in testing
+        skip_postgeneration_save = True
 
     title = factory.Faker('sentence', locale=current_locale)
     link_more = factory.Faker('sentence', locale=current_locale)
@@ -121,6 +124,7 @@ class BlogPromoteLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = BlogPromoteLink
+        skip_postgeneration_save = True
 
     snippet = factory.SubFactory(BlogPromoteFactory, title='blog')
     related_page = factory.SubFactory(BlogPageFactory)

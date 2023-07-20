@@ -27,6 +27,7 @@ class BaseIndexPageFactory(wagtail_factories.PageFactory):
 
     class Meta:
         abstract = True
+        skip_postgeneration_save = True
 
     parent = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True).root_page)
 
@@ -61,6 +62,7 @@ class BasicPageRelatedLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = BasicPageRelatedLink
+        skip_postgeneration_save = True
 
     page = factory.SubFactory('folioblog.core.factories.BasicPageFactory')
     related_page = factory.SubFactory(PageFactory)

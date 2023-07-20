@@ -13,6 +13,7 @@ class BaseTagFactory(DjangoModelFactory):
     class Meta:
         abstract = True
         django_get_or_create = ('slug',)
+        skip_postgeneration_save = True
 
     name = factory.Faker('word', locale=current_locale)
     slug = factory.LazyAttribute(lambda o: slugify(o.name))

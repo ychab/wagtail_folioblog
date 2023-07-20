@@ -49,6 +49,7 @@ class EmbedFactory(DjangoModelFactory):
     class Meta:
         model = Embed
         django_get_or_create = ('hash',)
+        skip_postgeneration_save = True
 
     url = factory.Faker('url')
     max_width = fuzzy.FuzzyInteger(400, 800)
@@ -71,6 +72,7 @@ class VideoPageRelatedLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = VideoPageRelatedLink
+        skip_postgeneration_save = True
 
     page = factory.SubFactory('folioblog.video.factories.VideoPageFactory')
     related_page = factory.SubFactory(PageFactory)
@@ -135,6 +137,7 @@ class VideoPageTagFactory(DjangoModelFactory):
     class Meta:
         model = VideoPageTag
         django_get_or_create = ('tag', 'content_object')
+        skip_postgeneration_save = True
 
     tag = factory.SubFactory(VideoTagFactory)
     content_object = factory.SubFactory(VideoPageFactory)
@@ -145,6 +148,7 @@ class VideoPromoteFactory(DjangoModelFactory):
     class Meta:
         model = VideoPromote
         django_get_or_create = ('title',)  # just for reuse in testing
+        skip_postgeneration_save = True
 
     title = factory.Faker('sentence', locale=current_locale)
     link_more = factory.Faker('sentence', locale=current_locale)
@@ -154,6 +158,7 @@ class VideoPromoteLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = VideoPromoteLink
+        skip_postgeneration_save = True
 
     snippet = factory.SubFactory(VideoPromoteFactory, title='videos')
     related_page = factory.SubFactory(VideoPageFactory)

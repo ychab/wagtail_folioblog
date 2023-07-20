@@ -33,3 +33,5 @@ backup.sql
 .idea
 .vscode
 .history
+
+.env

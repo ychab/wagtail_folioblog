@@ -18,6 +18,7 @@ class PortfolioPageFactory(PageFactory):
 
     class Meta:
         model = PortfolioPage
+        skip_postgeneration_save = True
 
     title = _('Portfolio')
     slug = 'portfolio'

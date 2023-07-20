@@ -16,6 +16,7 @@ class BaseCategoryFactory(DjangoModelFactory):
     class Meta:
         abstract = True
         django_get_or_create = ('slug',)
+        skip_postgeneration_save = True
 
     name = factory.Faker('word', locale=current_locale)
     slug = factory.LazyAttribute(lambda o: slugify(o.name))
@@ -25,6 +26,7 @@ class MenuFactory(DjangoModelFactory):
 
     class Meta:
         model = Menu
+        skip_postgeneration_save = True
 
     homepage = factory.SubFactory(PageFactory)
 
@@ -41,6 +43,7 @@ class MenuLinkFactory(DjangoModelFactory):
 
     class Meta:
         model = MenuLink
+        skip_postgeneration_save = True
 
     menu = factory.SubFactory(MenuFactory)
     related_page = factory.SubFactory(PageFactory)

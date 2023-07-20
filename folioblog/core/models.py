@@ -8,7 +8,9 @@ from django.utils.translation import get_language, gettext_lazy as _
 
 from wagtail.admin.panels import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface,
+    TitleFieldPanel,
 )
+from wagtail.admin.widgets.slug import SlugInput
 from wagtail.contrib.settings.models import BaseGenericSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.fields import RichTextField, StreamField
@@ -114,8 +116,8 @@ class BaseCategory(TranslatableMixin, models.Model):
     slug = models.SlugField()
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('slug'),
+        TitleFieldPanel('name'),
+        FieldPanel('slug', widget=SlugInput),
     ]
 
     objects = I18nManager()
