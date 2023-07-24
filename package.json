@@ -11,12 +11,12 @@
     "packery": "^2.1.2",
     "startbootstrap-agency": "^7.0.12",
     "startbootstrap-clean-blog": "^6.0.9",
-    "uglify-js": "^3.17.3"
+    "uglify-js": "^3.17.4"
   },
   "scripts": {
     "dist": "dist/build/build.sh"
   },
   "name": "folioblog",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "author": "Yannick Chabbert"
 }
