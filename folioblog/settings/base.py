@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'folioblog.user',
 
     'wagtail.contrib.simple_translation',
-    'wagtail.contrib.modeladmin',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.contrib.settings',

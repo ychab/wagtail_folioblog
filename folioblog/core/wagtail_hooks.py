@@ -1,6 +1,3 @@
-import os.path
-
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext
 
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
@@ -9,10 +6,9 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register,
-)
 from wagtail.embeds.models import Embed
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
 from taggit.models import Tag
 
@@ -48,51 +44,52 @@ def register_keyboard_feature(features):
     )
 
 
-class TagModelAdmin(ModelAdmin):
+class TagSnippetViewSet(SnippetViewSet):
     model = Tag
     menu_label = 'Tags'
-    menu_icon = 'tag'
+    icon = 'tag'
     list_display = ["name", "slug"]
     search_fields = ("name",)
     ordering = ('name',)
     panels = [FieldPanel('name')]  # only show the name field
 
 
-class BlogTagModelAdmin(ModelAdmin):
-    panels = [FieldPanel('name')]  # only show the name field
+class BlogTagSnippetViewSet(SnippetViewSet):
     model = BlogTag
     menu_label = 'Blog Tags'
-    menu_icon = 'tag'
+    icon = 'tag'
     list_display = ["name", "slug"]
     search_fields = ("name",)
     ordering = ('name',)
-
-
-class VideoTagModelAdmin(ModelAdmin):
     panels = [FieldPanel('name')]  # only show the name field
+
+
+class VideoTagSnippetViewSet(SnippetViewSet):
     model = VideoTag
     menu_label = 'Video Tags'
-    menu_icon = 'tag'
+    icon = 'tag'
     list_display = ["name", "slug"]
     search_fields = ("name",)
     ordering = ('name',)
+    panels = [FieldPanel('name')]  # only show the name field
 
 
-@modeladmin_register
-class TagGroupAdmin(ModelAdminGroup):
+@register_snippet
+class TagSnippetViewSetGroup(SnippetViewSetGroup):
     menu_label = 'Tags'
     menu_icon = 'tag'
     menu_order = 400
-    items = (TagModelAdmin, BlogTagModelAdmin, VideoTagModelAdmin)
+    items = (TagSnippetViewSet, BlogTagSnippetViewSet, VideoTagSnippetViewSet)
 
 
-@modeladmin_register
-class EmbedModelAdmin(ModelAdmin):
+@register_snippet
+class EmbedSnippetViewSet(SnippetViewSet):
+    add_to_admin_menu = True
     model = Embed
     menu_label = 'Embeds'
-    menu_icon = 'media'
+    icon = 'media'
     menu_order = 450
-    list_display = ["title", "url_link", "thumbnail_link", "last_updated"]
+    list_display = ["title", "url", "thumbnail_url", "last_updated"]
     search_fields = ("title", "url")
     ordering = ('last_updated',)
 
@@ -112,16 +109,3 @@ class EmbedModelAdmin(ModelAdmin):
         FieldPanel("height"),
         FieldPanel("cache_until"),
     ]
-
-    def url_link(self, obj):
-        return mark_safe(
-            f'<a href="{obj.url}" target="_blank">{obj.url}</a>'
-        )
-    url_link.short_description = 'URL'
-
-    def thumbnail_link(self, obj):
-        basename = os.path.basename(obj.thumbnail_url)
-        return mark_safe(
-            f'<a href="{obj.thumbnail_url}" target="_blank">{basename}</a>'
-        )
-    thumbnail_link.short_description = 'Thumbnail'

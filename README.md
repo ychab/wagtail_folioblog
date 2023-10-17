@@ -4,7 +4,7 @@
 [![end2end](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/selenium.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/selenium.yaml)
 [![poetry](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/poetry.yaml)
 [![NPM deps](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/npm-dependencies.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/npm.yaml)
-![wagtail version](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-wagtail-version.svg)
+[![wagtail version](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/poetry-wagtail-version.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/version.yaml)
 
 # FolioBlog, a Wagtail portfolio / blog demo
 
@@ -53,7 +53,7 @@ And yeah, that's my personal website! So please, don't hack me, I'm not famous!
   * you must first install [poetry](https://python-poetry.org/docs/#installation).
   * Once installed, just run: `poetry install`
 
-* For testing (CI), no need to use poetry here, just do : `pip install -r requirements/dev.txt`
+* For testing (CI), no need to use poetry here, just do : `pip install -r requirements/test.txt`
 
 * For production, do instead : `pip install -r requirements/prod.txt`
 
