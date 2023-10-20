@@ -7,7 +7,7 @@
         </div>
         <ul class="timeline">
             {% for experience in page.cv_experiences %}
-            {% include_block experience with index=forloop.counter %}
+                {% include_block experience with index=forloop.counter %}
             {% endfor %}
             <li class="timeline-inverted">
                 <div class="timeline-image">

@@ -2,7 +2,6 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 class FolioBlogPaginator(Paginator):
-
     def get_page(self, number):
         try:
             number = self.validate_number(number)

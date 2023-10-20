@@ -9,12 +9,11 @@ Image = get_image_model()
 
 
 class Command(BaseCommand):
-
     def add_arguments(self, parser):
-        parser.add_argument('--dir', default='original_images')
+        parser.add_argument("--dir", default="original_images")
 
     def handle(self, *args, **options):
-        basepath = os.path.join(settings.MEDIA_ROOT, options['dir'])
+        basepath = os.path.join(settings.MEDIA_ROOT, options["dir"])
 
         count = 0
         for subdir, dirs, files in os.walk(basepath):
@@ -26,4 +25,4 @@ class Command(BaseCommand):
                     os.remove(filepath)
                     count += 1
 
-        self.stdout.write(self.style.SUCCESS(f'{count} orphan files deleted on drive.'))
+        self.stdout.write(self.style.SUCCESS(f"{count} orphan files deleted on drive."))

@@ -13,7 +13,6 @@ Rendition = Image.get_rendition_model()
 
 
 class GenerateRenditionsCommandTestCase(TestCase):
-
     def tearDown(self):
         Image.objects.all().delete()
 
@@ -22,5 +21,5 @@ class GenerateRenditionsCommandTestCase(TestCase):
         spec = list(GALLERY_SPECS.values())[0]
 
         out = StringIO()
-        call_command('generaterenditions', stdout=out, specs=[spec])
-        self.assertIn('About generating 1 renditions', out.getvalue())
+        call_command("generaterenditions", stdout=out, specs=[spec])
+        self.assertIn("About generating 1 renditions", out.getvalue())

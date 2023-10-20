@@ -8,23 +8,24 @@ from folioblog.gallery.tests.selenium.webpages import GalleryWebPage
 
 
 class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
-
     def setUp(self):
         super().setUp()
 
         self.page = GalleryPageFactory(parent=self.site.root_page)
         self.index = BlogIndexPageFactory(parent=self.site.root_page)
 
-        root_collection = CollectionFactory(name='Gallery')
-        self.collection = CollectionFactory(name='Test', parent=root_collection)
-        self.collection_alt = CollectionFactory(name='Alt test', parent=root_collection)
+        root_collection = CollectionFactory(name="Gallery")
+        self.collection = CollectionFactory(name="Test", parent=root_collection)
+        self.collection_alt = CollectionFactory(name="Alt test", parent=root_collection)
 
         self.images = [
             ImageFactory(collection=self.collection, file__width=480, file__height=360)
             for i in range(0, 3)
         ]
         self.images_alt = [
-            ImageFactory(collection=self.collection_alt, file__width=480, file__height=360)
+            ImageFactory(
+                collection=self.collection_alt, file__width=480, file__height=360
+            )
         ]
         self.image_orphan = [ImageFactory(file__width=480, file__height=360)]
 
@@ -36,9 +37,9 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
-        spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'
+        spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
         rendition = self.page.image.get_rendition(spec)
-        rendition_url = f'{self.live_server_url}{rendition.url}'
+        rendition_url = f"{self.live_server_url}{rendition.url}"
         self.assertEqual(rendition_url, self.webpage.get_masterhead_image())
 
     def test_layout_items(self):
@@ -46,19 +47,19 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), len(self.images) + len(self.images_alt))
 
         post = self.posts[0]
-        post_url = f'{self.live_server_url}{post.url}'
-        spec = 'fill-320x250' if self.is_mobile else 'fill-468x351'
+        post_url = f"{self.live_server_url}{post.url}"
+        spec = "fill-320x250" if self.is_mobile else "fill-468x351"
         rendition = post.image.get_rendition(spec)
-        rendition_url = f'{self.live_server_url}{rendition.url}'
+        rendition_url = f"{self.live_server_url}{rendition.url}"
 
         # Order is random... Wouin, a do...while miss me!!
         item = items.pop(0)
-        while item.get('title') != post.title:  # pragma: no cover
+        while item.get("title") != post.title:  # pragma: no cover
             item = items.pop(0)
 
-        self.assertEqual(item['title'], post.title)
-        self.assertEqual(item['href'], post_url)
-        self.assertEqual(item['img_src'], rendition_url)
+        self.assertEqual(item["title"], post.title)
+        self.assertEqual(item["href"], post_url)
+        self.assertEqual(item["img_src"], rendition_url)
 
     def test_filter_collection(self):
         expected_count = len(self.images)
@@ -68,7 +69,9 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), expected_count)
 
         expected_count = len(self.images_alt)
-        is_filtered = self.webpage.filter_collection(self.collection_alt.pk, expected_count)
+        is_filtered = self.webpage.filter_collection(
+            self.collection_alt.pk, expected_count
+        )
         self.assertTrue(is_filtered)
         items = self.webpage.get_layout_items()
         self.assertEqual(len(items), len(self.images_alt))

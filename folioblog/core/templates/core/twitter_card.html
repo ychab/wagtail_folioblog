@@ -2,13 +2,13 @@
 {# @see https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started#opengraph #}
 <meta name="twitter:card" content="{{ card }}">
 {% if fb_settings.twitter_site %}
-<meta name="twitter:site" content="@{{ fb_settings.twitter_site }}">
+    <meta name="twitter:site" content="@{{ fb_settings.twitter_site }}">
 {% endif %}
 {% if fb_settings.twitter_creator %}
-<meta name="twitter:creator" content="@{{ fb_settings.twitter_creator }}">
+    <meta name="twitter:creator" content="@{{ fb_settings.twitter_creator }}">
 {% endif %}
 {% if card == 'player' %}
-<meta name="twitter:player" content="{{ embed.url }}">
-<meta name="twitter:player:width" content="{{ embed.width }}">
-<meta name="twitter:player:height" content="{{ embed.height }}">
+    <meta name="twitter:player" content="{{ embed.url }}">
+    <meta name="twitter:player:width" content="{{ embed.width }}">
+    <meta name="twitter:player:height" content="{{ embed.height }}">
 {% endif %}

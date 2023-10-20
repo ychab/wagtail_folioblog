@@ -2,21 +2,21 @@
 {% load static i18n wagtailcore_tags wagtailimages_tags folioblog %}
 
 {% block extra_css_library %}
-<link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
+    <link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block extra_js_library %}
-<script src="{% static 'glightbox/glightbox.js' %}"></script>
+    <script src="{% static 'glightbox/glightbox.js' %}"></script>
 {% endblock %}
 
 {% block extra_js_inline %}
-<script type="text/javascript">
-    (() => {
-        window.addEventListener('DOMContentLoaded', () => {
-            let lightbox = GLightbox();
-        });
-    })();
-</script>
+    <script type="text/javascript">
+        (() => {
+            window.addEventListener('DOMContentLoaded', () => {
+                let lightbox = GLightbox();
+            });
+        })();
+    </script>
 {% endblock %}
 
 {% block content %}

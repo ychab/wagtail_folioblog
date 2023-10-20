@@ -9,19 +9,18 @@ Image = get_image_model()
 
 
 class Command(BaseCommand):
-
     DEFAULT_SPECS = list(GALLERY_SPECS.values()) + []
 
     def add_arguments(self, parser):
-        parser.add_argument('--specs', nargs='*', default=self.DEFAULT_SPECS)
+        parser.add_argument("--specs", nargs="*", default=self.DEFAULT_SPECS)
 
     def handle(self, *args, **options):
-        specs = options['specs']
+        specs = options["specs"]
         time_start = timezone.now()
 
-        qs = Image.objects.all().order_by('pk')
+        qs = Image.objects.all().order_by("pk")
         count = qs.count()
-        self.stdout.write(f'About generating {count} renditions...')
+        self.stdout.write(f"About generating {count} renditions...")
 
         for image in qs:
             for spec in specs:
@@ -29,4 +28,6 @@ class Command(BaseCommand):
 
         time_end = timezone.now()
         time_total = time_end - time_start
-        self.stdout.write(self.style.SUCCESS(f'Specs renditions generated in {time_total}'))
+        self.stdout.write(
+            self.style.SUCCESS(f"Specs renditions generated in {time_total}")
+        )

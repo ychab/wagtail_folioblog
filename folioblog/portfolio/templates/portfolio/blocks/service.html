@@ -5,13 +5,13 @@
     </span>
     <h4 class="service-name my-3">{{ value.name }}</h4>
     {% if value.text %}
-    <p class="service-text text-muted">{{ value.text }}</p>
+        <p class="service-text text-muted">{{ value.text }}</p>
     {% endif %}
     {% if value.items %}
-    <ul class="service-items list-unstyled text-muted text-start">
-        {% for item in value.items %}
-        <li><i class="fa-solid fa-check"></i> {{ item }}</li>
-        {% endfor  %}
-    </ul>
+        <ul class="service-items list-unstyled text-muted text-start">
+            {% for item in value.items %}
+                <li><i class="fa-solid fa-check"></i> {{ item }}</li>
+            {% endfor  %}
+        </ul>
     {% endif %}
 </div>

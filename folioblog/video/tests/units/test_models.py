@@ -10,10 +10,9 @@ from folioblog.video.models import VideoPage
 
 
 class VideoPageModelTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.collection = CollectionFactory(name='Video thumbnail')
+        cls.collection = CollectionFactory(name="Video thumbnail")
         cls.index = VideoIndexPageFactory()
 
     def tearDown(self):
@@ -27,10 +26,14 @@ class VideoPageModelTestCase(TestCase):
         self.assertTrue(page.embed.thumbnail_url)
 
     def test_embed_failed(self):
-        page = VideoPageFactory(parent=self.index, embed__skip=True, video_url='https://www.youtube.com/watch?v=FOO')
-        with self.assertLogs('folioblog.video.models', level='ERROR') as cm:
+        page = VideoPageFactory(
+            parent=self.index,
+            embed__skip=True,
+            video_url="https://www.youtube.com/watch?v=FOO",
+        )
+        with self.assertLogs("folioblog.video.models", level="ERROR") as cm:
             page.embed
-        self.assertIn('Embed error for page', cm.output[0])
+        self.assertIn("Embed error for page", cm.output[0])
 
     def test_thumbnail_already_exists(self):
         image = ImageFactory()
@@ -43,9 +46,9 @@ class VideoPageModelTestCase(TestCase):
         page = VideoPageFactory(parent=self.index, embed__skip=True, thumbnail=None)
         m.get(page.embed.thumbnail_url, exc=requests.exceptions.HTTPError)
 
-        with self.assertLogs('folioblog.video.models', level='ERROR') as cm:
+        with self.assertLogs("folioblog.video.models", level="ERROR") as cm:
             page.save_revision()
-        self.assertIn('Error thumbnail', cm.output[0])
+        self.assertIn("Error thumbnail", cm.output[0])
         self.assertFalse(page.thumbnail)
 
     @requests_mock.Mocker()
@@ -53,9 +56,9 @@ class VideoPageModelTestCase(TestCase):
         page = VideoPageFactory(parent=self.index, embed__skip=True, thumbnail=None)
         m.get(page.embed.thumbnail_url, status_code=400)
 
-        with self.assertLogs('folioblog.video.models', level='WARNING') as cm:
+        with self.assertLogs("folioblog.video.models", level="WARNING") as cm:
             page.save_revision()
-        self.assertIn('Bad status', cm.output[0])
+        self.assertIn("Bad status", cm.output[0])
         self.assertFalse(page.thumbnail)
 
     def test_thumbnail_attach(self):

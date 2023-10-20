@@ -22,7 +22,10 @@ from taggit.models import TagBase, TaggedItemBase
 
 from folioblog.core.managers import I18nManager
 from folioblog.core.models import (
-    BaseCategory, BaseIndexPage, BasePage, FolioBlogSettings,
+    BaseCategory,
+    BaseIndexPage,
+    BasePage,
+    FolioBlogSettings,
 )
 from folioblog.core.pagination import FolioBlogPaginator
 
@@ -31,46 +34,48 @@ logger = logging.getLogger(__name__)
 
 
 class VideoIndexPage(BaseIndexPage):
-    ajax_template = 'video/video_index_grid_item.html'
+    ajax_template = "video/video_index_grid_item.html"
 
-    parent_page_types = ['portfolio.PortfolioPage']
-    subpage_types = ['video.VideoPage']
+    parent_page_types = ["portfolio.PortfolioPage"]
+    subpage_types = ["video.VideoPage"]
 
     def get_context(self, request, *args, **kwargs):
         folio_settings = FolioBlogSettings.load(request_or_site=request)
         context = super().get_context(request, *args, **kwargs)
 
-        categories = VideoCategory.objects\
-            .filter(videopages__isnull=False)\
-            .filter_language()\
-            .order_by('slug') \
+        categories = (
+            VideoCategory.objects.filter(videopages__isnull=False)
+            .filter_language()
+            .order_by("slug")
             .distinct()
-        context['categories'] = categories
-        context['category_filters'] = [{'name': str(c), 'value': c.slug} for c in categories]
-        context['category_query'] = request.GET.get('category', '')
+        )
+        context["categories"] = categories
+        context["category_filters"] = [
+            {"name": str(c), "value": c.slug} for c in categories
+        ]
+        context["category_query"] = request.GET.get("category", "")
 
-        qs = VideoPage.objects \
-            .child_of(self) \
-            .live() \
-            .filter_language()\
-            .select_related('category', 'image') \
-            .prefetch_related('image__renditions') \
-            .order_by('-date', '-pk') \
-
-        if request.GET.get('category'):
-            qs = qs.filter(category__slug=request.GET['category'])
+        qs = (
+            VideoPage.objects.child_of(self)
+            .live()
+            .filter_language()
+            .select_related("category", "image")
+            .prefetch_related("image__renditions")
+            .order_by("-date", "-pk")
+        )
+        if request.GET.get("category"):
+            qs = qs.filter(category__slug=request.GET["category"])
 
         paginator = FolioBlogPaginator(qs, folio_settings.video_pager_limit)
-        context['videos'] = paginator.get_page(request.GET.get('page'))
+        context["videos"] = paginator.get_page(request.GET.get("page"))
 
         return context
 
 
 @register_snippet
 class VideoCategory(BaseCategory):
-
     class Meta(BaseCategory.Meta):
-        verbose_name_plural = 'video categories'
+        verbose_name_plural = "video categories"
 
 
 class VideoTag(TagBase):
@@ -78,71 +83,80 @@ class VideoTag(TagBase):
 
 
 class VideoPageTag(TaggedItemBase):
-    tag = models.ForeignKey(VideoTag, on_delete=models.CASCADE, related_name="tagged_videos")
-    content_object = ParentalKey('VideoPage', on_delete=models.CASCADE, related_name='tagged_items')
+    tag = models.ForeignKey(
+        VideoTag, on_delete=models.CASCADE, related_name="tagged_videos"
+    )
+    content_object = ParentalKey(
+        "VideoPage", on_delete=models.CASCADE, related_name="tagged_items"
+    )
 
 
 class VideoPage(BasePage):
-    date = models.DateField(_('Date de publication'))
+    date = models.DateField(_("Date de publication"))
     video_url = models.URLField()
     thumbnail = models.ForeignKey(
         Image,
         null=True,
         blank=True,
         on_delete=models.PROTECT,
-        verbose_name='Thumbnail',
+        verbose_name="Thumbnail",
         related_name="videos",
     )
 
-    category = models.ForeignKey(VideoCategory, on_delete=models.PROTECT, related_name='videopages')
+    category = models.ForeignKey(
+        VideoCategory, on_delete=models.PROTECT, related_name="videopages"
+    )
     tags = ClusterTaggableManager(through=VideoPageTag, blank=True)
 
     search_fields = Page.search_fields + [
-        index.AutocompleteField('subheading'),
-        index.SearchField('subheading'),
-        index.SearchField('intro'),
-        index.SearchField('body'),
-        index.FilterField('category_id'),
+        index.AutocompleteField("subheading"),
+        index.SearchField("subheading"),
+        index.SearchField("intro"),
+        index.SearchField("body"),
+        index.FilterField("category_id"),
         # Unfortunetly, doesn't work yet for filtering but still indexed
         # @see https://docs.wagtail.org/en/stable/topics/search/indexing.html#index-relatedfields
-        index.RelatedFields('tags', [
-            index.FilterField('slug'),
-        ]),
+        index.RelatedFields(
+            "tags",
+            [
+                index.FilterField("slug"),
+            ],
+        ),
     ]
 
     content_panels = Page.content_panels + [
-        FieldPanel('subheading'),
+        FieldPanel("subheading"),
         MultiFieldPanel(
             [
-                FieldPanel('category'),
-                FieldPanel('tags'),
+                FieldPanel("category"),
+                FieldPanel("tags"),
             ],
             heading=_("Video information"),
         ),
-        FieldPanel('intro'),
-        FieldPanel('body', classname="full"),
+        FieldPanel("intro"),
+        FieldPanel("body", classname="full"),
         MultiFieldPanel(
             [
-                FieldPanel('image'),
-                FieldPanel('image_alt'),
+                FieldPanel("image"),
+                FieldPanel("image_alt"),
             ],
             heading=_("Image"),
         ),
-        FieldPanel('video_url'),
-        FieldPanel('thumbnail'),
-        InlinePanel('related_links', label=_('Related pages')),
+        FieldPanel("video_url"),
+        FieldPanel("thumbnail"),
+        InlinePanel("related_links", label=_("Related pages")),
     ]
 
-    settings_panels = [FieldPanel('date')] + BasePage.settings_panels
+    settings_panels = [FieldPanel("date")] + BasePage.settings_panels
 
-    parent_page_types = ['video.VideoIndexPage']
+    parent_page_types = ["video.VideoIndexPage"]
     subpage_types = []
 
     @cached_property
     def video_id(self):
         # For now, keep it simple, stupid!
-        if 'watch?v=' in self.video_url:  # pragma: no branch
-            return self.video_url.split('=')[-1]
+        if "watch?v=" in self.video_url:  # pragma: no branch
+            return self.video_url.split("=")[-1]
 
     @cached_property
     def embed(self):
@@ -150,7 +164,8 @@ class VideoPage(BasePage):
             return embeds.get_embed(self.video_url)
         except EmbedException as exc:
             logger.exception(
-                f'Embed error for page {self.pk} with src {self.video_url} and error msg: {exc}')
+                f"Embed error for page {self.pk} with src {self.video_url} and error msg: {exc}"
+            )
 
     def save_revision(self, *args, **kwargs):
         if self.thumbnail is None:
@@ -161,33 +176,35 @@ class VideoPage(BasePage):
         try:
             r = requests.get(self.embed.thumbnail_url)
         except requests.RequestException as exc:
-            logger.exception(f'Error thumbnail for page {self.pk} with exc: {exc}')
+            logger.exception(f"Error thumbnail for page {self.pk} with exc: {exc}")
             return
         else:
             if not r.ok:
-                logger.warning(f'Bad status thumbnail {r.status_code} for page {self.pk}')
+                logger.warning(
+                    f"Bad status thumbnail {r.status_code} for page {self.pk}"
+                )
                 return
 
-        ext = self.embed.thumbnail_url.split('.')[-1]
+        ext = self.embed.thumbnail_url.split(".")[-1]
 
         thumbnail = Image(
             title=self.embed.title,
             file=ImageFile(
                 file=BytesIO(r.content),
-                name=f'thumbnail-{self.video_id}.{ext}',
+                name=f"thumbnail-{self.video_id}.{ext}",
             ),
-            collection=Collection.objects.get(name='Video thumbnail'),
+            collection=Collection.objects.get(name="Video thumbnail"),
         )
         thumbnail.save()
         return thumbnail
 
 
 class VideoPageRelatedLink(Orderable):
-    page = ParentalKey(VideoPage, related_name='related_links')
-    related_page = ParentalKey(Page, related_name='video_related_pages')
+    page = ParentalKey(VideoPage, related_name="related_links")
+    related_page = ParentalKey(Page, related_name="video_related_pages")
 
     panels = [
-        FieldPanel('related_page'),
+        FieldPanel("related_page"),
     ]
 
 
@@ -197,9 +214,9 @@ class VideoPromote(TranslatableMixin, ClusterableModel):
     link_more = models.CharField(max_length=255)
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('link_more'),
-        InlinePanel('related_links', label=_('Related links')),
+        FieldPanel("title"),
+        FieldPanel("link_more"),
+        InlinePanel("related_links", label=_("Related links")),
     ]
 
     objects = I18nManager()
@@ -214,9 +231,9 @@ class VideoPromote(TranslatableMixin, ClusterableModel):
 
 
 class VideoPromoteLink(Orderable):
-    snippet = ParentalKey(VideoPromote, related_name='related_links')
-    related_page = ParentalKey(VideoPage, related_name='promoted_links')
+    snippet = ParentalKey(VideoPromote, related_name="related_links")
+    related_page = ParentalKey(VideoPage, related_name="promoted_links")
 
     panels = [
-        FieldPanel('related_page'),
+        FieldPanel("related_page"),
     ]

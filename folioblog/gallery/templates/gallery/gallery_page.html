@@ -2,17 +2,17 @@
 {% load i18n static wagtailcore_tags wagtailimages_tags folioblog %}
 
 {% block extra_css_library %}
-<link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
+    <link href="{% static 'glightbox/glightbox.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block extra_js_library %}
-<script src="{% static 'draggabilly/draggabilly.pkgd.js' %}"></script>
-<script src="{% static 'packery/packery.pkgd.js' %}"></script>
-<script src="{% static 'glightbox/glightbox.js' %}"></script>
+    <script src="{% static 'draggabilly/draggabilly.pkgd.js' %}"></script>
+    <script src="{% static 'packery/packery.pkgd.js' %}"></script>
+    <script src="{% static 'glightbox/glightbox.js' %}"></script>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'gallery/js/gallery.js' %}"></script>
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}
 
 {% block content %}

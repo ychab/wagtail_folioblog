@@ -12,40 +12,39 @@ class ServiceBlock(blocks.StructBlock):
         blocks.CharBlock(
             max_length=128,
             required=False,
-            icon='list-ul',
+            icon="list-ul",
         )
     )
     icon = blocks.CharBlock(max_length=128)
 
     class Meta:
-        template = 'portfolio/blocks/service.html'
-        icon = 'cogs'
+        template = "portfolio/blocks/service.html"
+        icon = "cogs"
 
 
 class ServicesBlock(blocks.StreamBlock):
     service = ServiceBlock()
 
     class Meta:
-        template = 'portfolio/blocks/services.html'
-        icon = 'cogs'
+        template = "portfolio/blocks/services.html"
+        icon = "cogs"
 
 
 class SkillLinkStructValue(blocks.StructValue):
-
     def url(self):
-        external_url = self.get('external_url')
-        page = self.get('page')
+        external_url = self.get("external_url")
+        page = self.get("page")
         return page.url if page else external_url
 
 
 class SkillLinkBlock(blocks.StructBlock):
     title = blocks.CharBlock(max_length=128)
     caption = blocks.CharBlock(max_length=128, required=False)
-    page = blocks.PageChooserBlock(label='Page', required=False)
+    page = blocks.PageChooserBlock(label="Page", required=False)
     external_url = blocks.URLBlock(required=False)
 
     class Meta:
-        icon = 'link'
+        icon = "link"
         value_class = SkillLinkStructValue
 
 
@@ -58,16 +57,16 @@ class SkillBlock(blocks.StructBlock):
     image = ImageChooserBlock()
 
     class Meta:
-        template = 'portfolio/blocks/skill_grid.html'
-        icon = 'code'
+        template = "portfolio/blocks/skill_grid.html"
+        icon = "code"
 
 
 class SkillsBlock(blocks.StreamBlock):
     skill = SkillBlock()
 
     class Meta:
-        template = 'portfolio/blocks/skills.html'
-        icon = 'code'
+        template = "portfolio/blocks/skills.html"
+        icon = "code"
 
 
 class ExperienceBlock(blocks.StructBlock):
@@ -77,16 +76,16 @@ class ExperienceBlock(blocks.StructBlock):
     photo = ImageChooserBlock(required=False)
 
     class Meta:
-        template = 'portfolio/blocks/experience.html'
-        icon = 'date'
+        template = "portfolio/blocks/experience.html"
+        icon = "date"
 
 
 class ExperiencesBlock(blocks.StreamBlock):
     experience = ExperienceBlock()
 
     class Meta:
-        template = 'portfolio/blocks/experiences.html'
-        icon = 'date'
+        template = "portfolio/blocks/experiences.html"
+        icon = "date"
 
 
 class TeamMemberBlock(blocks.StructBlock):
@@ -96,13 +95,13 @@ class TeamMemberBlock(blocks.StructBlock):
     photo_alt = blocks.CharBlock()
 
     class Meta:
-        template = 'portfolio/blocks/team_member.html'
-        icon = 'user'
+        template = "portfolio/blocks/team_member.html"
+        icon = "user"
 
 
 class TeamMembersBlock(blocks.StreamBlock):
     member = TeamMemberBlock()
 
     class Meta:
-        template = 'portfolio/blocks/team.html'
-        icon = 'group'
+        template = "portfolio/blocks/team.html"
+        icon = "group"

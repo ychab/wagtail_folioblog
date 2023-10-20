@@ -2,11 +2,11 @@
 {% load i18n static folioblog %}
 
 {% block extra_js_library %}
-<script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
+    <script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'blog/js/blogindex.js' %}"></script>
+    <script src="{% static 'blog/js/blogindex.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -23,6 +23,6 @@
     {% include 'cleanblog/spinner.html' %}
     <!-- Pagination -->
     {% if blogpages and blogpages.paginator.num_pages > 1 %}
-    {% include 'cleanblog/pager.html' with page=blogpages %}
+        {% include 'cleanblog/pager.html' with page=blogpages %}
     {% endif %}
 {% endblock %}

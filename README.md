@@ -37,11 +37,16 @@ Testing:
 * End to end (integration:
   * [Selenium](https://www.selenium.dev/)
 
+Coding style:
+* [Black](https://black.readthedocs.io/en/stable/index.html)
+* [Pylama](https://github.com/klen/pylama)
+* [isort](https://pycqa.github.io/isort/)
+* [djhtml](https://github.com/rtts/djhtml)
+
 Integration / Automation:
 * [Tox](https://tox.wiki/en/latest/)
 * [Pre-commit](https://pre-commit.com/)
 * [GitHub Action](https://github.com/features/actions)
-* [Pylama](https://github.com/klen/pylama) and [isort](https://pycqa.github.io/isort/) for codingstyle
 
 And yeah, that's my personal website! So please, don't hack me, I'm not famous!
 

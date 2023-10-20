@@ -20,21 +20,28 @@ hiredis = "^2.2.3"
 psycopg = "^3.1.9"
 
 [tool.poetry.group.test.dependencies]
-isort = "^5.12.0"
 tblib = "^2.0.0"
 factory-boy = "^3.3.0"
 wagtail-factories = "^4.1.0"
 requests-mock = "^1.11.0"
 selenium = "^4.10.0"
 tox = "^4.6.4"
-coverage = {extras = ["toml"], version = "^7.2.7"}
-pylama = {extras = ["toml"], version = "^8.4.1"}
 lxml = "^4.9.3"
+coverage = {extras = ["toml"], version = "^7.2.7"}
 
 [tool.poetry.group.dev.dependencies]
 django-extensions = "^3.2.3"
 django-debug-toolbar = "^4.1.0"
 pre-commit = "^3.5.0"
+pylama = {extras = ["toml"], version = "^8.4.1"}
+black = "^23.9.1"
+djhtml = "^3.0.6"
+isort = "^5.12.0"
+
+[tool.black]
+line-lenght = 119
+target-version = ["py310"]
+extend-exclude = "/migrations/|/settings/"
 
 [tool.pylama]
 skip = "*/.tox/*,*/migrations/*,*/settings/*,*/static/*"
@@ -47,10 +54,8 @@ max_line_length = 119
 complexity = 15
 
 [tool.isort]
-combine_as_imports = true
-multi_line_output = 5
-include_trailing_comma = true
-skip = ".tox,migrations,docs,media,static"
+profile = "black"
+skip = "migrations"
 sections = "FUTURE,STDLIB,DJANGO,WAGTAIL,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
 known_django = "django"
 known_wagtail = "wagtail"

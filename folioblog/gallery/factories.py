@@ -5,9 +5,8 @@ from folioblog.gallery.models import GalleryPage
 
 
 class GalleryPageFactory(BaseIndexPageFactory):
-
     class Meta:
         model = GalleryPage
 
-    title = _('Galerie')
-    slug = 'gallery'
+    title = _("Galerie")
+    slug = "gallery"

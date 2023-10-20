@@ -9,8 +9,8 @@
         <meta name="robots" content="index, follow, archive">
         <meta name="author" content="{{ current_site.site_name }}">
         {% block meta %}
-        <meta name="description" content="{{ page.seo_description}}">
-        <title>{{ page.seo_title|default:page.title }}</title>
+            <meta name="description" content="{{ page.seo_description}}">
+            <title>{{ page.seo_title|default:page.title }}</title>
         {% endblock meta %}
         <!-- OG and Twitter meta -->
         {% block meta_og %}{% og_meta page %}{% endblock %}
@@ -21,35 +21,35 @@
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
         <!-- Canonical Links -->
         {% block canonical_links %}
-        <link rel="canonical" href="{{ page.full_url }}" />
+            <link rel="canonical" href="{{ page.full_url }}" />
         {% endblock %}
         <!-- RSS -->
         <link rel="alternate" type="application/rss+xml" href="{% url 'rss' %}">
         <!-- Alternative link -->
         {% block alternative_links %}
-        {% if page %}
-        {% for translation in page|page_translations %}
-        {% language translation.locale.language_code %}
-        <link rel="alternate" hreflang="{{ translation.locale.language_code }}" href="{{ translation.full_url }}" />
-        {% endlanguage %}
-        {% endfor %}
-        {% endif %}
+            {% if page %}
+                {% for translation in page|page_translations %}
+                    {% language translation.locale.language_code %}
+                        <link rel="alternate" hreflang="{{ translation.locale.language_code }}" href="{{ translation.full_url }}" />
+                    {% endlanguage %}
+                {% endfor %}
+            {% endif %}
         {% endblock %}
         {# Compress third party #}
         {% compress css file folioblog-contrib %}
         <!-- CSS third party -->
-        {% block extra_css_library %}{% endblock %}
+            {% block extra_css_library %}{% endblock %}
         {% endcompress %}
         {# Compress base CSS #}
         {% compress css file folioblog-base %}
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'cleanblog/css/styles.css' %}" rel="stylesheet">
+            <link href="{% static 'cleanblog/css/styles.css' %}" rel="stylesheet">
         <!-- Custom CSS -->
-        <link href="{% static 'folioblog/css/cleanblog.css' %}" rel="stylesheet">
+            <link href="{% static 'folioblog/css/cleanblog.css' %}" rel="stylesheet">
         {% endcompress %}
         <!-- Extra CSS inline -->
         {% block extra_css_inline %}
-        {% background_style page.image %}
+            {% background_style page.image %}
         {% endblock %}
     </head>
 
@@ -61,7 +61,7 @@
         {% include 'cleanblog/navbar.html' %}
         <!-- Page Header-->
         {% block header %}
-        {% include 'cleanblog/header.html' %}
+            {% include 'cleanblog/header.html' %}
         {% endblock %}
         <!-- Main content -->
         {% block content %}{% endblock %}
@@ -74,25 +74,25 @@
         {% block extra_js_inline %}{% endblock %}
         <!-- JS third party -->
         {% compress js file folioblog-contrib %}
-        <script src="{% static 'cookies-eu-banner/cookies-eu-banner.js' %}"></script>
-        {% block extra_js_library %}{% endblock %}
+            <script src="{% static 'cookies-eu-banner/cookies-eu-banner.js' %}"></script>
+            {% block extra_js_library %}{% endblock %}
         {% endcompress %}
         <!-- JS common -->
         {% compress js file folioblog-base %}
         <!-- Fontawesome -->
-        <script src="{% static 'fontawesome/js/all.js' %}"></script>
+            <script src="{% static 'fontawesome/js/all.js' %}"></script>
         <!-- Bootstrap -->
-        <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+            <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
         <!-- Core theme JS -->
-        <script src="{% static 'cleanblog/js/scripts.js' %}"></script>
+            <script src="{% static 'cleanblog/js/scripts.js' %}"></script>
         {% endcompress %}
         {% compress js inline %}
         <!-- Extra JS -->
-        {% block extra_js %}{% endblock %}
+            {% block extra_js %}{% endblock %}
         <!-- GA -->
-        <script src="{% static 'core/js/googleanalytics.js' %}"></script>
+            <script src="{% static 'core/js/googleanalytics.js' %}"></script>
         <!-- Cookies banner JS -->
-        <script src="{% static 'core/js/cookies_banner.js' %}"></script>
+            <script src="{% static 'core/js/cookies_banner.js' %}"></script>
         {% endcompress %}
     </body>
 </html>

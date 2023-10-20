@@ -14,62 +14,73 @@ Image = get_image_model()
 
 
 class GalleryPage(BaseIndexPage):
-    ajax_template = 'gallery/gallery_page_ajax.html'
+    ajax_template = "gallery/gallery_page_ajax.html"
 
-    gallery_title = models.CharField(max_length=512, blank=True, default='')
+    gallery_title = models.CharField(max_length=512, blank=True, default="")
     gallery_text = RichTextField(blank=True)
 
     content_panels = BaseIndexPage.content_panels + [
         MultiFieldPanel(
             [
-                FieldPanel('gallery_title'),
-                FieldPanel('gallery_text'),
+                FieldPanel("gallery_title"),
+                FieldPanel("gallery_text"),
             ],
             heading=_("Section"),
         ),
     ]
 
-    parent_page_types = ['portfolio.PortfolioPage']
+    parent_page_types = ["portfolio.PortfolioPage"]
     subpage_types = []
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
         # First collect gallery collection.
-        root_collection = Collection.objects.get(name='Gallery')
-        collection_qs = Collection.objects.child_of(root_collection).order_by('name')
+        root_collection = Collection.objects.get(name="Gallery")
+        collection_qs = Collection.objects.child_of(root_collection).order_by("name")
 
         # Then filter collections if any.
-        collection_filter = request.GET.get('collection', None)
+        collection_filter = request.GET.get("collection", None)
         if collection_filter:
             collection_subquery = collection_qs.filter(pk=collection_filter)
         else:
             collection_subquery = collection_qs.all()  # keep a copy/clone
 
         # Collect images for these collections.
-        image_qs = Image.objects \
-            .filter(collection__in=collection_subquery) \
-            .select_related('collection') \
-            .prefetch_renditions() \
-            .order_by('?')  # just for fun, will be cached in production
+        image_qs = (
+            Image.objects.filter(collection__in=collection_subquery)
+            .select_related("collection")
+            .prefetch_renditions()
+            .order_by("?")
+        )  # just for fun, will be cached in production
 
         # For each images, try to attach its page if any (that's the ugly part):
         # - fetching related pages is not possible (i.e related_name='+' due to abstract=True)
         # - using Image.get_usage() in loop is just a performance killer
         # ... so we do it manually in that ugly way!
         # @Note: if BaseIndexPage is not abstract, we could do BaseIndexPage.objects.live()...
-        image_pages = {p.image_id: p for p in BasicPage.objects.live().filter_language()}
-        image_pages.update({p.image_id: p for p in BlogPage.objects.live().filter_language()})
-        image_pages.update({p.image_id: p for p in VideoPage.objects.live().filter_language()})
+        image_pages = {
+            p.image_id: p for p in BasicPage.objects.live().filter_language()
+        }
+        image_pages.update(
+            {p.image_id: p for p in BlogPage.objects.live().filter_language()}
+        )
+        image_pages.update(
+            {p.image_id: p for p in VideoPage.objects.live().filter_language()}
+        )
 
         images = []
         for image in image_qs:
             image.page = image_pages.get(image.pk, None)  # ugly properties on the fly
             images.append(image)
 
-        context.update({
-            'images': images,
-            'collection_options': [{'name': _(str(c)), 'value': c.pk} for c in collection_qs],  # ugly trad on the fly
-            'collection_filter': collection_filter,
-        })
+        context.update(
+            {
+                "images": images,
+                "collection_options": [
+                    {"name": _(str(c)), "value": c.pk} for c in collection_qs
+                ],  # ugly trad on the fly
+                "collection_filter": collection_filter,
+            }
+        )
         return context

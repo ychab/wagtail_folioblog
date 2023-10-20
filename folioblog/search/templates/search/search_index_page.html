@@ -2,45 +2,45 @@
 {% load i18n static wagtailcore_tags wagtailimages_tags folioblog %}
 
 {% block extra_css_library %}
-<link href="{% static 'tagify/tagify.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'tagify/tagify.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block extra_js_inline %}
-{{ form.tags.value|json_script:'tags-defaults' }}
-{{ tag_options|json_script:'tags-options' }}
-{{ autocomplete_url|json_script:'autocomplete-url' }}
+    {{ form.tags.value|json_script:'tags-defaults' }}
+    {{ tag_options|json_script:'tags-options' }}
+    {{ autocomplete_url|json_script:'autocomplete-url' }}
 {% endblock %}
 
 {% block extra_js_library %}
-<script src="{% static 'autocomplete/autoComplete.js' %}"></script>
-<script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
-<script src="{% static 'tagify/tagify.js' %}"></script>
+    <script src="{% static 'autocomplete/autoComplete.js' %}"></script>
+    <script src="{% static 'infinite-scroll/infinite-scroll.pkgd.js' %}"></script>
+    <script src="{% static 'tagify/tagify.js' %}"></script>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'search/js/search.js' %}"></script>
+    <script src="{% static 'search/js/search.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<div id="search-page"  class="container mt-4 px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            {% if search_counter >= 0 %}
-            <h2 class="text-center text-muted mb-4 fs-4">
-                🎉️ {% blocktrans trimmed count counter=search_counter %}
-                "Va chercher bonheur" : {{ counter }} résultat (pas ouf) 😅️
-                {% plural %}
-                "Va chercher bonheur" : {{ counter }} résultats 🚀
-            {% endblocktrans %}
-            </h2>
-            {% endif %}
+    <div id="search-page"  class="container mt-4 px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                {% if search_counter >= 0 %}
+                    <h2 class="text-center text-muted mb-4 fs-4">
+                        🎉️ {% blocktrans trimmed count counter=search_counter %}
+                            "Va chercher bonheur" : {{ counter }} résultat (pas ouf) 😅️
+                        {% plural %}
+                            "Va chercher bonheur" : {{ counter }} résultats 🚀
+                        {% endblocktrans %}
+                    </h2>
+                {% endif %}
             <!-- Search form -->
-            {% include 'search/search_form.html' with count=search_counter form=form %}
-            {% if has_filters %}
+                {% include 'search/search_form.html' with count=search_counter form=form %}
+                {% if has_filters %}
             <!-- Search results -->
-            {% include 'search/search_results.html' with search_results=search_results %}
-            {% endif %}
+                    {% include 'search/search_results.html' with search_results=search_results %}
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

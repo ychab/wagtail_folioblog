@@ -16,7 +16,9 @@ import requests_mock
 from wagtail_factories import CollectionFactory
 
 from folioblog.blog.factories import (
-    BlogCategoryFactory, BlogIndexPageFactory, BlogPageFactory,
+    BlogCategoryFactory,
+    BlogIndexPageFactory,
+    BlogPageFactory,
 )
 from folioblog.core.factories import BasicPageFactory, LocaleFactory
 from folioblog.core.models import FolioBlogSettings
@@ -32,7 +34,6 @@ Rendition = Image.get_rendition_model()
 
 
 class LoadCachePagesCommandTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         """
@@ -41,8 +42,8 @@ class LoadCachePagesCommandTestCase(TestCase):
         between testmethods just after the SQL transaction begin!
         """
         super().setUpClass()
-        cls.locale_fr = LocaleFactory(language_code='fr')
-        cls.locale_en = LocaleFactory(language_code='en')
+        cls.locale_fr = LocaleFactory(language_code="fr")
+        cls.locale_en = LocaleFactory(language_code="en")
 
         cls.site = Site.objects.get(is_default_site=True)
         cls.root_page_original = cls.site.root_page
@@ -53,13 +54,13 @@ class LoadCachePagesCommandTestCase(TestCase):
         cls.folio_settings.save()  # Save only after transaction is enabled
 
         cls.portfolio = PortfolioPageFactory(
-            parent=Page.objects.get(slug='root', locale=cls.locale_fr),
+            parent=Page.objects.get(slug="root", locale=cls.locale_fr),
             locale=cls.locale_fr,
-            services__0='service',
+            services__0="service",
             # skills__0='skill',
             skills__0__skill__links__0__page=None,
-            cv_experiences__0='experience',
-            team_members__0='member',
+            cv_experiences__0="experience",
+            team_members__0="member",
         )
         cls.site.root_page = cls.portfolio
         cls.site.save()
@@ -67,37 +68,63 @@ class LoadCachePagesCommandTestCase(TestCase):
         # Then delete old homepage
         Page.objects.filter(pk=2).delete()
 
-        root_collection = CollectionFactory(name='Gallery')
-        for name in ['posts', 'videos']:
+        root_collection = CollectionFactory(name="Gallery")
+        for name in ["posts", "videos"]:
             CollectionFactory(name=name, parent=root_collection)
 
         cls.home_blog = HomePageFactory(parent=cls.portfolio, locale=cls.locale_fr)
-        cls.gallery_page = GalleryPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
-        cls.index_posts = BlogIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
-        cls.index_videos = VideoIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
-        cls.index_search = SearchIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
+        cls.gallery_page = GalleryPageFactory(
+            parent=cls.portfolio, locale=cls.locale_fr
+        )
+        cls.index_posts = BlogIndexPageFactory(
+            parent=cls.portfolio, locale=cls.locale_fr
+        )
+        cls.index_videos = VideoIndexPageFactory(
+            parent=cls.portfolio, locale=cls.locale_fr
+        )
+        cls.index_search = SearchIndexPageFactory(
+            parent=cls.portfolio, locale=cls.locale_fr
+        )
 
         cls.basics = []
-        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title='disclaimer'))
-        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title='presentation'))
-        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title='cookies-policy'))
-        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title='rgpd'))
+        cls.basics.append(
+            BasicPageFactory(
+                parent=cls.portfolio, locale=cls.locale_fr, title="disclaimer"
+            )
+        )
+        cls.basics.append(
+            BasicPageFactory(
+                parent=cls.portfolio, locale=cls.locale_fr, title="presentation"
+            )
+        )
+        cls.basics.append(
+            BasicPageFactory(
+                parent=cls.portfolio, locale=cls.locale_fr, title="cookies-policy"
+            )
+        )
+        cls.basics.append(
+            BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="rgpd")
+        )
 
         category = BlogCategoryFactory(locale=cls.locale_fr)
         cls.posts = []
         for i in range(0, cls.folio_settings.blog_pager_limit + 1):
-            cls.posts.append(BlogPageFactory(
-                parent=cls.index_posts,
-                locale=cls.locale_fr,
-                category=category,
-            ))
+            cls.posts.append(
+                BlogPageFactory(
+                    parent=cls.index_posts,
+                    locale=cls.locale_fr,
+                    category=category,
+                )
+            )
 
         cls.videos = []
         for i in range(0, cls.folio_settings.video_pager_limit + 1):
-            cls.videos.append(VideoPageFactory(
-                parent=cls.index_videos,
-                locale=cls.locale_fr,
-            ))
+            cls.videos.append(
+                VideoPageFactory(
+                    parent=cls.index_videos,
+                    locale=cls.locale_fr,
+                )
+            )
 
         cls.portfolio_en = CopyPageForTranslationAction(
             page=cls.portfolio,
@@ -106,15 +133,20 @@ class LoadCachePagesCommandTestCase(TestCase):
             include_subtree=False,
         ).execute(skip_permission_checks=True)
 
-        cls.pages = [
-            cls.portfolio,
-            cls.portfolio_en,
-            cls.home_blog,
-            cls.gallery_page,
-            cls.index_posts,
-            cls.index_videos,
-            cls.index_search,
-        ] + cls.basics + cls.posts + cls.videos
+        cls.pages = (
+            [
+                cls.portfolio,
+                cls.portfolio_en,
+                cls.home_blog,
+                cls.gallery_page,
+                cls.index_posts,
+                cls.index_videos,
+                cls.index_search,
+            ]
+            + cls.basics
+            + cls.posts
+            + cls.videos
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -123,27 +155,31 @@ class LoadCachePagesCommandTestCase(TestCase):
         # root page was done BEFORE entering into the SQL transaction.
         # As a result, we need to reset it manually.
         cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=['root_page'])
+        cls.site.save(update_fields=["root_page"])
         super().tearDownClass()
 
     @requests_mock.Mocker()
     def test_load_all_pages(self, m):
         for page in self.pages:
-            m.get(page.full_url, text='Ok')
+            m.get(page.full_url, text="Ok")
 
         for lang in dict(settings.LANGUAGES).keys():
-            for view_name in ['javascript-catalog', 'rss']:
+            for view_name in ["javascript-catalog", "rss"]:
                 with translation.override(lang):
-                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
 
-        m.get(f'{self.site.root_url}/givemea404please', text='Ok')
+        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
 
         out = StringIO()
-        call_command('loadcachepages', stdout=out)
-        self.assertIn('All page cache loaded', out.getvalue())
+        call_command("loadcachepages", stdout=out)
+        self.assertIn("All page cache loaded", out.getvalue())
 
         for page in self.pages:
-            self.assertIn(f'Requesting: "{page.full_url}"', out.getvalue(), f'Page {page}({page.pk}) request check')
+            self.assertIn(
+                f'Requesting: "{page.full_url}"',
+                out.getvalue(),
+                f"Page {page}({page.pk}) request check",
+            )
 
     @requests_mock.Mocker()
     def test_load_request_exception(self, m):
@@ -151,43 +187,43 @@ class LoadCachePagesCommandTestCase(TestCase):
 
         for page in Page.objects.all():
             # Special handling for exception
-            if page.slug == 'portfolio':
+            if page.slug == "portfolio":
                 url_exc = page.full_url
                 m.get(url_exc, exc=requests.exceptions.HTTPError)
             else:
-                m.get(page.full_url, text='Ok')
+                m.get(page.full_url, text="Ok")
 
         for lang in dict(settings.LANGUAGES).keys():
-            for view_name in ['javascript-catalog', 'rss']:
+            for view_name in ["javascript-catalog", "rss"]:
                 with translation.override(lang):
-                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
 
-        m.get(f'{self.site.root_url}/givemea404please', text='Ok')
+        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
 
         out = StringIO()
-        call_command('loadcachepages', stdout=out)
+        call_command("loadcachepages", stdout=out)
 
-        self.assertIn(f'Error on page {url_exc} with exc', out.getvalue())
+        self.assertIn(f"Error on page {url_exc} with exc", out.getvalue())
 
     @requests_mock.Mocker()
     def test_load_request_error(self, m):
         url_error = None
 
         for page in Page.objects.all():
-            if page.slug == 'portfolio':
+            if page.slug == "portfolio":
                 url_error = page.full_url
                 m.get(url_error, status_code=400)
             else:
-                m.get(page.full_url, text='Ok')
+                m.get(page.full_url, text="Ok")
 
         for lang in dict(settings.LANGUAGES).keys():
-            for view_name in ['javascript-catalog', 'rss']:
+            for view_name in ["javascript-catalog", "rss"]:
                 with translation.override(lang):
-                    m.get(f'{self.site.root_url}{reverse(view_name)}', text='Ok')
+                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
 
-        m.get(f'{self.site.root_url}/givemea404please', text='Ok')
+        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
 
         out = StringIO()
-        call_command('loadcachepages', stdout=out)
+        call_command("loadcachepages", stdout=out)
 
-        self.assertIn(f'Error for page {url_error} with status 400', out.getvalue())
+        self.assertIn(f"Error for page {url_error} with status 400", out.getvalue())

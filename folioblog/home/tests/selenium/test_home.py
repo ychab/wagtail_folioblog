@@ -1,14 +1,11 @@
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
-from folioblog.core.utils.tests import (
-    FolioBlogSeleniumServerTestCase, skip_mobile,
-)
+from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase, skip_mobile
 from folioblog.home.factories import HomePageFactory
 from folioblog.home.tests.selenium.webpages import HomeWebPage
 from folioblog.video.factories import VideoIndexPageFactory, VideoPageFactory
 
 
 class HomePageLiveTestCase(FolioBlogSeleniumServerTestCase):
-
     def setUp(self):
         super().setUp()
 
@@ -30,12 +27,12 @@ class HomePageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
-        spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'
+        spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
         rendition = self.page.image.get_rendition(spec)
-        rendition_url = f'{self.live_server_url}{rendition.url}'
+        rendition_url = f"{self.live_server_url}{rendition.url}"
         self.assertEqual(rendition_url, self.webpage.get_masterhead_image())
 
-    @skip_mobile('@fixme - action drag_n_drop() is broken on mobile!?')
+    @skip_mobile("@fixme - action drag_n_drop() is broken on mobile!?")
     def test_carousel_posts_dragdrop_next(self):
         self.webpage.scroll_to_carousel_post()
         self.webpage.promoted_posts_dragdrop()

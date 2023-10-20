@@ -3,7 +3,9 @@ from django.utils.formats import date_format
 from django.utils.translation import gettext
 
 from folioblog.blog.factories import (
-    BlogCategoryFactory, BlogIndexPageFactory, BlogPageFactory,
+    BlogCategoryFactory,
+    BlogIndexPageFactory,
+    BlogPageFactory,
 )
 from folioblog.blog.tests.selenium.webpages import BlogIndexWebPage
 from folioblog.core.models import FolioBlogSettings
@@ -11,16 +13,15 @@ from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase
 
 
 class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
-
     def setUp(self):
         super().setUp()
 
         self.foliosettings = FolioBlogSettings.load()
 
         self.categories = [
-            BlogCategoryFactory(name='Tech'),
-            BlogCategoryFactory(name='Économie'),
-            BlogCategoryFactory(name='Philosophie'),
+            BlogCategoryFactory(name="Tech"),
+            BlogCategoryFactory(name="Économie"),
+            BlogCategoryFactory(name="Philosophie"),
         ]
         self.page = BlogIndexPageFactory(parent=self.site.root_page)
         self.posts = []
@@ -33,9 +34,9 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.webpage.fetch_page(self.page.full_url)
 
     def test_masthead_image(self):
-        spec = 'fill-1080x1380' if self.is_mobile else 'fill-1905x560'
+        spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
         rendition = self.page.image.get_rendition(spec)
-        rendition_url = f'{self.live_server_url}{rendition.url}'
+        rendition_url = f"{self.live_server_url}{rendition.url}"
         self.assertEqual(rendition_url, self.webpage.get_masterhead_image())
 
     def test_grid_item(self):
@@ -45,19 +46,21 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         item = items[0]
         post = self.posts[-1]
 
-        post_url = f'{self.live_server_url}{post.url}'
-        spec = 'fill-1010x675' if self.is_mobile else 'fill-460x310'
+        post_url = f"{self.live_server_url}{post.url}"
+        spec = "fill-1010x675" if self.is_mobile else "fill-460x310"
         rendition = post.image.get_rendition(spec)
-        rendition_url = f'{self.live_server_url}{rendition.url}'
-        page_date = '{} {}'.format(gettext('Publié le'), date_format(post.date, 'SHORT_DATE_FORMAT'))
+        rendition_url = f"{self.live_server_url}{rendition.url}"
+        page_date = "{} {}".format(
+            gettext("Publié le"), date_format(post.date, "SHORT_DATE_FORMAT")
+        )
 
-        self.assertEqual(item['title'], self.posts[-1].title)
-        self.assertEqual(item['link'], post_url)
-        self.assertEqual(item['date'], page_date)
-        self.assertEqual(item['intro'], post.intro)
-        self.assertEqual(item['img_src'], rendition_url)
+        self.assertEqual(item["title"], self.posts[-1].title)
+        self.assertEqual(item["link"], post_url)
+        self.assertEqual(item["date"], page_date)
+        self.assertEqual(item["intro"], post.intro)
+        self.assertEqual(item["img_src"], rendition_url)
 
-    @override_settings(LANGUAGE_CODE='fr')
+    @override_settings(LANGUAGE_CODE="fr")
     def test_infinite_scroll(self):
         expected_count = self.foliosettings.blog_pager_limit * 2
         is_scrolled = self.webpage.scroll_down(expected_count)
@@ -83,9 +86,9 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         items = self.webpage.get_grid_items()
         self.assertEqual(len(items), 1)
-        self.assertEqual(category.name, items[0]['category'])
+        self.assertEqual(category.name, items[0]["category"])
 
-    @override_settings(LANGUAGE_CODE='fr')
+    @override_settings(LANGUAGE_CODE="fr")
     def test_categories_filter_and_scroll(self):
         category = self.categories[0]
 
@@ -95,7 +98,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertTrue(is_filtered)
         self.assertEqual(len(items), expected_count)
 
-        categories = list(set([i['category'] for i in items]))
+        categories = list(set([i["category"] for i in items]))
         self.assertEqual(len(categories), 1)
         self.assertEqual(category.name, categories[0])
 
@@ -105,7 +108,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         items = self.webpage.get_grid_items()
         self.assertEqual(len(items), expected_count)
 
-        categories = list(set([i['category'] for i in items]))
+        categories = list(set([i["category"] for i in items]))
         self.assertEqual(len(categories), 1)
         self.assertEqual(category.name, categories[0])
 

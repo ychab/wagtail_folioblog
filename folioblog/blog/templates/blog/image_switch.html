@@ -5,8 +5,8 @@
 {% image page.image width-1920 format-jpeg as image_full %}
 
 {% if has_switch %}
-{% image page.image_body width-936 as image_xs_3x_switch %}
-{% image page.image_body width-700 as image_lg_1x_switch %}
+    {% image page.image_body width-936 as image_xs_3x_switch %}
+    {% image page.image_body width-700 as image_lg_1x_switch %}
 {% endif %}
 
 <div class="position-relative page-image{% if page.image.is_portrait %} image-portrait{% endif %}{% if has_switch %} image-switch{% endif %}">
@@ -14,40 +14,40 @@
     <figure class="figure d-block">
 
         {% if not has_switch %}
-        <a href="{{ image_full.url }}"
-           class="glightbox"
-           data-glightbox="type: image; description: .custom-desc; alt: {{ page.caption }};">
+            <a href="{{ image_full.url }}"
+               class="glightbox"
+               data-glightbox="type: image; description: .custom-desc; alt: {{ page.caption }};">
         {% endif %}
 
-            <picture data-image-current="first"
-                     data-image-first-xs="{{ image_xs_3x.url }}"
-                     data-image-first-lg="{{ image_lg_1x.url }}"
-                     data-image-second-xs="{{ image_xs_3x_switch.url }}"
-                     data-image-second-lg="{{ image_lg_1x_switch.url }}">
+        <picture data-image-current="first"
+                 data-image-first-xs="{{ image_xs_3x.url }}"
+                 data-image-first-lg="{{ image_lg_1x.url }}"
+                 data-image-second-xs="{{ image_xs_3x_switch.url }}"
+                 data-image-second-lg="{{ image_lg_1x_switch.url }}">
 
-                <source type="image/webp"
-                        srcset="{{ image_xs_3x.url }}"
-                        media="(max-width: 576px) and (min-resolution: 192dpi)"
-                        width="{{ image_xs_3x.width }}"
-                        height="{{ image_xs_3x.height }}">
+            <source type="image/webp"
+                    srcset="{{ image_xs_3x.url }}"
+                    media="(max-width: 576px) and (min-resolution: 192dpi)"
+                    width="{{ image_xs_3x.width }}"
+                    height="{{ image_xs_3x.height }}">
 
-                <img src="{{ image_lg_1x.url }}"
-                     alt="{{ page.caption }}"
-                     class="figure-img img-fluid rounded mx-auto d-block"
-                     width="{{ image_lg_1x.width }}"
-                     height="{{ image_lg_1x.height }}">
+            <img src="{{ image_lg_1x.url }}"
+                 alt="{{ page.caption }}"
+                 class="figure-img img-fluid rounded mx-auto d-block"
+                 width="{{ image_lg_1x.width }}"
+                 height="{{ image_lg_1x.height }}">
 
-            </picture>
+        </picture>
         {% if not has_switch %}
-        </a>
-        <div class="glightbox-desc custom-desc">{% figcaption page %}</div>
+            </a>
+            <div class="glightbox-desc custom-desc">{% figcaption page %}</div>
         {% endif %}
         <figcaption class="caption figure-caption">{% figcaption page %}</figcaption>
     </figure>
 
     {% if has_switch %}
-    <div id="image-switch-tooltip" class="position-absolute start-0 top-0 bg-secondary p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="{% trans "Clique sur l'image, c'est magique !" %}">
-        <i class="fa-solid fa-wand-sparkles"></i>
-    </div>
+        <div id="image-switch-tooltip" class="position-absolute start-0 top-0 bg-secondary p-3" data-bs-toggle="tooltip" data-bs-placement="top" title="{% trans "Clique sur l'image, c'est magique !" %}">
+            <i class="fa-solid fa-wand-sparkles"></i>
+        </div>
     {% endif %}
 </div>

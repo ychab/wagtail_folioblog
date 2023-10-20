@@ -1,31 +1,31 @@
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 {% if related_links %} {# Ugly check here to prevent useless SQL count query #}
-<hr class="mt-5 mb-0"/>
-<div class="my-4">
-    <h3 class="text-center mb-4 fs-5">
-    {% blocktrans count counter=related_links|length %}Page liée{% plural %}Pages liées{% endblocktrans %}
-    </h3>
+    <hr class="mt-5 mb-0"/>
+    <div class="my-4">
+        <h3 class="text-center mb-4 fs-5">
+            {% blocktrans count counter=related_links|length %}Page liée{% plural %}Pages liées{% endblocktrans %}
+        </h3>
 
-    {% for link in related_links %}
-    {% with related_page=link.related_page.specific %}
-    <div class="related-page card text-center text-md-start">
-        <div class="row g-0">
-            <div class="col-md-3">
-                {% image related_page.image fill-150x150 class="img-fluid mt-3 mt-md-0" alt=related_page.caption %}
-            </div>
-            <div class="col-md-9">
-                <div class="card-body fs-6">
-                    <h4 class="related-page-title card-title fs-6">{{ related_page.title }}</h4>
-                    <p class="card-text my-2">{{ related_page.intro|truncatewords:15 }}</p>
-                    <a href="{% pageurl related_page %}"
-                       class="related-page-link btn btn-primary btn-sm stretched-link">
-                        {% trans 'Voir' %}
-                    </a>
+        {% for link in related_links %}
+            {% with related_page=link.related_page.specific %}
+                <div class="related-page card text-center text-md-start">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            {% image related_page.image fill-150x150 class="img-fluid mt-3 mt-md-0" alt=related_page.caption %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body fs-6">
+                                <h4 class="related-page-title card-title fs-6">{{ related_page.title }}</h4>
+                                <p class="card-text my-2">{{ related_page.intro|truncatewords:15 }}</p>
+                                <a href="{% pageurl related_page %}"
+                                   class="related-page-link btn btn-primary btn-sm stretched-link">
+                                    {% trans 'Voir' %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            {% endwith %}
+        {% endfor %}
     </div>
-    {% endwith %}
-    {% endfor %}
-</div>
 {% endif %}

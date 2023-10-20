@@ -10,7 +10,7 @@ from folioblog.blog.models import BlogPage
 from folioblog.core.models import FolioBlogSettings
 
 
-@method_decorator(never_cache, name='dispatch')
+@method_decorator(never_cache, name="dispatch")
 class AutocompleteView(View):
     """
     To avoid cache flood by hacker... don't cache it too!
@@ -21,10 +21,14 @@ class AutocompleteView(View):
         # Unfortunetly, only locale_id is indexed...
         locale = Locale.objects.get(language_code=get_language())
 
-        search_qs = BlogPage.objects.live().filter_locale(locale).autocomplete(
-            query=query,
-            fields=['title'],
-            operator=folio_settings.search_operator,
+        search_qs = (
+            BlogPage.objects.live()
+            .filter_locale(locale)
+            .autocomplete(
+                query=query,
+                fields=["title"],
+                operator=folio_settings.search_operator,
+            )
         )
-        results = [{'title': str(p), 'href': p.url} for p in search_qs]
+        results = [{"title": str(p), "href": p.url} for p in search_qs]
         return JsonResponse(results, safe=False)

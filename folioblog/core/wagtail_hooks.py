@@ -16,7 +16,7 @@ from folioblog.blog.models import BlogTag
 from folioblog.video.models import VideoTag
 
 
-@hooks.register('register_rich_text_features')
+@hooks.register("register_rich_text_features")
 def register_keyboard_feature(features):
     # Just mimic wagtail.admin.wagtail_hooks.register_core_features()
     # @see draftjs_exporter.constants.py
@@ -46,38 +46,38 @@ def register_keyboard_feature(features):
 
 class TagSnippetViewSet(SnippetViewSet):
     model = Tag
-    menu_label = 'Tags'
-    icon = 'tag'
+    menu_label = "Tags"
+    icon = "tag"
     list_display = ["name", "slug"]
     search_fields = ("name",)
-    ordering = ('name',)
-    panels = [FieldPanel('name')]  # only show the name field
+    ordering = ("name",)
+    panels = [FieldPanel("name")]  # only show the name field
 
 
 class BlogTagSnippetViewSet(SnippetViewSet):
     model = BlogTag
-    menu_label = 'Blog Tags'
-    icon = 'tag'
+    menu_label = "Blog Tags"
+    icon = "tag"
     list_display = ["name", "slug"]
     search_fields = ("name",)
-    ordering = ('name',)
-    panels = [FieldPanel('name')]  # only show the name field
+    ordering = ("name",)
+    panels = [FieldPanel("name")]  # only show the name field
 
 
 class VideoTagSnippetViewSet(SnippetViewSet):
     model = VideoTag
-    menu_label = 'Video Tags'
-    icon = 'tag'
+    menu_label = "Video Tags"
+    icon = "tag"
     list_display = ["name", "slug"]
     search_fields = ("name",)
-    ordering = ('name',)
-    panels = [FieldPanel('name')]  # only show the name field
+    ordering = ("name",)
+    panels = [FieldPanel("name")]  # only show the name field
 
 
 @register_snippet
 class TagSnippetViewSetGroup(SnippetViewSetGroup):
-    menu_label = 'Tags'
-    menu_icon = 'tag'
+    menu_label = "Tags"
+    menu_icon = "tag"
     menu_order = 400
     items = (TagSnippetViewSet, BlogTagSnippetViewSet, VideoTagSnippetViewSet)
 
@@ -86,12 +86,12 @@ class TagSnippetViewSetGroup(SnippetViewSetGroup):
 class EmbedSnippetViewSet(SnippetViewSet):
     add_to_admin_menu = True
     model = Embed
-    menu_label = 'Embeds'
-    icon = 'media'
+    menu_label = "Embeds"
+    icon = "media"
     menu_order = 450
     list_display = ["title", "url", "thumbnail_url", "last_updated"]
     search_fields = ("title", "url")
-    ordering = ('last_updated',)
+    ordering = ("last_updated",)
 
     inspect_view_enabled = True
 

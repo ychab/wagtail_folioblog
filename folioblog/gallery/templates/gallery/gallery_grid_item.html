@@ -27,15 +27,15 @@
     </picture>
 
     {% if image.page %}
-    <div class="grid-item-link position-absolute top-0 start-0 end-0">
-        <a href="{% pageurl image.page %}" alt="{{ image.page.title }}"
-           class="post-link text-center p-1 p-sm-3 text-white">
-            <h5 class="post-title d-none d-sm-block fw-normal" data-post-title="{{ image.page.title }}">
-                {{ image.page.title }} <i class="fa-solid fa-link"></i>
-            </h5>
-            <i class="fa-solid fa-link d-sm-none"></i>
-        </a>
-    </div>
+        <div class="grid-item-link position-absolute top-0 start-0 end-0">
+            <a href="{% pageurl image.page %}" alt="{{ image.page.title }}"
+               class="post-link text-center p-1 p-sm-3 text-white">
+                <h5 class="post-title d-none d-sm-block fw-normal" data-post-title="{{ image.page.title }}">
+                    {{ image.page.title }} <i class="fa-solid fa-link"></i>
+                </h5>
+                <i class="fa-solid fa-link d-sm-none"></i>
+            </a>
+        </div>
     {% endif %}
 
     <div class="grid-item-zoom position-absolute bottom-0 end-0">
@@ -52,9 +52,9 @@
         </a>
         <div class="glightbox-desc custom-desc-{{ image_full.pk }}">
             {% if image.page %}
-            {% figcaption image.page %} - <a href="{{ image.page.url }}" class="text-decoration-underline">{% trans "Voir l'article" %}</a>
+                {% figcaption image.page %} - <a href="{{ image.page.url }}" class="text-decoration-underline">{% trans "Voir l'article" %}</a>
             {% else %}
-            {% figcaption image_full.image %}
+                {% figcaption image_full.image %}
             {% endif %}
         </div>
     </div>

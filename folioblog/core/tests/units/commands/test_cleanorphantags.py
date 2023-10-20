@@ -6,18 +6,21 @@ from django.test import TestCase
 from taggit.models import Tag
 
 from folioblog.blog.factories import (
-    BlogIndexPageFactory, BlogPageFactory, BlogTagFactory,
+    BlogIndexPageFactory,
+    BlogPageFactory,
+    BlogTagFactory,
 )
 from folioblog.blog.models import BlogTag
 from folioblog.core.factories import ImageFactory, TagFactory
 from folioblog.video.factories import (
-    VideoIndexPageFactory, VideoPageFactory, VideoTagFactory,
+    VideoIndexPageFactory,
+    VideoPageFactory,
+    VideoTagFactory,
 )
 from folioblog.video.models import VideoTag
 
 
 class CleanOrphanTagsCommandTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.post_index = BlogIndexPageFactory()
@@ -33,42 +36,42 @@ class CleanOrphanTagsCommandTestCase(TestCase):
         ImageFactory(tags=[tag])
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('0 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("0 orphan tags deleted", out.getvalue())
 
     def test_tag_orphan(self):
         TagFactory()
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('1 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("1 orphan tags deleted", out.getvalue())
 
     def test_blogtag_used(self):
         tag = BlogTagFactory()
         BlogPageFactory(parent=self.post_index, tags=[tag])
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('0 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("0 orphan tags deleted", out.getvalue())
 
     def test_blogtag_orphan(self):
         BlogTagFactory()
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('1 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("1 orphan tags deleted", out.getvalue())
 
     def test_videotag_used(self):
         tag = VideoTagFactory()
         VideoPageFactory(parent=self.video_index, tags=[tag])
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('0 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("0 orphan tags deleted", out.getvalue())
 
     def test_videotag_orphan(self):
         VideoTagFactory()
 
         out = StringIO()
-        call_command('cleanorphantags', stdout=out)
-        self.assertIn('1 orphan tags deleted', out.getvalue())
+        call_command("cleanorphantags", stdout=out)
+        self.assertIn("1 orphan tags deleted", out.getvalue())

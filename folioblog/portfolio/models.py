@@ -9,25 +9,27 @@ from wagtail.models import Page
 from folioblog.core.managers import I18nPageManager
 from folioblog.core.sitemap import SitemapPageMixin
 from folioblog.portfolio.blocks import (
-    ExperiencesBlock, ServicesBlock, SkillsBlock, TeamMembersBlock,
+    ExperiencesBlock,
+    ServicesBlock,
+    SkillsBlock,
+    TeamMembersBlock,
 )
 
 Image = get_image_model()
 
 
 class PortfolioPage(SitemapPageMixin, Page):
-
     # Header
     header_heading = models.CharField(
-        verbose_name=_('Titre'),
+        verbose_name=_("Titre"),
         max_length=128,
-        default='',
+        default="",
     )
     header_lead = models.CharField(
-        verbose_name=_('Slogan'),
+        verbose_name=_("Slogan"),
         max_length=255,
         blank=True,
-        default='',
+        default="",
     )
     header_slide = models.ForeignKey(
         Image,
@@ -35,16 +37,16 @@ class PortfolioPage(SitemapPageMixin, Page):
         null=True,
         blank=True,
         on_delete=models.PROTECT,
-        verbose_name=_('Slide'),
-        related_name='+',
+        verbose_name=_("Slide"),
+        related_name="+",
     )
 
     # Service
     service_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=255,
         blank=True,
-        default='',
+        default="",
     )
     services = StreamField(
         ServicesBlock(),
@@ -55,10 +57,10 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Skills
     skill_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=512,
         blank=True,
-        default='',
+        default="",
     )
     skills = StreamField(
         SkillsBlock(),
@@ -69,36 +71,36 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # About
     about_heading = models.CharField(
-        verbose_name=_('Titre'),
+        verbose_name=_("Titre"),
         max_length=128,
-        default='',
+        default="",
     )
     about_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=128,
         blank=True,
-        default='',
+        default="",
     )
     about_text = RichTextField(blank=True)
     about_video = models.ForeignKey(
-        'video.VideoPage',
+        "video.VideoPage",
         on_delete=models.PROTECT,
-        related_name='portfolio',
+        related_name="portfolio",
         null=True,
         blank=True,
     )
 
     # CV
     cv_heading = models.CharField(
-        verbose_name=_('Titre'),
+        verbose_name=_("Titre"),
         max_length=128,
-        default='',
+        default="",
     )
     cv_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=128,
         blank=True,
-        default='',
+        default="",
     )
     cv_experiences = StreamField(
         ExperiencesBlock(),
@@ -109,21 +111,21 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Team
     team_heading = models.CharField(
-        verbose_name=_('Titre'),
+        verbose_name=_("Titre"),
         max_length=128,
-        default='',
+        default="",
     )
     team_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=128,
         blank=True,
-        default='',
+        default="",
     )
     team_text = models.CharField(
-        verbose_name=_('Texte'),
+        verbose_name=_("Texte"),
         max_length=512,
         blank=True,
-        default='',
+        default="",
     )
     team_members = StreamField(
         TeamMembersBlock(),
@@ -134,15 +136,15 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Contact
     contact_heading = models.CharField(
-        verbose_name=_('Titre'),
+        verbose_name=_("Titre"),
         max_length=128,
-        default='',
+        default="",
     )
     contact_subheading = models.CharField(
-        verbose_name=_('Sous-titre'),
+        verbose_name=_("Sous-titre"),
         max_length=128,
         blank=True,
-        default='',
+        default="",
     )
 
     objects = I18nPageManager()
@@ -150,64 +152,64 @@ class PortfolioPage(SitemapPageMixin, Page):
     content_panels = Page.content_panels + [
         MultiFieldPanel(
             [
-                FieldPanel('header_lead'),
-                FieldPanel('header_heading'),
-                FieldPanel('header_slide'),
+                FieldPanel("header_lead"),
+                FieldPanel("header_heading"),
+                FieldPanel("header_slide"),
             ],
-            heading=_('Entête'),
+            heading=_("Entête"),
             classname="collapsible",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('service_subheading'),
-                FieldPanel('services'),
+                FieldPanel("service_subheading"),
+                FieldPanel("services"),
             ],
-            heading=_('Services'),
+            heading=_("Services"),
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('skill_subheading'),
-                FieldPanel('skills'),
+                FieldPanel("skill_subheading"),
+                FieldPanel("skills"),
             ],
-            heading=_('Skills'),
+            heading=_("Skills"),
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('cv_heading'),
-                FieldPanel('cv_subheading'),
-                FieldPanel('cv_experiences'),
+                FieldPanel("cv_heading"),
+                FieldPanel("cv_subheading"),
+                FieldPanel("cv_experiences"),
             ],
-            heading=_('CV'),
+            heading=_("CV"),
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('team_heading'),
-                FieldPanel('team_subheading'),
-                FieldPanel('team_text'),
-                FieldPanel('team_members'),
+                FieldPanel("team_heading"),
+                FieldPanel("team_subheading"),
+                FieldPanel("team_text"),
+                FieldPanel("team_members"),
             ],
-            heading=_('Équipe'),
+            heading=_("Équipe"),
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('about_heading'),
-                FieldPanel('about_subheading'),
-                FieldPanel('about_text'),
-                FieldPanel('about_video'),
+                FieldPanel("about_heading"),
+                FieldPanel("about_subheading"),
+                FieldPanel("about_text"),
+                FieldPanel("about_video"),
             ],
-            heading=_('À propos'),
+            heading=_("À propos"),
             classname="collapsible",
         ),
         MultiFieldPanel(
             [
-                FieldPanel('contact_heading'),
-                FieldPanel('contact_subheading'),
+                FieldPanel("contact_heading"),
+                FieldPanel("contact_subheading"),
             ],
-            heading=_('Contact'),
+            heading=_("Contact"),
             classname="collapsible",
         ),
     ]

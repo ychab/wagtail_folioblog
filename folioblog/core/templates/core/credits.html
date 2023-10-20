@@ -1,12 +1,12 @@
 {% load i18n %}
 {% if photographers %}
-{% trans 'Photos &copy; : ' %}
-{% for photographer in photographers %}
-    {% if photographer.website %}
-    <a href="{{ photographer.website }}" target="_blank">{{ photographer }}</a>
-    {% else %}
-    {{ photographer }}
-    {% endif %}
-    {% if not forloop.last %}, {% endif %}
-{% endfor %}
+    {% trans 'Photos &copy; : ' %}
+    {% for photographer in photographers %}
+        {% if photographer.website %}
+            <a href="{{ photographer.website }}" target="_blank">{{ photographer }}</a>
+        {% else %}
+            {{ photographer }}
+        {% endif %}
+        {% if not forloop.last %}, {% endif %}
+    {% endfor %}
 {% endif %}

@@ -6,14 +6,14 @@
             <h3 class="section-subheading text-muted">{{ page.skill_subheading }}</h3>
         </div>
         <div class="row">
-        {% for skill in page.skills %}
-            {% include_block skill with index=forloop.counter %}
-        {% endfor  %}
+            {% for skill in page.skills %}
+                {% include_block skill with index=forloop.counter %}
+            {% endfor  %}
         </div>
     </div>
 </section>
 
 <!-- Portfolio Modals -->
 {% for skill in page.skills %}
-{% include 'portfolio/blocks/skill_modal.html' with skill=skill.value index=forloop.counter %}
+    {% include 'portfolio/blocks/skill_modal.html' with skill=skill.value index=forloop.counter %}
 {% endfor %}

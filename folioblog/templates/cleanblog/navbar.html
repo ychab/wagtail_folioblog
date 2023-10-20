@@ -11,11 +11,11 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0 align-items-lg-center">
                 {% for page in menu_links.values %}
-                <li class="nav-item">
-                    <a class="nav-link px-lg-3" href="{% pageurl page %}" alt="{{ page }}">
-                        {{ page }}
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3" href="{% pageurl page %}" alt="{{ page }}">
+                            {{ page }}
+                        </a>
+                    </li>
                 {% endfor %}
                 {% if page %}{% language_selector page=page %}{% endif %}
             </ul>

@@ -4,7 +4,9 @@ from django.test import TestCase
 from wagtail.models import Site
 
 from folioblog.blog.factories import (
-    BlogIndexPageFactory, BlogPageFactory, BlogPromoteFactory,
+    BlogIndexPageFactory,
+    BlogPageFactory,
+    BlogPromoteFactory,
 )
 from folioblog.blog.models import BlogPage, BlogPromote
 from folioblog.core.factories import LocaleFactory
@@ -12,13 +14,14 @@ from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.home.factories import HomePageFactory
 from folioblog.home.tests.units.htmlpages import HomeHTMLPage
 from folioblog.video.factories import (
-    VideoIndexPageFactory, VideoPageFactory, VideoPromoteFactory,
+    VideoIndexPageFactory,
+    VideoPageFactory,
+    VideoPromoteFactory,
 )
 from folioblog.video.models import VideoPage, VideoPromote
 
 
 class HomePageTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.site = Site.objects.get(is_default_site=True)
@@ -40,8 +43,8 @@ class HomePageTestCase(TestCase):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertIsNone(response.context['blog_snippet'])
-        self.assertIsNone(response.context['video_snippet'])
+        self.assertIsNone(response.context["blog_snippet"])
+        self.assertIsNone(response.context["video_snippet"])
 
     def test_list_live(self):
         BlogPageFactory(parent=self.index_blog, promoted=True, live=False)
@@ -50,8 +53,8 @@ class HomePageTestCase(TestCase):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.context['blog_snippet'].related_links.count(), 0)
-        self.assertEqual(response.context['video_snippet'].related_links.count(), 0)
+        self.assertEqual(response.context["blog_snippet"].related_links.count(), 0)
+        self.assertEqual(response.context["video_snippet"].related_links.count(), 0)
 
     def test_list_order(self):
         posts = []
@@ -65,25 +68,28 @@ class HomePageTestCase(TestCase):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
 
-        blog_ids = response.context['blog_snippet'].related_links \
-            .order_by('sort_order') \
-            .values_list('related_page_id', flat=True)
+        blog_ids = (
+            response.context["blog_snippet"]
+            .related_links.order_by("sort_order")
+            .values_list("related_page_id", flat=True)
+        )
         self.assertListEqual(list(blog_ids), [p.pk for p in posts])
 
-        video_ids = response.context['video_snippet'].related_links \
-            .order_by('sort_order') \
-            .values_list('related_page_id', flat=True)
+        video_ids = (
+            response.context["video_snippet"]
+            .related_links.order_by("sort_order")
+            .values_list("related_page_id", flat=True)
+        )
         self.assertListEqual(list(video_ids), [p.pk for p in videos])
 
 
 class HomePageI18nPageTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         site = Site.objects.get(is_default_site=True)
 
-        locale_fr = LocaleFactory(language_code='fr')
-        locale_en = LocaleFactory(language_code='en')
+        locale_fr = LocaleFactory(language_code="fr")
+        locale_en = LocaleFactory(language_code="en")
 
         # Required links
         BlogIndexPageFactory(parent=site.root_page)
@@ -111,19 +117,18 @@ class HomePageI18nPageTestCase(TestCase):
         response = self.client.get(self.page_fr.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.context['blog_snippet'].locale.language_code, 'fr')
-        self.assertEqual(response.context['video_snippet'].locale.language_code, 'fr')
+        self.assertEqual(response.context["blog_snippet"].locale.language_code, "fr")
+        self.assertEqual(response.context["video_snippet"].locale.language_code, "fr")
 
     def test_filter_language_en(self):
         response = self.client.get(self.page_en.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.context['blog_snippet'].locale.language_code, 'en')
-        self.assertEqual(response.context['video_snippet'].locale.language_code, 'en')
+        self.assertEqual(response.context["blog_snippet"].locale.language_code, "en")
+        self.assertEqual(response.context["video_snippet"].locale.language_code, "en")
 
 
 class HomeHTMLTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.page = HomePageFactory()
@@ -139,28 +144,28 @@ class HomeHTMLTestCase(TestCase):
         self.assertEqual(self.htmlpage.get_title(), self.page.title)
 
     def test_masthead_content(self):
-        masthead_txt = self.htmlpage.get_masterhead_content().replace('\n', '')
+        masthead_txt = self.htmlpage.get_masterhead_content().replace("\n", "")
         self.assertIn(self.page.title, masthead_txt)
         self.assertIn(self.page.subheading, masthead_txt)
 
     def test_meta_og(self):
         meta = self.htmlpage.get_meta_og()
-        rendition = self.page.image.get_rendition('fill-2400x1260|format-jpeg')
-        self.assertEqual(meta['og:type'], 'website')
-        self.assertEqual(meta['og:site_name'], self.page.get_site().site_name)
-        self.assertEqual(meta['og:locale'], self.page.locale.language_code)
-        self.assertEqual(meta['og:title'], self.page.title)
-        self.assertEqual(meta['og:url'], self.page.full_url)
-        self.assertEqual(meta['og:description'], self.page.seo_description)
-        self.assertEqual(meta['og:image'], rendition.full_url)
-        self.assertEqual(meta['og:image:type'], mimetype(rendition.url))
-        self.assertEqual(int(meta['og:image:width']), rendition.width)
-        self.assertEqual(int(meta['og:image:height']), rendition.height)
-        self.assertEqual(meta['og:image:alt'], self.page.caption)
+        rendition = self.page.image.get_rendition("fill-2400x1260|format-jpeg")
+        self.assertEqual(meta["og:type"], "website")
+        self.assertEqual(meta["og:site_name"], self.page.get_site().site_name)
+        self.assertEqual(meta["og:locale"], self.page.locale.language_code)
+        self.assertEqual(meta["og:title"], self.page.title)
+        self.assertEqual(meta["og:url"], self.page.full_url)
+        self.assertEqual(meta["og:description"], self.page.seo_description)
+        self.assertEqual(meta["og:image"], rendition.full_url)
+        self.assertEqual(meta["og:image:type"], mimetype(rendition.url))
+        self.assertEqual(int(meta["og:image:width"]), rendition.width)
+        self.assertEqual(int(meta["og:image:height"]), rendition.height)
+        self.assertEqual(meta["og:image:alt"], self.page.caption)
 
     def test_meta_twitter(self):
         meta = self.htmlpage.get_meta_twitter()
-        self.assertEqual(meta['twitter:card'], 'summary')
+        self.assertEqual(meta["twitter:card"], "summary")
 
     def test_meta_canonical(self):
         href = self.htmlpage.get_canonical_href()
@@ -168,14 +173,13 @@ class HomeHTMLTestCase(TestCase):
 
 
 class HomeHTMLi18nTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.page_fr = HomePageFactory(
-            locale=LocaleFactory(language_code='fr'),
+            locale=LocaleFactory(language_code="fr"),
         )
         cls.page_en = cls.page_fr.copy_for_translation(
-            locale=LocaleFactory(language_code='en'),
+            locale=LocaleFactory(language_code="en"),
             copy_parents=True,
             alias=True,
         )

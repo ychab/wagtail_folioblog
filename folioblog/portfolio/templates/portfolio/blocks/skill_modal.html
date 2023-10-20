@@ -15,14 +15,14 @@
                                 {{ skill.text|richtext }}
                             </div>
                             {% if skill.links %}
-                            <ul class="list-unstyled text-center">
-                                {% for link in skill.links %}
-                                <li>
-                                    <a href="{{ link.url }}">{{ link.title }}</a>
-                                    {% if link.caption %}: {{ link.caption }}{% endif %}
-                                </li>
-                                {% endfor %}
-                            </ul>
+                                <ul class="list-unstyled text-center">
+                                    {% for link in skill.links %}
+                                        <li>
+                                            <a href="{{ link.url }}">{{ link.title }}</a>
+                                            {% if link.caption %}: {{ link.caption }}{% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
                             {% endif %}
                             <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                 <i class="fas fa-xmark me-1"></i>

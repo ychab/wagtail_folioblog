@@ -11,15 +11,17 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from folioblog.core.utils.tests.selenium import is_document_ready
 from folioblog.core.utils.tests.selenium.conditions import (
-    has_active_class, is_not_obstructed, is_scroll_finished,
-    is_visible_in_viewport, videos_stopped,
+    has_active_class,
+    is_not_obstructed,
+    is_scroll_finished,
+    is_visible_in_viewport,
+    videos_stopped,
 )
 
 logger = logging.getLogger(__name__)
 
 
 class BaseIndexWebPage:
-
     def __init__(self, selenium: RemoteWebDriver) -> None:
         self.selenium: RemoteWebDriver = selenium
 
@@ -30,7 +32,9 @@ class BaseIndexWebPage:
         # Then do implicit wait manually to don't mix with explicit wait.
         # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
         conditions = [
-            EC.invisibility_of_element_located((By.ID, 'page-500-body')),  # check for 500 page
+            EC.invisibility_of_element_located(
+                (By.ID, "page-500-body")
+            ),  # check for 500 page
             is_document_ready(),
         ]
         if not skip_check_url:
@@ -49,7 +53,7 @@ class BaseIndexWebPage:
             return True
 
         button = WebDriverWait(self.selenium, 5).until(
-            EC.element_to_be_clickable((By.ID, 'cookies-eu-accept')),
+            EC.element_to_be_clickable((By.ID, "cookies-eu-accept")),
         )
         button.click()
 
@@ -62,7 +66,7 @@ class BaseIndexWebPage:
             return True
 
         button = WebDriverWait(self.selenium, 5).until(
-            EC.element_to_be_clickable((By.ID, 'cookies-eu-reject')),
+            EC.element_to_be_clickable((By.ID, "cookies-eu-reject")),
         )
         button.click()
 
@@ -70,36 +74,38 @@ class BaseIndexWebPage:
             EC.invisibility_of_element_located((By.ID, "cookies-eu-banner"))
         )
 
-    def force_cookie_consent(self, value='true'):
-        self.selenium.add_cookie({
-            'name': 'hasConsent',
-            'value': value,
-            'path': '/',
-        })
+    def force_cookie_consent(self, value="true"):
+        self.selenium.add_cookie(
+            {
+                "name": "hasConsent",
+                "value": value,
+                "path": "/",
+            }
+        )
 
     def cookie_consent_reset(self):
-        self.selenium.delete_cookie('hasConsent')
+        self.selenium.delete_cookie("hasConsent")
 
     def has_cookie_banner(self):
         try:
             return WebDriverWait(self.selenium, 1).until(
-                EC.visibility_of_element_located((By.ID, 'cookies-eu-banner'))
+                EC.visibility_of_element_located((By.ID, "cookies-eu-banner"))
             )
         except TimeoutException:
             return False
 
     def has_cookie_consent(self):
-        cookie = self.selenium.get_cookie('hasConsent')
+        cookie = self.selenium.get_cookie("hasConsent")
         if cookie is not None:
-            return cookie.get('value') == 'true'
+            return cookie.get("value") == "true"
 
     def has_cookie_consent_banner(self):
         return WebDriverWait(self.selenium, 2).until(
-            EC.visibility_of_element_located((By.CLASS_NAME, 'youtube-cookies-consent'))
+            EC.visibility_of_element_located((By.CLASS_NAME, "youtube-cookies-consent"))
         )
 
-    def save_screenshot(self, screenshot_dir, prefix='screenshot'):
-        fd, filename = mkstemp(prefix=prefix + '-', suffix='.png')
+    def save_screenshot(self, screenshot_dir, prefix="screenshot"):
+        fd, filename = mkstemp(prefix=prefix + "-", suffix=".png")
         filepath = os.path.join(
             screenshot_dir,
             os.path.basename(filename),
@@ -133,15 +139,15 @@ class BaseIndexWebPage:
         )
 
     def scroll_to_top(self):
-        return self.scroll_to((By.TAG_NAME, 'header'))
+        return self.scroll_to((By.TAG_NAME, "header"))
 
     def scroll_to_video(self, locator=None):
-        locator = locator or (By.CLASS_NAME, 'video-youtube-thumbnail')
+        locator = locator or (By.CLASS_NAME, "video-youtube-thumbnail")
         return self.scroll_to(locator)
 
     def scroll_down(self, locator, expected_count):
         # First scroll to latest element.
-        last_locator = (locator[0], locator[1] + ':last-child')
+        last_locator = (locator[0], locator[1] + ":last-child")
         is_scrolled = self.scroll_to(last_locator)
 
         # Then wait for infinite scroll to load items.
@@ -169,7 +175,7 @@ class BaseIndexWebPage:
         )
 
     def play_video(self, locator=None):
-        locator = locator or (By.CLASS_NAME, 'youtube-player-button')
+        locator = locator or (By.CLASS_NAME, "youtube-player-button")
 
         button = WebDriverWait(self.selenium, 5).until(
             EC.element_to_be_clickable(locator),
@@ -178,12 +184,16 @@ class BaseIndexWebPage:
 
         # First wait for thumbnail to disappear.
         is_triggered = WebDriverWait(self.selenium, 2).until(
-            EC.invisibility_of_element_located(button))
+            EC.invisibility_of_element_located(button)
+        )
 
         # Then wait for YouTube to insert the iframe.
         try:
             is_loaded = WebDriverWait(self.selenium, 5).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, '.video-youtube-player-wrapper iframe')))
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, ".video-youtube-player-wrapper iframe")
+                )
+            )
         except TimeoutException:  # pragma: no cover
             # Because YouTube maybe very slow, we won't wait indefinitely...
             is_loaded = False
@@ -191,76 +201,98 @@ class BaseIndexWebPage:
         return is_triggered, is_loaded
 
     def stop_videos(self):
-        locator = (By.CLASS_NAME, 'video-youtube-player-wrapper')
+        locator = (By.CLASS_NAME, "video-youtube-player-wrapper")
         elems = self.selenium.find_elements(*locator)
-        video_ids = [elem.get_attribute('data-video-id') for elem in elems]
+        video_ids = [elem.get_attribute("data-video-id") for elem in elems]
 
         # Beautifuuuuuul... I just want U to know... U'R my favorite giiiiirl
-        self.selenium.execute_script("""
+        self.selenium.execute_script(
+            """
             for (let playerId in youtubePlayers) {
                 youtubePlayers[playerId].destroy();
                 delete youtubePlayers[playerId];
             }
-        """)
+        """
+        )
 
         return WebDriverWait(self.selenium, 5).until(
             all_of(*[videos_stopped(vid) for vid in video_ids])
         )
 
     def stop_video(self, locator=None):
-        locator = locator or (By.CLASS_NAME, 'video-youtube-player-wrapper')
+        locator = locator or (By.CLASS_NAME, "video-youtube-player-wrapper")
         elem = self.selenium.find_element(*locator)
-        video_id = elem.get_attribute('data-video-id')
+        video_id = elem.get_attribute("data-video-id")
 
         # Beautifuuuuuul... I just want U to know... U'R my favorite giiiiirl
-        self.selenium.execute_script("""
+        self.selenium.execute_script(
+            """
             for (let playerId in youtubePlayers) {
                 if (playerId == arguments[0]) {
                     youtubePlayers[playerId].destroy();
                     delete youtubePlayers[playerId];
                 }
             }
-        """, video_id)
+        """,
+            video_id,
+        )
 
         return WebDriverWait(self.selenium, 5).until(
-            lambda driver: driver.find_element(By.ID, f'youtube-video-{video_id}').tag_name == 'div'
+            lambda driver: driver.find_element(
+                By.ID, f"youtube-video-{video_id}"
+            ).tag_name
+            == "div"
         )
 
     def get_url(self):
         return self.selenium.current_url
+
     url = property(get_url)
 
     def get_title(self):
         return self.selenium.title
+
     title = property(get_title)
 
     def get_content(self):
         return self.selenium.page_source
+
     content = property(get_content)
 
     def get_masterhead_image(self):
-        elem = self.selenium.find_element(By.CLASS_NAME, 'masthead')
-        return elem.value_of_css_property('background-image').replace('url("', '').replace('")', '')
+        elem = self.selenium.find_element(By.CLASS_NAME, "masthead")
+        return (
+            elem.value_of_css_property("background-image")
+            .replace('url("', "")
+            .replace('")', "")
+        )
 
 
 class BaseWebPage(BaseIndexWebPage):
-
     def get_related_pages(self):
         data = []
 
-        elems = self.selenium.find_elements(By.CLASS_NAME, 'related-page')
+        elems = self.selenium.find_elements(By.CLASS_NAME, "related-page")
         for elem in elems:
-            data.append({
-                'title': elem.find_element(By.CLASS_NAME, 'related-page-title').text,
-                'url': elem.find_element(By.CLASS_NAME, 'related-page-link').get_attribute('href'),
-                'img_src': elem.find_element(By.TAG_NAME, 'img').get_property('currentSrc'),
-            })
+            data.append(
+                {
+                    "title": elem.find_element(
+                        By.CLASS_NAME, "related-page-title"
+                    ).text,
+                    "url": elem.find_element(
+                        By.CLASS_NAME, "related-page-link"
+                    ).get_attribute("href"),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
+                        "currentSrc"
+                    ),
+                }
+            )
 
         return data
 
     def get_image_with_caption(self):
-        elem = self.selenium.find_element(By.CLASS_NAME, 'page-image')
+        elem = self.selenium.find_element(By.CLASS_NAME, "page-image")
         return {
-            'img_src': elem.find_element(By.TAG_NAME, 'img').get_property('currentSrc'),
-            'caption': elem.find_element(By.TAG_NAME, 'figcaption').text,
+            "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
+            "caption": elem.find_element(By.TAG_NAME, "figcaption").text,
         }

@@ -15,13 +15,12 @@ fake = Faker(locale=current_locale)
 
 
 class BodyFullImageFormatTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.image = ImageFactory()
-        cls.rendition = cls.image.get_rendition('width-940')
+        cls.rendition = cls.image.get_rendition("width-940")
 
         text = fake.text()
         text += f'<embed alt="Test text alt" embedtype="image" format="bodyfullfuild" id="{cls.image.pk}"/>'
@@ -40,20 +39,22 @@ class BodyFullImageFormatTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         html = unescape(response.content.decode())
 
-        self.assertIn('<figcaption class="caption figure-caption">Test text alt</figcaption>', html)
+        self.assertIn(
+            '<figcaption class="caption figure-caption">Test text alt</figcaption>',
+            html,
+        )
 
 
 class CreditLightboxImageFormatTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.image = ImageFactory()
-        cls.rendition = cls.image.get_rendition('width-940')
-        cls.rendition_full = cls.image.get_rendition('width-1920|format-jpeg')
+        cls.rendition = cls.image.get_rendition("width-940")
+        cls.rendition_full = cls.image.get_rendition("width-1920|format-jpeg")
 
-        cls.alt_text = 'Test text alt'
+        cls.alt_text = "Test text alt"
         cls.alt_text_html = unescape(cls.image.figcaption(cls.alt_text))
 
         text = fake.text()
@@ -73,7 +74,10 @@ class CreditLightboxImageFormatTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         html = unescape(response.content.decode())
 
-        self.assertIn(f'<figcaption class="caption figure-caption">{self.alt_text_html}</figcaption>', html)
+        self.assertIn(
+            f'<figcaption class="caption figure-caption">{self.alt_text_html}</figcaption>',
+            html,
+        )
 
     def test_image_lightbox_link(self):
         response = self.client.get(self.page.url)
@@ -91,4 +95,7 @@ class CreditLightboxImageFormatTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         html = unescape(response.content.decode())
 
-        self.assertIn(f'<div class="glightbox-desc custom-desc-{self.image.pk}">{self.alt_text_html}</div>', html)
+        self.assertIn(
+            f'<div class="glightbox-desc custom-desc-{self.image.pk}">{self.alt_text_html}</div>',
+            html,
+        )

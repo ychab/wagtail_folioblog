@@ -1,8 +1,8 @@
 {% load wagtailcore_tags wagtailimages_tags folioblog %}
 {% if image.is_portrait %}
-{% image image fill-1260x2400 format-jpeg as og_image %}
+    {% image image fill-1260x2400 format-jpeg as og_image %}
 {% else %}
-{% image image fill-2400x1260 format-jpeg as og_image %}
+    {% image image fill-2400x1260 format-jpeg as og_image %}
 {% endif %}
 <meta property="og:type" content="{{ og_type }}"/>
 <meta property="og:site_name" content="{{ site.site_name }}"/>
@@ -16,22 +16,22 @@
 <meta property="og:image:height" content="{{ og_image.height }}"/>
 <meta property="og:image:alt" content="{{ image_alt }}"/>
 {% if embed %}
-<meta property="og:video" content="{{ embed.url }}" />
-<meta property="og:video:type" content="text/html" />  {# Yes, YouTube add this on its own pages?? #}
-<meta property="og:video:width" content="{{ embed.width }}" />
-<meta property="og:video:height" content="{{ embed.height }}" />
+    <meta property="og:video" content="{{ embed.url }}" />
+    <meta property="og:video:type" content="text/html" />  {# Yes, YouTube add this on its own pages?? #}
+    <meta property="og:video:width" content="{{ embed.width }}" />
+    <meta property="og:video:height" content="{{ embed.height }}" />
 {% endif %}
 {% if og_type == 'article' %}
-<meta property="article:published_time" content="{{ page.first_published_at|date:"c" }}"/>
-<meta property="article:modified_time" content="{{ page.last_published_at|date:"c" }}"/>
-<meta property="article:section" content="{{ page.category }}"/>
-{% for tag in page.tags.all %}
-<meta property="article:tag" content="{{ tag.slug }}"/>
-{% endfor %}
+    <meta property="article:published_time" content="{{ page.first_published_at|date:"c" }}"/>
+    <meta property="article:modified_time" content="{{ page.last_published_at|date:"c" }}"/>
+    <meta property="article:section" content="{{ page.category }}"/>
+    {% for tag in page.tags.all %}
+        <meta property="article:tag" content="{{ tag.slug }}"/>
+    {% endfor %}
 {% elif 'video.' in og_type %}
-<meta property="video:release_date" content="{{ page.first_published_at|date:"c" }}"/>
-<meta property="video:tag" content="{{ page.category }}"/>
-{% for tag in page.tags.all %}
-<meta property="video:tag" content="{{ tag.slug }}"/>
-{% endfor %}
+    <meta property="video:release_date" content="{{ page.first_published_at|date:"c" }}"/>
+    <meta property="video:tag" content="{{ page.category }}"/>
+    {% for tag in page.tags.all %}
+        <meta property="video:tag" content="{{ tag.slug }}"/>
+    {% endfor %}
 {% endif %}

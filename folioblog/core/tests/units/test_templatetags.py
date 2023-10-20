@@ -10,7 +10,6 @@ from folioblog.core.factories.images import PhotographerFactory
 
 
 class PhotoCreditTemplateTagTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)

@@ -1,12 +1,9 @@
 from folioblog.core.factories import BasicPageFactory
 from folioblog.core.tests.selenium.webpages import BasicWebPage
-from folioblog.core.utils.tests import (
-    FolioBlogSeleniumServerTestCase, skip_mobile,
-)
+from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase, skip_mobile
 
 
 class CookieBannerLiveTestCase(FolioBlogSeleniumServerTestCase):
-
     def setUp(self):
         super().setUp()
 
@@ -43,7 +40,7 @@ class CookieBannerLiveTestCase(FolioBlogSeleniumServerTestCase):
 
     @skip_mobile()
     def test_cookie_already_rejected(self):
-        self.webpage.force_cookie_consent(value='false')
+        self.webpage.force_cookie_consent(value="false")
         self.assertFalse(self.webpage.has_cookie_consent())
 
         self.webpage.cookies_reject()
@@ -60,6 +57,6 @@ class CookieBannerLiveTestCase(FolioBlogSeleniumServerTestCase):
 
     @skip_mobile()
     def test_banner_invisible_rejected(self):
-        self.webpage.force_cookie_consent(value='false')
+        self.webpage.force_cookie_consent(value="false")
         self.webpage.fetch_page(self.page.full_url, force_consent=False)
         self.assertFalse(self.webpage.has_cookie_banner())

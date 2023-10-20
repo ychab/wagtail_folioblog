@@ -3,12 +3,12 @@
     <nav aria-label="{% trans 'Navigation des pages' %}">
         <ul class="pagination">
             {% if page.number != 1 %}
-            <li class="page-item">
-                <a class="page-link page-first" href="?{% query_string 'page' 1 %}" aria-label="{% trans 'Début' %}">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">{% trans 'Début' %}</span>
-                </a>
-            </li>
+                <li class="page-item">
+                    <a class="page-link page-first" href="?{% query_string 'page' 1 %}" aria-label="{% trans 'Début' %}">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">{% trans 'Début' %}</span>
+                    </a>
+                </li>
             {% endif %}
             {% if page.has_previous %}
                 <li class="page-item">
@@ -32,13 +32,13 @@
                 </li>
             {% endif %}
             {% if page.number != page.paginator.num_pages %}
-            <li class="page-item">
-                <a class="page-link page-last" href="?{% query_string 'page' page.paginator.num_pages %}"
-                   aria-label="{% trans 'Fin' %}">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">{% trans 'Fin' %}</span>
-                </a>
-            </li>
+                <li class="page-item">
+                    <a class="page-link page-last" href="?{% query_string 'page' page.paginator.num_pages %}"
+                       aria-label="{% trans 'Fin' %}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">{% trans 'Fin' %}</span>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </nav>

@@ -4,13 +4,13 @@
         <div class="text-center">
             <h2 class="section-heading text-uppercase">{% trans 'Services' %}</h2>
             {% if page.service_subheading %}
-            <h3 class="section-subheading text-muted">{{ page.service_subheading }}</h3>
+                <h3 class="section-subheading text-muted">{{ page.service_subheading }}</h3>
             {% endif %}
         </div>
         <div class="row text-center">
-        {% for service in page.services %}
-            {% include_block service %}
-        {% endfor  %}
+            {% for service in page.services %}
+                {% include_block service %}
+            {% endfor  %}
         </div>
     </div>
 </section>

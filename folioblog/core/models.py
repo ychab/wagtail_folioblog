@@ -4,19 +4,22 @@ from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from django.utils.translation import get_language, gettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import (
-    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface,
+    FieldPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    ObjectList,
+    TabbedInterface,
     TitleFieldPanel,
 )
 from wagtail.admin.widgets.slug import SlugInput
 from wagtail.contrib.settings.models import BaseGenericSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.fields import RichTextField, StreamField
-from wagtail.images.models import (
-    AbstractImage, AbstractRendition, Image, ImageQuerySet,
-)
+from wagtail.images.models import AbstractImage, AbstractRendition, Image, ImageQuerySet
 from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.snippets.models import register_snippet
 
@@ -24,9 +27,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from folioblog.core.blocks import CookieBannersBlock, RssFeedsBlock
-from folioblog.core.managers import (
-    I18nIndexPageManager, I18nManager, ImageManager,
-)
+from folioblog.core.managers import I18nIndexPageManager, I18nManager, ImageManager
 from folioblog.core.sitemap import SitemapPageMixin
 
 
@@ -36,8 +37,8 @@ class Photographer(models.Model):
     website = models.URLField(null=True, blank=True)
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('website'),
+        FieldPanel("name"),
+        FieldPanel("website"),
     ]
 
     def __str__(self):
@@ -46,10 +47,13 @@ class Photographer(models.Model):
 
 class FolioImage(AbstractImage):
     caption = models.CharField(max_length=255, blank=True)
-    photographer = models.ForeignKey(Photographer, on_delete=models.SET_NULL, null=True, blank=True)
+    photographer = models.ForeignKey(
+        Photographer, on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     admin_form_fields = Image.admin_form_fields + (
-        'caption', 'photographer',
+        "caption",
+        "photographer",
     )
 
     objects = ImageManager.from_queryset(ImageQuerySet)()
@@ -61,18 +65,18 @@ class FolioImage(AbstractImage):
         if language_code == settings.LANGUAGE_CODE:
             return self.caption or self.title
         else:
-            return ''
+            return ""
 
     def figcaption(self, alt_text=None):
         alt_text = alt_text or self.default_alt_text
 
-        output = f'<cite>{alt_text}</cite> - ' if alt_text else ''
+        output = f"<cite>{alt_text}</cite> - " if alt_text else ""
         if self.photographer:
-            output += '&copy; '
+            output += "&copy; "
             if self.photographer.website:
                 output += f'<a href="{self.photographer.website}" target="_blank">{self.photographer}</a>'
             else:
-                output += f'{self.photographer}'
+                output += f"{self.photographer}"
 
         return mark_safe(output)
 
@@ -89,26 +93,26 @@ class FolioImage(AbstractImage):
 
 
 class FolioRendition(AbstractRendition):
-    image = models.ForeignKey(FolioImage, on_delete=models.CASCADE, related_name='renditions')
+    image = models.ForeignKey(
+        FolioImage, on_delete=models.CASCADE, related_name="renditions"
+    )
 
     class Meta:
-        unique_together = (
-            ('image', 'filter_spec', 'focal_point_key'),
-        )
+        unique_together = (("image", "filter_spec", "focal_point_key"),)
 
     def get_upload_to(self, filename):
         # No hash in filename? (i.e: no focal point)
-        if filename.count('.') == 2:
-            name, spec, ext = filename.split('.')
-            filename = f'{name}.{ext}'
+        if filename.count(".") == 2:
+            name, spec, ext = filename.split(".")
+            filename = f"{name}.{ext}"
         else:
             # Fill images spec support focal point so they needs a hash(?)
-            name, hash, *spec, ext = filename.split('.')
-            spec = '.'.join(spec)
-            filename = f'{name}.{hash}.{ext}'
+            name, hash, *spec, ext = filename.split(".")
+            spec = ".".join(spec)
+            filename = f"{name}.{hash}.{ext}"
 
         filename = self.file.field.storage.get_valid_name(filename)
-        return os.path.join('images', slugify(self.image.collection), spec, filename)
+        return os.path.join("images", slugify(self.image.collection), spec, filename)
 
 
 class BaseCategory(TranslatableMixin, models.Model):
@@ -116,8 +120,8 @@ class BaseCategory(TranslatableMixin, models.Model):
     slug = models.SlugField()
 
     panels = [
-        TitleFieldPanel('name'),
-        FieldPanel('slug', widget=SlugInput),
+        TitleFieldPanel("name"),
+        FieldPanel("slug", widget=SlugInput),
     ]
 
     objects = I18nManager()
@@ -125,7 +129,11 @@ class BaseCategory(TranslatableMixin, models.Model):
     class Meta(TranslatableMixin.Meta):
         abstract = True
         unique_together = TranslatableMixin.Meta.unique_together + [
-            ('translation_key', 'locale', 'slug'),  # Stupid check don't allow us to override it!
+            (
+                "translation_key",
+                "locale",
+                "slug",
+            ),  # Stupid check don't allow us to override it!
         ]
 
     def __str__(self):
@@ -138,23 +146,23 @@ class BaseCategory(TranslatableMixin, models.Model):
 
 
 class BaseIndexPage(SitemapPageMixin, Page):
-    subheading = models.CharField(max_length=512, blank=True, default='')
+    subheading = models.CharField(max_length=512, blank=True, default="")
 
     image = models.ForeignKey(
         FolioImage,
         on_delete=models.PROTECT,
-        verbose_name='Image',
+        verbose_name="Image",
         related_name="%(app_label)s_%(class)s_+",
         related_query_name="%(app_label)s_%(class)ss",
     )
-    image_alt = models.CharField(max_length=512, blank=True, default='')
+    image_alt = models.CharField(max_length=512, blank=True, default="")
 
     content_panels = Page.content_panels + [
-        FieldPanel('subheading'),
+        FieldPanel("subheading"),
         MultiFieldPanel(
             [
-                FieldPanel('image'),
-                FieldPanel('image_alt'),
+                FieldPanel("image"),
+                FieldPanel("image_alt"),
             ],
             heading=_("Image"),
         ),
@@ -184,17 +192,17 @@ class BaseIndexPage(SitemapPageMixin, Page):
 
 
 class BasePage(BaseIndexPage):
-    intro = models.TextField(default='', blank=True)
+    intro = models.TextField(default="", blank=True)
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('subheading'),
-        FieldPanel('intro'),
-        FieldPanel('body', classname="full"),
+        FieldPanel("subheading"),
+        FieldPanel("intro"),
+        FieldPanel("body", classname="full"),
         MultiFieldPanel(
             [
-                FieldPanel('image'),
-                FieldPanel('image_alt'),
+                FieldPanel("image"),
+                FieldPanel("image_alt"),
             ],
             heading=_("Image"),
         ),
@@ -209,47 +217,46 @@ class BasePage(BaseIndexPage):
 
 
 class BasicPage(BasePage):
-    parent_page_types = ['portfolio.PortfolioPage']
+    parent_page_types = ["portfolio.PortfolioPage"]
     subpage_types = []
 
     content_panels = BasePage.content_panels + [
-        InlinePanel('related_links', label=_('Related links')),
+        InlinePanel("related_links", label=_("Related links")),
     ]
 
 
 class BasicPageRelatedLink(Orderable):
-    page = ParentalKey(BasicPage, related_name='related_links')
-    related_page = ParentalKey(Page, related_name='basic_related_pages')
+    page = ParentalKey(BasicPage, related_name="related_links")
+    related_page = ParentalKey(Page, related_name="basic_related_pages")
 
     panels = [
-        FieldPanel('related_page'),
+        FieldPanel("related_page"),
     ]
 
 
-@register_setting(icon='cog')
+@register_setting(icon="cog")
 class FolioBlogSettings(BaseGenericSetting):
-
     google_analytics_id = models.CharField(
-        verbose_name=_('Google Analytics ID'),
+        verbose_name=_("Google Analytics ID"),
         max_length=128,
         blank=True,
-        default='',
+        default="",
     )
 
-    linkedin_url = models.URLField(blank=True, default='')
-    github_url = models.URLField(blank=True, default='')
-    instagram_url = models.URLField(blank=True, default='')
-    facebook_url = models.URLField(blank=True, default='')
-    twitter_url = models.URLField(blank=True, default='')
-    twitter_site = models.CharField(max_length=255, blank=True, default='')
-    twitter_creator = models.CharField(max_length=255, blank=True, default='')
+    linkedin_url = models.URLField(blank=True, default="")
+    github_url = models.URLField(blank=True, default="")
+    instagram_url = models.URLField(blank=True, default="")
+    facebook_url = models.URLField(blank=True, default="")
+    twitter_url = models.URLField(blank=True, default="")
+    twitter_site = models.CharField(max_length=255, blank=True, default="")
+    twitter_creator = models.CharField(max_length=255, blank=True, default="")
 
     email = models.EmailField(
-        help_text=_('Email address used for contact form submission.'),
+        help_text=_("Email address used for contact form submission."),
         blank=True,
-        default='',
+        default="",
     )
-    phone = models.CharField(max_length=128, blank=True, default='')
+    phone = models.CharField(max_length=128, blank=True, default="")
 
     cookie_banner = StreamField(
         CookieBannersBlock(),
@@ -271,61 +278,71 @@ class FolioBlogSettings(BaseGenericSetting):
     search_limit = models.PositiveSmallIntegerField(default=10)
     search_operator = models.CharField(
         max_length=3,
-        choices=[('or', _('Or')), ('and', _('And'))],
-        default='and',
+        choices=[("or", _("Or")), ("and", _("And"))],
+        default="and",
     )
 
     seo_panels = [
-        FieldPanel('google_analytics_id'),
+        FieldPanel("google_analytics_id"),
     ]
     social_panels = [
-        MultiFieldPanel([FieldPanel('linkedin_url', heading='URL')], heading=_('LinkedIn')),
-        MultiFieldPanel([FieldPanel('github_url', heading='URL')], heading=_('GitHub')),
-        MultiFieldPanel([FieldPanel('instagram_url', heading='URL')], heading=_('Instagram')),
-        MultiFieldPanel([FieldPanel('facebook_url', heading='URL')], heading=_('Facebook')),
+        MultiFieldPanel(
+            [FieldPanel("linkedin_url", heading="URL")], heading=_("LinkedIn")
+        ),
+        MultiFieldPanel([FieldPanel("github_url", heading="URL")], heading=_("GitHub")),
+        MultiFieldPanel(
+            [FieldPanel("instagram_url", heading="URL")], heading=_("Instagram")
+        ),
+        MultiFieldPanel(
+            [FieldPanel("facebook_url", heading="URL")], heading=_("Facebook")
+        ),
         MultiFieldPanel(
             [
-                FieldPanel('twitter_url', heading='URL'),
-                FieldPanel('twitter_site', heading='Site', help_text=_('Sans le @')),
-                FieldPanel('twitter_creator', heading='Creator', help_text=_('Sans le @')),
+                FieldPanel("twitter_url", heading="URL"),
+                FieldPanel("twitter_site", heading="Site", help_text=_("Sans le @")),
+                FieldPanel(
+                    "twitter_creator", heading="Creator", help_text=_("Sans le @")
+                ),
             ],
-            heading=_('Twitter'),
+            heading=_("Twitter"),
         ),
     ]
     contact_panels = [
-        FieldPanel('email'),
-        FieldPanel('phone'),
+        FieldPanel("email"),
+        FieldPanel("phone"),
     ]
     blog_panels = [
-        FieldPanel('blog_pager_limit'),
+        FieldPanel("blog_pager_limit"),
     ]
     video_panels = [
-        FieldPanel('video_pager_limit'),
+        FieldPanel("video_pager_limit"),
     ]
     search_panels = [
-        FieldPanel('search_limit'),
-        FieldPanel('search_operator'),
+        FieldPanel("search_limit"),
+        FieldPanel("search_operator"),
     ]
     cookie_panels = [
-        FieldPanel('cookie_banner'),
+        FieldPanel("cookie_banner"),
     ]
     rss_panels = [
-        FieldPanel('rss_feed'),
+        FieldPanel("rss_feed"),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(seo_panels, heading=_('SEO')),
-        ObjectList(social_panels, heading=_('Social')),
-        ObjectList(contact_panels, heading=_('Contact')),
-        ObjectList(blog_panels, heading=_('Blog')),
-        ObjectList(video_panels, heading=_('Video')),
-        ObjectList(search_panels, heading=_('Search')),
-        ObjectList(cookie_panels, heading=_('Cookies')),
-        ObjectList(rss_panels, heading=_('RSS')),
-    ])
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(seo_panels, heading=_("SEO")),
+            ObjectList(social_panels, heading=_("Social")),
+            ObjectList(contact_panels, heading=_("Contact")),
+            ObjectList(blog_panels, heading=_("Blog")),
+            ObjectList(video_panels, heading=_("Video")),
+            ObjectList(search_panels, heading=_("Search")),
+            ObjectList(cookie_panels, heading=_("Cookies")),
+            ObjectList(rss_panels, heading=_("RSS")),
+        ]
+    )
 
     class Meta:
-        verbose_name = 'FolioBlog'
+        verbose_name = "FolioBlog"
 
 
 @register_snippet
@@ -334,15 +351,15 @@ class Menu(TranslatableMixin, ClusterableModel):
     homepage = ParentalKey(
         Page,
         on_delete=models.PROTECT,
-        related_name='menu_home',
+        related_name="menu_home",
         null=True,
         blank=True,
     )
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('homepage'),
-        InlinePanel('links', label=_('Links')),
+        FieldPanel("name"),
+        FieldPanel("homepage"),
+        InlinePanel("links", label=_("Links")),
     ]
 
     objects = I18nManager()
@@ -352,9 +369,9 @@ class Menu(TranslatableMixin, ClusterableModel):
 
 
 class MenuLink(Orderable):
-    menu = ParentalKey(Menu, related_name='links')
-    related_page = ParentalKey(Page, related_name='menu_link')
+    menu = ParentalKey(Menu, related_name="links")
+    related_page = ParentalKey(Page, related_name="menu_link")
 
     panels = [
-        FieldPanel('related_page'),
+        FieldPanel("related_page"),
     ]

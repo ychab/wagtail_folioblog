@@ -13,6 +13,8 @@ def clear_cache_page(sender, **kwargs):
     # to avoid cascading behavior! In that way, we could have a huge cache
     # duration if no changes are done for a looooong time!
     # Furthermore, changes are applied... immediatly!
-    subclasses = tuple([Page, TagBase, AbstractImage, BaseGenericSetting] + get_snippet_models())
+    subclasses = tuple(
+        [Page, TagBase, AbstractImage, BaseGenericSetting] + get_snippet_models()
+    )
     if issubclass(sender, subclasses):
         cache.clear()

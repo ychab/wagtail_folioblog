@@ -10,40 +10,39 @@ User = get_user_model()
 
 
 class CreateUserCommandTestCase(TestCase):
-
     def tearDown(self):
         User.objects.all().delete()
 
     def test_create_superuser(self):
         out = StringIO()
         extra_fields = {
-            'username': 'admin',
-            'password': 'foo',
-            'email': 'admin@example.com',
+            "username": "admin",
+            "password": "foo",
+            "email": "admin@example.com",
         }
-        call_command('createadmin', stdout=out, **extra_fields)
-        self.assertIn('Superuser created successfully.', out.getvalue())
+        call_command("createadmin", stdout=out, **extra_fields)
+        self.assertIn("Superuser created successfully.", out.getvalue())
 
-        user = User.objects.get(username=extra_fields['username'])
-        self.assertEqual(user.email, extra_fields['email'])
-        self.assertTrue(user.check_password(extra_fields['password']))
+        user = User.objects.get(username=extra_fields["username"])
+        self.assertEqual(user.email, extra_fields["email"])
+        self.assertTrue(user.check_password(extra_fields["password"]))
         self.assertTrue(user.is_superuser)
 
     def test_update_superuser(self):
         out = StringIO()
 
         user = UserFactory(
-            username='admin',
-            email='admin@example.com',
+            username="admin",
+            email="admin@example.com",
         )
-        new_passwd = 'bar'
+        new_passwd = "bar"
 
         extra_fields = {
-            'password': new_passwd,
-            'update': True,
+            "password": new_passwd,
+            "update": True,
         }
-        call_command('createadmin', stdout=out, **extra_fields)
+        call_command("createadmin", stdout=out, **extra_fields)
         user.refresh_from_db()
 
         self.assertTrue(user.check_password(new_passwd))
-        self.assertIn('Superuser updated successfully.', out.getvalue())
+        self.assertIn("Superuser updated successfully.", out.getvalue())

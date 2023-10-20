@@ -4,9 +4,9 @@
     <h5 class="alert-heading">{{ settings.title }} <i class="fa-solid fa-cookie"></i></h5>
     <p class="mb-0 fs-6">{{ settings.text|safe }}</p>
     {% if settings.page %}
-    <a id="cookies-eu-more" href="{% pageurl settings.page %}">
-        {{ settings.link_text }}
-    </a>
+        <a id="cookies-eu-more" href="{% pageurl settings.page %}">
+            {{ settings.link_text }}
+        </a>
     {% endif %}
     <hr>
     <button id="cookies-eu-reject" class="card-link btn btn-sm btn-light">

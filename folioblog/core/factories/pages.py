@@ -24,19 +24,20 @@ fake = Faker(locale=current_locale)
 
 
 class BaseIndexPageFactory(wagtail_factories.PageFactory):
-
     class Meta:
         abstract = True
         skip_postgeneration_save = True
 
-    parent = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True).root_page)
+    parent = factory.LazyFunction(
+        lambda: Site.objects.get(is_default_site=True).root_page
+    )
 
-    title = factory.Sequence(lambda n: 'page_{n}'.format(n=n))
+    title = factory.Sequence(lambda n: "page_{n}".format(n=n))
     slug = factory.LazyAttribute(lambda o: slugify(o.title))
 
-    subheading = factory.Faker('sentence', nb_words=5, locale=current_locale)
+    subheading = factory.Faker("sentence", nb_words=5, locale=current_locale)
     image = factory.SubFactory(ImageFactory)
-    image_alt = factory.Faker('sentence', nb_words=5, locale=current_locale)
+    image_alt = factory.Faker("sentence", nb_words=5, locale=current_locale)
 
     first_published_at = fuzzy.FuzzyDateTime(
         start_dt=timezone.now() - timedelta(days=10),
@@ -49,27 +50,26 @@ class BaseIndexPageFactory(wagtail_factories.PageFactory):
 
 
 class BasePageFactory(BaseIndexPageFactory):
-
     class Meta:
         abstract = True
 
     parent = None  # Children MUST set parent
-    intro = factory.Faker('paragraph', locale=current_locale)
-    body = factory.LazyFunction(lambda: RichText(fake.text()))  # @todo - RickTextBlockFactory()
+    intro = factory.Faker("paragraph", locale=current_locale)
+    body = factory.LazyFunction(
+        lambda: RichText(fake.text())
+    )  # @todo - RickTextBlockFactory()
 
 
 class BasicPageRelatedLinkFactory(DjangoModelFactory):
-
     class Meta:
         model = BasicPageRelatedLink
         skip_postgeneration_save = True
 
-    page = factory.SubFactory('folioblog.core.factories.BasicPageFactory')
+    page = factory.SubFactory("folioblog.core.factories.BasicPageFactory")
     related_page = factory.SubFactory(PageFactory)
 
 
 class BasicPageFactory(BasePageFactory):
-
     class Meta:
         model = BasicPage
 
@@ -80,9 +80,10 @@ class BasicPageFactory(BasePageFactory):
 
             if extracted:
                 related_pages = extracted
-            elif kwargs.get('number', 0) > 0:
+            elif kwargs.get("number", 0) > 0:
                 related_pages = [
-                    BasicPageFactory(parent=obj.get_parent()) for i in range(0, kwargs['number'])
+                    BasicPageFactory(parent=obj.get_parent())
+                    for i in range(0, kwargs["number"])
                 ]
 
             for page in related_pages:

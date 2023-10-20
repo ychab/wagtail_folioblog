@@ -4,18 +4,22 @@ from django.test import TestCase, modify_settings
 from django.test.utils import CaptureQueriesContext
 
 from folioblog.blog.factories import (
-    BlogCategoryFactory, BlogIndexPageFactory, BlogPageFactory, BlogTagFactory,
+    BlogCategoryFactory,
+    BlogIndexPageFactory,
+    BlogPageFactory,
+    BlogTagFactory,
 )
 from folioblog.core.apps import connect_cache_signal
 from folioblog.core.factories import ImageFactory
 
 
-@modify_settings(MIDDLEWARE={
-    'prepend': ['folioblog.core.middleware.AnonymousUpdateCacheMiddleware'],
-    'append': ['folioblog.core.middleware.AnonymousFetchCacheMiddleware'],
-})
+@modify_settings(
+    MIDDLEWARE={
+        "prepend": ["folioblog.core.middleware.AnonymousUpdateCacheMiddleware"],
+        "append": ["folioblog.core.middleware.AnonymousFetchCacheMiddleware"],
+    }
+)
 class ResetCacheTestCase(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.index = BlogIndexPageFactory()
@@ -42,14 +46,14 @@ class ResetCacheTestCase(TestCase):
         # Not cached yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
         # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(count, 0)
 
@@ -57,14 +61,14 @@ class ResetCacheTestCase(TestCase):
         # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
         # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(count, 0)
 
@@ -73,7 +77,7 @@ class ResetCacheTestCase(TestCase):
         # No cache (rebuild)
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
@@ -81,14 +85,14 @@ class ResetCacheTestCase(TestCase):
         # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
         # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(count, 0)
 
@@ -97,7 +101,7 @@ class ResetCacheTestCase(TestCase):
         # No cache (rebuild)
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
@@ -105,14 +109,14 @@ class ResetCacheTestCase(TestCase):
         # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
         # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(count, 0)
 
@@ -121,7 +125,7 @@ class ResetCacheTestCase(TestCase):
         # No cache (rebuild)
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
@@ -129,14 +133,14 @@ class ResetCacheTestCase(TestCase):
         # No cache yet
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
 
         # Cache hit
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(count, 0)
 
@@ -145,6 +149,6 @@ class ResetCacheTestCase(TestCase):
         # No cache (rebuild)
         with CaptureQueriesContext(connection) as cm:
             response = self.client.get(self.page.url)
-        count = len([q['sql'] for q in cm.captured_queries])
+        count = len([q["sql"] for q in cm.captured_queries])
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)

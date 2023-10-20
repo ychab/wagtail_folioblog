@@ -10,9 +10,11 @@ from wagtail.images import get_image_model
 from wagtail.models import Page, Site
 
 from django_social_share.templatetags.social_share import (
-    post_to_facebook, post_to_reddit, post_to_twitter,
-    urlencode as tpl_urlencode,
+    post_to_facebook,
+    post_to_reddit,
+    post_to_twitter,
 )
+from django_social_share.templatetags.social_share import urlencode as tpl_urlencode
 
 from folioblog.core.models import Photographer
 from folioblog.core.utils import get_block_language
@@ -39,7 +41,7 @@ def page_translations(page, inclusive=True):
 
 @register.simple_tag(takes_context=True)
 def query_string(context, key, value):
-    parts = parse_qs(context['request'].META.get('QUERY_STRING', ''))
+    parts = parse_qs(context["request"].META.get("QUERY_STRING", ""))
     parts[key] = [value]
     return urlencode(parts, doseq=True)
 
@@ -56,113 +58,123 @@ def image_404(title):
     return Image.objects.filter(title=title).first()
 
 
-@register.inclusion_tag('core/cookies_banner.html', takes_context=True)
+@register.inclusion_tag("core/cookies_banner.html", takes_context=True)
 def cookies_banner(context):
-    langcode = context['LANGUAGE_CODE']
-    settings = get_block_language(context['settings']['core']['folioblogsettings'].cookie_banner, langcode)
+    langcode = context["LANGUAGE_CODE"]
+    settings = get_block_language(
+        context["settings"]["core"]["folioblogsettings"].cookie_banner, langcode
+    )
     return {
-        'settings': settings,
+        "settings": settings,
     }
 
 
-@register.inclusion_tag('core/background.html')
-def background_style(image, xs_3x_spec='fill-1080x1380', lg_1x_spec='fill-1905x560'):
+@register.inclusion_tag("core/background.html")
+def background_style(image, xs_3x_spec="fill-1080x1380", lg_1x_spec="fill-1905x560"):
     return {
-        'bg_xs_3x': image.get_rendition(xs_3x_spec),
-        'bg_lg_1x': image.get_rendition(lg_1x_spec),
+        "bg_xs_3x": image.get_rendition(xs_3x_spec),
+        "bg_lg_1x": image.get_rendition(lg_1x_spec),
     }
 
 
-@register.inclusion_tag('core/credits.html')
+@register.inclusion_tag("core/credits.html")
 def photo_credits():
     return {
-        'photographers': Photographer.objects.all(),
+        "photographers": Photographer.objects.all(),
     }
 
 
-@register.inclusion_tag('core/filter_dropdown.html')
+@register.inclusion_tag("core/filter_dropdown.html")
 def filter_dropdown(wrapper_id, filter_name, title, page, filter_query, filters):
     return {
-        'wrapper_id': wrapper_id,
-        'filter_name': filter_name,
-        'title': title,
-        'page': page,
-        'filter_query': filter_query,
-        'filters': filters,
+        "wrapper_id": wrapper_id,
+        "filter_name": filter_name,
+        "title": title,
+        "page": page,
+        "filter_query": filter_query,
+        "filters": filters,
     }
 
 
-@register.inclusion_tag('core/social_links.html', takes_context=True)
+@register.inclusion_tag("core/social_links.html", takes_context=True)
 def social_links(context, page):
     extra_context = {}
 
-    page_full_url = page.get_full_url(request=context['request'])
+    page_full_url = page.get_full_url(request=context["request"])
 
-    extra_context['reddit_url'] = post_to_reddit(context, page.title, page_full_url)['reddit_url']
-    extra_context['facebook_url'] = post_to_facebook(context, page_full_url)['facebook_url']
-    extra_context['twitter_url'] = post_to_twitter(context, page.title, page_full_url)['tweet_url']
+    extra_context["reddit_url"] = post_to_reddit(context, page.title, page_full_url)[
+        "reddit_url"
+    ]
+    extra_context["facebook_url"] = post_to_facebook(context, page_full_url)[
+        "facebook_url"
+    ]
+    extra_context["twitter_url"] = post_to_twitter(context, page.title, page_full_url)[
+        "tweet_url"
+    ]
     # Don't want ugly JS plugin which write cookies and force layout button!
     # Old way, but still working?? Because new (offline) doesn't seems to work...
     # @see https://stackoverflow.com/questions/33426752/linkedin-share-post-url
-    extra_context['linkedin_url'] = f'https://www.linkedin.com/shareArticle?url={tpl_urlencode(page_full_url)}'
+    extra_context[
+        "linkedin_url"
+    ] = f"https://www.linkedin.com/shareArticle?url={tpl_urlencode(page_full_url)}"
 
     return extra_context
 
 
-@register.inclusion_tag('core/og_meta.html', takes_context=True)
+@register.inclusion_tag("core/og_meta.html", takes_context=True)
 def og_meta(context, page, image=None, embed=None):
     og_types = {
-        'blog.BlogPage': 'article',
-        'video.VideoPage': 'video.other',
+        "blog.BlogPage": "article",
+        "video.VideoPage": "video.other",
     }
     image = image or page.image
     return {
-        'page': page,
-        'image': image,
-        'image_alt': getattr(page, 'caption', None) or image.default_alt_text,
-        'embed': embed or getattr(page, 'embed', None),
-        'og_type': og_types.get(page._meta.label, 'website'),
-        'site': Site.find_for_request(request=context.get('request')),
-        'seo_description': getattr(page, 'seo_description', None) or page.search_description,
+        "page": page,
+        "image": image,
+        "image_alt": getattr(page, "caption", None) or image.default_alt_text,
+        "embed": embed or getattr(page, "embed", None),
+        "og_type": og_types.get(page._meta.label, "website"),
+        "site": Site.find_for_request(request=context.get("request")),
+        "seo_description": getattr(page, "seo_description", None)
+        or page.search_description,
     }
 
 
-@register.inclusion_tag('core/twitter_card.html', takes_context=True)
+@register.inclusion_tag("core/twitter_card.html", takes_context=True)
 def twitter_card(context, page, embed=None):
     card_types = {
-        'blog.BlogPage': 'summary_large_image',
-        'video.VideoPage': 'player',
+        "blog.BlogPage": "summary_large_image",
+        "video.VideoPage": "player",
     }
     return {
-        'card': card_types.get(page._meta.label, 'summary'),
-        'embed': embed or getattr(page, 'embed', None),
-        'fb_settings': context['settings']['core']['FolioBlogSettings'],
+        "card": card_types.get(page._meta.label, "summary"),
+        "embed": embed or getattr(page, "embed", None),
+        "fb_settings": context["settings"]["core"]["FolioBlogSettings"],
     }
 
 
-@register.inclusion_tag('core/toast.html', takes_context=True)
+@register.inclusion_tag("core/toast.html", takes_context=True)
 def toast(context, title=None, timer=None, text=None):
     return {
-        'request': context.get('request'),
-        'title': title,
-        'timer': timer,
-        'text': text,
+        "request": context.get("request"),
+        "title": title,
+        "timer": timer,
+        "text": text,
     }
 
 
-@register.inclusion_tag('core/related_page.html')
+@register.inclusion_tag("core/related_page.html")
 def related_page(page):
     return {
         # Don't trust deprecated Meta.ordering in Orderable model base.
-        'related_links': page.related_links.filter(
-            related_page__live=True,
-            related_page__locale__language_code=get_language())
-        .order_by('sort_order'),
+        "related_links": page.related_links.filter(
+            related_page__live=True, related_page__locale__language_code=get_language()
+        ).order_by("sort_order"),
     }
 
 
-@register.inclusion_tag('core/language_selector.html')
+@register.inclusion_tag("core/language_selector.html")
 def language_selector(page):
     return {
-        'translations': page.get_translations().live(),
+        "translations": page.get_translations().live(),
     }

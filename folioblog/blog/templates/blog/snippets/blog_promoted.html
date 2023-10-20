@@ -6,45 +6,45 @@
     <div class="row justify-content-center mb-5">
         <div class="carousel-posts col px-0">
             {% for link in snippet.related_links.all|dictsort:"sort_order" %}
-            {% with post=link.related_page %}
-            <div class="carousel-cell me-2">
-                <div class="post-promoted card rounded shadow text-center">
-                    {% image post.image fill-805x1610 as image_xs_3x %}
-                    {% image post.image fill-960x720 as image_lg_1x %}
-                    <picture>
-                        <source
-                            type="image/webp"
-                            srcset="{{ image_xs_3x.url }}"
-                            media="(max-width: 576px) and (min-resolution: 192dpi)"
-                            width="{{ image_xs_3x.width }}"
-                            height="{{ image_xs_3x.height }}">
-                        <img
-                            src="{{ image_lg_1x.url }}"
-                            alt="{{ post.caption }}"
-                            width="{{ image_lg_1x.width }}"
-                            height="{{ image_lg_1x.height }}"
-                            class="img-fluid card-img" />
-                    </picture>
-                    <span class="btn btn-dark btn-sm position-absolute top-0 end-0 d-none d-sm-block">
-                        {{ post.category }}
-                    </span>
-                    <div class="post-promoted-body d-flex flex-column align-items-center position-absolute bottom-0 start-0 end-0 p-2 bg-black bg-gradient">
-                        <a href="{% pageurl post %}" alt="{{ post.title }}">
-                            <h3 class="slide-title fs-6 p-2">{{ post.title }}</h3>
-                        </a>
-                        <h4 class="slide-description fs-6 fw-bold d-none d-sm-block">{{ post.subheading }}</h4>
+                {% with post=link.related_page %}
+                    <div class="carousel-cell me-2">
+                        <div class="post-promoted card rounded shadow text-center">
+                            {% image post.image fill-805x1610 as image_xs_3x %}
+                            {% image post.image fill-960x720 as image_lg_1x %}
+                            <picture>
+                                <source
+                                    type="image/webp"
+                                    srcset="{{ image_xs_3x.url }}"
+                                    media="(max-width: 576px) and (min-resolution: 192dpi)"
+                                    width="{{ image_xs_3x.width }}"
+                                    height="{{ image_xs_3x.height }}">
+                                <img
+                                    src="{{ image_lg_1x.url }}"
+                                    alt="{{ post.caption }}"
+                                    width="{{ image_lg_1x.width }}"
+                                    height="{{ image_lg_1x.height }}"
+                                    class="img-fluid card-img" />
+                            </picture>
+                            <span class="btn btn-dark btn-sm position-absolute top-0 end-0 d-none d-sm-block">
+                                {{ post.category }}
+                            </span>
+                            <div class="post-promoted-body d-flex flex-column align-items-center position-absolute bottom-0 start-0 end-0 p-2 bg-black bg-gradient">
+                                <a href="{% pageurl post %}" alt="{{ post.title }}">
+                                    <h3 class="slide-title fs-6 p-2">{{ post.title }}</h3>
+                                </a>
+                                <h4 class="slide-description fs-6 fw-bold d-none d-sm-block">{{ post.subheading }}</h4>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            {% endwith %}
+                {% endwith %}
             {% endfor %}
         </div>
     </div>
     {% if menu_links.posts %}
-    <div id="post-more-link" class="row my-5">
-        <div class="text-center">
-            <a href="{% pageurl menu_links.posts %}" class="btn btn-primary">{{ snippet.link_more }}</a>
+        <div id="post-more-link" class="row my-5">
+            <div class="text-center">
+                <a href="{% pageurl menu_links.posts %}" class="btn btn-primary">{{ snippet.link_more }}</a>
+            </div>
         </div>
-    </div>
     {% endif %}
 </div>
