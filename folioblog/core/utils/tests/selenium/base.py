@@ -84,6 +84,7 @@ class MetaSeleniumTestCase(SeleniumTestCaseBase):
                 "--disable-extensions",
                 "--no-sandbox",  # Obviously, required if run as root
                 "--disable-dev-shm-usage",
+                "--headless",  # Required since chromedriver 118?
             ]
             for option in option_args:
                 options.add_argument(option)
