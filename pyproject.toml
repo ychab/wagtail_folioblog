@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "folioblog"
-version = "1.4.0"
+version = "1.5.0"
 description = "A PortFolio/Blog website build with the CMS Wagtail"
 authors = ["Yannick Chabbert <yannick.chabbert.it@gmail.com>"]
 license = "MIT"
