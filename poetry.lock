@@ -119,13 +119,13 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "cachetools"
-version = "5.3.1"
+version = "5.3.2"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "cachetools-5.3.1-py3-none-any.whl", hash = "sha256:95ef631eeaea14ba2e36f06437f36463aac3a096799e876ee55e5cdccb102590"},
-    {file = "cachetools-5.3.1.tar.gz", hash = "sha256:dce83f2d9b4e1f732a8cd44af8e8fab2dbe46201467fc98b3ef8f269092bf62b"},
+    {file = "cachetools-5.3.2-py3-none-any.whl", hash = "sha256:861f35a13a451f94e301ce2bec7cac63e881232ccce7ed67fab9b5df4d3beaa1"},
+    {file = "cachetools-5.3.2.tar.gz", hash = "sha256:086ee420196f7b2ab9ca2db2520aca326318b68fe5ba8bc4d49cca91add450f2"},
 ]
 
 [[package]]
@@ -694,13 +694,13 @@ doc = ["Sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
 
 [[package]]
 name = "faker"
-version = "19.11.0"
+version = "19.12.0"
 description = "Faker is a Python package that generates fake data for you."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "Faker-19.11.0-py3-none-any.whl", hash = "sha256:e28090068293c5a83e7f4d636417d45fae1031ca8a8136cc2415549ebc2111e2"},
-    {file = "Faker-19.11.0.tar.gz", hash = "sha256:a62a3fd3bfa3122d4f57dfa26a1cc37d76751a76c8ddd63cf9d24078c57913a4"},
+    {file = "Faker-19.12.0-py3-none-any.whl", hash = "sha256:5990380a8ee81cf189d6b85d5fdc1fb43772cb136aca0385a08ff24ef01b9fdf"},
+    {file = "Faker-19.12.0.tar.gz", hash = "sha256:91438f6b1713274ec3f24970ba303617be86ce5caf6f6a0776f1d04777b6ff5f"},
 ]
 
 [package.dependencies]

@@ -127,6 +127,8 @@ class PortfolioPage(SitemapPageMixin, Page):
         blank=True,
         default="",
     )
+    team_active = models.BooleanField(default=True)
+
     team_members = StreamField(
         TeamMembersBlock(),
         null=True,
@@ -189,6 +191,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("team_heading"),
                 FieldPanel("team_subheading"),
                 FieldPanel("team_text"),
+                FieldPanel("team_active"),
                 FieldPanel("team_members"),
             ],
             heading=_("Équipe"),

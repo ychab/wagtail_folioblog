@@ -1,5 +1,5 @@
 {% load wagtailcore_tags video %}
-<section class="page-section" id="about">
+<section class="page-section bg-light" id="about">
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">{{ self.about_heading }}</h2>
@@ -11,13 +11,15 @@
             <div class="col-lg-8 mx-auto text-center">
                 {{ self.about_text|richtext }}
             </div>
-            <div class="col-lg-6 mx-auto text-center">
-                <div class="my-4">
-                    <h4><a href="{% pageurl self.about_video %}">{{ self.about_video.title }}</a></h4>
-                    <h5>{{ self.about_video.subheading }}</h5>
+            {% if self.about_video %}
+                <div class="col-lg-6 mx-auto text-center">
+                    <div class="my-4">
+                        <h4><a href="{% pageurl self.about_video %}">{{ self.about_video.title }}</a></h4>
+                        <h5>{{ self.about_video.subheading }}</h5>
+                    </div>
+                    {% youtube_player self.about_video %}
                 </div>
-                {% youtube_player self.about_video %}
-            </div>
+            {% endif %}
         </div>
     </div>
 </section>

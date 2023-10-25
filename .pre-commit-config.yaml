@@ -17,24 +17,6 @@ repos:
       - id: check-docstring-first
       - id: debug-statements
 
-  - repo: https://github.com/python-poetry/poetry
-    rev: 1.6.1
-    hooks:
-      - id: poetry-check
-      - id: poetry-lock
-      - id: poetry-export
-        name: poetry-export-prod
-        args: [ "-f", "requirements.txt", "--only", "main", "-o", "requirements/prod.txt" ]
-        verbose: true
-      - id: poetry-export
-        name: poetry-export-test
-        args: [ "-f", "requirements.txt", "--with", "test", "-o", "requirements/test.txt" ]
-        verbose: true
-      - id: poetry-export
-        name: poetry-export-dev
-        args: [ "-f", "requirements.txt", "--with", "test,dev", "-o", "requirements/dev.txt" ]
-        verbose: true
-
   - repo: https://github.com/psf/black
     rev: 23.10.0
     hooks:
@@ -61,6 +43,23 @@ repos:
     rev: 5.12.0
     hooks:
       - id: isort
-#        args: ['--profile', 'black']
         files: folioblog
         exclude: /migrations/
+
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.6.1
+    hooks:
+      - id: poetry-check
+      - id: poetry-lock
+      - id: poetry-export
+        name: poetry-export-prod
+        args: [ "-f", "requirements.txt", "--only", "main", "-o", "requirements/prod.txt" ]
+        verbose: true
+      - id: poetry-export
+        name: poetry-export-test
+        args: [ "-f", "requirements.txt", "--with", "test", "-o", "requirements/test.txt" ]
+        verbose: true
+      - id: poetry-export
+        name: poetry-export-dev
+        args: [ "-f", "requirements.txt", "--with", "test,dev", "-o", "requirements/dev.txt" ]
+        verbose: true

@@ -2,16 +2,18 @@
 {% load i18n static wagtailcore_tags %}
 
 {% block content %}
+    <!-- About -->
+    {% include 'portfolio/about.html' %}
     <!-- Services -->
     {% include_block page.services %}
     <!-- Skills -->
     {% include_block page.skills %}
     <!-- CV -->
     {% include_block page.cv_experiences %}
+    {% if page.team_active %}
     <!-- Team -->
-    {% include_block page.team_members %}
-    <!-- About -->
-    {% include 'portfolio/about.html' %}
+        {% include_block page.team_members %}
+    {% endif %}
     <!-- Contact -->
     {% include 'portfolio/contact.html' %}
 {% endblock %}

@@ -9,7 +9,7 @@ class CookieBannerBlock(blocks.StructBlock):
     title = blocks.CharBlock(max_length=255)
     text = blocks.TextBlock()
 
-    page = blocks.PageChooserBlock()
+    page = blocks.PageChooserBlock(required=False)
     link_text = blocks.CharBlock(max_length=255, required=False)
 
     button_cancel_text = blocks.CharBlock(max_length=255)
