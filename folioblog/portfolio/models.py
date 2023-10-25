@@ -41,6 +41,27 @@ class PortfolioPage(SitemapPageMixin, Page):
         related_name="+",
     )
 
+    # About
+    about_heading = models.CharField(
+        verbose_name=_("Titre"),
+        max_length=128,
+        default="",
+    )
+    about_subheading = models.CharField(
+        verbose_name=_("Sous-titre"),
+        max_length=128,
+        blank=True,
+        default="",
+    )
+    about_text = RichTextField(blank=True)
+    about_video = models.ForeignKey(
+        "video.VideoPage",
+        on_delete=models.PROTECT,
+        related_name="portfolio",
+        null=True,
+        blank=True,
+    )
+
     # Service
     service_subheading = models.CharField(
         verbose_name=_("Sous-titre"),
@@ -67,27 +88,6 @@ class PortfolioPage(SitemapPageMixin, Page):
         null=True,
         blank=True,
         use_json_field=True,
-    )
-
-    # About
-    about_heading = models.CharField(
-        verbose_name=_("Titre"),
-        max_length=128,
-        default="",
-    )
-    about_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
-        max_length=128,
-        blank=True,
-        default="",
-    )
-    about_text = RichTextField(blank=True)
-    about_video = models.ForeignKey(
-        "video.VideoPage",
-        on_delete=models.PROTECT,
-        related_name="portfolio",
-        null=True,
-        blank=True,
     )
 
     # CV
@@ -163,6 +163,16 @@ class PortfolioPage(SitemapPageMixin, Page):
         ),
         MultiFieldPanel(
             [
+                FieldPanel("about_heading"),
+                FieldPanel("about_subheading"),
+                FieldPanel("about_text"),
+                FieldPanel("about_video"),
+            ],
+            heading=_("À propos"),
+            classname="collapsible",
+        ),
+        MultiFieldPanel(
+            [
                 FieldPanel("service_subheading"),
                 FieldPanel("services"),
             ],
@@ -196,16 +206,6 @@ class PortfolioPage(SitemapPageMixin, Page):
             ],
             heading=_("Équipe"),
             classname="collapsible collapsed",
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("about_heading"),
-                FieldPanel("about_subheading"),
-                FieldPanel("about_text"),
-                FieldPanel("about_video"),
-            ],
-            heading=_("À propos"),
-            classname="collapsible",
         ),
         MultiFieldPanel(
             [

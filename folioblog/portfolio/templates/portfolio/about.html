@@ -9,7 +9,9 @@
         </div>
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                {{ self.about_text|richtext }}
+                <div class="text-start">
+                    {{ self.about_text|richtext }}
+                </div>
             </div>
             {% if self.about_video %}
                 <div class="col-lg-6 mx-auto text-center">
