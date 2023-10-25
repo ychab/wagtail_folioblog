@@ -7,39 +7,52 @@ from wagtail_factories import PageFactory
 from folioblog.blog.factories import BlogIndexPageFactory
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.factories.snippets import MenuFactory, MenuLinkFactory
+from folioblog.core.models import Menu
 
 
 class MenuTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         site = Site.objects.get(is_default_site=True)
-        cls.menu = MenuFactory(links__number=3)
         cls.index = BlogIndexPageFactory(parent=site.root_page)
 
+    def tearDown(self):
+        Menu.objects.all().delete()
+
     def test_menu_links(self):
+        menu = MenuFactory(links__number=3)
+
         response = self.client.get(self.index.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(response.context["menu_homepage"], self.menu.homepage)
+        self.assertEqual(response.context["menu_homepage"], menu.homepage)
 
-        for link in self.menu.links.all():
+        for link in menu.links.all():
             self.assertIn(
                 link.related_page.slug,
                 response.context["menu_links"],
                 msg=f"Checking for link {link.pk}",
             )
 
+    def test_menu_inactive(self):
+        MenuFactory(is_active=False, links__number=3)
+
+        response = self.client.get(self.index.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertFalse(response.context["menu_homepage"])
+        self.assertFalse(response.context["menu_links"])
+
     def test_menu_links_not_live(self):
+        menu = MenuFactory(links__number=3)
         page = PageFactory(live=False)
-        link = MenuLinkFactory(menu=self.menu, related_page=page)
-        self.menu.links.add(link)
-        self.assertEqual(self.menu.links.count(), 4)
+        link = MenuLinkFactory(menu=menu, related_page=page)
+        menu.links.add(link)
+        self.assertEqual(menu.links.count(), 4)
 
         response = self.client.get(self.index.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["menu_links"]), 3)
-
-        self.menu.links.remove(link)
 
 
 class MenuI18nTestCase(TestCase):

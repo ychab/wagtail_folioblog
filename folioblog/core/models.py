@@ -355,10 +355,12 @@ class Menu(TranslatableMixin, ClusterableModel):
         null=True,
         blank=True,
     )
+    is_active = models.BooleanField(default=True)
 
     panels = [
         FieldPanel("name"),
         FieldPanel("homepage"),
+        FieldPanel("is_active"),
         InlinePanel("links", label=_("Links")),
     ]
 

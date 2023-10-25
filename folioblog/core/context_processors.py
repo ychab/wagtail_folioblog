@@ -12,7 +12,8 @@ def menu(request):
     }
 
     menu = (
-        Menu.objects.filter_language()
+        Menu.objects.filter(is_active=True)
+        .filter_language()
         .select_related("homepage")
         .prefetch_related(
             Prefetch(
