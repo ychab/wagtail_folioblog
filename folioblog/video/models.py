@@ -36,7 +36,6 @@ logger = logging.getLogger(__name__)
 class VideoIndexPage(BaseIndexPage):
     ajax_template = "video/video_index_grid_item.html"
 
-    parent_page_types = ["portfolio.PortfolioPage"]
     subpage_types = ["video.VideoPage"]
 
     def get_context(self, request, *args, **kwargs):

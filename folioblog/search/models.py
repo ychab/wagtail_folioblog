@@ -10,7 +10,7 @@ from folioblog.search.form import SearchForm
 
 
 class SearchIndexPage(BaseIndexPage):
-    parent_page_types = ["portfolio.PortfolioPage"]
+    parent_page_types = ["home.HomePage"]
     subpage_types = []
 
     def serve(self, request, *args, **kwargs):

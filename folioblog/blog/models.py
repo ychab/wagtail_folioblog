@@ -27,7 +27,7 @@ Image = get_image_model()
 class BlogIndexPage(BaseIndexPage):
     ajax_template = "blog/blog_index_item.html"
 
-    parent_page_types = ["portfolio.PortfolioPage"]
+    parent_page_types = ["home.HomePage"]
     subpage_types = ["blog.BlogPage"]
 
     def get_context(self, request, *args, **kwargs):

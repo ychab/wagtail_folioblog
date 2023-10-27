@@ -217,7 +217,6 @@ class BasePage(BaseIndexPage):
 
 
 class BasicPage(BasePage):
-    parent_page_types = ["portfolio.PortfolioPage"]
     subpage_types = []
 
     content_panels = BasePage.content_panels + [

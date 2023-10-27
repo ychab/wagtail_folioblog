@@ -7,9 +7,6 @@ from folioblog.video.models import VideoPromote, VideoPromoteLink
 
 
 class HomePage(BaseIndexPage):
-    parent_page_types = ["portfolio.PortfolioPage"]
-    subpage_types = []
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         lang_code = get_language()

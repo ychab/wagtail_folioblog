@@ -29,9 +29,6 @@ class GalleryPage(BaseIndexPage):
         ),
     ]
 
-    parent_page_types = ["portfolio.PortfolioPage"]
-    subpage_types = []
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
 
