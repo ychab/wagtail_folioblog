@@ -16,18 +16,6 @@
                     <li class="nav-item"><a class="nav-link" href="#team">{% trans 'Équipe' %}</a></li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="#contact">{% trans 'Contact' %}</a></li>
-                {% if menu_homepage %}
-                    <li class="nav-item">
-                        <span class="badge bg-secondary position-relative">
-                            <a class="nav-link" href="{% pageurl menu_homepage %}">
-                                {{ menu_homepage }}
-                                <span class="position-absolute top-0 start-100 translate-middle p-1 badge rounded-pill bg-primary border border-light rounded-circle">
-                                    <span class="visually-hidden">Iceberg link!</span>
-                                </span>
-                            </a>
-                        </span>
-                    </li>
-                {% endif %}
                 {% language_selector page=page %}
             </ul>
         </div>
