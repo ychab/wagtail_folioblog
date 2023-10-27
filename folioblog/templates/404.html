@@ -14,6 +14,9 @@
     {% endif %}
 {% endblock %}
 
+{# No navbar too! #}
+{% block navbar %}{% endblock %}
+
 {% block header %}
     <header class="masthead">
         <div class="container position-relative px-4 px-lg-5">
@@ -21,9 +24,6 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
                         <h1>{% trans 'Page introuvable' %}</h1>
-                        <span class="subheading">
-                            {% trans 'Lien cassé ? Armée de méchants robots zombies ?' %}<br />
-                        </span>
                     </div>
                 </div>
             </div>
@@ -32,43 +32,29 @@
 {% endblock %}
 
 {% block content %}
-    {% image_404 '404-body' as image_404_body %}
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="d-flex flex-column align-items-center">
-                    <h2 class="text-center display-6 mt-3">{% trans 'Cher robot' %}</h2>
-                    <blockquote class="text-center mb-0">
-                        <p class="mb-0">
-                            {% trans '"Tu vois, le monde se divise en deux catégories : ceux qui ont un pistolet chargé et ceux qui creusent. Toi, tu creuses."' %} 🕳
-                        </p>
-                        {% trans 'Le bon, la brute et le truand' as cite_title %}
-                        <footer class="blockquote-footer mb-0">Clint Eastwood, <cite title="{{ cite_title }}">{{ cite_title }}</cite></footer>
-                    </blockquote>
-
-                    {% if image_404_body %}
-                        {% image image_404_body width-700 as image_lg_1x %}
-                        {% image image_404_body width-940 as image_xs_3x %}
-                        <div class="page-image{% if image_404_body.is_portrait %} image-portrait{% endif %}">
-                            <figure class="figure d-block">
-                                <img src="{{ image_lg_1x.url }}"
-                                     srcset="{{ image_lg_1x.url }} 700w, {{ image_xs_3x.url }} 940w"
-                                     sizes="(max-width: 576px) and (min-resolution: 288dpi) 940px, 700px"
-                                     alt="{{ image_404_body.caption }}"
-                                     width="{{ image_lg_1x.width }}"
-                                     height="{{ image_lg_1x.height }}"
-                                     class="figure-img img-fluid rounded" />
-                                <figcaption class="caption figure-caption">{% figcaption image_404_body %}</figcaption>
-                            </figure>
-                        </div>
-                    {% endif %}
-
-                    <a href="{% if menu_homepage %}{% pageurl menu_homepage %}{% endif %}" class="btn btn-primary mt-4">{% trans "Retour à l'accueil" %}</a>
+                    <h2 class="text-center display-4 mt-3">{% trans 'Oups !' %}</h2>
+                    <p>{% trans "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..." %}</p>
                 </div>
             </div>
         </div>
     </div>
-    {% trans "À l'instant..." as toast_timer %}
-    {% trans "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de retourner à l'accueil" as toast_text %}
-    {% toast timer=toast_timer text=toast_text %}
+{% endblock %}
+
+{# Just a basic footer #}
+{% block footer %}
+    <footer>
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="small text-center text-muted fst-italic">
+                        Copyright &copy; {% now 'Y' %} {{ current_site.site_name }}<br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
