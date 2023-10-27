@@ -153,16 +153,6 @@ def twitter_card(context, page, embed=None):
     }
 
 
-@register.inclusion_tag("core/toast.html", takes_context=True)
-def toast(context, title=None, timer=None, text=None):
-    return {
-        "request": context.get("request"),
-        "title": title,
-        "timer": timer,
-        "text": text,
-    }
-
-
 @register.inclusion_tag("core/related_page.html")
 def related_page(page):
     return {
