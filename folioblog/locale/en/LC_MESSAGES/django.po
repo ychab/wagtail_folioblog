@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-15 17:21+0100\n"
-"PO-Revision-Date: 2022-12-08 14:18+0100\n"
+"POT-Creation-Date: 2023-10-27 14:06+0200\n"
+"PO-Revision-Date: 2023-10-27 14:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,36 +18,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: blog/factories.py:39
+#: blog/factories.py:47
 msgid "Articles"
 msgstr "Posts"
 
-#: blog/models.py:69 video/models.py:86
+#: blog/models.py:77 video/models.py:94
 msgid "Date de publication"
 msgstr "Publication date"
 
-#: blog/models.py:107
+#: blog/models.py:120
 msgid "Blog information"
 msgstr "Blog's data"
 
-#: blog/models.py:118
+#: blog/models.py:131
 msgid "Citation"
 msgstr "Quotation"
 
-#: blog/models.py:126 core/models.py:157 core/models.py:197 video/models.py:129
+#: blog/models.py:139 core/models.py:167 core/models.py:207 video/models.py:142
 msgid "Image"
 msgstr ""
 
-#: blog/models.py:128 blog/models.py:152 core/models.py:214 video/models.py:202
+#: blog/models.py:141 blog/models.py:165 core/models.py:223 video/models.py:218
 msgid "Related links"
 msgstr ""
 
 #: blog/templates/blog/blog_index_item.html:26
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                        Publié le %(post_date)s\n"
+#| "                    "
 msgid ""
 "\n"
-"                        Publié le %(post_date)s\n"
-"                    "
+"                                Publié le %(post_date)s\n"
+"                            "
 msgstr ""
 "\n"
 "                        Published on %(post_date)s\n"
@@ -58,9 +62,9 @@ msgstr ""
 msgid "Filtrer par catégories"
 msgstr "Filter by categories"
 
-#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:67
+#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:68
 #: video/templates/video/video_page.html:26
-#: video/tests/units/test_video_page.py:81
+#: video/tests/units/test_video_page.py:84
 msgid "Posté le"
 msgstr "Published on"
 
@@ -68,83 +72,83 @@ msgstr "Published on"
 msgid "Clique sur l'image, c'est magique !"
 msgstr "Click on the image, it's magic!"
 
-#: blog/tests/selenium/test_blog_index.py:52
+#: blog/tests/selenium/test_blog_index.py:54
 msgid "Publié le"
 msgstr "Published on"
 
-#: core/models.py:231
+#: core/models.py:239
 msgid "Google Analytics ID"
 msgstr ""
 
-#: core/models.py:246
+#: core/models.py:254
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:272
+#: core/models.py:280
 msgid "Or"
 msgstr "Ou"
 
-#: core/models.py:272
+#: core/models.py:280
 msgid "And"
 msgstr "Et"
 
-#: core/models.py:280
+#: core/models.py:289
 msgid "LinkedIn"
 msgstr ""
 
-#: core/models.py:281
+#: core/models.py:291
 msgid "GitHub"
 msgstr ""
 
-#: core/models.py:282
+#: core/models.py:293
 msgid "Instagram"
 msgstr ""
 
-#: core/models.py:283
+#: core/models.py:296
 msgid "Facebook"
 msgstr ""
 
-#: core/models.py:287 core/models.py:288
+#: core/models.py:301 core/models.py:303
 msgid "Sans le @"
-msgstr ""
+msgstr "Without the @"
 
-#: core/models.py:290
+#: core/models.py:306
 msgid "Twitter"
 msgstr ""
 
-#: core/models.py:315
+#: core/models.py:332
 msgid "SEO"
 msgstr ""
 
-#: core/models.py:316
+#: core/models.py:333
 msgid "Social"
 msgstr ""
 
-#: core/models.py:317 portfolio/models.py:210 templates/agency/navbar.html:16
+#: core/models.py:334 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:318
+#: core/models.py:335
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:319
+#: core/models.py:336
 msgid "Video"
 msgstr ""
 
-#: core/models.py:320
+#: core/models.py:337
 msgid "Search"
 msgstr ""
 
-#: core/models.py:321
+#: core/models.py:338
 msgid "Cookies"
 msgstr ""
 
-#: core/models.py:322
+#: core/models.py:339
 msgid "RSS"
 msgstr ""
 
-#: core/models.py:343
+#: core/models.py:363
 msgid "Links"
 msgstr ""
 
@@ -194,17 +198,11 @@ msgstr "Share on Facebook"
 msgid "Partager sur Linkedin"
 msgstr "Share on  Linkedin"
 
-#: core/templates/core/toast.html:10
-#: portfolio/templates/portfolio/blocks/skill_modal.html:29
-#: search/templates/search/search_form.html:14
-msgid "Fermer"
-msgstr "Close"
-
-#: core/wagtail_hooks.py:35
+#: core/wagtail_hooks.py:31
 msgid "Keyboard"
 msgstr "Clavier"
 
-#: gallery/factories.py:12
+#: gallery/factories.py:11
 msgid "Galerie"
 msgstr "Gallery"
 
@@ -228,61 +226,61 @@ msgstr "Check"
 msgid "Déplacer"
 msgstr "Move"
 
-#: home/factories.py:12 templates/cleanblog/navbar.html:4
+#: home/factories.py:11 templates/cleanblog/navbar.html:4
 #: templates/cleanblog/navbar.html:5
 msgid "Accueil"
 msgstr "Home"
 
-#: portfolio/factories/pages.py:22 templates/agency/navbar.html:4
+#: portfolio/factories/pages.py:26 templates/agency/navbar.html:4
 msgid "Portfolio"
 msgstr ""
 
-#: portfolio/models.py:22 portfolio/models.py:72 portfolio/models.py:93
-#: portfolio/models.py:112 portfolio/models.py:137
+#: portfolio/models.py:24 portfolio/models.py:46 portfolio/models.py:95
+#: portfolio/models.py:114 portfolio/models.py:141
 msgid "Titre"
 msgstr "Title"
 
-#: portfolio/models.py:27
+#: portfolio/models.py:29
 msgid "Slogan"
 msgstr ""
 
-#: portfolio/models.py:38
+#: portfolio/models.py:40
 msgid "Slide"
 msgstr ""
 
-#: portfolio/models.py:44 portfolio/models.py:58 portfolio/models.py:77
-#: portfolio/models.py:98 portfolio/models.py:117 portfolio/models.py:142
+#: portfolio/models.py:51 portfolio/models.py:67 portfolio/models.py:81
+#: portfolio/models.py:100 portfolio/models.py:119 portfolio/models.py:146
 msgid "Sous-titre"
 msgstr "Subtitle"
 
-#: portfolio/models.py:123
+#: portfolio/models.py:125
 msgid "Texte"
 msgstr "Text"
 
-#: portfolio/models.py:157
+#: portfolio/models.py:161
 msgid "Entête"
 msgstr "Header"
 
-#: portfolio/models.py:165 portfolio/templates/portfolio/blocks/services.html:5
-#: templates/agency/navbar.html:11
+#: portfolio/models.py:171 templates/agency/navbar.html:11
+msgid "À propos"
+msgstr "About"
+
+#: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
+#: templates/agency/navbar.html:12
 msgid "Services"
 msgstr ""
 
-#: portfolio/models.py:173
+#: portfolio/models.py:187
 msgid "Skills"
 msgstr ""
 
-#: portfolio/models.py:182 templates/agency/navbar.html:13
+#: portfolio/models.py:196 templates/agency/navbar.html:14
 msgid "CV"
 msgstr ""
 
-#: portfolio/models.py:192 templates/agency/navbar.html:14
+#: portfolio/models.py:207 templates/agency/navbar.html:16
 msgid "Équipe"
 msgstr "Team"
-
-#: portfolio/models.py:202 templates/agency/navbar.html:15
-msgid "À propos"
-msgstr "About"
 
 #: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"
@@ -292,12 +290,17 @@ msgstr "Only the future<br />will<br />tell us !"
 msgid "Fermer la fenêtre"
 msgstr "Close the window"
 
+#: portfolio/templates/portfolio/blocks/skill_modal.html:29
+#: search/templates/search/search_form.html:14
+msgid "Fermer"
+msgstr "Close"
+
 #: portfolio/templates/portfolio/blocks/skills.html:5
-#: templates/agency/navbar.html:12
+#: templates/agency/navbar.html:13
 msgid "Expertises"
 msgstr "Skills"
 
-#: search/factories.py:12
+#: search/factories.py:11
 msgid "Recherche"
 msgstr "Search"
 
@@ -342,43 +345,18 @@ msgstr[1] "\"Go find happiness\"  (french joke): %(counter)s results 🚀"
 msgid "Ah non... bah pas bonheur"
 msgstr "Well so... not very well"
 
-#: templates/404.html:23
+#: templates/404.html:26
 msgid "Page introuvable"
 msgstr "Page not found"
 
-#: templates/404.html:25
-msgid "Lien cassé ? Armée de méchants robots zombies ?"
-msgstr "Broken links ? Army of evil robot zombies?"
+#: templates/404.html:39
+msgid "Oups !"
+msgstr "Oops!"
 
 #: templates/404.html:40
-msgid "Cher robot"
-msgstr "Dear bot"
-
-#: templates/404.html:43
-msgid ""
-"\"Tu vois, le monde se divise en deux catégories : ceux qui ont un pistolet "
-"chargé et ceux qui creusent. Toi, tu creuses.\""
+msgid "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..."
 msgstr ""
-"\"You see, in this world, there is two kinds of people, my friend: those "
-"with loaded guns and those who dig. You dig.\""
-
-#: templates/404.html:45
-msgid "Le bon, la brute et le truand"
-msgstr "The good, the bad and the ugly"
-
-#: templates/404.html:66
-msgid "Retour à l'accueil"
-msgstr "Go back to home"
-
-#: templates/404.html:71
-msgid "À l'instant..."
-msgstr "This very minute"
-
-#: templates/404.html:72
-msgid ""
-"Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de "
-"retourner à l'accueil"
-msgstr "No really... Nobody will take your call! Please return to home"
+"The requested page does not exist, no longer exists, or never existed..."
 
 #: templates/agency/footer.html:6
 msgid "conception avec le CMS"
@@ -448,17 +426,17 @@ msgstr "Hell no, it's already finished!"
 msgid "Oups ! On dirait bien qu'il y a un bug :/"
 msgstr "Oups! Looks like there is a bug somewhere :/"
 
-#: video/factories.py:31
+#: video/factories.py:41
 msgid "Vidéos"
 msgstr "Videos"
 
-#: video/models.py:120
+#: video/models.py:133
 msgid "Video information"
 msgstr "Video data"
 
-#: video/models.py:133
+#: video/models.py:146
 msgid "Related pages"
-msgstr ""
+msgstr "Pages associées"
 
 #: video/templates/video/snippets/video_promoted.html:30
 msgid "Carousel video item"
@@ -482,6 +460,33 @@ msgstr "Well, I accept!"
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
 msgstr "Start video"
+
+#~ msgid "Lien cassé ? Armée de méchants robots zombies ?"
+#~ msgstr "Broken links ? Army of evil robot zombies?"
+
+#~ msgid "Cher robot"
+#~ msgstr "Dear bot"
+
+#~ msgid ""
+#~ "\"Tu vois, le monde se divise en deux catégories : ceux qui ont un "
+#~ "pistolet chargé et ceux qui creusent. Toi, tu creuses.\""
+#~ msgstr ""
+#~ "\"You see, in this world, there is two kinds of people, my friend: those "
+#~ "with loaded guns and those who dig. You dig.\""
+
+#~ msgid "Le bon, la brute et le truand"
+#~ msgstr "The good, the bad and the ugly"
+
+#~ msgid "Retour à l'accueil"
+#~ msgstr "Go back to home"
+
+#~ msgid "À l'instant..."
+#~ msgstr "This very minute"
+
+#~ msgid ""
+#~ "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de "
+#~ "retourner à l'accueil"
+#~ msgstr "No really... Nobody will take your call! Please return to home"
 
 #~ msgid "Langues"
 #~ msgstr "Languages"
