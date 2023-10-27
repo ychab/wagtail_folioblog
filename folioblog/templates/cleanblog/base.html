@@ -58,7 +58,9 @@
         {% cookies_banner %}
         {% wagtailuserbar %}
         <!-- Navigation -->
-        {% include 'cleanblog/navbar.html' %}
+        {% block navbar %}
+            {% include 'cleanblog/navbar.html' %}
+        {% endblock %}
         <!-- Page Header-->
         {% block header %}
             {% include 'cleanblog/header.html' %}
@@ -66,7 +68,9 @@
         <!-- Main content -->
         {% block content %}{% endblock %}
         <!-- Footer -->
-        {% include 'cleanblog/footer.html' %}
+        {% block footer %}
+            {% include 'cleanblog/footer.html' %}
+        {% endblock %}
         <!-- Dynamic Javascript -->
         <script src="{% url 'javascript-catalog' %}"></script>
         <!-- JS inline -->
