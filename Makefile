@@ -41,7 +41,7 @@ restore_db:
 	mv -f *.sql latest.sql
 	psql -U postgres -d folioblog < latest.sql
 	python manage.py createadmin --password=admin --update
-	python manage.py updatesite --hostname=127.0.0.1 --port 8000
+	python manage.py updatesite --site=1 --hostname=127.0.0.1 --port 8000
 	rm -f *.sql
 
 restore_media:
