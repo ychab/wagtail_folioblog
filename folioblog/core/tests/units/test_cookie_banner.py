@@ -9,30 +9,34 @@ from folioblog.core.factories import (
     FolioBlogSettingsFactory,
     LocaleFactory,
 )
-from folioblog.core.models import FolioBlogSettings
 
 
 class CookieBannerSettingsTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
-        settings_factory = FolioBlogSettingsFactory(
+        cls.site = Site.objects.get(is_default_site=True)
+
+        # Create site settings if not exist yet
+        FolioBlogSettingsFactory(site=cls.site)
+        cls.site.refresh_from_db()
+
+        # Then update it.
+        settings_factory = FolioBlogSettingsFactory.build(
             cookie_banner__0__banners__language="fr",
             cookie_banner__0__banners__title="Coucou toi",
             cookie_banner__1__banners__language="en",
             cookie_banner__1__banners__title="Hello Honey",
         )
-        cls.settings_fr = settings_factory.cookie_banner[0].value
-        cls.settings_en = settings_factory.cookie_banner[1].value
+        cls.site.folioblogsettings.cookie_banner = settings_factory.cookie_banner
+        cls.site.folioblogsettings.save()
 
-        folio_settings = FolioBlogSettings.load()
-        folio_settings.cookie_banner = settings_factory.cookie_banner
-        folio_settings.save()
+        cls.settings_fr = cls.site.folioblogsettings.cookie_banner[0].value
+        cls.settings_en = cls.site.folioblogsettings.cookie_banner[1].value
 
         super().setUpClass()
 
     @classmethod
     def setUpTestData(cls):
-        cls.site = Site.objects.get(is_default_site=True)
         cls.page_fr = BasicPageFactory(
             parent=cls.site.root_page,
             locale=LocaleFactory(language_code="fr"),

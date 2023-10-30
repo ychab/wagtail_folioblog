@@ -30,7 +30,7 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
             "https://www.youtube.com/watch?v=KLOn3i-mah4",
             "https://www.youtube.com/watch?v=ml9ahwz_oNA",
         ]
-        self.foliosettings = FolioBlogSettings.load()
+        self.foliosettings = FolioBlogSettings.for_site(self.site)
         self.foliosettings.video_pager_limit = round(
             (len(youtube_urls) / 2) - 1
         )  # we got at least 2 pages

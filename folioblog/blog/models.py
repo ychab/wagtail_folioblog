@@ -31,7 +31,7 @@ class BlogIndexPage(BaseIndexPage):
     subpage_types = ["blog.BlogPage"]
 
     def get_context(self, request, *args, **kwargs):
-        folio_settings = FolioBlogSettings.load(request_or_site=request)
+        folio_settings = FolioBlogSettings.for_request(request)
         context = super().get_context(request, *args, **kwargs)
 
         categories = BlogCategory.objects.filter_language().order_by("slug")

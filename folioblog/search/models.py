@@ -22,7 +22,7 @@ class SearchIndexPage(BaseIndexPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        folio_settings = FolioBlogSettings.load(request_or_site=request)
+        folio_settings = FolioBlogSettings.for_request(request)
         page = request.GET.get("page", 1)  # pager link, not in form
 
         # Mimic FormView in WagtailPage to sanitize data

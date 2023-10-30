@@ -11,7 +11,7 @@ class RssView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        folio_settings = FolioBlogSettings.load(request_or_site=self.request)
+        folio_settings = FolioBlogSettings.for_request(self.request)
         rss_feed = get_block_language(folio_settings.rss_feed)
 
         qs = (

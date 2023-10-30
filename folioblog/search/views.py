@@ -17,7 +17,7 @@ class AutocompleteView(View):
     """
 
     def get(self, request, query, *args, **kwargs):
-        folio_settings = FolioBlogSettings.load(request_or_site=request)
+        folio_settings = FolioBlogSettings.for_request(request)
         # Unfortunetly, only locale_id is indexed...
         locale = Locale.objects.get(language_code=get_language())
 

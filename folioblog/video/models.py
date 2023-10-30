@@ -39,7 +39,7 @@ class VideoIndexPage(BaseIndexPage):
     subpage_types = ["video.VideoPage"]
 
     def get_context(self, request, *args, **kwargs):
-        folio_settings = FolioBlogSettings.load(request_or_site=request)
+        folio_settings = FolioBlogSettings.for_request(request)
         context = super().get_context(request, *args, **kwargs)
 
         categories = (

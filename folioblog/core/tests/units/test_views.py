@@ -2,29 +2,36 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import translation
 
+from wagtail.models import Site
+
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.core.factories import FolioBlogSettingsFactory, LocaleFactory
-from folioblog.core.models import FolioBlogSettings
 
 
 class RssViewTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
-        settings_factory = FolioBlogSettingsFactory(
+        cls.site = Site.objects.get(is_default_site=True)
+
+        cls.locale_fr = LocaleFactory(language_code="fr")
+        cls.locale_en = LocaleFactory(language_code="en")
+
+        # Create site settings if not exist yet
+        FolioBlogSettingsFactory(site=cls.site)
+        cls.site.refresh_from_db()
+
+        # Then update settings.
+        settings_factory = FolioBlogSettingsFactory.build(
             rss_feed__0__feeds__language="fr",
             rss_feed__0__feeds__title="Les derniers articles",
             rss_feed__1__feeds__language="en",
             rss_feed__1__feeds__title="The latest posts",
         )
-        cls.settings_fr = settings_factory.rss_feed[0].value
-        cls.settings_en = settings_factory.rss_feed[1].value
+        cls.site.folioblogsettings.rss_feed = settings_factory.rss_feed
+        cls.site.folioblogsettings.save()
 
-        folio_settings = FolioBlogSettings.load()
-        folio_settings.rss_feed = settings_factory.rss_feed
-        folio_settings.save()
-
-        cls.locale_fr = LocaleFactory(language_code="fr")
-        cls.locale_en = LocaleFactory(language_code="en")
+        cls.settings_fr = cls.site.folioblogsettings.rss_feed[0].value
+        cls.settings_en = cls.site.folioblogsettings.rss_feed[1].value
 
         super().setUpClass()
 

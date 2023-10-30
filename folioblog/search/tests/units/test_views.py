@@ -15,7 +15,7 @@ class AutocompleteViewTestCase(TestCase):
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
-        cls.folio_settings = FolioBlogSettings.load()
+        cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.search_operator = "or"
         cls.folio_settings.save()
 

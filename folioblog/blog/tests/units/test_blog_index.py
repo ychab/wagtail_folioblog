@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.test import TestCase
 
+from wagtail.models import Site
+
 from folioblog.blog.factories import (
     BlogCategoryFactory,
     BlogIndexPageFactory,
@@ -18,7 +20,9 @@ class BlogIndexPageTestCase(TestCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.folio_settings = FolioBlogSettings.load()
+        cls.site = Site.objects.get(is_default_site=True)
+
+        cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.blog_pager_limit = 3
         cls.folio_settings.save()
 

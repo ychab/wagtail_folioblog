@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         site = Site.objects.get(is_default_site=True)
-        folio_settings = FolioBlogSettings.load()
+        folio_settings = FolioBlogSettings.for_site(site)
 
         if options["auth_user"] and options["auth_passwd"]:  # pragma: no cover
             self.requests_kwargs["auth"] = (

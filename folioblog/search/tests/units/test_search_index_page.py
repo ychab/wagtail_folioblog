@@ -29,7 +29,7 @@ class SearchIndexPageTestCase(TestCase):
 
         super().setUpClass()
 
-        cls.folio_settings = FolioBlogSettings.load()
+        cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.search_limit = 3
         cls.folio_settings.save()
 

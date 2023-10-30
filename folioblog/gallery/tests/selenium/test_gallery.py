@@ -2,6 +2,7 @@ from wagtail_factories import CollectionFactory
 
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.core.factories import ImageFactory
+from folioblog.core.models import FolioBlogSettings
 from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.gallery.tests.selenium.webpages import GalleryWebPage
@@ -15,6 +16,10 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.index = BlogIndexPageFactory(parent=self.site.root_page)
 
         root_collection = CollectionFactory(name="Gallery")
+        site_settings = FolioBlogSettings.for_site(self.site)
+        site_settings.gallery_collection = root_collection
+        site_settings.save()
+
         self.collection = CollectionFactory(name="Test", parent=root_collection)
         self.collection_alt = CollectionFactory(name="Alt test", parent=root_collection)
 

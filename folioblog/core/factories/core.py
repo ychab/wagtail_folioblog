@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.utils.translation import get_language, to_locale
 
-from wagtail.models import Locale
+from wagtail.models import Locale, Site
 
+import factory
 import wagtail_factories
 from factory import fuzzy
 from factory.django import DjangoModelFactory
@@ -26,6 +27,9 @@ class FolioBlogSettingsFactory(DjangoModelFactory):
     class Meta:
         model = FolioBlogSettings
         skip_postgeneration_save = True
+        django_get_or_create = ("site",)
+
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
     cookie_banner = wagtail_factories.StreamFieldFactory(CookieBannersBlockFactory)
     rss_feed = wagtail_factories.StreamFieldFactory(RssFeedsBlockFactory)

@@ -16,11 +16,11 @@ from wagtail.admin.panels import (
     TitleFieldPanel,
 )
 from wagtail.admin.widgets.slug import SlugInput
-from wagtail.contrib.settings.models import BaseGenericSetting
+from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images.models import AbstractImage, AbstractRendition, Image, ImageQuerySet
-from wagtail.models import Orderable, Page, TranslatableMixin
+from wagtail.models import Collection, Orderable, Page, TranslatableMixin
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
@@ -234,7 +234,10 @@ class BasicPageRelatedLink(Orderable):
 
 
 @register_setting(icon="cog")
-class FolioBlogSettings(BaseGenericSetting):
+class FolioBlogSettings(BaseSiteSetting):
+    # @see https://docs.wagtail.org/en/stable/reference/contrib/settings.html#utilising-select-related-to-improve-efficiency  # noqa
+    select_related = ["gallery_collection"]
+
     google_analytics_id = models.CharField(
         verbose_name=_("Google Analytics ID"),
         max_length=128,
@@ -273,6 +276,14 @@ class FolioBlogSettings(BaseGenericSetting):
 
     blog_pager_limit = models.PositiveSmallIntegerField(default=8)
     video_pager_limit = models.PositiveSmallIntegerField(default=10)
+
+    gallery_collection = models.ForeignKey(
+        Collection,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
 
     search_limit = models.PositiveSmallIntegerField(default=10)
     search_operator = models.CharField(
@@ -316,6 +327,9 @@ class FolioBlogSettings(BaseGenericSetting):
     video_panels = [
         FieldPanel("video_pager_limit"),
     ]
+    gallery_panels = [
+        FieldPanel("gallery_collection"),
+    ]
     search_panels = [
         FieldPanel("search_limit"),
         FieldPanel("search_operator"),
@@ -334,6 +348,7 @@ class FolioBlogSettings(BaseGenericSetting):
             ObjectList(contact_panels, heading=_("Contact")),
             ObjectList(blog_panels, heading=_("Blog")),
             ObjectList(video_panels, heading=_("Video")),
+            ObjectList(gallery_panels, heading=_("Gallery")),
             ObjectList(search_panels, heading=_("Search")),
             ObjectList(cookie_panels, heading=_("Cookies")),
             ObjectList(rss_panels, heading=_("RSS")),

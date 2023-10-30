@@ -16,7 +16,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def setUp(self):
         super().setUp()
 
-        self.foliosettings = FolioBlogSettings.load()
+        self.foliosettings = FolioBlogSettings.for_site(self.site)
 
         self.categories = [
             BlogCategoryFactory(name="Tech"),

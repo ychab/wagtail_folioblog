@@ -4,10 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import RichTextField
 from wagtail.images import get_image_model
-from wagtail.models import Collection
+from wagtail.models import Collection, Site
 
 from folioblog.blog.models import BlogPage
-from folioblog.core.models import BaseIndexPage, BasicPage
+from folioblog.core.models import BaseIndexPage, BasicPage, FolioBlogSettings
 from folioblog.video.models import VideoPage
 
 Image = get_image_model()
@@ -33,8 +33,12 @@ class GalleryPage(BaseIndexPage):
         context = super().get_context(request, *args, **kwargs)
 
         # First collect gallery collection.
-        root_collection = Collection.objects.get(name="Gallery")
-        collection_qs = Collection.objects.child_of(root_collection).order_by("name")
+        site = Site.find_for_request(request)
+        site_settings = FolioBlogSettings.for_site(site)
+
+        collection_qs = Collection.objects.all().order_by("name")
+        if site_settings.gallery_collection:
+            collection_qs = collection_qs.child_of(site_settings.gallery_collection)
 
         # Then filter collections if any.
         collection_filter = request.GET.get("collection", None)

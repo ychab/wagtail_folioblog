@@ -16,7 +16,7 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def setUp(self):
         super().setUp()
 
-        self.foliosettings = FolioBlogSettings.load()
+        self.foliosettings = FolioBlogSettings.for_site(self.site)
         self.foliosettings.search_limit = 2
         self.foliosettings.save()
 

@@ -2,13 +2,14 @@ from django.conf import settings
 from django.test import TestCase
 
 from wagtail.images import get_image_model
+from wagtail.models import Site
 
 from wagtail_factories import CollectionFactory
 
 from folioblog.blog.factories import BlogPageFactory
 from folioblog.blog.models import BlogPage
 from folioblog.core.factories import BasicPageFactory, ImageFactory, LocaleFactory
-from folioblog.core.models import BasicPage
+from folioblog.core.models import BasicPage, FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.gallery.tests.units.htmlpages import GalleryHTMLPage
@@ -20,6 +21,11 @@ class GalleryPageTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         root_collection = CollectionFactory(name="Gallery")
+
+        cls.site = Site.objects.get(is_default_site=True)
+        site_settings = FolioBlogSettings.for_site(cls.site)
+        site_settings.gallery_collection = root_collection
+        site_settings.save()
 
         cls.collections = {}
         for name in ["page", "post", "video"]:
@@ -73,6 +79,16 @@ class GalleryPageTestCase(TestCase):
         self.assertEqual(response.context["images"][0].pk, image.pk)
         self.assertIsNone(response.context["images"][0].page)
 
+    def test_filter_exclude_collections(self):
+        image = ImageFactory(collection=self.collections["post"])
+        ImageFactory(collection=CollectionFactory())
+
+        response = self.client.get(self.page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["images"]), 1)
+
+        self.assertEqual(response.context["images"][0].pk, image.pk)
+
     def test_filter_collections(self):
         image = ImageFactory(collection=self.collections["post"])
         ImageFactory(collection=self.collections["video"])
@@ -86,10 +102,32 @@ class GalleryPageTestCase(TestCase):
         self.assertEqual(response.context["images"][0].pk, image.pk)
 
 
+class GalleryPageNoSettingsTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.page = GalleryPageFactory()
+
+    def tearDown(self):
+        Image.objects.exclude(pk=self.page.image.pk).delete()
+
+    def test_no_collections(self):
+        image = ImageFactory()
+
+        response = self.client.get(self.page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(image.pk, [i.pk for i in response.context["images"]])
+
+
 class GalleryHTMLTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        CollectionFactory(name="Gallery")
+        root_collection = CollectionFactory(name="Gallery")
+
+        cls.site = Site.objects.get(is_default_site=True)
+        site_settings = FolioBlogSettings.for_site(cls.site)
+        site_settings.gallery_collection = root_collection
+        site_settings.save()
+
         cls.page = GalleryPageFactory()
 
     def setUp(self):
@@ -131,7 +169,13 @@ class GalleryHTMLTestCase(TestCase):
 class GalleryHTMLi18nTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        CollectionFactory(name="Gallery")
+        root_collection = CollectionFactory(name="Gallery")
+
+        cls.site = Site.objects.get(is_default_site=True)
+        site_settings = FolioBlogSettings.for_site(cls.site)
+        site_settings.gallery_collection = root_collection
+        site_settings.save()
+
         cls.page_fr = GalleryPageFactory(
             locale=LocaleFactory(language_code="fr"),
         )
