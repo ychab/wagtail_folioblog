@@ -73,6 +73,7 @@ class SearchIndexPage(BaseIndexPage):
         if has_filters:
             search_results = (
                 BlogPage.objects.live()
+                .in_site_localized(self.get_site())
                 .filter_locale(self.locale)
                 .select_related("category", "image")
                 .prefetch_related(

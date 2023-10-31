@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.db.models import Q
 
 from wagtail.contrib.sitemaps.sitemap_generator import Sitemap as WagtailSitemap
 from wagtail.models import Page
+
+from folioblog.core.managers import qs_in_site_alt
 
 
 class SitemapPageMixin:
@@ -38,18 +39,13 @@ class SitemapPageMixin:
 
 class Sitemap(WagtailSitemap):
     def items(self):
-        q = Q()
-
-        root_pages = self.get_wagtail_site().root_page.get_translations(inclusive=True)
-        for root_page in root_pages:
-            # Mimic descendant_of(inclusive=True), but combine them.
-            q |= Q(path__startswith=root_page.path) & Q(depth__gte=root_page.depth)
-
-        return (
+        qs = (
             Page.objects.live()
             .public()
-            .filter(q)
             .order_by("path")
             .defer_streamfields()
             .specific()
         )
+        qs = qs_in_site_alt(qs, self.get_wagtail_site())
+
+        return qs

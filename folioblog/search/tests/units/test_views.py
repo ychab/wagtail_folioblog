@@ -4,10 +4,13 @@ from django.utils import translation
 
 from wagtail.models import Site
 
+from wagtail_factories import SiteFactory
+
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.blog.models import BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
+from folioblog.home.factories import HomePageFactory
 
 
 class AutocompleteViewTestCase(TestCase):
@@ -58,6 +61,43 @@ class AutocompleteViewTestCase(TestCase):
             sorted([p["title"] for p in json]),
             sorted([p1.title, p2.title]),
         )
+
+
+class AutocompleteViewMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.home = HomePageFactory(slug="home")
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.blog = BlogPageFactory(parent=cls.index, title="foobarbaz")
+
+        cls.home_other = HomePageFactory(slug="home_other")
+        cls.site_other = SiteFactory(root_page=cls.home_other)
+        cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
+        cls.blog_other = BlogPageFactory(parent=cls.index_other, title="foobarbaz")
+
+        cls.root_page_original = cls.site.root_page
+        cls.site.root_page = cls.home
+        cls.site.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        # Because we change the site root page which is created by migrations,
+        # it would affect next TestCases even if rollback is done because the
+        # root page was done BEFORE entering into the SQL transaction.
+        # As a result, we need to reset it manually.
+        cls.site.root_page = cls.root_page_original
+        cls.site.save(update_fields=["root_page"])
+        super().tearDownClass()
+
+    def test_filter_site(self):
+        url = reverse("search-autocomplete", kwargs={"query": "foobar"})
+        response = self.client.get(url, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        json = response.json()
+        self.assertIn(self.blog.url, [p["href"] for p in json])
+        self.assertNotIn(self.blog_other.url, [p["href"] for p in json])
 
 
 class AutocompleteI18nViewTestCase(TestCase):

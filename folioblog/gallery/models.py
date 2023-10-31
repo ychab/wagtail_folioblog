@@ -38,7 +38,9 @@ class GalleryPage(BaseIndexPage):
 
         collection_qs = Collection.objects.all().order_by("name")
         if site_settings.gallery_collection:
-            collection_qs = collection_qs.child_of(site_settings.gallery_collection)
+            collection_qs = collection_qs.descendant_of(
+                site_settings.gallery_collection
+            )
 
         # Then filter collections if any.
         collection_filter = request.GET.get("collection", None)
@@ -55,24 +57,38 @@ class GalleryPage(BaseIndexPage):
             .order_by("?")
         )  # just for fun, will be cached in production
 
+        # To prevent useless queries, fetch once the localized root page.
+        root_page = site.root_page.localized
+
         # For each images, try to attach its page if any (that's the ugly part):
         # - fetching related pages is not possible (i.e related_name='+' due to abstract=True)
         # - using Image.get_usage() in loop is just a performance killer
         # ... so we do it manually in that ugly way!
         # @Note: if BaseIndexPage is not abstract, we could do BaseIndexPage.objects.live()...
-        image_pages = {
-            p.image_id: p for p in BasicPage.objects.live().filter_language()
+        pages = {
+            p.image_id: p
+            for p in BasicPage.objects.live().descendant_of(root_page).filter_language()
         }
-        image_pages.update(
-            {p.image_id: p for p in BlogPage.objects.live().filter_language()}
+        pages.update(
+            {
+                p.image_id: p
+                for p in BlogPage.objects.live()
+                .descendant_of(root_page)
+                .filter_language()
+            }
         )
-        image_pages.update(
-            {p.image_id: p for p in VideoPage.objects.live().filter_language()}
+        pages.update(
+            {
+                p.image_id: p
+                for p in VideoPage.objects.live()
+                .descendant_of(root_page)
+                .filter_language()
+            }
         )
 
         images = []
         for image in image_qs:
-            image.page = image_pages.get(image.pk, None)  # ugly properties on the fly
+            image.page = pages.get(image.pk, None)  # ugly properties on the fly
             images.append(image)
 
         context.update(

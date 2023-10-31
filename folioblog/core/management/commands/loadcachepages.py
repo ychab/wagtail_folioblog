@@ -12,6 +12,7 @@ import requests
 from requests import RequestException
 
 from folioblog.blog.models import BlogCategory, BlogPage
+from folioblog.core.managers import qs_in_site_alt
 from folioblog.core.models import FolioBlogSettings
 from folioblog.video.models import VideoCategory, VideoPage
 
@@ -26,30 +27,32 @@ class Command(BaseCommand):
         parser.add_argument("--auth-passwd")
 
     def handle(self, *args, **options):
-        site = Site.objects.get(is_default_site=True)
-        folio_settings = FolioBlogSettings.for_site(site)
-
+        # Prepare request options
         if options["auth_user"] and options["auth_passwd"]:  # pragma: no cover
             self.requests_kwargs["auth"] = (
                 options["auth_user"],
                 options["auth_passwd"],
             )
 
-        # First clear the cache before rebuilding it!
+        # Then clear the cache before rebuilding it!
         self.stdout.write(self.style.WARNING("WARNING: clearing cache...\n"))
         cache.clear()
 
-        # Then fetch pages to build renditions and populate the cache!
-        self.stdout.write(self.style.WARNING("About requesting pages:"))
-        qs = Page.objects.live().order_by("pk")
-        for page in qs:
-            if page.slug == "root":
-                continue
+        # Then iterate over each sites to fetch their pages.
+        for site in Site.objects.all():
+            self.process_site(site, FolioBlogSettings.for_site(site))
 
+    def process_site(self, site, folio_settings):
+        self.stdout.write(self.style.WARNING(f"About requesting pages of site {site}:"))
+
+        # Fetch pages to build renditions and populate the cache!
+        qs = Page.objects.live().order_by("pk")
+        qs = qs_in_site_alt(qs, site)
+        for page in qs:
             self.process_page(page, folio_settings)
 
-        # Then fetch views
-        self.stdout.write(self.style.WARNING("\nAbout requesting views:"))
+        # Fetch views
+        self.stdout.write(self.style.WARNING("About requesting views:"))
         views = ["javascript-catalog", "rss"]
         for lang in dict(settings.LANGUAGES).keys():
             for view_name in views:
@@ -60,13 +63,16 @@ class Command(BaseCommand):
         # Don't forgot 404 page for renditions only (dummy url + not a 200 code)
         self.request_page(f"{site.root_url}/givemea404please", status=404)
 
-        self.stdout.write(self.style.SUCCESS("\nAll page cache loaded."))
+        self.stdout.write(
+            self.style.SUCCESS(f"All page cache loaded for site {site}.\n")
+        )
 
     def process_page(self, page, folio_settings):
         # Request page without parameters.
         self.request_page(page.full_url)
 
         # Request pages with pagination only.
+        limit = None
         if page.slug in ["posts", "videos"]:
             limit = (
                 folio_settings.video_pager_limit
@@ -81,7 +87,7 @@ class Command(BaseCommand):
         if page.slug == "videos":
             self.request_filtering_video_category(page, limit)
         elif page.slug == "gallery":
-            self.request_filtering_collection(page)
+            self.request_filtering_collection(page, folio_settings.gallery_collection)
 
     def request_page(self, full_url, status=None, **kwargs):
         self.stdout.write(f'Requesting: "{full_url}"')
@@ -104,7 +110,7 @@ class Command(BaseCommand):
                 )  # noqa
 
     def request_pagination(self, page, limit):
-        total = Page.objects.child_of(page).live().count()
+        total = Page.objects.descendant_of(page).live().count()
         num_pages = math.ceil(total / limit)
         for i in range(0, num_pages):
             self.request_page(
@@ -114,11 +120,12 @@ class Command(BaseCommand):
                 },
             )
 
-    def request_filtering_collection(self, page):
-        root_collection = Collection.objects.get(name="Gallery")
-        collections = Collection.objects.child_of(root_collection)
+    def request_filtering_collection(self, page, root_collection=None):
+        qs_collection = Collection.objects.all()
+        if root_collection:
+            qs_collection = qs_collection.descendant_of(root_collection)
 
-        for collection in collections:
+        for collection in qs_collection:
             self.request_page(
                 f"{page.full_url}?ajax=1&collection={collection.pk}",
                 headers={
@@ -131,7 +138,10 @@ class Command(BaseCommand):
 
         for category in categories:
             total = (
-                BlogPage.objects.child_of(page).live().filter(category=category).count()
+                BlogPage.objects.descendant_of(page)
+                .live()
+                .filter(category=category)
+                .count()
             )
             num_pages = math.ceil(total / limit)
 
@@ -148,7 +158,7 @@ class Command(BaseCommand):
 
         for category in categories:
             total = (
-                VideoPage.objects.child_of(page)
+                VideoPage.objects.descendant_of(page)
                 .live()
                 .filter(category=category)
                 .count()

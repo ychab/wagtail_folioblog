@@ -13,14 +13,19 @@ from wagtail.models import Page, Site
 
 import requests
 import requests_mock
-from wagtail_factories import CollectionFactory
+from wagtail_factories import CollectionFactory, SiteFactory
 
 from folioblog.blog.factories import (
     BlogCategoryFactory,
     BlogIndexPageFactory,
     BlogPageFactory,
 )
-from folioblog.core.factories import BasicPageFactory, LocaleFactory
+from folioblog.core.factories import (
+    BasicPageFactory,
+    FolioBlogSettingsFactory,
+    ImageFactory,
+    LocaleFactory,
+)
 from folioblog.core.models import FolioBlogSettings
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.home.factories import HomePageFactory
@@ -45,12 +50,15 @@ class LoadCachePagesCommandTestCase(TestCase):
         cls.locale_fr = LocaleFactory(language_code="fr")
         cls.locale_en = LocaleFactory(language_code="en")
 
+        root_collection = CollectionFactory(name="Gallery")
+
         cls.site = Site.objects.get(is_default_site=True)
         cls.root_page_original = cls.site.root_page
 
         cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.blog_pager_limit = 3
         cls.folio_settings.video_pager_limit = 3
+        cls.folio_settings.gallery_collection = root_collection
         cls.folio_settings.save()  # Save only after transaction is enabled
 
         cls.portfolio = PortfolioPageFactory(
@@ -68,7 +76,6 @@ class LoadCachePagesCommandTestCase(TestCase):
         # Then delete old homepage
         Page.objects.filter(pk=2).delete()
 
-        root_collection = CollectionFactory(name="Gallery")
         for name in ["posts", "videos"]:
             CollectionFactory(name=name, parent=root_collection)
 
@@ -227,3 +234,113 @@ class LoadCachePagesCommandTestCase(TestCase):
         call_command("loadcachepages", stdout=out)
 
         self.assertIn(f"Error for page {url_error} with status 400", out.getvalue())
+
+
+class LoadCachePagesMultiDomainCommandTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.locale_fr = LocaleFactory(language_code="fr")
+        cls.locale_en = LocaleFactory(language_code="en")
+
+        # Website A
+        cls.home = HomePageFactory(locale=cls.locale_fr, slug="home")
+        cls.site = SiteFactory(root_page=cls.home)
+        FolioBlogSettingsFactory(site=cls.site)
+        cls.index = BlogIndexPageFactory(parent=cls.home, locale=cls.locale_fr)
+        cls.post = BlogPageFactory(parent=cls.index, locale=cls.locale_fr)
+
+        # Website B
+        cls.other_home = HomePageFactory(locale=cls.locale_fr, slug="home_other")
+        cls.other_site = SiteFactory(root_page=cls.other_home)
+        FolioBlogSettingsFactory(site=cls.other_site)
+        cls.other_index = BlogIndexPageFactory(
+            parent=cls.other_home, locale=cls.locale_fr
+        )
+        cls.other_post = BlogPageFactory(parent=cls.other_index, locale=cls.locale_fr)
+
+        cls.pages = [
+            cls.home,
+            cls.index,
+            cls.post,
+            cls.other_home,
+            cls.other_index,
+            cls.other_post,
+        ]
+
+    @requests_mock.Mocker()
+    def setUp(self, m):
+        for page in Page.objects.all():
+            m.get(page.full_url, text="Ok")
+
+        for site in Site.objects.all():
+            for locale in [self.locale_fr, self.locale_en]:
+                for view_name in ["javascript-catalog", "rss"]:
+                    with translation.override(locale.language_code):
+                        m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
+
+            m.get(f"{site.root_url}/givemea404please", text="Ok")
+
+    def test_multi_domains(self):
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+        self.assertIn(f"About requesting pages of site {self.site}:", out.getvalue())
+        self.assertIn(
+            f"About requesting pages of site {self.other_site}:", out.getvalue()
+        )
+
+        for page in self.pages:
+            self.assertIn(
+                f'Requesting: "{page.full_url}"',
+                out.getvalue(),
+                f"Page {page}({page.pk}) request check",
+            )
+
+
+class LoadCachePagesCollectionRootNoneCommandTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.locale_fr = LocaleFactory(language_code="fr")
+        cls.locale_en = LocaleFactory(language_code="en")
+
+        cls.home = HomePageFactory(locale=cls.locale_fr, slug="home")
+        cls.site = SiteFactory(root_page=cls.home)
+        FolioBlogSettingsFactory(site=cls.site, gallery_collection=None)
+
+        cls.collection = CollectionFactory()
+        cls.image = ImageFactory(collection=cls.collection)
+
+        cls.index = BlogIndexPageFactory(parent=cls.home, locale=cls.locale_fr)
+        cls.post = BlogPageFactory(
+            parent=cls.index, locale=cls.locale_fr, image=cls.image
+        )
+        cls.gallery = GalleryPageFactory(parent=cls.home, locale=cls.locale_fr)
+
+        cls.pages = [
+            cls.home,
+            cls.index,
+            cls.post,
+        ]
+
+    @requests_mock.Mocker()
+    def setUp(self, m):
+        for page in Page.objects.all():
+            m.get(page.full_url, text="Ok")
+
+        for site in Site.objects.all():
+            for locale in [self.locale_fr, self.locale_en]:
+                for view_name in ["javascript-catalog", "rss"]:
+                    with translation.override(locale.language_code):
+                        m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
+
+            m.get(f"{site.root_url}/givemea404please", text="Ok")
+
+    def test_collection_without_settings(self):
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+
+        self.assertIn(
+            f'Requesting: "{self.gallery.full_url}?ajax=1&collection={self.collection.pk}"',
+            out.getvalue(),
+        )

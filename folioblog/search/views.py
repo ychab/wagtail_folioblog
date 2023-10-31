@@ -23,6 +23,7 @@ class AutocompleteView(View):
 
         search_qs = (
             BlogPage.objects.live()
+            .in_site_locale(folio_settings.site, locale)
             .filter_locale(locale)
             .autocomplete(
                 query=query,

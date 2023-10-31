@@ -7,6 +7,7 @@ from django.utils.html import escape
 from wagtail.models import Site
 
 from taggit.models import Tag
+from wagtail_factories import SiteFactory
 
 from folioblog.blog.factories import (
     BlogCategoryFactory,
@@ -18,6 +19,7 @@ from folioblog.blog.models import BlogCategory, BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
+from folioblog.home.factories import HomePageFactory
 from folioblog.search.factories import SearchIndexPageFactory
 from folioblog.search.tests.units.htmlpages import SearchIndexHTMLPage
 
@@ -496,6 +498,50 @@ class SearchIndexI18nPageTestCase(TestCase):
         self.assertEqual(len(response.context["category_options"]), 1)
         self.assertEqual(
             response.context["category_options"][0].locale.language_code, "en"
+        )
+
+
+class SearchIndexMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.home = HomePageFactory(slug="home")
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.search = SearchIndexPageFactory(parent=cls.home)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.blog = BlogPageFactory(parent=cls.index, title="foobarbaz")
+
+        cls.home_other = HomePageFactory(slug="home_other")
+        cls.site_other = SiteFactory(root_page=cls.home_other)
+        cls.search_other = SearchIndexPageFactory(parent=cls.home_other)
+        cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
+        cls.blog_other = BlogPageFactory(parent=cls.index_other, title="foobarbaz")
+
+        cls.root_page_original = cls.site.root_page
+        cls.site.root_page = cls.home
+        cls.site.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        # Because we change the site root page which is created by migrations,
+        # it would affect next TestCases even if rollback is done because the
+        # root page was done BEFORE entering into the SQL transaction.
+        # As a result, we need to reset it manually.
+        cls.site.root_page = cls.root_page_original
+        cls.site.save(update_fields=["root_page"])
+        super().tearDownClass()
+
+    def test_filter_site(self):
+        response = self.client.get(
+            self.search.url,
+            data={
+                "query": "foobarbaz",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn(self.blog.pk, [p.pk for p in response.context["search_results"]])
+        self.assertNotIn(
+            self.blog_other.pk, [p.pk for p in response.context["search_results"]]
         )
 
 

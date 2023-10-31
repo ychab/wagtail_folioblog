@@ -4,15 +4,16 @@ from django.test import TestCase
 from wagtail.images import get_image_model
 from wagtail.models import Site
 
-from wagtail_factories import CollectionFactory
+from wagtail_factories import CollectionFactory, SiteFactory
 
-from folioblog.blog.factories import BlogPageFactory
+from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.blog.models import BlogPage
 from folioblog.core.factories import BasicPageFactory, ImageFactory, LocaleFactory
 from folioblog.core.models import BasicPage, FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.gallery.tests.units.htmlpages import GalleryHTMLPage
+from folioblog.home.factories import HomePageFactory
 
 Image = get_image_model()
 
@@ -116,6 +117,49 @@ class GalleryPageNoSettingsTestCase(TestCase):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
         self.assertIn(image.pk, [i.pk for i in response.context["images"]])
+
+
+class GalleryPageMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.home = HomePageFactory(slug="home")
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.gallery = GalleryPageFactory(parent=cls.home)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.blog = BlogPageFactory(parent=cls.index)
+
+        cls.home_other = HomePageFactory(slug="home_other")
+        cls.site_other = SiteFactory(root_page=cls.home_other)
+        cls.gallery_other = GalleryPageFactory(parent=cls.home_other)
+        cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
+        cls.blog_other = BlogPageFactory(parent=cls.index_other)
+
+        cls.root_page_original = cls.site.root_page
+        cls.site.root_page = cls.home
+        cls.site.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        # Because we change the site root page which is created by migrations,
+        # it would affect next TestCases even if rollback is done because the
+        # root page was done BEFORE entering into the SQL transaction.
+        # As a result, we need to reset it manually.
+        cls.site.root_page = cls.root_page_original
+        cls.site.save(update_fields=["root_page"])
+        super().tearDownClass()
+
+    def test_filter_site(self):
+        response = self.client.get(self.gallery.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn(
+            self.blog.pk,
+            [i.page.pk for i in response.context["images"] if getattr(i, "page")],
+        )
+        self.assertNotIn(
+            self.blog_other.pk,
+            [i.page.pk for i in response.context["images"] if getattr(i, "page")],
+        )
 
 
 class GalleryHTMLTestCase(TestCase):

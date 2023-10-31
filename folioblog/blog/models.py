@@ -41,7 +41,7 @@ class BlogIndexPage(BaseIndexPage):
         ]
         context["category_query"] = request.GET.get("category", "")
 
-        qs = BlogPage.objects.live().filter_language()
+        qs = BlogPage.objects.live().child_of(self).filter_language()
         if request.GET.get("category"):
             qs = qs.filter(category__slug=request.GET["category"])
         qs = qs.select_related("category", "image")

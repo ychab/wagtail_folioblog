@@ -1,32 +1,34 @@
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 {% wagtail_site as current_site %}
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-    {% autoescape off %}
-    <channel>
-        <title>{{ feed_title }}</title>
-        <copyright>Copyright {% now 'Y' %}, {{ current_site.site_name }}</copyright>
-        <link>{{ current_site.root_url }}{{ blog_index.url }}</link>
-        <description>{{ feed_description }}</description>
-        <language>{{ LANGUAGE_CODE|slice:":2" }}</language>
-        <pubDate>{% now 'r' %}</pubDate>
-        {% for post in feed_items %}
-        {% image post.image max-400x400 format-jpeg as image %}
-        <item>
-            <guid isPermaLink="false">{{ post.pk }}</guid>
-            <title>{{ post.title }}</title>
-            <link>{{ current_site.root_url }}{{ post.url }}</link>
-            <description>{{ post.description }}</description>
-            <pubDate>{{ post.date|date:"D, d M Y" }} 00:00:00 +0000</pubDate>
-            <enclosure>
-                <url>{{ current_site.root_url }}{{ image.url }}</url>
-                <length>{{ post.image.file_size }}</length>
-                <type>image/jpeg</type>
-            </enclosure>
-            <category>{{ post.category }}</category>
-        </item>
-        {% endfor %}
-    </channel>
-    {% endautoescape %}
-</rss>
+{% if feed_active %}
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0">
+        {% autoescape off %}
+        <channel>
+            <title>{{ feed_title }}</title>
+            <copyright>Copyright {% now 'Y' %}, {{ current_site.site_name }}</copyright>
+            <link>{{ blog_index.url }}</link>
+            <description>{{ feed_description }}</description>
+            <language>{{ LANGUAGE_CODE|slice:":2" }}</language>
+            <pubDate>{% now 'r' %}</pubDate>
+            {% for post in feed_items %}
+            {% image post.image max-400x400 format-jpeg as image %}
+            <item>
+                <guid isPermaLink="false">{{ post.pk }}</guid>
+                <title>{{ post.title }}</title>
+                <link>{{ current_site.root_url }}{{ post.url }}</link>
+                <description>{{ post.description }}</description>
+                <pubDate>{{ post.date|date:"D, d M Y" }} 00:00:00 +0000</pubDate>
+                <enclosure>
+                    <url>{{ current_site.root_url }}{{ image.url }}</url>
+                    <length>{{ post.image.file_size }}</length>
+                    <type>image/jpeg</type>
+                </enclosure>
+                <category>{{ post.category }}</category>
+            </item>
+            {% endfor %}
+        </channel>
+        {% endautoescape %}
+    </rss>
+{% endif %}

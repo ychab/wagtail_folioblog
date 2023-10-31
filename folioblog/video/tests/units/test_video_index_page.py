@@ -3,6 +3,8 @@ from django.test import TestCase
 
 from wagtail.models import Site
 
+from wagtail_factories import SiteFactory
+
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
@@ -118,6 +120,41 @@ class VideoIndexPageTestCase(TestCase):
 
         self.assertEqual(len(response.context["videos"]), 1)
         self.assertEqual(response.context["videos"][0].pk, p1.pk)
+
+
+class VideoIndexPageMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.index = VideoIndexPageFactory(slug="video")
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.video = VideoPageFactory(parent=cls.index)
+
+        cls.index_other = VideoIndexPageFactory(slug="video-other")
+        cls.site_other = SiteFactory(root_page=cls.index_other)
+        cls.video_other = VideoPageFactory(parent=cls.index_other)
+
+        cls.root_page_original = cls.site.root_page
+        cls.site.root_page = cls.index
+        cls.site.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        # Because we change the site root page which is created by migrations,
+        # it would affect next TestCases even if rollback is done because the
+        # root page was done BEFORE entering into the SQL transaction.
+        # As a result, we need to reset it manually.
+        cls.site.root_page = cls.root_page_original
+        cls.site.save(update_fields=["root_page"])
+        super().tearDownClass()
+
+    def test_filter_site(self):
+        response = self.client.get(self.index.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn(self.video.pk, [p.pk for p in response.context["videos"]])
+        self.assertNotIn(
+            self.video_other.pk, [p.pk for p in response.context["videos"]]
+        )
 
 
 class VideoIndexI18nPageTestCase(TestCase):
