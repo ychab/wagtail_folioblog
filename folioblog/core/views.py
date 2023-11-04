@@ -1,4 +1,9 @@
+from django import forms
 from django.views.generic import TemplateView
+
+from wagtail.admin.forms.choosers import BaseFilterForm, LocaleFilterMixin
+from wagtail.admin.ui.tables import Column
+from wagtail.models import Site
 
 from folioblog.blog.models import BlogIndexPage, BlogPage
 from folioblog.core.models import FolioBlogSettings
@@ -40,3 +45,28 @@ class RssView(TemplateView):
                 context["feed_items"].append(post)
 
         return context
+
+
+class MultiSiteFilter(LocaleFilterMixin, BaseFilterForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["site"] = forms.ChoiceField(
+            choices=[(site.id, site) for site in Site.objects.all()],
+            required=False,
+            widget=forms.Select(attrs={"data-chooser-modal-search-filter": True}),
+        )
+
+    def filter(self, objects):
+        site_id = self.cleaned_data.get("site")
+        if site_id:
+            objects = objects.filter(site_id=site_id)
+        return super().filter(objects)
+
+
+class MultiSiteChooseMixin:
+    filter_form_class = MultiSiteFilter
+
+    @property
+    def columns(self):
+        return [self.title_column, Column("site")]

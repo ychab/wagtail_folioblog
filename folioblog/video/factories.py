@@ -7,6 +7,7 @@ from django.utils.translation import to_locale
 
 from wagtail.embeds.embeds import get_embed_hash
 from wagtail.embeds.models import Embed
+from wagtail.models import Site
 
 import factory
 from factory import fuzzy
@@ -151,11 +152,12 @@ class VideoPageTagFactory(DjangoModelFactory):
 class VideoPromoteFactory(DjangoModelFactory):
     class Meta:
         model = VideoPromote
-        django_get_or_create = ("title",)  # just for reuse in testing
+        django_get_or_create = ("title", "site")  # just for reuse in testing
         skip_postgeneration_save = True
 
     title = factory.Faker("sentence", locale=current_locale)
     link_more = factory.Faker("sentence", locale=current_locale)
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
 
 class VideoPromoteLinkFactory(DjangoModelFactory):

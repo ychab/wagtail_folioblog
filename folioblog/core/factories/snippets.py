@@ -1,6 +1,8 @@
 from django.utils.text import slugify
 from django.utils.translation import get_language, to_locale
 
+from wagtail.models import Site
+
 import factory
 from factory import post_generation
 from factory.django import DjangoModelFactory
@@ -14,11 +16,12 @@ current_locale = to_locale(get_language())
 class BaseCategoryFactory(DjangoModelFactory):
     class Meta:
         abstract = True
-        django_get_or_create = ("slug",)
+        django_get_or_create = ("slug", "site")
         skip_postgeneration_save = True
 
     name = factory.Faker("word", locale=current_locale)
     slug = factory.LazyAttribute(lambda o: slugify(o.name))
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
 
 class MenuFactory(DjangoModelFactory):
@@ -27,6 +30,7 @@ class MenuFactory(DjangoModelFactory):
         skip_postgeneration_save = True
 
     homepage = factory.SubFactory(PageFactory)
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
     @post_generation
     def links(obj, create, extracted, **kwargs):

@@ -12,7 +12,6 @@ from wagtail.embeds.exceptions import EmbedException
 from wagtail.images import get_image_model
 from wagtail.models import Collection, Orderable, Page, TranslatableMixin
 from wagtail.search import index
-from wagtail.snippets.models import register_snippet
 
 import requests
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -26,6 +25,7 @@ from folioblog.core.models import (
     BaseIndexPage,
     BasePage,
     FolioBlogSettings,
+    MultiSiteMixin,
 )
 from folioblog.core.pagination import FolioBlogPaginator
 
@@ -71,13 +71,12 @@ class VideoIndexPage(BaseIndexPage):
         return context
 
 
-@register_snippet
 class VideoCategory(BaseCategory):
     class Meta(BaseCategory.Meta):
         verbose_name_plural = "video categories"
 
 
-class VideoTag(TagBase):
+class VideoTag(MultiSiteMixin, TagBase):
     pass
 
 
@@ -207,18 +206,14 @@ class VideoPageRelatedLink(Orderable):
     ]
 
 
-@register_snippet
-class VideoPromote(TranslatableMixin, ClusterableModel):
+class VideoPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
-    panels = [
-        FieldPanel("title"),
-        FieldPanel("link_more"),
-        InlinePanel("related_links", label=_("Related links")),
-    ]
-
     objects = I18nManager()
+
+    class Meta(TranslatableMixin.Meta):
+        pass
 
     def __str__(self):
         return self.title

@@ -3,6 +3,8 @@ from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import to_locale
 
+from wagtail.models import Site
+
 import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
@@ -118,11 +120,12 @@ class BlogPageTagFactory(DjangoModelFactory):
 class BlogPromoteFactory(DjangoModelFactory):
     class Meta:
         model = BlogPromote
-        django_get_or_create = ("title",)  # just for reuse in testing
+        django_get_or_create = ("title", "site")  # just for reuse in testing
         skip_postgeneration_save = True
 
     title = factory.Faker("sentence", locale=current_locale)
     link_more = factory.Faker("sentence", locale=current_locale)
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
 
 class BlogPromoteLinkFactory(DjangoModelFactory):

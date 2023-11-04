@@ -1,6 +1,7 @@
 from django.utils.translation import get_language, to_locale
 
 from wagtail.images import get_image_model
+from wagtail.models import Site
 
 import factory
 import wagtail_factories
@@ -19,6 +20,7 @@ class PhotographerFactory(DjangoModelFactory):
 
     name = factory.Faker("name", locale=current_locale)
     website = factory.Faker("url", locale=current_locale)
+    site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
 
 class ImageFactory(wagtail_factories.ImageFactory):

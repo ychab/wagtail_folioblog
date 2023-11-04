@@ -13,15 +13,12 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     ObjectList,
     TabbedInterface,
-    TitleFieldPanel,
 )
-from wagtail.admin.widgets.slug import SlugInput
 from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.fields import RichTextField, StreamField
 from wagtail.images.models import AbstractImage, AbstractRendition, Image, ImageQuerySet
-from wagtail.models import Collection, Orderable, Page, TranslatableMixin
-from wagtail.snippets.models import register_snippet
+from wagtail.models import Collection, Orderable, Page, Site, TranslatableMixin
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -31,15 +28,22 @@ from folioblog.core.managers import I18nIndexPageManager, I18nManager, ImageMana
 from folioblog.core.sitemap import SitemapPageMixin
 
 
-@register_snippet
-class Photographer(models.Model):
+class MultiSiteMixin(models.Model):
+    site = models.ForeignKey(
+        Site,
+        on_delete=models.CASCADE,
+        db_index=True,
+        related_name="%(app_label)s_%(class)s",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Photographer(MultiSiteMixin, models.Model):
     name = models.CharField(max_length=255, blank=True)
     website = models.URLField(null=True, blank=True)
-
-    panels = [
-        FieldPanel("name"),
-        FieldPanel("website"),
-    ]
 
     def __str__(self):
         return self.name
@@ -115,14 +119,9 @@ class FolioRendition(AbstractRendition):
         return os.path.join("images", slugify(self.image.collection), spec, filename)
 
 
-class BaseCategory(TranslatableMixin, models.Model):
+class BaseCategory(MultiSiteMixin, TranslatableMixin, models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
-
-    panels = [
-        TitleFieldPanel("name"),
-        FieldPanel("slug", widget=SlugInput),
-    ]
 
     objects = I18nManager()
 
@@ -130,10 +129,10 @@ class BaseCategory(TranslatableMixin, models.Model):
         abstract = True
         unique_together = TranslatableMixin.Meta.unique_together + [
             (
-                "translation_key",
                 "locale",
                 "slug",
-            ),  # Stupid check don't allow us to override it!
+                "site",
+            ),  # TranslatableMixin.check() don't allow us to mix it!
         ]
 
     def __str__(self):
@@ -359,8 +358,7 @@ class FolioBlogSettings(BaseSiteSetting):
         verbose_name = "FolioBlog"
 
 
-@register_snippet
-class Menu(TranslatableMixin, ClusterableModel):
+class Menu(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     name = models.CharField(max_length=255)
     homepage = ParentalKey(
         Page,
@@ -371,14 +369,10 @@ class Menu(TranslatableMixin, ClusterableModel):
     )
     is_active = models.BooleanField(default=True)
 
-    panels = [
-        FieldPanel("name"),
-        FieldPanel("homepage"),
-        FieldPanel("is_active"),
-        InlinePanel("links", label=_("Links")),
-    ]
-
     objects = I18nManager()
+
+    class Meta(TranslatableMixin.Meta):
+        pass
 
     def __str__(self):
         return self.name

@@ -5,7 +5,6 @@ from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images import get_image_model
 from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.search import index
-from wagtail.snippets.models import register_snippet
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -18,6 +17,7 @@ from folioblog.core.models import (
     BaseIndexPage,
     BasePage,
     FolioBlogSettings,
+    MultiSiteMixin,
 )
 from folioblog.core.pagination import FolioBlogPaginator
 
@@ -54,7 +54,7 @@ class BlogIndexPage(BaseIndexPage):
         return context
 
 
-class BlogTag(TagBase):
+class BlogTag(MultiSiteMixin, TagBase):
     pass
 
 
@@ -67,7 +67,6 @@ class BlogPageTag(TaggedItemBase):
     )
 
 
-@register_snippet
 class BlogCategory(BaseCategory):
     class Meta(BaseCategory.Meta):
         verbose_name_plural = "blog categories"
@@ -154,18 +153,14 @@ class BlogPageRelatedLink(Orderable):
     ]
 
 
-@register_snippet
-class BlogPromote(TranslatableMixin, ClusterableModel):
+class BlogPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
-    panels = [
-        FieldPanel("title"),
-        FieldPanel("link_more"),
-        InlinePanel("related_links", label=_("Related links")),
-    ]
-
     objects = I18nManager()
+
+    class Meta(TranslatableMixin.Meta):
+        pass
 
     def __str__(self):
         return self.title
