@@ -37,7 +37,7 @@ register_image_format(
     BodyFullImageFormat(
         name="bodyfullfuild",
         label="Body Full (w940)",
-        classnames="img-fluid mx-auto d-block rounded",
+        classname="img-fluid mx-auto d-block rounded",
         filter_spec="width-940",
     )
 )
@@ -46,7 +46,7 @@ register_image_format(
     CreditLightboxImageFormat(
         name="creditlightbox",
         label="Credit Lightbox (w940)",
-        classnames="img-fluid mx-auto d-block rounded",
+        classname="img-fluid mx-auto d-block rounded",
         filter_spec="width-940",
     )
 )
