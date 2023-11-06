@@ -129,11 +129,11 @@ class MenuSnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSet):
         return qs
 
 
-class PhotographerSnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSet):
+class PhotographerSnippetViewSet(SnippetViewSetMultiSiteMixin, SnippetViewSet):
     model = Photographer
     icon = "crosshairs"
 
-    list_display = ["name", "website", "locale", "site"]
+    list_display = ["name", "website", "site"]
     search_fields = ("name",)
     ordering = ("name",)
 
