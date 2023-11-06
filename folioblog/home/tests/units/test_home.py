@@ -3,6 +3,8 @@ from django.test import TestCase
 
 from wagtail.models import Site
 
+from wagtail_factories import SiteFactory
+
 from folioblog.blog.factories import (
     BlogIndexPageFactory,
     BlogPageFactory,
@@ -126,6 +128,29 @@ class HomePageI18nPageTestCase(TestCase):
 
         self.assertEqual(response.context["blog_snippet"].locale.language_code, "en")
         self.assertEqual(response.context["video_snippet"].locale.language_code, "en")
+
+
+class HomePageMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.home = HomePageFactory(slug="foo")
+        home_other = HomePageFactory(slug="bar")
+
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.site_other = SiteFactory(root_page=home_other)
+
+        cls.blog_promote = BlogPromoteFactory(site=cls.site)
+        BlogPromoteFactory(site=cls.site_other)
+
+        cls.video_promote = VideoPromoteFactory(site=cls.site)
+        VideoPromoteFactory(site=cls.site_other)
+
+    def test_multi_site(self):
+        response = self.client.get(self.home.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(self.blog_promote, response.context_data["blog_snippet"])
+        self.assertEqual(self.video_promote, response.context_data["video_snippet"])
 
 
 class HomeHTMLTestCase(TestCase):

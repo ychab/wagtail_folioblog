@@ -113,35 +113,31 @@ class BlogIndexPageTestCase(TestCase):
 class BlogIndexPageMultiDomainTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.index = BlogIndexPageFactory(slug="blog")
+        cls.root_page = BlogIndexPageFactory(slug="blog")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.blog = BlogPageFactory(parent=cls.index)
+        cls.cat = BlogCategoryFactory(site=cls.site)
+        cls.blog = BlogPageFactory(parent=cls.root_page, category=cls.cat)
 
         cls.index_other = BlogIndexPageFactory(slug="blog-other")
         cls.site_other = SiteFactory(root_page=cls.index_other)
-        cls.blog_other = BlogPageFactory(parent=cls.index_other)
-
-        cls.root_page_original = cls.site.root_page
-        cls.site.root_page = cls.index
-        cls.site.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
+        cls.cat_other = BlogCategoryFactory(site=cls.site_other)
+        cls.blog_other = BlogPageFactory(parent=cls.index_other, category=cls.cat_other)
 
     def test_filter_site(self):
-        response = self.client.get(self.index.url)
+        response = self.client.get(self.root_page.url)
         self.assertEqual(response.status_code, 200)
 
         self.assertIn(self.blog.pk, [p.pk for p in response.context["blogpages"]])
         self.assertNotIn(
             self.blog_other.pk, [p.pk for p in response.context["blogpages"]]
+        )
+
+    def test_categories(self):
+        response = self.client.get(self.root_page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.cat.pk, [c.pk for c in response.context["categories"]])
+        self.assertNotIn(
+            self.cat_other.pk, [c.pk for c in response.context["categories"]]
         )
 
 

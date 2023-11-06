@@ -92,7 +92,13 @@ class VideoPageFactory(BasePageFactory):
     title = factory.Sequence(lambda n: "video_{n}".format(n=n))
 
     date = fuzzy.FuzzyDateTime(timezone.now())
-    category = factory.SubFactory(VideoCategoryFactory)
+
+    category = factory.SubFactory(
+        VideoCategoryFactory,
+        # WARNING - using get_site() here cause cache in page url sites...
+        site=factory.LazyAttribute(lambda o: o.factory_parent.parent.get_site()),
+    )
+
     video_url = factory.Faker("youtube_url", locale=current_locale)
     thumbnail = factory.SubFactory(ImageFactory, file__width=480, file__height=360)
 
@@ -104,23 +110,13 @@ class VideoPageFactory(BasePageFactory):
             if extracted:
                 tags = extracted
             elif kwargs.get("number", 0) > 0:
-                tags = [VideoTagFactory() for i in range(0, kwargs["number"])]
+                tags = [
+                    VideoTagFactory(site=obj.get_site())
+                    for _ in range(0, kwargs["number"])
+                ]
 
             for tag in tags:
                 VideoPageTagFactory(tag=tag, content_object=obj)
-
-    @factory.post_generation
-    def embed(obj, create, extracted, **kwargs):
-        # Because embed will be first created on the fly and may raise network
-        # issue during testing, we generate it first before any hits and avoid
-        # network call on YouTube!
-        if create and not kwargs.get("skip", False):  # pragma: no branch
-            EmbedFactory(url=obj.video_url)
-
-    @factory.post_generation
-    def promoted(obj, create, extracted, **kwargs):
-        if create and extracted:
-            VideoPromoteLinkFactory(related_page=obj)
 
     @factory.post_generation
     def related_pages(obj, create, extracted, **kwargs):
@@ -132,11 +128,24 @@ class VideoPageFactory(BasePageFactory):
             elif kwargs.get("number", 0) > 0:
                 related_pages = [
                     VideoPageFactory(parent=obj.get_parent())
-                    for i in range(0, kwargs["number"])
+                    for _ in range(0, kwargs["number"])
                 ]
 
             for page in related_pages:
                 VideoPageRelatedLinkFactory(page=obj, related_page=page)
+
+    @factory.post_generation
+    def promoted(obj, create, extracted, **kwargs):
+        if create and extracted:
+            VideoPromoteLinkFactory(related_page=obj, snippet__site=obj.get_site())
+
+    @factory.post_generation
+    def embed(obj, create, extracted, **kwargs):
+        # Because embed will be first created on the fly and may raise network
+        # issue during testing, we generate it first before any hits and avoid
+        # network call on YouTube!
+        if create and not kwargs.get("skip", False):  # pragma: no branch
+            EmbedFactory(url=obj.video_url)
 
 
 class VideoPageTagFactory(DjangoModelFactory):

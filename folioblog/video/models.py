@@ -19,7 +19,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, TaggedItemBase
 
-from folioblog.core.managers import I18nManager
+from folioblog.core.managers import I18nMultiSiteManager
 from folioblog.core.models import (
     BaseCategory,
     BaseIndexPage,
@@ -43,7 +43,8 @@ class VideoIndexPage(BaseIndexPage):
         context = super().get_context(request, *args, **kwargs)
 
         categories = (
-            VideoCategory.objects.filter(videopages__isnull=False)
+            VideoCategory.objects.in_site(folio_settings.site)
+            .filter(videopages__isnull=False)
             .filter_language()
             .order_by("slug")
             .distinct()
@@ -210,7 +211,7 @@ class VideoPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
-    objects = I18nManager()
+    objects = I18nMultiSiteManager()
 
     class Meta(TranslatableMixin.Meta):
         pass

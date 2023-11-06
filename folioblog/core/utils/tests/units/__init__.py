@@ -1,1 +1,2 @@
-from .base import BaseHTMLPage, BaseIndexHTMLPage  # noqa
+from .base import MultiDomainPageTestCase  # noqa
+from .html import BaseHTMLPage, BaseIndexHTMLPage  # noqa

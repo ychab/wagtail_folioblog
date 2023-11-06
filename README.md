@@ -8,9 +8,10 @@
 
 # FolioBlog, a Wagtail portfolio / blog demo
 
-The FolioBlog project is the combination of a portfolio and a basic blog, build
-with the powerful Wagtail CMS. It's main goal is to be a showcase for best
-practices integrations with:
+The FolioBlog project is the combination of a portfolio and blogs, with a
+**multi-tenancy** + **multi-language** context, build with the powerful Wagtail CMS.
+
+It's main goal is to be a showcase for best practices integrations with:
 
 Backend:
 * [Django Web Framework](https://www.djangoproject.com/)
@@ -47,8 +48,6 @@ Integration / Automation:
 * [Tox](https://tox.wiki/en/latest/)
 * [Pre-commit](https://pre-commit.com/)
 * [GitHub Action](https://github.com/features/actions)
-
-And yeah, that's my personal website! So please, don't hack me, I'm not famous!
 
 ## Requirements
 
@@ -94,11 +93,6 @@ to do:
 
 That's it!
 
-**ugly tips**: If you want to skip check for a particular commit, do:
-> git commit -m "blabla" --no-verify
-
-but hope this is for good reasons huh!!
-
 ### Selenium (end2end tests)
 
 For end2end tests, download at least Chrome and its chromedriver (to put in PATH),
@@ -109,6 +103,8 @@ For more details, see:
 * [selenium python doc](https://selenium-python.readthedocs.io/installation.html)
 
 ## Get started
+
+*Note*: For now, the setup is manual but a docker-compose setup is on the roadmap!
 
 ### Local installation
 
@@ -129,10 +125,10 @@ google-chrome http://127.0.0.1:8000/admin &
 
 By default, fixtures have been removed and thus, the database is empty.
 
-Here is the pages tree:
+Here is the pages tree per content type:
 * Root page
   * PortFolio page
-    * Home index
+  * Home index
     * Blog index
       * Blog pages
     * Gallery

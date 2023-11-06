@@ -24,7 +24,12 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from folioblog.core.blocks import CookieBannersBlock, RssFeedsBlock
-from folioblog.core.managers import I18nIndexPageManager, I18nManager, ImageManager
+from folioblog.core.managers import (
+    I18nIndexPageManager,
+    I18nMultiSiteManager,
+    ImageManager,
+    MultiSiteManager,
+)
 from folioblog.core.sitemap import SitemapPageMixin
 
 
@@ -36,6 +41,8 @@ class MultiSiteMixin(models.Model):
         related_name="%(app_label)s_%(class)s",
         related_query_name="%(app_label)s_%(class)ss",
     )
+
+    objects = MultiSiteManager()
 
     class Meta:
         abstract = True
@@ -123,7 +130,7 @@ class BaseCategory(MultiSiteMixin, TranslatableMixin, models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
 
-    objects = I18nManager()
+    objects = I18nMultiSiteManager()
 
     class Meta(TranslatableMixin.Meta):
         abstract = True
@@ -369,7 +376,7 @@ class Menu(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     )
     is_active = models.BooleanField(default=True)
 
-    objects = I18nManager()
+    objects = I18nMultiSiteManager()
 
     class Meta(TranslatableMixin.Meta):
         pass

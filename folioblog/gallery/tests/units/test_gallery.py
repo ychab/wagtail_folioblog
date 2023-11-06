@@ -11,6 +11,7 @@ from folioblog.blog.models import BlogPage
 from folioblog.core.factories import BasicPageFactory, ImageFactory, LocaleFactory
 from folioblog.core.models import BasicPage, FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
+from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.gallery.tests.units.htmlpages import GalleryHTMLPage
 from folioblog.home.factories import HomePageFactory
@@ -119,13 +120,13 @@ class GalleryPageNoSettingsTestCase(TestCase):
         self.assertIn(image.pk, [i.pk for i in response.context["images"]])
 
 
-class GalleryPageMultiDomainTestCase(TestCase):
+class GalleryPageMultiDomainTestCase(MultiDomainPageTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.home = HomePageFactory(slug="home")
+        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.gallery = GalleryPageFactory(parent=cls.home)
-        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.gallery = GalleryPageFactory(parent=cls.root_page)
+        cls.index = BlogIndexPageFactory(parent=cls.root_page)
         cls.blog = BlogPageFactory(parent=cls.index)
 
         cls.home_other = HomePageFactory(slug="home_other")
@@ -134,19 +135,7 @@ class GalleryPageMultiDomainTestCase(TestCase):
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
         cls.blog_other = BlogPageFactory(parent=cls.index_other)
 
-        cls.root_page_original = cls.site.root_page
-        cls.site.root_page = cls.home
-        cls.site.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
+        super().setUpTestData()
 
     def test_filter_site(self):
         response = self.client.get(self.gallery.url)

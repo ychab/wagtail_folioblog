@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from wagtail.models import Site
 
-from wagtail_factories import PageFactory
+from wagtail_factories import PageFactory, SiteFactory
 
 from folioblog.blog.factories import BlogIndexPageFactory
 from folioblog.core.factories import LocaleFactory
@@ -85,3 +85,25 @@ class MenuI18nTestCase(TestCase):
         response = self.client.get(self.index_en.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["menu_homepage"], self.menu_en.homepage)
+
+
+class MenuMultiDomainTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.root_page = BlogIndexPageFactory(slug="blog")
+        cls.index_other = BlogIndexPageFactory(slug="blog-other")
+
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.site_other = SiteFactory(root_page=cls.index_other)
+
+        cls.menu = MenuFactory(homepage=cls.root_page, site=cls.site)
+        cls.menu_other = MenuFactory(homepage=cls.index_other, site=cls.site_other)
+
+    def test_menu_filter_site(self):
+        response = self.client.get(self.root_page.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(self.root_page, response.context["menu_homepage"].specific)
+        self.assertNotEqual(
+            self.index_other, response.context["menu_homepage"].specific
+        )

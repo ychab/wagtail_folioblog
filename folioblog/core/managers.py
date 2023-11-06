@@ -20,6 +20,11 @@ def qs_in_site_alt(qs, site):
     return qs.filter(q)
 
 
+class MultiSiteQuerySetMixin:
+    def in_site(self, site):
+        return self.filter(site=site)
+
+
 class I18nQuerySetMixin:
     def filter_language(self, language_code=None):
         language_code = language_code or get_language()
@@ -28,9 +33,6 @@ class I18nQuerySetMixin:
     def filter_locale(self, locale):
         return self.filter(locale=locale)
 
-    # def in_site_alt(self, site):
-    #     return qs_in_site_alt(self, site)
-    #
     def in_site_locale(self, site, locale):
         return self.descendant_of(site.root_page.get_translation(locale))
 
@@ -40,7 +42,11 @@ class I18nQuerySetMixin:
         return self.descendant_of(site.root_page.localized)
 
 
-class I18nQuerySet(I18nQuerySetMixin, QuerySet):
+class MultiSiteQuerySet(MultiSiteQuerySetMixin, QuerySet):
+    pass
+
+
+class I18nMultiSiteQuerySet(MultiSiteQuerySetMixin, I18nQuerySetMixin, QuerySet):
     pass
 
 
@@ -62,6 +68,7 @@ class ImagePageManager(PageManager):
         )
 
 
-I18nManager = models.Manager.from_queryset(I18nQuerySet)
+MultiSiteManager = models.Manager.from_queryset(MultiSiteQuerySet)
+I18nMultiSiteManager = models.Manager.from_queryset(I18nMultiSiteQuerySet)
 I18nPageManager = PageManager.from_queryset(I18nPageQuerySet)
 I18nIndexPageManager = ImagePageManager.from_queryset(I18nPageQuerySet)

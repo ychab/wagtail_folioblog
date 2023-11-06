@@ -11,7 +11,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.models import TagBase, TaggedItemBase
 
-from folioblog.core.managers import I18nManager
+from folioblog.core.managers import I18nMultiSiteManager
 from folioblog.core.models import (
     BaseCategory,
     BaseIndexPage,
@@ -34,7 +34,12 @@ class BlogIndexPage(BaseIndexPage):
         folio_settings = FolioBlogSettings.for_request(request)
         context = super().get_context(request, *args, **kwargs)
 
-        categories = BlogCategory.objects.filter_language().order_by("slug")
+        categories = (
+            BlogCategory.objects.in_site(folio_settings.site)
+            .filter_language()
+            .order_by("slug")
+        )
+
         context["categories"] = categories
         context["category_filters"] = [
             {"name": str(c), "value": c.slug} for c in categories
@@ -157,7 +162,7 @@ class BlogPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     title = models.CharField(max_length=255)
     link_more = models.CharField(max_length=255)
 
-    objects = I18nManager()
+    objects = I18nMultiSiteManager()
 
     class Meta(TranslatableMixin.Meta):
         pass

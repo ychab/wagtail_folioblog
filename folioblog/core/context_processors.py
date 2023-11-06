@@ -2,6 +2,8 @@ from collections import OrderedDict
 
 from django.db.models import Prefetch
 
+from wagtail.models import Site
+
 from folioblog.core.models import Menu, MenuLink
 
 
@@ -11,8 +13,11 @@ def menu(request):
         "menu_links": None,
     }
 
+    site = Site.find_for_request(request)
+
     menu = (
-        Menu.objects.filter(is_active=True)
+        Menu.objects.in_site(site)
+        .filter(is_active=True)
         .filter_language()
         .select_related("homepage")
         .prefetch_related(

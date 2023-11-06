@@ -2,17 +2,20 @@ from django.db.models import Prefetch
 from django.utils.translation import get_language
 
 from folioblog.blog.models import BlogPromote, BlogPromoteLink
-from folioblog.core.models import BaseIndexPage
+from folioblog.core.models import BaseIndexPage, FolioBlogSettings
 from folioblog.video.models import VideoPromote, VideoPromoteLink
 
 
 class HomePage(BaseIndexPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+
+        folio_settings = FolioBlogSettings.for_request(request)
         lang_code = get_language()
 
         context["blog_snippet"] = (
-            BlogPromote.objects.filter_language()
+            BlogPromote.objects.in_site(folio_settings.site)
+            .filter_language()
             .prefetch_related(
                 Prefetch(
                     "related_links",
@@ -25,11 +28,13 @@ class HomePage(BaseIndexPage):
                     .order_by("sort_order"),
                 )
             )
+            .order_by("-pk")
             .first()
         )
 
         context["video_snippet"] = (
-            VideoPromote.objects.filter_language()
+            VideoPromote.objects.in_site(folio_settings.site)
+            .filter_language()
             .prefetch_related(
                 Prefetch(
                     "related_links",
@@ -42,6 +47,7 @@ class HomePage(BaseIndexPage):
                     .order_by("sort_order"),
                 )
             )
+            .order_by("-pk")
             .first()
         )
 

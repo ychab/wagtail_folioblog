@@ -240,32 +240,41 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.locale_fr = LocaleFactory(language_code="fr")
-        cls.locale_en = LocaleFactory(language_code="en")
 
         # Website A
-        cls.home = HomePageFactory(locale=cls.locale_fr, slug="home")
+        cls.home = HomePageFactory(slug="home")
         cls.site = SiteFactory(root_page=cls.home)
         FolioBlogSettingsFactory(site=cls.site)
-        cls.index = BlogIndexPageFactory(parent=cls.home, locale=cls.locale_fr)
-        cls.post = BlogPageFactory(parent=cls.index, locale=cls.locale_fr)
+        cls.blog_index = BlogIndexPageFactory(parent=cls.home)
+        cls.post = BlogPageFactory(parent=cls.blog_index, category__slug="foo")
+        cls.video_index = VideoIndexPageFactory(parent=cls.home)
+        cls.video = VideoPageFactory(parent=cls.video_index, category__slug="foo")
 
         # Website B
-        cls.other_home = HomePageFactory(locale=cls.locale_fr, slug="home_other")
+        cls.other_home = HomePageFactory(slug="home_other")
         cls.other_site = SiteFactory(root_page=cls.other_home)
         FolioBlogSettingsFactory(site=cls.other_site)
-        cls.other_index = BlogIndexPageFactory(
-            parent=cls.other_home, locale=cls.locale_fr
+        cls.other_blog_index = BlogIndexPageFactory(parent=cls.other_home)
+        cls.other_post = BlogPageFactory(
+            parent=cls.other_blog_index, category__slug="bar"
         )
-        cls.other_post = BlogPageFactory(parent=cls.other_index, locale=cls.locale_fr)
+        cls.other_video_index = VideoIndexPageFactory(parent=cls.other_home)
+        cls.other_video = VideoPageFactory(
+            parent=cls.other_video_index, category__slug="bar"
+        )
 
         cls.pages = [
             cls.home,
-            cls.index,
+            cls.blog_index,
             cls.post,
+            cls.video_index,
+            cls.video,
+            # Other site
             cls.other_home,
-            cls.other_index,
+            cls.other_blog_index,
             cls.other_post,
+            cls.other_video_index,
+            cls.other_video,
         ]
 
     @requests_mock.Mocker()
@@ -274,10 +283,8 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
             m.get(page.full_url, text="Ok")
 
         for site in Site.objects.all():
-            for locale in [self.locale_fr, self.locale_en]:
-                for view_name in ["javascript-catalog", "rss"]:
-                    with translation.override(locale.language_code):
-                        m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
+            for view_name in ["javascript-catalog", "rss"]:
+                m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
 
             m.get(f"{site.root_url}/givemea404please", text="Ok")
 
@@ -295,6 +302,50 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
                 out.getvalue(),
                 f"Page {page}({page.pk}) request check",
             )
+
+    def test_blog_categories_filter(self):
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+
+        self.assertIn(
+            f"{self.blog_index.full_url}?ajax=1&page=1&category={self.post.category.slug}",
+            out.getvalue(),
+        )
+        self.assertNotIn(
+            f"{self.blog_index.full_url}?ajax=1&page=1&category={self.other_post.category.slug}",
+            out.getvalue(),
+        )
+
+        self.assertIn(
+            f"{self.other_blog_index.full_url}?ajax=1&page=1&category={self.other_post.category.slug}",
+            out.getvalue(),
+        )
+        self.assertNotIn(
+            f"{self.other_blog_index.full_url}?ajax=1&page=1&category={self.post.category.slug}",
+            out.getvalue(),
+        )
+
+    def test_video_categories_filter(self):
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+
+        self.assertIn(
+            f"{self.video_index.full_url}?ajax=1&page=1&category={self.video.category.slug}",
+            out.getvalue(),
+        )
+        self.assertNotIn(
+            f"{self.video_index.full_url}?ajax=1&page=1&category={self.other_video.category.slug}",
+            out.getvalue(),
+        )
+
+        self.assertIn(
+            f"{self.other_video_index.full_url}?ajax=1&page=1&category={self.other_video.category.slug}",
+            out.getvalue(),
+        )
+        self.assertNotIn(
+            f"{self.other_video_index.full_url}?ajax=1&page=1&category={self.video.category.slug}",
+            out.getvalue(),
+        )
 
 
 class LoadCachePagesCollectionRootNoneCommandTestCase(TestCase):

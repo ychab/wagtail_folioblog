@@ -77,10 +77,10 @@ def background_style(image, xs_3x_spec="fill-1080x1380", lg_1x_spec="fill-1905x5
     }
 
 
-@register.inclusion_tag("core/credits.html")
-def photo_credits():
+@register.inclusion_tag("core/credits.html", takes_context=True)
+def photo_credits(context):
     return {
-        "photographers": Photographer.objects.all(),
+        "photographers": Photographer.objects.in_site(context["current_site"]),
     }
 
 

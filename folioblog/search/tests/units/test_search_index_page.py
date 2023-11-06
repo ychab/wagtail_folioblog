@@ -19,6 +19,7 @@ from folioblog.blog.models import BlogCategory, BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
+from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.home.factories import HomePageFactory
 from folioblog.search.factories import SearchIndexPageFactory
 from folioblog.search.tests.units.htmlpages import SearchIndexHTMLPage
@@ -501,34 +502,36 @@ class SearchIndexI18nPageTestCase(TestCase):
         )
 
 
-class SearchIndexMultiDomainTestCase(TestCase):
+class SearchIndexMultiDomainTestCase(MultiDomainPageTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.home = HomePageFactory(slug="home")
+        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.search = SearchIndexPageFactory(parent=cls.home)
-        cls.index = BlogIndexPageFactory(parent=cls.home)
-        cls.blog = BlogPageFactory(parent=cls.index, title="foobarbaz")
+        cls.search = SearchIndexPageFactory(parent=cls.root_page)
+        cls.index = BlogIndexPageFactory(parent=cls.root_page)
+        cls.blog_cat = BlogCategoryFactory(slug="foo", site=cls.site)
+        cls.blog_tag = BlogTagFactory(slug="foo", site=cls.site)
+        cls.blog = BlogPageFactory(
+            parent=cls.index,
+            title="foobarbaz",
+            category=cls.blog_cat,
+            tags=[cls.blog_tag],
+        )
 
         cls.home_other = HomePageFactory(slug="home_other")
         cls.site_other = SiteFactory(root_page=cls.home_other)
         cls.search_other = SearchIndexPageFactory(parent=cls.home_other)
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
-        cls.blog_other = BlogPageFactory(parent=cls.index_other, title="foobarbaz")
+        cls.blog_cat_other = BlogCategoryFactory(slug="bar", site=cls.site_other)
+        cls.blog_tag_other = BlogTagFactory(slug="bar", site=cls.site_other)
+        cls.blog_other = BlogPageFactory(
+            parent=cls.index_other,
+            title="foobarbaz",
+            category=cls.blog_cat_other,
+            tags=[cls.blog_tag_other],
+        )
 
-        cls.root_page_original = cls.site.root_page
-        cls.site.root_page = cls.home
-        cls.site.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
+        super().setUpTestData()
 
     def test_filter_site(self):
         response = self.client.get(
@@ -543,6 +546,52 @@ class SearchIndexMultiDomainTestCase(TestCase):
         self.assertNotIn(
             self.blog_other.pk, [p.pk for p in response.context["search_results"]]
         )
+
+    def test_filter_categories(self):
+        response = self.client.get(
+            self.search.url,
+            data={
+                "categories": [self.blog_cat.slug],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context.get("errors"))
+        self.assertEqual(len(response.context["category_options"]), 1)
+        self.assertEqual(
+            self.blog_cat.pk, response.context["category_options"].first().pk
+        )
+
+    def test_filter_categories_errors(self):
+        response = self.client.get(
+            self.search.url,
+            data={
+                "categories": [self.blog_cat_other.slug],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["errors"]["categories"])
+
+    def test_filter_tags(self):
+        response = self.client.get(
+            self.search.url,
+            data={
+                "tags": [self.blog_tag.slug],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context.get("errors"))
+        self.assertEqual(len(response.context["tag_options"]), 1)
+        self.assertIn(self.blog_tag.slug, response.context["tag_options"])
+
+    def test_filter_tags_errors(self):
+        response = self.client.get(
+            self.search.url,
+            data={
+                "tags": [self.blog_tag_other.slug],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["errors"]["tags"])
 
 
 class SearchIndexHTMLTestCase(TestCase):

@@ -13,14 +13,21 @@ class TagWidget(SelectMultiple):
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=255, required=False)
+
     categories = forms.ModelMultipleChoiceField(
-        queryset=BlogCategory.objects.all(),
+        queryset=BlogCategory.objects.none(),
         to_field_name="slug",
         required=False,
     )
     tags = forms.ModelMultipleChoiceField(
-        queryset=BlogTag.objects.all(),
+        queryset=BlogTag.objects.none(),
         to_field_name="slug",
         required=False,
         widget=TagWidget,
     )
+
+    def __init__(self, site, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+
+        self.fields["categories"].queryset = BlogCategory.objects.in_site(site)
+        self.fields["tags"].queryset = BlogTag.objects.in_site(site)

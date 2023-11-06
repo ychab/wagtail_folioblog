@@ -83,9 +83,9 @@ class Command(BaseCommand):
 
         # Request pages with pagination AND filtering.
         if page.slug == "posts":
-            self.request_filtering_blog_category(page, limit)
+            self.request_filtering_blog_category(folio_settings.site, page, limit)
         if page.slug == "videos":
-            self.request_filtering_video_category(page, limit)
+            self.request_filtering_video_category(folio_settings.site, page, limit)
         elif page.slug == "gallery":
             self.request_filtering_collection(page, folio_settings.gallery_collection)
 
@@ -133,8 +133,8 @@ class Command(BaseCommand):
                 },
             )
 
-    def request_filtering_blog_category(self, page, limit):
-        categories = BlogCategory.objects.all()
+    def request_filtering_blog_category(self, site, page, limit):
+        categories = BlogCategory.objects.in_site(site)
 
         for category in categories:
             total = (
@@ -153,8 +153,8 @@ class Command(BaseCommand):
                     },
                 )
 
-    def request_filtering_video_category(self, page, limit):
-        categories = VideoCategory.objects.all()
+    def request_filtering_video_category(self, site, page, limit):
+        categories = VideoCategory.objects.in_site(site)
 
         for category in categories:
             total = (

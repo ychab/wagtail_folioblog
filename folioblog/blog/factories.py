@@ -66,7 +66,12 @@ class BlogPageFactory(BasePageFactory):
     title = factory.Sequence(lambda n: "post_{n}".format(n=n))
 
     date = fuzzy.FuzzyDateTime(timezone.now())
-    category = factory.SubFactory(BlogCategoryFactory)
+
+    category = factory.SubFactory(
+        BlogCategoryFactory,
+        # WARNING - using get_site() here cause cache in page url sites...
+        site=factory.LazyAttribute(lambda o: o.factory_parent.parent.get_site()),
+    )
 
     blockquote = factory.Faker("sentence", nb_words=5, locale=current_locale)
     blockquote_author = factory.Faker("name", locale=current_locale)
@@ -80,7 +85,10 @@ class BlogPageFactory(BasePageFactory):
             if extracted:
                 tags = extracted
             elif kwargs.get("number", 0) > 0:
-                tags = [BlogTagFactory() for i in range(0, kwargs["number"])]
+                tags = [
+                    BlogTagFactory(site=obj.get_site())
+                    for _ in range(0, kwargs["number"])
+                ]
 
             for tag in tags:
                 BlogPageTagFactory(tag=tag, content_object=obj)
@@ -95,7 +103,7 @@ class BlogPageFactory(BasePageFactory):
             elif kwargs.get("number", 0) > 0:
                 related_pages = [
                     BlogPageFactory(parent=obj.get_parent())
-                    for i in range(0, kwargs["number"])
+                    for _ in range(0, kwargs["number"])
                 ]
 
             for page in related_pages:
@@ -104,7 +112,7 @@ class BlogPageFactory(BasePageFactory):
     @factory.post_generation
     def promoted(obj, create, extracted, **kwargs):
         if create and extracted:
-            BlogPromoteLinkFactory(related_page=obj)
+            BlogPromoteLinkFactory(related_page=obj, snippet__site=obj.get_site())
 
 
 class BlogPageTagFactory(DjangoModelFactory):

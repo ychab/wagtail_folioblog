@@ -26,7 +26,7 @@ class SearchIndexPage(BaseIndexPage):
         page = request.GET.get("page", 1)  # pager link, not in form
 
         # Mimic FormView in WagtailPage to sanitize data
-        form = SearchForm(data=request.GET)
+        form = SearchForm(site=folio_settings.site, data=request.GET)
         form.is_valid()
         if form.errors:
             context.update({"errors": form.errors})
@@ -58,8 +58,8 @@ class SearchIndexPage(BaseIndexPage):
                 "form": form,
                 "search_results": search_results,
                 "search_counter": search_counter,
-                "category_options": self.get_category_options(),
-                "tag_options": self.get_tag_options(),
+                "category_options": self.get_category_options(folio_settings.site),
+                "tag_options": self.get_tag_options(folio_settings.site),
                 "autocomplete_url": self.get_autocomplete_url(token="__QUERY__"),
             }
         )
@@ -106,17 +106,20 @@ class SearchIndexPage(BaseIndexPage):
         page_results = paginator.get_page(page)
         return page_results
 
-    def get_tag_options(self):
+    def get_tag_options(self, site):
         # No other choices than returning all tags for all languages...
         # Indeed, tag are unique by their slug and thus, make no sense to
         # translate them... @see TagBase.fields
         return [
             t["slug"]
-            for t in BlogTag.objects.values("slug").order_by("slug").distinct()
+            for t in BlogTag.objects.in_site(site)
+            .values("slug")
+            .order_by("slug")
+            .distinct()
         ]
 
-    def get_category_options(self):
-        return BlogCategory.objects.filter_language().order_by("slug")
+    def get_category_options(self, site):
+        return BlogCategory.objects.in_site(site).filter_language().order_by("slug")
 
     def get_autocomplete_url(self, token):
         with translation.override(self.locale.language_code):

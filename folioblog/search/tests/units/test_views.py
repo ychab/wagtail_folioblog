@@ -10,6 +10,7 @@ from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.blog.models import BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
+from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.home.factories import HomePageFactory
 
 
@@ -63,12 +64,12 @@ class AutocompleteViewTestCase(TestCase):
         )
 
 
-class AutocompleteViewMultiDomainTestCase(TestCase):
+class AutocompleteViewMultiDomainTestCase(MultiDomainPageTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.home = HomePageFactory(slug="home")
+        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.index = BlogIndexPageFactory(parent=cls.root_page)
         cls.blog = BlogPageFactory(parent=cls.index, title="foobarbaz")
 
         cls.home_other = HomePageFactory(slug="home_other")
@@ -76,19 +77,7 @@ class AutocompleteViewMultiDomainTestCase(TestCase):
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
         cls.blog_other = BlogPageFactory(parent=cls.index_other, title="foobarbaz")
 
-        cls.root_page_original = cls.site.root_page
-        cls.site.root_page = cls.home
-        cls.site.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
+        super().setUpTestData()
 
     def test_filter_site(self):
         url = reverse("search-autocomplete", kwargs={"query": "foobar"})
