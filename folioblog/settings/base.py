@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
+    'wagtail.locales',
     'wagtail.snippets',
     'wagtail.documents',
     'wagtail.images',
@@ -142,6 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 LANGUAGES = [
     ('en', "English"),
     ('fr', "French"),
+    ('es', "Spanish"),
 ]
 LANGUAGE_CODE = 'fr'
 TIME_ZONE = 'UTC'
