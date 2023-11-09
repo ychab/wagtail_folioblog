@@ -13,7 +13,7 @@ current_locale = to_locale(get_language())
 class BaseTagFactory(DjangoModelFactory):
     class Meta:
         abstract = True
-        django_get_or_create = ("slug", "site")
+        django_get_or_create = ("slug",)
         skip_postgeneration_save = True
 
     name = factory.Faker("word", locale=current_locale)

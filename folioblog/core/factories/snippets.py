@@ -35,11 +35,14 @@ class MenuFactory(DjangoModelFactory):
     @post_generation
     def links(obj, create, extracted, **kwargs):
         if create:  # pragma: no branch
-            number = kwargs.pop("number", 3)
-            pages = [
-                PageFactory(slug=f"page_{i}", live=True, parent=obj.site.root_page)
-                for i in range(0, number)
-            ]
+            if extracted:
+                pages = extracted
+            else:
+                number = kwargs.pop("number", 3)
+                pages = [
+                    PageFactory(slug=f"page_{i}", live=True, parent=obj.site.root_page)
+                    for i in range(0, number)
+                ]
 
             for page in pages:
                 MenuLinkFactory(menu=obj, related_page=page, **kwargs)

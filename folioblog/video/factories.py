@@ -122,13 +122,14 @@ class VideoPageFactory(BasePageFactory):
     def related_pages(obj, create, extracted, **kwargs):
         if create:  # pragma: nobranch
             related_pages = []
+            number = kwargs.pop("number", False)
 
             if extracted:
                 related_pages = extracted
-            elif kwargs.get("number", 0) > 0:
+            elif number:
                 related_pages = [
-                    VideoPageFactory(parent=obj.get_parent())
-                    for _ in range(0, kwargs["number"])
+                    VideoPageFactory(parent=obj.get_parent(), **kwargs)
+                    for _ in range(0, number)
                 ]
 
             for page in related_pages:
