@@ -35,7 +35,7 @@ class MenuFactory(DjangoModelFactory):
     @post_generation
     def links(obj, create, extracted, **kwargs):
         if create:  # pragma: no branch
-            if extracted:
+            if extracted:  # pragma: no cover
                 pages = extracted
             else:
                 number = kwargs.pop("number", 3)
