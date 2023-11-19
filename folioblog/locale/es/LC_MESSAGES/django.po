@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-15 11:07+0100\n"
-"PO-Revision-Date: 2023-11-15 11:11+0100\n"
+"PO-Revision-Date: 2023-11-15 11:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,23 +20,23 @@ msgstr ""
 
 #: blog/factories.py:49
 msgid "Articles"
-msgstr "Posts"
+msgstr "Artículos"
 
 #: blog/models.py:81 video/models.py:94
 msgid "Date de publication"
-msgstr "Publication date"
+msgstr "Fecha de publicación"
 
 #: blog/models.py:124
 msgid "Blog information"
-msgstr "Blog's data"
+msgstr ""
 
 #: blog/models.py:135
 msgid "Citation"
-msgstr "Quotation"
+msgstr "Cita"
 
 #: blog/models.py:143 core/models.py:173 core/models.py:213 video/models.py:142
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #: blog/models.py:145 core/models.py:229 core/wagtail_hooks.py:107
 msgid "Related links"
@@ -50,27 +50,27 @@ msgid ""
 "                            "
 msgstr ""
 "\n"
-"                        Published on %(post_date)s\n"
-"                    "
+"                                Publicado el %(post_date)s\n"
+"                            "
 
 #: blog/templates/blog/blog_index_page.html:14
 #: video/templates/video/video_index_page.html:18
 msgid "Filtrer par catégories"
-msgstr "Filter by categories"
+msgstr "Filtrar por categoría"
 
 #: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:68
 #: video/templates/video/video_page.html:26
 #: video/tests/units/test_video_page.py:84
 msgid "Posté le"
-msgstr "Published on"
+msgstr "Publicado el"
 
 #: blog/templates/blog/image_switch.html:49
 msgid "Clique sur l'image, c'est magique !"
-msgstr "Click on the image, it's magic!"
+msgstr "Haz clic en la imagen, ¡es mágica!"
 
 #: blog/tests/selenium/test_blog_index.py:54
 msgid "Publié le"
-msgstr "Published on"
+msgstr "Publicado el"
 
 #: core/models.py:248
 msgid "Google Analytics ID"
@@ -82,11 +82,11 @@ msgstr ""
 
 #: core/models.py:297
 msgid "Or"
-msgstr "Ou"
+msgstr ""
 
 #: core/models.py:297
 msgid "And"
-msgstr "Et"
+msgstr ""
 
 #: core/models.py:306
 msgid "LinkedIn"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: core/models.py:318 core/models.py:320
 msgid "Sans le @"
-msgstr "Without the @"
+msgstr ""
 
 #: core/models.py:323
 msgid "Twitter"
@@ -158,78 +158,78 @@ msgstr ""
 
 #: core/templates/core/credits.html:3
 msgid "Photos &copy; : "
-msgstr ""
+msgstr "Fotos &copy; : "
 
 #: core/templates/core/filter_dropdown.html:12
 msgid "Tout"
-msgstr "All"
+msgstr "Todos"
 
 #: core/templates/core/related_page.html:6
 msgid "Page liée"
 msgid_plural "Pages liées"
-msgstr[0] "Related page"
-msgstr[1] "Related pages"
+msgstr[0] "Página relacionada"
+msgstr[1] "Páginas relacionadas"
 
 #: core/templates/core/related_page.html:22
 msgid "Voir"
-msgstr "See"
+msgstr "Ver"
 
 #: core/templates/core/social_links.html:4
 #: core/templates/core/social_links.html:6
 msgid "Partager sur Reddit"
-msgstr "Share on Reddit"
+msgstr "Compartir en Reddit"
 
 #: core/templates/core/social_links.html:8
 #: core/templates/core/social_links.html:10
 msgid "Partager sur Twitter"
-msgstr "Share on Twitter"
+msgstr "Compartir en Twitter"
 
 #: core/templates/core/social_links.html:12
 #: core/templates/core/social_links.html:14
 msgid "Partager sur Facebook"
-msgstr "Share on Facebook"
+msgstr "Compartir en Facebook"
 
 #: core/templates/core/social_links.html:16
 #: core/templates/core/social_links.html:18
 msgid "Partager sur Linkedin"
-msgstr "Share on  Linkedin"
+msgstr "Compartir en Linkedin"
 
 #: core/wagtail_hooks.py:34
 msgid "Keyboard"
-msgstr "Clavier"
+msgstr ""
 
 #: core/wagtail_hooks.py:123
 msgid "Links"
-msgstr ""
+msgstr "Enlaces"
 
 #: gallery/factories.py:11
 msgid "Galerie"
-msgstr "Gallery"
+msgstr ""
 
 #: gallery/models.py:28
 msgid "Section"
-msgstr "Area"
+msgstr ""
 
 #: gallery/templates/gallery/gallery_grid_item.html:55
 msgid "Voir l'article"
-msgstr "See post"
+msgstr "Leer el artículo"
 
 #: gallery/templates/gallery/gallery_page.html:25
 msgid "Filtrer par albums"
-msgstr "Filter by collections"
+msgstr "Filtrar por álbumes"
 
 #: gallery/templates/gallery/gallery_page.html:29
 msgid "Mélanger"
-msgstr "Check"
+msgstr "Mezclar"
 
 #: gallery/templates/gallery/gallery_page.html:44
 msgid "Déplacer"
-msgstr "Move"
+msgstr "Mover"
 
 #: home/factories.py:11 templates/cleanblog/navbar.html:4
 #: templates/cleanblog/navbar.html:5
 msgid "Accueil"
-msgstr "Home"
+msgstr "Inicio"
 
 #: portfolio/factories/pages.py:26 templates/agency/navbar.html:4
 msgid "Portfolio"
@@ -238,11 +238,11 @@ msgstr ""
 #: portfolio/models.py:24 portfolio/models.py:46 portfolio/models.py:95
 #: portfolio/models.py:114 portfolio/models.py:141
 msgid "Titre"
-msgstr "Title"
+msgstr "Título"
 
 #: portfolio/models.py:29
 msgid "Slogan"
-msgstr ""
+msgstr "Eslogan"
 
 #: portfolio/models.py:40
 msgid "Slide"
@@ -251,24 +251,24 @@ msgstr ""
 #: portfolio/models.py:51 portfolio/models.py:67 portfolio/models.py:81
 #: portfolio/models.py:100 portfolio/models.py:119 portfolio/models.py:146
 msgid "Sous-titre"
-msgstr "Subtitle"
+msgstr "Subtítulo"
 
 #: portfolio/models.py:125
 msgid "Texte"
-msgstr "Text"
+msgstr "Texto"
 
 #: portfolio/models.py:161
 msgid "Entête"
-msgstr "Header"
+msgstr "Cabecera"
 
 #: portfolio/models.py:171 templates/agency/navbar.html:11
 msgid "À propos"
-msgstr "About"
+msgstr "Sobre me"
 
 #: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
 #: templates/agency/navbar.html:12
 msgid "Services"
-msgstr ""
+msgstr "Servicios"
 
 #: portfolio/models.py:187
 msgid "Skills"
@@ -280,161 +280,161 @@ msgstr ""
 
 #: portfolio/models.py:207 templates/agency/navbar.html:16
 msgid "Équipe"
-msgstr "Team"
+msgstr "Equipo"
 
 #: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"
-msgstr "Only the future<br />will<br />tell us !"
+msgstr "¡Sólo el tiempo<br />lo dirá!"
 
 #: portfolio/templates/portfolio/blocks/skill_modal.html:6
 msgid "Fermer la fenêtre"
-msgstr "Close the window"
+msgstr "Cerrar ventana"
 
 #: portfolio/templates/portfolio/blocks/skill_modal.html:29
 #: search/templates/search/search_form.html:14
 msgid "Fermer"
-msgstr "Close"
+msgstr "Cerrar"
 
 #: portfolio/templates/portfolio/blocks/skills.html:5
 #: templates/agency/navbar.html:13
 msgid "Expertises"
-msgstr "Skills"
+msgstr "Conocimientos"
 
 #: search/factories.py:11
 msgid "Recherche"
-msgstr "Search"
+msgstr "Búsqueda"
 
 #: search/templates/search/search_form.html:2
 #: search/templates/search/search_form.html:56
 msgid "Rechercher"
-msgstr "Search"
+msgstr "Buscar"
 
 #: search/templates/search/search_form.html:7
 msgid "Erreur de formulaire"
-msgstr "Form error"
+msgstr "Error de formulario"
 
 #: search/templates/search/search_form.html:8
 msgid "Pour valider le formulaire, merci de corriger les erreurs suivantes :"
-msgstr "To validate the form, please correct the following errors:"
+msgstr "Para validar el formulario, corrija los siguientes errores:"
 
 #: search/templates/search/search_form.html:23
 msgid "Filtrer la recherche"
-msgstr "Filter the search"
+msgstr "Filtrar la búsqueda"
 
 #: search/templates/search/search_form.html:42
 msgid "Saisir des tags"
-msgstr "Edit tags"
+msgstr "Introducir etiquetas"
 
 #: search/templates/search/search_form.html:42
 msgid "Étiquettes"
-msgstr "Tags"
+msgstr "Etiquetas"
 
 #: search/templates/search/search_form.html:48
 msgid "Liste des catégories"
-msgstr "Categories's list"
+msgstr "Lista de categorías"
 
 #: search/templates/search/search_index_page.html:30
 #, python-format
 msgid "%(counter)s résultat"
 msgid_plural "%(counter)s résultats 🎉️"
-msgstr[0] "%(counter)s result"
-msgstr[1] "%(counter)s results 🎉️"
+msgstr[0] "%(counter)s resultado"
+msgstr[1] "%(counter)s resultados"
 
 #: search/templates/search/search_results.html:37
 msgid "Aucun résultat"
-msgstr "No result"
+msgstr "Ningún resultado"
 
 #: templates/404.html:26
 msgid "Page introuvable"
-msgstr "Page not found"
+msgstr "Página no encontrada"
 
 #: templates/404.html:39
 msgid "Oups !"
-msgstr "Oops!"
+msgstr "¡Oops!"
 
 #: templates/404.html:40
 msgid "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..."
-msgstr "The requested page does not exist, no longer exists, or never existed..."
+msgstr "La página solicitada no existe, ya no existe o nunca existió..."
 
 #: templates/agency/footer.html:6
 msgid "conception avec le CMS"
-msgstr "designed with the CMS"
+msgstr "diseño con CMS"
 
 #: templates/agency/header.html:6
 msgid "Mes services"
-msgstr "My  services"
+msgstr "Mis servicios"
 
 #: templates/agency/navbar.html:6 templates/cleanblog/navbar.html:8
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: templates/cleanblog/footer.html:10
 msgid "Voir sur Linkedin"
-msgstr "See on Linkedin"
+msgstr "Ver en Linkedin"
 
 #: templates/cleanblog/footer.html:15
 msgid "Compte Linkedin"
-msgstr "Linkedin account"
+msgstr "Cuenta Linkedin"
 
 #: templates/cleanblog/footer.html:19
 msgid "Voir sur Github"
-msgstr "See on Github"
+msgstr "Ver en Github"
 
 #: templates/cleanblog/footer.html:24
 msgid "Compte gitHub"
-msgstr "Github account"
+msgstr "Cuenta Github"
 
 #: templates/cleanblog/footer.html:28
 msgid "Voir sur Instagram"
-msgstr "See on Instagram"
+msgstr "Ver en Instagram"
 
 #: templates/cleanblog/footer.html:33
 msgid "Compte Instagram"
-msgstr "Instagram account"
+msgstr "Cuenta Instagram"
 
 #: templates/cleanblog/pager.html:3
 msgid "Navigation des pages"
-msgstr "Page zoning"
+msgstr "Navegación de páginas"
 
 #: templates/cleanblog/pager.html:7 templates/cleanblog/pager.html:9
 msgid "Début"
-msgstr "Start"
+msgstr "Inicio"
 
 #: templates/cleanblog/pager.html:15 templates/cleanblog/pager.html:17
 msgid "Précédent"
-msgstr "Previous"
+msgstr "Anterior"
 
 #: templates/cleanblog/pager.html:28 templates/cleanblog/pager.html:30
 msgid "Suivant"
-msgstr "Next"
+msgstr "Siguiente"
 
 #: templates/cleanblog/pager.html:37 templates/cleanblog/pager.html:39
 msgid "Fin"
-msgstr "End"
+msgstr "Fin"
 
 #: templates/cleanblog/spinner.html:5
 msgid "Chargement..."
-msgstr "Loading..."
+msgstr "Cargando..."
 
 #: templates/cleanblog/spinner.html:9
 msgid "Oh non, c'est déjà fini !!"
-msgstr "Hell no, it's already finished!"
+msgstr "¡Oh no, ya ha terminado!"
 
 #: templates/cleanblog/spinner.html:12
 msgid "Oups ! On dirait bien qu'il y a un bug :/"
-msgstr "Oups! Looks like there is a bug somewhere :/"
+msgstr "¡Uy! Parece que hay un error :/"
 
 #: video/factories.py:42
 msgid "Vidéos"
-msgstr "Videos"
+msgstr "Vídeos"
 
 #: video/models.py:133
 msgid "Video information"
-msgstr "Video data"
+msgstr "Información en vídeo"
 
 #: video/models.py:146
 msgid "Related pages"
-msgstr "Pages associées"
+msgstr ""
 
 #: video/templates/video/snippets/video_promoted.html:30
 msgid "Carousel video item"
@@ -442,58 +442,16 @@ msgstr ""
 
 #: video/templates/video/youtube_player.html:17
 msgid "Pour voir cette vidéo, vous devez accepter les cookies."
-msgstr "To view this video, you must accept cookies."
+msgstr "Para ver este vídeo, debe aceptar las cookies."
 
 #: video/templates/video/youtube_player.html:19
 msgid "Accepter les cookies"
-msgstr "Accept cookies"
+msgstr "Aceptar cookies"
 
 #: video/templates/video/youtube_player.html:20
 msgid "J'accepte"
-msgstr "I accept"
+msgstr "Acepto"
 
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
-msgstr "Start video"
-
-#~ msgid "Hey, tu essayes de me hacker petit filou ??"
-#~ msgstr "Hey, did you try to hack me?"
-
-#, python-format
-#~ msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
-#~ msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
-#~ msgstr[0] "\"Go find happiness\"  (french joke): %(counter)s result (not crazy) 😅️"
-#~ msgstr[1] "\"Go find happiness\"  (french joke): %(counter)s results 🚀"
-
-#~ msgid "Ah non... bah pas bonheur"
-#~ msgstr "Well so... not very well"
-
-#~ msgid "Oups, on dirait qu'il y a un soucis !"
-#~ msgstr "Oops, there seems to be a problem!"
-
-#~ msgid "Lien cassé ? Armée de méchants robots zombies ?"
-#~ msgstr "Broken links ? Army of evil robot zombies?"
-
-#~ msgid "Cher robot"
-#~ msgstr "Dear bot"
-
-#~ msgid "\"Tu vois, le monde se divise en deux catégories : ceux qui ont un pistolet chargé et ceux qui creusent. Toi, tu creuses.\""
-#~ msgstr "\"You see, in this world, there is two kinds of people, my friend: those with loaded guns and those who dig. You dig.\""
-
-#~ msgid "Le bon, la brute et le truand"
-#~ msgstr "The good, the bad and the ugly"
-
-#~ msgid "Retour à l'accueil"
-#~ msgstr "Go back to home"
-
-#~ msgid "À l'instant..."
-#~ msgstr "This very minute"
-
-#~ msgid "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de retourner à l'accueil"
-#~ msgstr "No really... Nobody will take your call! Please return to home"
-
-#~ msgid "Langues"
-#~ msgstr "Languages"
-
-#~ msgid "Autre"
-#~ msgstr "Other"
+msgstr "Reproducir vídeo"

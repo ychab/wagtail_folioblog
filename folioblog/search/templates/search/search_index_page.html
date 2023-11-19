@@ -27,10 +27,10 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 {% if search_counter >= 0 %}
                     <h2 class="text-center text-muted mb-4 fs-4">
-                        🎉️ {% blocktrans trimmed count counter=search_counter %}
-                            "Va chercher bonheur" : {{ counter }} résultat (pas ouf) 😅️
+                        {% blocktrans trimmed count counter=search_counter %}
+                            {{ counter }} résultat
                         {% plural %}
-                            "Va chercher bonheur" : {{ counter }} résultats 🚀
+                            {{ counter }} résultats 🎉️
                         {% endblocktrans %}
                     </h2>
                 {% endif %}

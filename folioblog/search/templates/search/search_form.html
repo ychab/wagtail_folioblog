@@ -4,8 +4,8 @@
 {% if form.errors %}
     {% for field, field_errors in form.errors.items %}
         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-            <h4 class="alert-heading">{% trans "Hack me I'm famous!" %}</h4>
-            <strong>{%  trans 'Hey, tu essayes de me hacker petit filou ??' %}</strong>
+            <h4 class="alert-heading">{% trans "Erreur de formulaire" %}</h4>
+            <strong>{%  trans 'Pour valider le formulaire, merci de corriger les erreurs suivantes :' %}</strong>
             <ul class="list-group list-group-flush list-group-numbered">
                 {% for error in field_errors %}
                     <li class="list-group-item list-group-item-danger">{{ error }}</li>

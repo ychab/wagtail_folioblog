@@ -60,9 +60,9 @@ admin:
 	python manage.py createadmin --password=admin
 
 trans:
-	cd folioblog && python ../manage.py makemessages -d django -l en -l fr
-	cd folioblog && python ../manage.py makemessages -d djangojs -l en -l fr
-	cd folioblog && python ../manage.py compilemessages -l en -l fr
+	cd folioblog && python ../manage.py makemessages -d django -l en -l es -l fr
+	cd folioblog && python ../manage.py makemessages -d djangojs -l en -l es -l fr
+	cd folioblog && python ../manage.py compilemessages -l en -l es -l fr
 
 fixtures_dump:
 	python manage.py fixtures dump

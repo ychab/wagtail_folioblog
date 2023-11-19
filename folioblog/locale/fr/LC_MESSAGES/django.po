@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 14:18+0200\n"
+"POT-Creation-Date: 2023-11-15 11:07+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: blog/factories.py:47
+#: blog/factories.py:49
 msgid "Articles"
 msgstr ""
 
-#: blog/models.py:77 video/models.py:94
+#: blog/models.py:81 video/models.py:94
 msgid "Date de publication"
 msgstr ""
 
-#: blog/models.py:120
+#: blog/models.py:124
 msgid "Blog information"
 msgstr ""
 
-#: blog/models.py:131
+#: blog/models.py:135
 msgid "Citation"
 msgstr ""
 
-#: blog/models.py:139 core/models.py:167 core/models.py:207 video/models.py:142
+#: blog/models.py:143 core/models.py:173 core/models.py:213 video/models.py:142
 msgid "Image"
 msgstr ""
 
-#: blog/models.py:141 blog/models.py:165 core/models.py:223 video/models.py:218
+#: blog/models.py:145 core/models.py:229 core/wagtail_hooks.py:107
 msgid "Related links"
 msgstr ""
 
@@ -69,80 +69,80 @@ msgstr ""
 msgid "Publié le"
 msgstr ""
 
-#: core/models.py:239
+#: core/models.py:248
 msgid "Google Analytics ID"
 msgstr ""
 
-#: core/models.py:254
+#: core/models.py:263
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:280
+#: core/models.py:297
 msgid "Or"
 msgstr ""
 
-#: core/models.py:280
+#: core/models.py:297
 msgid "And"
 msgstr ""
 
-#: core/models.py:289
+#: core/models.py:306
 msgid "LinkedIn"
 msgstr ""
 
-#: core/models.py:291
+#: core/models.py:308
 msgid "GitHub"
 msgstr ""
 
-#: core/models.py:293
+#: core/models.py:310
 msgid "Instagram"
 msgstr ""
 
-#: core/models.py:296
+#: core/models.py:313
 msgid "Facebook"
 msgstr ""
 
-#: core/models.py:301 core/models.py:303
+#: core/models.py:318 core/models.py:320
 msgid "Sans le @"
 msgstr ""
 
-#: core/models.py:306
+#: core/models.py:323
 msgid "Twitter"
 msgstr ""
 
-#: core/models.py:332
+#: core/models.py:352
 msgid "SEO"
 msgstr ""
 
-#: core/models.py:333
+#: core/models.py:353
 msgid "Social"
 msgstr ""
 
-#: core/models.py:334 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:354 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:335
+#: core/models.py:355
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:336
+#: core/models.py:356
 msgid "Video"
 msgstr ""
 
-#: core/models.py:337
+#: core/models.py:357
+msgid "Gallery"
+msgstr ""
+
+#: core/models.py:358
 msgid "Search"
 msgstr ""
 
-#: core/models.py:338
+#: core/models.py:359
 msgid "Cookies"
 msgstr ""
 
-#: core/models.py:339
+#: core/models.py:360
 msgid "RSS"
-msgstr ""
-
-#: core/models.py:363
-msgid "Links"
 msgstr ""
 
 #: core/templates/core/cookies_banner.html:13
@@ -191,8 +191,12 @@ msgstr ""
 msgid "Partager sur Linkedin"
 msgstr ""
 
-#: core/wagtail_hooks.py:31
+#: core/wagtail_hooks.py:34
 msgid "Keyboard"
+msgstr ""
+
+#: core/wagtail_hooks.py:123
+msgid "Links"
 msgstr ""
 
 #: gallery/factories.py:11
@@ -303,11 +307,11 @@ msgid "Rechercher"
 msgstr ""
 
 #: search/templates/search/search_form.html:7
-msgid "Hack me I'm famous!"
+msgid "Erreur de formulaire"
 msgstr ""
 
 #: search/templates/search/search_form.html:8
-msgid "Hey, tu essayes de me hacker petit filou ??"
+msgid "Pour valider le formulaire, merci de corriger les erreurs suivantes :"
 msgstr ""
 
 #: search/templates/search/search_form.html:23
@@ -327,16 +331,14 @@ msgid "Liste des catégories"
 msgstr ""
 
 #: search/templates/search/search_index_page.html:30
-#, fuzzy, python-format
-#| msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
-#| msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
-msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
-msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
-msgstr[0] "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
-msgstr[1] "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
+#, python-format
+msgid "%(counter)s résultat"
+msgid_plural "%(counter)s résultats 🎉️"
+msgstr[0] ""
+msgstr[1] ""
 
 #: search/templates/search/search_results.html:37
-msgid "Ah non... bah pas bonheur"
+msgid "Aucun résultat"
 msgstr ""
 
 #: templates/404.html:26
@@ -419,7 +421,7 @@ msgstr ""
 msgid "Oups ! On dirait bien qu'il y a un bug :/"
 msgstr ""
 
-#: video/factories.py:41
+#: video/factories.py:42
 msgid "Vidéos"
 msgstr ""
 
@@ -436,9 +438,7 @@ msgid "Carousel video item"
 msgstr ""
 
 #: video/templates/video/youtube_player.html:17
-msgid ""
-"Pour voir cette vidéo, merci de vendre un peu de vos données en acceptant "
-"les cookies !"
+msgid "Pour voir cette vidéo, vous devez accepter les cookies."
 msgstr ""
 
 #: video/templates/video/youtube_player.html:19
@@ -446,9 +446,17 @@ msgid "Accepter les cookies"
 msgstr ""
 
 #: video/templates/video/youtube_player.html:20
-msgid "Bon ok j'accepte !"
+msgid "J'accepte"
 msgstr ""
 
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
 msgstr ""
+
+#, fuzzy, python-format
+#~| msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
+#~| msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
+#~ msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
+#~ msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
+#~ msgstr[0] "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
+#~ msgstr[1] "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
