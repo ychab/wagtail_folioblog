@@ -200,7 +200,11 @@ class VideoPage(BasePage):
 
 class VideoPageRelatedLink(Orderable):
     page = ParentalKey(VideoPage, related_name="related_links")
-    related_page = ParentalKey(Page, related_name="video_related_pages")
+    related_page = models.ForeignKey(
+        Page,
+        on_delete=models.CASCADE,
+        related_name="video_related_pages",
+    )
 
     panels = [
         FieldPanel("related_page"),
@@ -227,7 +231,11 @@ class VideoPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
 
 class VideoPromoteLink(Orderable):
     snippet = ParentalKey(VideoPromote, related_name="related_links")
-    related_page = ParentalKey(VideoPage, related_name="promoted_links")
+    related_page = models.ForeignKey(
+        VideoPage,
+        on_delete=models.CASCADE,
+        related_name="promoted_links",
+    )
 
     panels = [
         FieldPanel("related_page"),

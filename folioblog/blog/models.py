@@ -151,7 +151,11 @@ class BlogPage(BasePage):
 
 class BlogPageRelatedLink(Orderable):
     page = ParentalKey(BlogPage, related_name="related_links")
-    related_page = ParentalKey(Page, related_name="blog_related_pages")
+    related_page = models.ForeignKey(
+        Page,
+        on_delete=models.CASCADE,
+        related_name="blog_related_pages",
+    )
 
     panels = [
         FieldPanel("related_page"),
@@ -173,7 +177,11 @@ class BlogPromote(MultiSiteMixin, TranslatableMixin, ClusterableModel):
 
 class BlogPromoteLink(Orderable):
     snippet = ParentalKey(BlogPromote, related_name="related_links")
-    related_page = ParentalKey(BlogPage, related_name="promoted_links")
+    related_page = models.ForeignKey(
+        BlogPage,
+        on_delete=models.CASCADE,
+        related_name="promoted_links",
+    )
 
     panels = [
         FieldPanel("related_page"),

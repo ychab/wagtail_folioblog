@@ -232,7 +232,11 @@ class BasicPage(BasePage):
 
 class BasicPageRelatedLink(Orderable):
     page = ParentalKey(BasicPage, related_name="related_links")
-    related_page = ParentalKey(Page, related_name="basic_related_pages")
+    related_page = models.ForeignKey(
+        Page,
+        on_delete=models.CASCADE,
+        related_name="basic_related_pages",
+    )
 
     panels = [
         FieldPanel("related_page"),
@@ -367,7 +371,7 @@ class FolioBlogSettings(BaseSiteSetting):
 
 class Menu(MultiSiteMixin, TranslatableMixin, ClusterableModel):
     name = models.CharField(max_length=255)
-    homepage = ParentalKey(
+    homepage = models.ForeignKey(
         Page,
         on_delete=models.PROTECT,
         related_name="menu_home",
@@ -387,7 +391,11 @@ class Menu(MultiSiteMixin, TranslatableMixin, ClusterableModel):
 
 class MenuLink(Orderable):
     menu = ParentalKey(Menu, related_name="links")
-    related_page = ParentalKey(Page, related_name="menu_link")
+    related_page = models.ForeignKey(
+        Page,
+        on_delete=models.CASCADE,
+        related_name="menu_link",
+    )
 
     panels = [
         FieldPanel("related_page"),
