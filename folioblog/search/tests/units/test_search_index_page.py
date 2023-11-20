@@ -168,7 +168,7 @@ class SearchIndexPageTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context["search_results"])
-        self.assertNotContains(response, escape("résultat"))
+        self.assertContains(response, escape("Aucun résultat"))
 
     @override_settings(LANGUAGE_CODE="fr")
     def test_invalid_page_filter(self):
@@ -199,7 +199,7 @@ class SearchIndexPageTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context["search_results"])
-        self.assertNotContains(response, escape("résultat"))
+        self.assertContains(response, escape("Aucun résultat"))
 
     def test_live_not(self):
         p1 = BlogPageFactory(
