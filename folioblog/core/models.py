@@ -248,6 +248,8 @@ class FolioBlogSettings(BaseSiteSetting):
     # @see https://docs.wagtail.org/en/stable/reference/contrib/settings.html#utilising-select-related-to-improve-efficiency  # noqa
     select_related = ["gallery_collection"]
 
+    favicon = models.ImageField(upload_to="favicons", blank=True, default="")
+
     google_analytics_id = models.CharField(
         verbose_name=_("Google Analytics ID"),
         max_length=128,
@@ -302,6 +304,9 @@ class FolioBlogSettings(BaseSiteSetting):
         default="and",
     )
 
+    design_panels = [
+        FieldPanel("favicon"),
+    ]
     seo_panels = [
         FieldPanel("google_analytics_id"),
     ]
@@ -353,6 +358,7 @@ class FolioBlogSettings(BaseSiteSetting):
 
     edit_handler = TabbedInterface(
         [
+            ObjectList(design_panels, heading=_("Design")),
             ObjectList(seo_panels, heading=_("SEO")),
             ObjectList(social_panels, heading=_("Social")),
             ObjectList(contact_panels, heading=_("Contact")),
