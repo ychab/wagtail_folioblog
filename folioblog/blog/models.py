@@ -79,6 +79,7 @@ class BlogCategory(BaseCategory):
 
 class BlogPage(BasePage):
     date = models.DateField(_("Date de publication"))
+    author = models.CharField(max_length=256, blank=True, default="")
 
     image_body = models.ForeignKey(
         Image,
@@ -118,6 +119,7 @@ class BlogPage(BasePage):
         MultiFieldPanel(
             [
                 FieldPanel("date"),
+                FieldPanel("author"),
                 FieldPanel("tags"),
                 FieldPanel("category"),
             ],

@@ -23,7 +23,13 @@
                                 {% endfor %}
                             </div>
                             <div class="meta">
-                                {% trans 'Posté le' %} {{ page.date|date:"SHORT_DATE_FORMAT" }}
+                                {% if page.author %}
+                                    {% blocktrans with author=page.author date=page.date|date:"SHORT_DATE_FORMAT" %}
+                                        Par {{ author }}, le {{ date }}
+                                    {% endblocktrans %}
+                                {% else %}
+                                    {% trans 'Posté le' %} {{ page.date|date:"SHORT_DATE_FORMAT" }}
+                                {% endif %}
                             </div>
                             {% social_links page %}
                         </div>

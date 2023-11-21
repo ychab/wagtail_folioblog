@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-15 11:07+0100\n"
+"POT-Creation-Date: 2023-11-21 09:40+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -26,19 +26,19 @@ msgstr ""
 msgid "Date de publication"
 msgstr ""
 
-#: blog/models.py:124
+#: blog/models.py:126
 msgid "Blog information"
 msgstr ""
 
-#: blog/models.py:135
+#: blog/models.py:137
 msgid "Citation"
 msgstr ""
 
-#: blog/models.py:143 core/models.py:173 core/models.py:213 video/models.py:142
+#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:142
 msgid "Image"
 msgstr ""
 
-#: blog/models.py:145 core/models.py:229 core/wagtail_hooks.py:107
+#: blog/models.py:147 core/models.py:229 core/wagtail_hooks.py:107
 msgid "Related links"
 msgstr ""
 
@@ -55,7 +55,15 @@ msgstr ""
 msgid "Filtrer par catégories"
 msgstr ""
 
-#: blog/templates/blog/blog_page.html:38 blog/tests/units/test_blog_page.py:68
+#: blog/templates/blog/blog_page.html:39
+#, python-format
+msgid ""
+"\n"
+"                                Par %(author)s, le %(date)s\n"
+"                                "
+msgstr ""
+
+#: blog/templates/blog/blog_page.html:43 blog/tests/units/test_blog_page.py:68
 #: video/templates/video/video_page.html:26
 #: video/tests/units/test_video_page.py:84
 msgid "Posté le"
@@ -69,79 +77,83 @@ msgstr ""
 msgid "Publié le"
 msgstr ""
 
-#: core/models.py:248
+#: core/models.py:254
 msgid "Google Analytics ID"
 msgstr ""
 
-#: core/models.py:263
+#: core/models.py:269
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:297
+#: core/models.py:303
 msgid "Or"
 msgstr ""
 
-#: core/models.py:297
+#: core/models.py:303
 msgid "And"
 msgstr ""
 
-#: core/models.py:306
+#: core/models.py:315
 msgid "LinkedIn"
 msgstr ""
 
-#: core/models.py:308
+#: core/models.py:317
 msgid "GitHub"
 msgstr ""
 
-#: core/models.py:310
+#: core/models.py:319
 msgid "Instagram"
 msgstr ""
 
-#: core/models.py:313
+#: core/models.py:322
 msgid "Facebook"
 msgstr ""
 
-#: core/models.py:318 core/models.py:320
+#: core/models.py:327 core/models.py:329
 msgid "Sans le @"
 msgstr ""
 
-#: core/models.py:323
+#: core/models.py:332
 msgid "Twitter"
 msgstr ""
 
-#: core/models.py:352
+#: core/models.py:361
+msgid "Design"
+msgstr ""
+
+#: core/models.py:362
 msgid "SEO"
 msgstr ""
 
-#: core/models.py:353
+#: core/models.py:363
 msgid "Social"
 msgstr ""
 
-#: core/models.py:354 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:364 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:355
+#: core/models.py:365
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:356
+#: core/models.py:366
 msgid "Video"
 msgstr ""
 
-#: core/models.py:357
+#: core/models.py:367
 msgid "Gallery"
 msgstr ""
 
-#: core/models.py:358
+#: core/models.py:368
 msgid "Search"
 msgstr ""
 
-#: core/models.py:359
+#: core/models.py:369
 msgid "Cookies"
 msgstr ""
 
-#: core/models.py:360
+#: core/models.py:370
 msgid "RSS"
 msgstr ""
 

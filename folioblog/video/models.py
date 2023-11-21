@@ -92,6 +92,8 @@ class VideoPageTag(TaggedItemBase):
 
 class VideoPage(BasePage):
     date = models.DateField(_("Date de publication"))
+    author = models.CharField(max_length=256, blank=True, default="")
+
     video_url = models.URLField()
     thumbnail = models.ForeignKey(
         Image,
@@ -127,6 +129,8 @@ class VideoPage(BasePage):
         FieldPanel("subheading"),
         MultiFieldPanel(
             [
+                FieldPanel("date"),
+                FieldPanel("author"),
                 FieldPanel("category"),
                 FieldPanel("tags"),
             ],
@@ -145,8 +149,6 @@ class VideoPage(BasePage):
         FieldPanel("thumbnail"),
         InlinePanel("related_links", label=_("Related pages")),
     ]
-
-    settings_panels = [FieldPanel("date")] + BasePage.settings_panels
 
     parent_page_types = ["video.VideoIndexPage"]
     subpage_types = []
