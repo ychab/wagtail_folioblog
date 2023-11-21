@@ -107,15 +107,15 @@ charset-normalizer==3.3.2 ; python_version >= "3.10" and python_version < "4.0" 
 defusedxml==0.7.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69 \
     --hash=sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61
-django-appconf==1.0.5 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:ae9f864ee1958c815a965ed63b3fba4874eec13de10236ba063a788f9a17389d \
-    --hash=sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4
+django-appconf==1.0.6 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:c3ae442fba1ff7ec830412c5184b17169a7a1e71cf0864a4c3f93cf4c98a1993 \
+    --hash=sha256:cfe87ea827c4ee04b9a70fab90b86d704cb02f2981f89da8423cb0fabf88efbf
 django-compressor==4.4 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1b0acc9cfba9f69bc38e7c41da9b0d70a20bc95587b643ffef9609cf46064f67 \
     --hash=sha256:6e2b0c0becb9607f5099c2546a824c5b84a6918a34bc37a8a622ffa250313596
-django-filter==23.3 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:015fe155582e1805b40629344e4a6cf3cc40450827d294d040b4b8c1749a9fa6 \
-    --hash=sha256:65bc5d1d8f4fff3aaf74cb5da537b6620e9214fb4b3180f6c560776b1b6dccd0
+django-filter==23.4 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:526954f18bd7d6423f232a9a7974f58fbc6863908b9fc160de075e01adcc2a5f \
+    --hash=sha256:bed070b38359dce7d2dbe057b165d59773057986356cb809ded983b36c77a976
 django-modelcluster==6.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:3b1791638046c73ae7415327cf54bfa0adad9d89d342a5b86d0ec29a2504e067 \
     --hash=sha256:8ce72635db4b90b34993afda5021ed8676ef94f1d4c607466d0f8d3f676c5b64
