@@ -1,15 +1,18 @@
 from folioblog.core.factories import ImageFactory
+from folioblog.core.models import FolioBlogSettings
 from folioblog.core.tests.selenium.webpages import NotFoundWebPage
 from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase
-from folioblog.home.factories import HomePageFactory
 
 
 class NotFoundPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def setUp(self):
         super().setUp()
 
-        HomePageFactory(parent=self.site.root_page)
-        self.image_bg = ImageFactory(title="404-bg")
+        self.image_bg = ImageFactory()
+
+        self.foliosettings = FolioBlogSettings.for_site(self.site)
+        self.foliosettings.image_404 = self.image_bg
+        self.foliosettings.save()
 
         url = f"{self.live_server_url}/givemea404please"
         self.webpage = NotFoundWebPage(self.selenium)
