@@ -52,6 +52,16 @@ class GalleryPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["images"]), 0)
 
+    def test_image_without_page(self):
+        image = ImageFactory(collection=self.collections["video"])
+
+        response = self.client.get(self.page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context["images"]), 1)
+
+        self.assertEqual(response.context["images"][0].pk, image.pk)
+        self.assertIsNone(response.context["images"][0].page)
+
     def test_image_with_page(self):
         image_page = ImageFactory(collection=self.collections["page"])
         image_blog = ImageFactory(collection=self.collections["post"])
@@ -62,7 +72,6 @@ class GalleryPageTestCase(TestCase):
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["images"]), 2)
-
         images = {i.pk: i for i in response.context["images"]}
 
         self.assertIn(image_page.pk, images)
@@ -71,15 +80,30 @@ class GalleryPageTestCase(TestCase):
         self.assertIn(image_blog.pk, images)
         self.assertEqual(images[image_blog.pk].page, blog_page)
 
-    def test_image_without_page(self):
-        image = ImageFactory(collection=self.collections["video"])
+    def test_image_in_richtext_i18n(self):
+        image_main = ImageFactory(collection=self.collections["post"])
+        image_body = ImageFactory(collection=self.collections["post"])
+
+        blog_page = BlogPageFactory(
+            parent=self.page,
+            image=image_main,
+            body=f'<embed alt="Foo Bar Baz" embedtype="image" format="bodyfullfuild" id="{image_body.pk}"/>',
+        )
+        blog_page.copy_for_translation(
+            locale=LocaleFactory(language_code="en"),
+            copy_parents=True,
+        )
 
         response = self.client.get(self.page.url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["images"]), 1)
+        self.assertEqual(len(response.context["images"]), 2)
+        images = {i.pk: i for i in response.context["images"]}
 
-        self.assertEqual(response.context["images"][0].pk, image.pk)
-        self.assertIsNone(response.context["images"][0].page)
+        self.assertIn(image_main.pk, images)
+        self.assertEqual(images[image_main.pk].page, blog_page)
+
+        self.assertIn(image_body.pk, images)
+        self.assertEqual(images[image_body.pk].page, blog_page)
 
     def test_filter_exclude_collections(self):
         image = ImageFactory(collection=self.collections["post"])
