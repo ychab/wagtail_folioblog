@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 21:10+0100\n"
+"POT-Creation-Date: 2023-11-23 17:17+0100\n"
 "PO-Revision-Date: 2023-11-22 17:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -88,83 +88,83 @@ msgstr "Click on the image, it's magic!"
 msgid "Publié le"
 msgstr "Published on"
 
-#: core/models.py:254
+#: core/models.py:269
 msgid "Google Analytics ID"
 msgstr ""
 
-#: core/models.py:269
+#: core/models.py:284
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:303
+#: core/models.py:318
 msgid "Or"
 msgstr "Ou"
 
-#: core/models.py:303
+#: core/models.py:318
 msgid "And"
 msgstr "Et"
 
-#: core/models.py:315
+#: core/models.py:332
 msgid "LinkedIn"
 msgstr ""
 
-#: core/models.py:317
+#: core/models.py:334
 msgid "GitHub"
 msgstr ""
 
-#: core/models.py:319
+#: core/models.py:336
 msgid "Instagram"
 msgstr ""
 
-#: core/models.py:322
+#: core/models.py:339
 msgid "Facebook"
 msgstr ""
 
-#: core/models.py:327 core/models.py:329
+#: core/models.py:344 core/models.py:346
 msgid "Sans le @"
 msgstr "Without the @"
 
-#: core/models.py:332
+#: core/models.py:349
 msgid "Twitter"
 msgstr ""
 
-#: core/models.py:361
+#: core/models.py:378
 msgid "Design"
 msgstr ""
 
-#: core/models.py:362
+#: core/models.py:379
 msgid "SEO"
 msgstr ""
 
-#: core/models.py:363
+#: core/models.py:380
 msgid "Social"
 msgstr ""
 
-#: core/models.py:364 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:381 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:365
+#: core/models.py:382
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:366
+#: core/models.py:383
 msgid "Video"
 msgstr ""
 
-#: core/models.py:367
+#: core/models.py:384
 msgid "Gallery"
 msgstr ""
 
-#: core/models.py:368
+#: core/models.py:385
 msgid "Search"
 msgstr ""
 
-#: core/models.py:369
+#: core/models.py:386
 msgid "Cookies"
 msgstr ""
 
-#: core/models.py:370
+#: core/models.py:387
 msgid "RSS"
 msgstr ""
 
@@ -463,14 +463,18 @@ msgstr "No result"
 msgid "Page introuvable"
 msgstr "Page not found"
 
-#: templates/404.html:39
+#: templates/404.html:42
 msgid "Oups !"
 msgstr "Oops!"
 
-#: templates/404.html:40
+#: templates/404.html:46
 msgid "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..."
 msgstr ""
 "The requested page does not exist, no longer exists, or never existed..."
+
+#: templates/404.html:51
+msgid "Retour à l'accueil"
+msgstr "Go back to home"
 
 #: templates/agency/footer.html:6
 msgid "conception avec le CMS"
@@ -571,52 +575,3 @@ msgstr "I accept"
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
 msgstr "Start video"
-
-#~ msgid "Hey, tu essayes de me hacker petit filou ??"
-#~ msgstr "Hey, did you try to hack me?"
-
-#, python-format
-#~ msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
-#~ msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
-#~ msgstr[0] ""
-#~ "\"Go find happiness\"  (french joke): %(counter)s result (not crazy) 😅️"
-#~ msgstr[1] "\"Go find happiness\"  (french joke): %(counter)s results 🚀"
-
-#~ msgid "Ah non... bah pas bonheur"
-#~ msgstr "Well so... not very well"
-
-#~ msgid "Oups, on dirait qu'il y a un soucis !"
-#~ msgstr "Oops, there seems to be a problem!"
-
-#~ msgid "Lien cassé ? Armée de méchants robots zombies ?"
-#~ msgstr "Broken links ? Army of evil robot zombies?"
-
-#~ msgid "Cher robot"
-#~ msgstr "Dear bot"
-
-#~ msgid ""
-#~ "\"Tu vois, le monde se divise en deux catégories : ceux qui ont un "
-#~ "pistolet chargé et ceux qui creusent. Toi, tu creuses.\""
-#~ msgstr ""
-#~ "\"You see, in this world, there is two kinds of people, my friend: those "
-#~ "with loaded guns and those who dig. You dig.\""
-
-#~ msgid "Le bon, la brute et le truand"
-#~ msgstr "The good, the bad and the ugly"
-
-#~ msgid "Retour à l'accueil"
-#~ msgstr "Go back to home"
-
-#~ msgid "À l'instant..."
-#~ msgstr "This very minute"
-
-#~ msgid ""
-#~ "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de "
-#~ "retourner à l'accueil"
-#~ msgstr "No really... Nobody will take your call! Please return to home"
-
-#~ msgid "Langues"
-#~ msgstr "Languages"
-
-#~ msgid "Autre"
-#~ msgstr "Other"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-22 21:10+0100\n"
+"POT-Creation-Date: 2023-11-23 17:17+0100\n"
 "PO-Revision-Date: 2023-11-22 17:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -88,83 +88,83 @@ msgstr "Haz clic en la imagen, ¡es mágica!"
 msgid "Publié le"
 msgstr "Publicado el"
 
-#: core/models.py:254
+#: core/models.py:269
 msgid "Google Analytics ID"
 msgstr ""
 
-#: core/models.py:269
+#: core/models.py:284
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:303
+#: core/models.py:318
 msgid "Or"
 msgstr ""
 
-#: core/models.py:303
+#: core/models.py:318
 msgid "And"
 msgstr ""
 
-#: core/models.py:315
+#: core/models.py:332
 msgid "LinkedIn"
 msgstr ""
 
-#: core/models.py:317
+#: core/models.py:334
 msgid "GitHub"
 msgstr ""
 
-#: core/models.py:319
+#: core/models.py:336
 msgid "Instagram"
 msgstr ""
 
-#: core/models.py:322
+#: core/models.py:339
 msgid "Facebook"
 msgstr ""
 
-#: core/models.py:327 core/models.py:329
+#: core/models.py:344 core/models.py:346
 msgid "Sans le @"
 msgstr ""
 
-#: core/models.py:332
+#: core/models.py:349
 msgid "Twitter"
 msgstr ""
 
-#: core/models.py:361
+#: core/models.py:378
 msgid "Design"
 msgstr ""
 
-#: core/models.py:362
+#: core/models.py:379
 msgid "SEO"
 msgstr ""
 
-#: core/models.py:363
+#: core/models.py:380
 msgid "Social"
 msgstr ""
 
-#: core/models.py:364 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:381 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:365
+#: core/models.py:382
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:366
+#: core/models.py:383
 msgid "Video"
 msgstr ""
 
-#: core/models.py:367
+#: core/models.py:384
 msgid "Gallery"
 msgstr ""
 
-#: core/models.py:368
+#: core/models.py:385
 msgid "Search"
 msgstr ""
 
-#: core/models.py:369
+#: core/models.py:386
 msgid "Cookies"
 msgstr ""
 
-#: core/models.py:370
+#: core/models.py:387
 msgid "RSS"
 msgstr ""
 
@@ -463,13 +463,17 @@ msgstr "Ningún resultado"
 msgid "Page introuvable"
 msgstr "Página no encontrada"
 
-#: templates/404.html:39
+#: templates/404.html:42
 msgid "Oups !"
 msgstr "¡Oops!"
 
-#: templates/404.html:40
+#: templates/404.html:46
 msgid "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..."
 msgstr "La página solicitada no existe, ya no existe o nunca existió..."
+
+#: templates/404.html:51
+msgid "Retour à l'accueil"
+msgstr "Volver a la página inicial"
 
 #: templates/agency/footer.html:6
 msgid "conception avec le CMS"
