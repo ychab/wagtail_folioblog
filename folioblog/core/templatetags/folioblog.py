@@ -53,19 +53,23 @@ def figcaption(image_or_page):
     return image.figcaption(page.caption if page else image.default_alt_text)
 
 
-@register.simple_tag
-def image_404(title):
-    return Image.objects.filter(title=title).first()
+@register.simple_tag(takes_context=True)
+def text_404(context, field, default=""):
+    langcode = context["LANGUAGE_CODE"]
+    site_settings = context["settings"]["core"]["folioblogsettings"]
+
+    texts = get_block_language(site_settings.text_404, langcode) or {}
+    return texts.get(field, default)
 
 
 @register.inclusion_tag("core/cookies_banner.html", takes_context=True)
 def cookies_banner(context):
     langcode = context["LANGUAGE_CODE"]
-    settings = get_block_language(
+    banner_settings = get_block_language(
         context["settings"]["core"]["folioblogsettings"].cookie_banner, langcode
     )
     return {
-        "settings": settings,
+        "settings": banner_settings,
     }
 
 

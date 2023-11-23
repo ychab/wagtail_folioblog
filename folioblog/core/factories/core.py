@@ -8,7 +8,11 @@ import wagtail_factories
 from factory import fuzzy
 from factory.django import DjangoModelFactory
 
-from folioblog.core.factories import CookieBannersBlockFactory, RssFeedsBlockFactory
+from folioblog.core.factories import (
+    CookieBannersBlockFactory,
+    PageNotFoundsBlockFactory,
+    RssFeedsBlockFactory,
+)
 from folioblog.core.models import FolioBlogSettings
 
 current_locale = to_locale(get_language())
@@ -33,3 +37,4 @@ class FolioBlogSettingsFactory(DjangoModelFactory):
 
     cookie_banner = wagtail_factories.StreamFieldFactory(CookieBannersBlockFactory)
     rss_feed = wagtail_factories.StreamFieldFactory(RssFeedsBlockFactory)
+    text_404 = wagtail_factories.StreamFieldFactory(PageNotFoundsBlockFactory)

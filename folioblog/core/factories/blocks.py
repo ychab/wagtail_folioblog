@@ -8,6 +8,8 @@ from factory import fuzzy
 from folioblog.core.blocks import (
     CookieBannerBlock,
     CookieBannersBlock,
+    PageNotFoundBlock,
+    PageNotFoundsBlock,
     RssFeedBlock,
     RssFeedsBlock,
 )
@@ -54,3 +56,22 @@ class RssFeedsBlockFactory(wagtail_factories.StreamBlockFactory):
         model = RssFeedsBlock
 
     feeds = factory.SubFactory(RssFeedBlockFactory)
+
+
+class PageNotFoundBlockFactory(wagtail_factories.StructBlockFactory):
+    class Meta:
+        model = PageNotFoundBlock
+
+    language = fuzzy.FuzzyChoice(list(dict(settings.LANGUAGES).keys()))
+
+    title = factory.Faker("sentence", nb_words=5, locale=current_locale)
+    subtitle = factory.Faker("sentence", nb_words=8, locale=current_locale)
+    text = factory.Faker("text", locale=current_locale)
+    link_text = factory.Faker("sentence", nb_words=5, locale=current_locale)
+
+
+class PageNotFoundsBlockFactory(wagtail_factories.StreamBlockFactory):
+    class Meta:
+        model = PageNotFoundsBlock
+
+    items = factory.SubFactory(PageNotFoundBlockFactory)

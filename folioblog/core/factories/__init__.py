@@ -1,6 +1,8 @@
 from .blocks import (  # noqa
     CookieBannerBlockFactory,
     CookieBannersBlockFactory,
+    PageNotFoundBlockFactory,
+    PageNotFoundsBlockFactory,
     RssFeedBlockFactory,
     RssFeedsBlockFactory,
 )

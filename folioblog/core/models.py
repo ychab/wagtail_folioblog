@@ -23,7 +23,7 @@ from wagtail.models import Collection, Orderable, Page, Site, TranslatableMixin
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-from folioblog.core.blocks import CookieBannersBlock, RssFeedsBlock
+from folioblog.core.blocks import CookieBannersBlock, PageNotFoundsBlock, RssFeedsBlock
 from folioblog.core.managers import (
     I18nIndexPageManager,
     I18nMultiSiteManager,
@@ -249,6 +249,21 @@ class FolioBlogSettings(BaseSiteSetting):
     select_related = ["gallery_collection"]
 
     favicon = models.ImageField(upload_to="favicons", blank=True, default="")
+    image_404 = models.ForeignKey(
+        FolioImage,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Image Not Found",
+        related_name="folioblogsettings_not_found",
+    )
+    text_404 = StreamField(
+        PageNotFoundsBlock(),
+        verbose_name="Text page not found",
+        null=True,
+        blank=True,
+        use_json_field=True,
+    )
 
     google_analytics_id = models.CharField(
         verbose_name=_("Google Analytics ID"),
@@ -306,6 +321,8 @@ class FolioBlogSettings(BaseSiteSetting):
 
     design_panels = [
         FieldPanel("favicon"),
+        FieldPanel("image_404"),
+        FieldPanel("text_404"),
     ]
     seo_panels = [
         FieldPanel("google_analytics_id"),

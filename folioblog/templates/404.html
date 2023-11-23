@@ -8,9 +8,8 @@
 {% block meta_twitter %}{% endblock %}
 
 {% block extra_css_inline %}
-    {% image_404 '404-bg' as image_404_bg %}
-    {% if image_404_bg %}
-        {% background_style image_404_bg %}
+    {% if settings.core.folioblogsettings.image_404 %}
+        {% background_style settings.core.folioblogsettings.image_404 %}
     {% endif %}
 {% endblock %}
 
@@ -23,7 +22,10 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>{% trans 'Page introuvable' %}</h1>
+                        <h1>
+                            {% trans 'Page introuvable' as title %}
+                            {% text_404 "title" default=title %}
+                        </h1>
                     </div>
                 </div>
             </div>
@@ -36,8 +38,20 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="d-flex flex-column align-items-center">
-                    <h2 class="text-center display-4 mt-3">{% trans 'Oups !' %}</h2>
-                    <p>{% trans "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..." %}</p>
+                    <h2 class="text-center display-4 mt-3">
+                        {% trans 'Oups !' as subtitle %}
+                        {% text_404 "subtitle" default=subtitle %}
+                    </h2>
+                    <p>
+                        {% trans "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..." as text %}
+                        {% text_404 "text" default=text %}
+                    </p>
+                    {% if menu_homepage %}
+                        <a href="{% pageurl menu_homepage %}" class="btn btn-primary mt-4">
+                            {% trans "Retour à l'accueil" as link_text %}
+                            {% text_404 "link_text" default=link_text %}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
