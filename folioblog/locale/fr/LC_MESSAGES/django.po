@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 09:40+0100\n"
+"POT-Creation-Date: 2023-11-22 21:10+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Citation"
 msgstr ""
 
-#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:142
+#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:146
 msgid "Image"
 msgstr ""
 
@@ -56,15 +56,16 @@ msgid "Filtrer par catégories"
 msgstr ""
 
 #: blog/templates/blog/blog_page.html:39
+#: video/templates/video/video_page.html:27
 #, python-format
 msgid ""
 "\n"
-"                                Par %(author)s, le %(date)s\n"
-"                                "
+"                                        Par %(author)s, le %(date)s\n"
+"                                    "
 msgstr ""
 
 #: blog/templates/blog/blog_page.html:43 blog/tests/units/test_blog_page.py:68
-#: video/templates/video/video_page.html:26
+#: video/templates/video/video_page.html:31
 #: video/tests/units/test_video_page.py:84
 msgid "Posté le"
 msgstr ""
@@ -203,6 +204,101 @@ msgstr ""
 msgid "Partager sur Linkedin"
 msgstr ""
 
+#: core/trans.py:16
+msgctxt "collection"
+msgid "Bogota"
+msgstr ""
+
+#: core/trans.py:17
+msgctxt "collection"
+msgid "Bordeaux"
+msgstr ""
+
+#: core/trans.py:18
+msgctxt "collection"
+msgid "Cali"
+msgstr ""
+
+#: core/trans.py:19
+msgctxt "collection"
+msgid "Carcassonne"
+msgstr ""
+
+#: core/trans.py:20
+msgctxt "collection"
+msgid "Carthagène des Indes"
+msgstr ""
+
+#: core/trans.py:21
+msgctxt "collection"
+msgid "Chicago"
+msgstr ""
+
+#: core/trans.py:22
+msgctxt "collection"
+msgid "Los Angeles"
+msgstr ""
+
+#: core/trans.py:23
+msgctxt "collection"
+msgid "Lyon"
+msgstr ""
+
+#: core/trans.py:24
+msgctxt "collection"
+msgid "Marseille"
+msgstr ""
+
+#: core/trans.py:25
+msgctxt "collection"
+msgid "Medellin"
+msgstr ""
+
+#: core/trans.py:26
+msgctxt "collection"
+msgid "Miami"
+msgstr ""
+
+#: core/trans.py:27
+msgctxt "collection"
+msgid "New York"
+msgstr ""
+
+#: core/trans.py:28
+msgctxt "collection"
+msgid "Paris"
+msgstr ""
+
+#: core/trans.py:29
+msgctxt "collection"
+msgid "Philadelphie"
+msgstr ""
+
+#: core/trans.py:30
+msgctxt "collection"
+msgid "San Andrés"
+msgstr ""
+
+#: core/trans.py:31
+msgctxt "collection"
+msgid "San Francisco"
+msgstr ""
+
+#: core/trans.py:32
+msgctxt "collection"
+msgid "Seattle"
+msgstr ""
+
+#: core/trans.py:33
+msgctxt "collection"
+msgid "Strasbourg"
+msgstr ""
+
+#: core/trans.py:34
+msgctxt "collection"
+msgid "Washington"
+msgstr ""
+
 #: core/wagtail_hooks.py:34
 msgid "Keyboard"
 msgstr ""
@@ -215,7 +311,7 @@ msgstr ""
 msgid "Galerie"
 msgstr ""
 
-#: gallery/models.py:28
+#: gallery/models.py:32
 msgid "Section"
 msgstr ""
 
@@ -437,11 +533,11 @@ msgstr ""
 msgid "Vidéos"
 msgstr ""
 
-#: video/models.py:133
+#: video/models.py:137
 msgid "Video information"
 msgstr ""
 
-#: video/models.py:146
+#: video/models.py:150
 msgid "Related pages"
 msgstr ""
 

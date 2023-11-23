@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 09:40+0100\n"
-"PO-Revision-Date: 2023-11-21 09:43+0100\n"
+"POT-Creation-Date: 2023-11-22 21:10+0100\n"
+"PO-Revision-Date: 2023-11-22 17:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -34,7 +34,7 @@ msgstr "Blog's data"
 msgid "Citation"
 msgstr "Quotation"
 
-#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:142
+#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:146
 msgid "Image"
 msgstr ""
 
@@ -59,18 +59,23 @@ msgid "Filtrer par catégories"
 msgstr "Filter by categories"
 
 #: blog/templates/blog/blog_page.html:39
-#, python-format
+#: video/templates/video/video_page.html:27
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                                Par %(author)s, le %(date)s\n"
+#| "                                "
 msgid ""
 "\n"
-"                                Par %(author)s, le %(date)s\n"
-"                                "
+"                                        Par %(author)s, le %(date)s\n"
+"                                    "
 msgstr ""
 "\n"
 "                                By %(author)s, on %(date)s\n"
 "                                "
 
 #: blog/templates/blog/blog_page.html:43 blog/tests/units/test_blog_page.py:68
-#: video/templates/video/video_page.html:26
+#: video/templates/video/video_page.html:31
 #: video/tests/units/test_video_page.py:84
 msgid "Posté le"
 msgstr "Published on"
@@ -209,6 +214,101 @@ msgstr "Share on Facebook"
 msgid "Partager sur Linkedin"
 msgstr "Share on  Linkedin"
 
+#: core/trans.py:16
+msgctxt "collection"
+msgid "Bogota"
+msgstr "Bogotá"
+
+#: core/trans.py:17
+msgctxt "collection"
+msgid "Bordeaux"
+msgstr "Bordeaux"
+
+#: core/trans.py:18
+msgctxt "collection"
+msgid "Cali"
+msgstr "Cali"
+
+#: core/trans.py:19
+msgctxt "collection"
+msgid "Carcassonne"
+msgstr "Carcassonne"
+
+#: core/trans.py:20
+msgctxt "collection"
+msgid "Carthagène des Indes"
+msgstr "Cartagena de Indias"
+
+#: core/trans.py:21
+msgctxt "collection"
+msgid "Chicago"
+msgstr "Chicago"
+
+#: core/trans.py:22
+msgctxt "collection"
+msgid "Los Angeles"
+msgstr "Los Angeles"
+
+#: core/trans.py:23
+msgctxt "collection"
+msgid "Lyon"
+msgstr "Lyon"
+
+#: core/trans.py:24
+msgctxt "collection"
+msgid "Marseille"
+msgstr "Marseille"
+
+#: core/trans.py:25
+msgctxt "collection"
+msgid "Medellin"
+msgstr "Medellín"
+
+#: core/trans.py:26
+msgctxt "collection"
+msgid "Miami"
+msgstr "Miami"
+
+#: core/trans.py:27
+msgctxt "collection"
+msgid "New York"
+msgstr "New York"
+
+#: core/trans.py:28
+msgctxt "collection"
+msgid "Paris"
+msgstr "Paris"
+
+#: core/trans.py:29
+msgctxt "collection"
+msgid "Philadelphie"
+msgstr "Philadelphia"
+
+#: core/trans.py:30
+msgctxt "collection"
+msgid "San Andrés"
+msgstr "San Andrés"
+
+#: core/trans.py:31
+msgctxt "collection"
+msgid "San Francisco"
+msgstr "San Francisco"
+
+#: core/trans.py:32
+msgctxt "collection"
+msgid "Seattle"
+msgstr "Seattle"
+
+#: core/trans.py:33
+msgctxt "collection"
+msgid "Strasbourg"
+msgstr "Strasbourg"
+
+#: core/trans.py:34
+msgctxt "collection"
+msgid "Washington"
+msgstr "Washington"
+
 #: core/wagtail_hooks.py:34
 msgid "Keyboard"
 msgstr "Clavier"
@@ -221,7 +321,7 @@ msgstr ""
 msgid "Galerie"
 msgstr "Gallery"
 
-#: gallery/models.py:28
+#: gallery/models.py:32
 msgid "Section"
 msgstr "Area"
 
@@ -369,7 +469,8 @@ msgstr "Oops!"
 
 #: templates/404.html:40
 msgid "La page demandée n'existe pas, n'existe plus, ou n'a jamais existé..."
-msgstr "The requested page does not exist, no longer exists, or never existed..."
+msgstr ""
+"The requested page does not exist, no longer exists, or never existed..."
 
 #: templates/agency/footer.html:6
 msgid "conception avec le CMS"
@@ -443,11 +544,11 @@ msgstr "Oups! Looks like there is a bug somewhere :/"
 msgid "Vidéos"
 msgstr "Videos"
 
-#: video/models.py:133
+#: video/models.py:137
 msgid "Video information"
 msgstr "Video data"
 
-#: video/models.py:146
+#: video/models.py:150
 msgid "Related pages"
 msgstr "Pages associées"
 
@@ -477,7 +578,8 @@ msgstr "Start video"
 #, python-format
 #~ msgid "\"Va chercher bonheur\" : %(counter)s résultat (pas ouf) 😅️"
 #~ msgid_plural "\"Va chercher bonheur\" : %(counter)s résultats 🚀"
-#~ msgstr[0] "\"Go find happiness\"  (french joke): %(counter)s result (not crazy) 😅️"
+#~ msgstr[0] ""
+#~ "\"Go find happiness\"  (french joke): %(counter)s result (not crazy) 😅️"
 #~ msgstr[1] "\"Go find happiness\"  (french joke): %(counter)s results 🚀"
 
 #~ msgid "Ah non... bah pas bonheur"
@@ -492,8 +594,12 @@ msgstr "Start video"
 #~ msgid "Cher robot"
 #~ msgstr "Dear bot"
 
-#~ msgid "\"Tu vois, le monde se divise en deux catégories : ceux qui ont un pistolet chargé et ceux qui creusent. Toi, tu creuses.\""
-#~ msgstr "\"You see, in this world, there is two kinds of people, my friend: those with loaded guns and those who dig. You dig.\""
+#~ msgid ""
+#~ "\"Tu vois, le monde se divise en deux catégories : ceux qui ont un "
+#~ "pistolet chargé et ceux qui creusent. Toi, tu creuses.\""
+#~ msgstr ""
+#~ "\"You see, in this world, there is two kinds of people, my friend: those "
+#~ "with loaded guns and those who dig. You dig.\""
 
 #~ msgid "Le bon, la brute et le truand"
 #~ msgstr "The good, the bad and the ugly"
@@ -504,7 +610,9 @@ msgstr "Start video"
 #~ msgid "À l'instant..."
 #~ msgstr "This very minute"
 
-#~ msgid "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de retourner à l'accueil"
+#~ msgid ""
+#~ "Non vraiment... Aucun conseiller ne va prendre votre appel ! Merci de "
+#~ "retourner à l'accueil"
 #~ msgstr "No really... Nobody will take your call! Please return to home"
 
 #~ msgid "Langues"

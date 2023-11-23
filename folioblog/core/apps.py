@@ -44,3 +44,9 @@ class CoreConfig(AppConfig):
             providers = providers_locale.get(current_locale, providers_default)
             for provider in providers:
                 factory.Faker.add_provider(provider, locale=current_locale)
+
+        # fmt: off
+        # Load manual translations just for coverage (not needed by gettext).
+        from .trans import export_trans
+        export_trans()
+        # fmt: on
