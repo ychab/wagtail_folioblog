@@ -27,6 +27,7 @@ from folioblog.core.factories import (
     LocaleFactory,
 )
 from folioblog.core.models import FolioBlogSettings
+from folioblog.core.utils.tests.units import SiteRootPageSwitchTestCase
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.home.factories import HomePageFactory
 from folioblog.portfolio.factories import PortfolioPageFactory
@@ -38,43 +39,33 @@ Image = get_image_model()
 Rendition = Image.get_rendition_model()
 
 
-class LoadCachePagesCommandTestCase(TestCase):
+class LoadCachePagesCommandTestCase(SiteRootPageSwitchTestCase):
     @classmethod
-    def setUpClass(cls):
-        """
-        Due to PortfolioPage which doesn't seems to support deepcopy(), we
-        cannot use setUpTestData(). However, we could still inject data (shared)
-        between testmethods just after the SQL transaction begin!
-        """
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.locale_fr = LocaleFactory(language_code="fr")
         cls.locale_en = LocaleFactory(language_code="en")
 
         root_collection = CollectionFactory(name="Gallery")
 
         cls.site = Site.objects.get(is_default_site=True)
-        cls.root_page_original = cls.site.root_page
 
         cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.blog_pager_limit = 3
         cls.folio_settings.video_pager_limit = 3
         cls.folio_settings.gallery_collection = root_collection
-        cls.folio_settings.save()  # Save only after transaction is enabled
+        cls.folio_settings.save()
 
+        # Must inherit from root page in order to generate translations later.
         cls.portfolio = PortfolioPageFactory(
             parent=Page.objects.get(slug="root", locale=cls.locale_fr),
             locale=cls.locale_fr,
             services__0="service",
-            # skills__0='skill',
             skills__0__skill__links__0__page=None,
             cv_experiences__0="experience",
             team_members__0="member",
         )
-        cls.site.root_page = cls.portfolio
-        cls.site.save()
-
-        # Then delete old homepage
-        Page.objects.filter(pk=2).delete()
+        cls.root_page = cls.portfolio
+        super().setUpTestData()
 
         for name in ["posts", "videos"]:
             CollectionFactory(name=name, parent=root_collection)
@@ -155,16 +146,6 @@ class LoadCachePagesCommandTestCase(TestCase):
             + cls.videos
         )
 
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
-
     @requests_mock.Mocker()
     def test_load_all_pages(self, m):
         for page in self.pages:
@@ -238,12 +219,10 @@ class LoadCachePagesCommandTestCase(TestCase):
 
 class LoadCachePagesMultiDomainCommandTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+    def setUpTestData(cls):
         # Website A
-        cls.home = HomePageFactory(slug="home")
-        cls.site = SiteFactory(root_page=cls.home)
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.home = HomePageFactory(parent=cls.site.root_page)
         FolioBlogSettingsFactory(site=cls.site)
         cls.blog_index = BlogIndexPageFactory(parent=cls.home)
         cls.post = BlogPageFactory(parent=cls.blog_index, category__slug="foo")
@@ -251,7 +230,7 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
         cls.video = VideoPageFactory(parent=cls.video_index, category__slug="foo")
 
         # Website B
-        cls.other_home = HomePageFactory(slug="home_other")
+        cls.other_home = HomePageFactory(parent=None)
         cls.other_site = SiteFactory(root_page=cls.other_home)
         FolioBlogSettingsFactory(site=cls.other_site)
         cls.other_blog_index = BlogIndexPageFactory(parent=cls.other_home)
@@ -350,23 +329,20 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
 
 class LoadCachePagesCollectionRootNoneCommandTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUpTestData(cls):
         cls.locale_fr = LocaleFactory(language_code="fr")
         cls.locale_en = LocaleFactory(language_code="en")
 
-        cls.home = HomePageFactory(locale=cls.locale_fr, slug="home")
-        cls.site = SiteFactory(root_page=cls.home)
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.home = HomePageFactory(parent=cls.site.root_page)
         FolioBlogSettingsFactory(site=cls.site, gallery_collection=None)
 
         cls.collection = CollectionFactory()
         cls.image = ImageFactory(collection=cls.collection)
 
-        cls.index = BlogIndexPageFactory(parent=cls.home, locale=cls.locale_fr)
-        cls.post = BlogPageFactory(
-            parent=cls.index, locale=cls.locale_fr, image=cls.image
-        )
-        cls.gallery = GalleryPageFactory(parent=cls.home, locale=cls.locale_fr)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
+        cls.post = BlogPageFactory(parent=cls.index, image=cls.image)
+        cls.gallery = GalleryPageFactory(parent=cls.home)
 
         cls.pages = [
             cls.home,

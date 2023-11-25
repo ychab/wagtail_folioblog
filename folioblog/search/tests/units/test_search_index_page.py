@@ -19,7 +19,6 @@ from folioblog.blog.models import BlogCategory, BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
-from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.home.factories import HomePageFactory
 from folioblog.search.factories import SearchIndexPageFactory
 from folioblog.search.tests.units.htmlpages import SearchIndexHTMLPage
@@ -27,17 +26,13 @@ from folioblog.search.tests.units.htmlpages import SearchIndexHTMLPage
 
 class SearchIndexPageTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
-
-        super().setUpClass()
 
         cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.search_limit = 3
         cls.folio_settings.save()
 
-    @classmethod
-    def setUpTestData(cls):
         cls.index = BlogIndexPageFactory(parent=cls.site.root_page)
         cls.page = SearchIndexPageFactory(parent=cls.site.root_page)
 
@@ -502,13 +497,13 @@ class SearchIndexI18nPageTestCase(TestCase):
         )
 
 
-class SearchIndexMultiDomainTestCase(MultiDomainPageTestCase):
+class SearchIndexMultiDomainTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.search = SearchIndexPageFactory(parent=cls.root_page)
-        cls.index = BlogIndexPageFactory(parent=cls.root_page)
+        cls.home = HomePageFactory(parent=cls.site.root_page)
+        cls.search = SearchIndexPageFactory(parent=cls.home)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
         cls.blog_cat = BlogCategoryFactory(slug="foo", site=cls.site)
         cls.blog_tag = BlogTagFactory(slug="foo", site=cls.site)
         cls.blog = BlogPageFactory(
@@ -518,7 +513,7 @@ class SearchIndexMultiDomainTestCase(MultiDomainPageTestCase):
             tags=[cls.blog_tag],
         )
 
-        cls.home_other = HomePageFactory(slug="home_other")
+        cls.home_other = HomePageFactory(parent=None)
         cls.site_other = SiteFactory(root_page=cls.home_other)
         cls.search_other = SearchIndexPageFactory(parent=cls.home_other)
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
@@ -530,8 +525,6 @@ class SearchIndexMultiDomainTestCase(MultiDomainPageTestCase):
             category=cls.blog_cat_other,
             tags=[cls.blog_tag_other],
         )
-
-        super().setUpTestData()
 
     def test_filter_site(self):
         response = self.client.get(

@@ -11,7 +11,6 @@ from folioblog.blog.models import BlogPage
 from folioblog.core.factories import BasicPageFactory, ImageFactory, LocaleFactory
 from folioblog.core.models import BasicPage, FolioBlogSettings
 from folioblog.core.templatetags.folioblog import mimetype
-from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.gallery.factories import GalleryPageFactory
 from folioblog.gallery.tests.units.htmlpages import GalleryHTMLPage
 from folioblog.home.factories import HomePageFactory
@@ -144,22 +143,20 @@ class GalleryPageNoSettingsTestCase(TestCase):
         self.assertIn(image.pk, [i.pk for i in response.context["images"]])
 
 
-class GalleryPageMultiDomainTestCase(MultiDomainPageTestCase):
+class GalleryPageMultiDomainTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.gallery = GalleryPageFactory(parent=cls.root_page)
-        cls.index = BlogIndexPageFactory(parent=cls.root_page)
+        cls.home = HomePageFactory(parent=cls.site.root_page)
+        cls.gallery = GalleryPageFactory(parent=cls.home)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
         cls.blog = BlogPageFactory(parent=cls.index)
 
-        cls.home_other = HomePageFactory(slug="home_other")
+        cls.home_other = HomePageFactory(parent=None)
         cls.site_other = SiteFactory(root_page=cls.home_other)
         cls.gallery_other = GalleryPageFactory(parent=cls.home_other)
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
         cls.blog_other = BlogPageFactory(parent=cls.index_other)
-
-        super().setUpTestData()
 
     def test_filter_site(self):
         response = self.client.get(self.gallery.url)

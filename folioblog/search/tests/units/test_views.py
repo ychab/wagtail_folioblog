@@ -10,7 +10,6 @@ from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.blog.models import BlogPage
 from folioblog.core.factories import LocaleFactory
 from folioblog.core.models import FolioBlogSettings
-from folioblog.core.utils.tests.units import MultiDomainPageTestCase
 from folioblog.home.factories import HomePageFactory
 
 
@@ -64,26 +63,23 @@ class AutocompleteViewTestCase(TestCase):
         )
 
 
-class AutocompleteViewMultiDomainTestCase(MultiDomainPageTestCase):
+class AutocompleteViewMultiDomainTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.root_page = HomePageFactory(slug="home")
         cls.site = Site.objects.get(is_default_site=True)
-        cls.index = BlogIndexPageFactory(parent=cls.root_page)
+        cls.home = HomePageFactory(parent=cls.site.root_page)
+        cls.index = BlogIndexPageFactory(parent=cls.home)
         cls.blog = BlogPageFactory(parent=cls.index, title="foobarbaz")
 
-        cls.home_other = HomePageFactory(slug="home_other")
+        cls.home_other = HomePageFactory(parent=None)
         cls.site_other = SiteFactory(root_page=cls.home_other)
         cls.index_other = BlogIndexPageFactory(parent=cls.home_other)
         cls.blog_other = BlogPageFactory(parent=cls.index_other, title="foobarbaz")
-
-        super().setUpTestData()
 
     def test_filter_site(self):
         url = reverse("search-autocomplete", kwargs={"query": "foobar"})
         response = self.client.get(url, content_type="application/json")
         self.assertEqual(response.status_code, 200)
-
         json = response.json()
         self.assertIn(self.blog.url, [p["href"] for p in json])
         self.assertNotIn(self.blog_other.url, [p["href"] for p in json])

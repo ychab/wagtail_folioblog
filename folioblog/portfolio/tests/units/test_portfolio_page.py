@@ -17,26 +17,16 @@ from folioblog.video.factories import VideoIndexPageFactory, VideoPageFactory
 
 class PortfolioPageTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        """
-        Due to PortfolioPage which doesn't seems to support deepcopy(), we
-        cannot use setUpTestData(). However, we could still inject data (shared)
-        between testmethods just after the SQL transaction begin!
-        """
-        super().setUpClass()
-
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
-        cls.root_page_original = cls.site.root_page
 
         cls.page = PortfolioPageFactory(
-            parent=None,
+            parent=cls.site.root_page,
             services__0="service",
-            skills__0__skill__links__0__page=PageFactory(),
+            skills__0__skill__links__0__page=PageFactory(parent=cls.site.root_page),
             cv_experiences__0="experience",
             team_members__0="member",
         )
-        cls.site.root_page = cls.page
-        cls.site.save()
 
         cls.index_blog = HomePageFactory(parent=cls.page)
         cls.index_video = VideoIndexPageFactory(parent=cls.page)
@@ -44,16 +34,6 @@ class PortfolioPageTestCase(TestCase):
 
         cls.page.about_video = cls.video_page
         cls.page.save(update_fields=["about_video"])
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
 
     def test_block_services(self):
         response = self.client.get(self.page.url)
@@ -111,12 +91,9 @@ class PortfolioPageTestCase(TestCase):
 
 class PortFolioHTMLTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+    def setUpTestData(cls):
         site = Site.objects.get(is_default_site=True)
 
-        HomePageFactory()  # Just for link in menu
         video_page = VideoPageFactory(parent=site.root_page)
 
         cls.page = PortfolioPageFactory(
@@ -182,15 +159,14 @@ class PortFolioHTMLTestCase(TestCase):
 
 class HomeHTMLi18nTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+    def setUpTestData(cls):
         site = Site.objects.get(is_default_site=True)
+
         locale_fr = LocaleFactory(language_code="fr")
         locale_en = LocaleFactory(language_code="en")
 
         # First create required links and their translations
-        homepage_fr = HomePageFactory(locale=locale_fr)
+        homepage_fr = HomePageFactory(parent=site.root_page, locale=locale_fr)
         homepage_fr.copy_for_translation(
             locale=locale_en,
             copy_parents=True,

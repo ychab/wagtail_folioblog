@@ -8,53 +8,25 @@ from bs4 import BeautifulSoup
 
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.core.factories import BasicPageFactory, LocaleFactory
+from folioblog.core.utils.tests.units import SiteRootPageSwitchTestCase
 from folioblog.portfolio.factories import PortfolioPageFactory
 from folioblog.video.factories import VideoIndexPageFactory, VideoPageFactory
 
 
 class SitemapTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        """
-        Due to PortfolioPage which doesn't seems to support deepcopy(), we
-        cannot use setUpTestData(). However, we could still inject data (shared)
-        between testmethods just after the SQL transaction begin!
-        """
-        super().setUpClass()
-
-        cls.locale_fr = LocaleFactory(language_code="fr")
-        cls.locale_en = LocaleFactory(language_code="en")
-
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
-        cls.root_page_original = cls.site.root_page
 
-        root_fr = Page.objects.filter(depth=1, locale=cls.locale_fr).first()
-        cls.portfolio_fr = PortfolioPageFactory(parent=root_fr, locale=cls.locale_fr)
-        cls.site.root_page = cls.portfolio_fr
-        cls.site.save()
+        cls.portfolio = PortfolioPageFactory(parent=cls.site.root_page)
 
-        cls.index_posts_fr = BlogIndexPageFactory(
-            parent=cls.portfolio_fr, locale=cls.locale_fr
-        )
-        cls.index_videos_fr = VideoIndexPageFactory(
-            parent=cls.portfolio_fr, locale=cls.locale_fr
-        )
+        # Once site root page is updated, create contents.
+        cls.index_posts = BlogIndexPageFactory(parent=cls.portfolio)
+        cls.index_videos = VideoIndexPageFactory(parent=cls.portfolio)
 
-        cls.basic_fr = BasicPageFactory(parent=cls.portfolio_fr, locale=cls.locale_fr)
-        cls.post_fr = BlogPageFactory(parent=cls.index_posts_fr, locale=cls.locale_fr)
-        cls.video_fr = VideoPageFactory(
-            parent=cls.index_videos_fr, locale=cls.locale_fr
-        )
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
+        cls.basic = BasicPageFactory(parent=cls.portfolio)
+        cls.post = BlogPageFactory(parent=cls.index_posts)
+        cls.video = VideoPageFactory(parent=cls.index_videos)
 
     def setUp(self):
         url = reverse("sitemap")
@@ -75,63 +47,57 @@ class SitemapTestCase(TestCase):
         self.xml_parsed = xml_parsed
 
     def test_sitemap_portfolio(self):
-        url_default = self.portfolio_fr.full_url
+        url_default = self.portfolio.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
     def test_sitemap_blog_index(self):
-        url_default = self.index_posts_fr.full_url
+        url_default = self.index_posts.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
     def test_sitemap_video_index(self):
-        url_default = self.index_videos_fr.full_url
+        url_default = self.index_videos.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
     def test_sitemap_basic_page(self):
-        url_default = self.basic_fr.full_url
+        url_default = self.basic.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
     def test_sitemap_blog_page(self):
-        url_default = self.post_fr.full_url
+        url_default = self.post.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
     def test_sitemap_video_page(self):
-        url_default = self.video_fr.full_url
+        url_default = self.video.full_url
         self.assertIn(url_default, self.xml_parsed)
         hrefs = self.xml_parsed[url_default]
         self.assertFalse(hrefs)
 
 
-class SitemapI18nTestCase(TestCase):
+class SitemapI18nTestCase(SiteRootPageSwitchTestCase):
     @classmethod
-    def setUpClass(cls):
-        """
-        Due to PortfolioPage which doesn't seems to support deepcopy(), we
-        cannot use setUpTestData(). However, we could still inject data (shared)
-        between testmethods just after the SQL transaction begin!
-        """
-        super().setUpClass()
+    def setUpTestData(cls):
+        cls.site = Site.objects.get(is_default_site=True)
 
         cls.locale_fr = LocaleFactory(language_code="fr")
         cls.locale_en = LocaleFactory(language_code="en")
 
-        cls.site = Site.objects.get(is_default_site=True)
-        cls.root_page_original = cls.site.root_page
-
-        root_fr = Page.objects.filter(depth=1, locale=cls.locale_fr).first()
+        # Must inherit from root page in order to generate translations later.
+        root_fr = Page.objects.get(slug="root", locale=cls.locale_fr)
         cls.portfolio_fr = PortfolioPageFactory(parent=root_fr, locale=cls.locale_fr)
-        cls.site.root_page = cls.portfolio_fr
-        cls.site.save()
+        cls.root_page = cls.portfolio_fr
+        super().setUpTestData()
 
+        # Once site root page is updated, create contents.
         cls.index_posts_fr = BlogIndexPageFactory(
             parent=cls.portfolio_fr, locale=cls.locale_fr
         )
@@ -151,16 +117,6 @@ class SitemapI18nTestCase(TestCase):
             alias=True,
             include_subtree=True,
         ).execute(skip_permission_checks=True)
-
-    @classmethod
-    def tearDownClass(cls):
-        # Because we change the site root page which is created by migrations,
-        # it would affect next TestCases even if rollback is done because the
-        # root page was done BEFORE entering into the SQL transaction.
-        # As a result, we need to reset it manually.
-        cls.site.root_page = cls.root_page_original
-        cls.site.save(update_fields=["root_page"])
-        super().tearDownClass()
 
     def setUp(self):
         url = reverse("sitemap")

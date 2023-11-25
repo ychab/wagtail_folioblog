@@ -8,7 +8,7 @@ from folioblog.video.factories import VideoIndexPageFactory, VideoPageFactory
 
 class VideoPageFactoryTestCase(TestCase):
     def test_other_site(self):
-        home = HomePageFactory()
+        home = HomePageFactory(parent=None)
         site = SiteFactory(root_page=home)
 
         index = VideoIndexPageFactory(parent=home)

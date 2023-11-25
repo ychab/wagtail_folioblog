@@ -19,17 +19,13 @@ from folioblog.core.templatetags.folioblog import mimetype
 
 class BlogIndexPageTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.blog_pager_limit = 3
         cls.folio_settings.save()
 
-    @classmethod
-    def setUpTestData(cls):
         cls.page = BlogIndexPageFactory()
 
     def tearDown(self):

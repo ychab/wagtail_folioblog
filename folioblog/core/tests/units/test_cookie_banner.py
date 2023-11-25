@@ -13,7 +13,7 @@ from folioblog.core.factories import (
 
 class CookieBannerSettingsTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         # Create site settings if not exist yet
@@ -33,10 +33,6 @@ class CookieBannerSettingsTestCase(TestCase):
         cls.settings_fr = cls.site.folioblogsettings.cookie_banner[0].value
         cls.settings_en = cls.site.folioblogsettings.cookie_banner[1].value
 
-        super().setUpClass()
-
-    @classmethod
-    def setUpTestData(cls):
         cls.page_fr = BasicPageFactory(
             parent=cls.site.root_page,
             locale=LocaleFactory(language_code="fr"),

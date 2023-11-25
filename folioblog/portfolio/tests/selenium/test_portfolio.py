@@ -14,7 +14,7 @@ class PortFolioPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         super().setUp()
 
         self.page = PortfolioPageFactory(
-            parent=None,
+            parent=self.site.root_page,
             services__0="service",
             services__1="service",
             services__2="service",
@@ -28,8 +28,6 @@ class PortFolioPageLiveTestCase(FolioBlogSeleniumServerTestCase):
             team_members__1="member",
             team_members__2="member",
         )
-        self.site.root_page = self.page
-        self.site.save(update_fields=["root_page"])
 
         self.index_blog = HomePageFactory(parent=self.page)
         self.index_video = VideoIndexPageFactory(parent=self.page)

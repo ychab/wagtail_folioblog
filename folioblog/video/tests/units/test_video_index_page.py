@@ -19,17 +19,13 @@ from folioblog.video.tests.units.htmlpages import VideoIndexHTMLPage
 
 class VideoIndexPageTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.folio_settings = FolioBlogSettings.for_site(cls.site)
         cls.folio_settings.video_pager_limit = 3
         cls.folio_settings.save()
 
-    @classmethod
-    def setUpTestData(cls):
         cls.page = VideoIndexPageFactory()
 
     def tearDown(self):

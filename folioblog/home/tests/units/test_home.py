@@ -25,12 +25,8 @@ from folioblog.video.models import VideoPage, VideoPromote
 
 class HomePageTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
-        cls.site = Site.objects.get(is_default_site=True)
-        super().setUpClass()
-
-    @classmethod
     def setUpTestData(cls):
+        cls.site = Site.objects.get(is_default_site=True)
         cls.index_blog = BlogIndexPageFactory(parent=cls.site.root_page)
         cls.index_videos = VideoIndexPageFactory(parent=cls.site.root_page)
         cls.page = HomePageFactory(parent=cls.site.root_page)
@@ -133,16 +129,14 @@ class HomePageI18nPageTestCase(TestCase):
 class HomePageMultiDomainTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.home = HomePageFactory(slug="foo")
-        home_other = HomePageFactory(slug="bar")
-
         cls.site = Site.objects.get(is_default_site=True)
-        cls.site_other = SiteFactory(root_page=home_other)
-
+        cls.home = HomePageFactory(parent=cls.site.root_page)
         cls.blog_promote = BlogPromoteFactory(site=cls.site)
-        BlogPromoteFactory(site=cls.site_other)
-
         cls.video_promote = VideoPromoteFactory(site=cls.site)
+
+        home_other = HomePageFactory(parent=None)
+        cls.site_other = SiteFactory(root_page=home_other)
+        BlogPromoteFactory(site=cls.site_other)
         VideoPromoteFactory(site=cls.site_other)
 
     def test_multi_site(self):

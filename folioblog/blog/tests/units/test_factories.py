@@ -8,7 +8,7 @@ from folioblog.home.factories import HomePageFactory
 
 class BlogPageFactoryTestCase(TestCase):
     def test_other_site(self):
-        home = HomePageFactory()
+        home = HomePageFactory(parent=None)
         site = SiteFactory(root_page=home)
 
         blog_index = BlogIndexPageFactory(parent=home)

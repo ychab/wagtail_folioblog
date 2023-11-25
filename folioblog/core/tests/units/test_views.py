@@ -12,7 +12,7 @@ from folioblog.core.factories import FolioBlogSettingsFactory, LocaleFactory
 
 class RssViewTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.locale_fr = LocaleFactory(language_code="fr")
@@ -35,10 +35,7 @@ class RssViewTestCase(TestCase):
         cls.settings_fr = cls.site.folioblogsettings.rss_feed[0].value
         cls.settings_en = cls.site.folioblogsettings.rss_feed[1].value
 
-        super().setUpClass()
-
-    @classmethod
-    def setUpTestData(cls):
+        # Then build pages.
         cls.index = BlogIndexPageFactory(parent=cls.site.root_page)
         cls.pages_fr = []
         cls.pages_en = []
@@ -88,7 +85,7 @@ class RssViewTestCase(TestCase):
 
 class RssViewMissingSettingsTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.locale_fr = LocaleFactory(language_code="fr")
@@ -97,10 +94,6 @@ class RssViewMissingSettingsTestCase(TestCase):
         # Create site settings if not exist yet
         FolioBlogSettingsFactory(site=cls.site, rss_feed=None)
 
-        super().setUpClass()
-
-    @classmethod
-    def setUpTestData(cls):
         index = BlogIndexPageFactory(parent=cls.site.root_page)
         page_fr = BlogPageFactory(parent=index, locale=cls.locale_fr)
         page_fr.copy_for_translation(
@@ -128,7 +121,7 @@ class RssViewMissingSettingsTestCase(TestCase):
 
 class RssViewMultiDomainTestCase(TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
 
         cls.locale_fr = LocaleFactory(language_code="fr")
@@ -151,10 +144,7 @@ class RssViewMultiDomainTestCase(TestCase):
         cls.settings_fr = cls.site.folioblogsettings.rss_feed[0].value
         cls.settings_en = cls.site.folioblogsettings.rss_feed[1].value
 
-        super().setUpClass()
-
-    @classmethod
-    def setUpTestData(cls):
+        # Build test pages
         cls.index = BlogIndexPageFactory(parent=cls.site.root_page)
         cls.page_fr = BlogPageFactory(parent=cls.index, locale=cls.locale_fr)
         cls.page_en = cls.page_fr.copy_for_translation(
