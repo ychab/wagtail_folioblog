@@ -10,6 +10,7 @@ from folioblog.core.models import Menu, MenuLink
 def menu(request):
     context = {
         "menu_homepage": None,
+        "menu_promopage": None,
         "menu_links": None,
     }
 
@@ -19,7 +20,7 @@ def menu(request):
         Menu.objects.in_site(site)
         .filter(is_active=True)
         .filter_language()
-        .select_related("homepage")
+        .select_related("homepage", "promopage")
         .prefetch_related(
             Prefetch(
                 "links",
@@ -33,6 +34,7 @@ def menu(request):
 
     if menu:
         context["menu_homepage"] = menu.homepage
+        context["menu_promopage"] = menu.promopage
         context["menu_links"] = OrderedDict(
             [(link.related_page.slug, link.related_page) for link in menu.links.all()]
         )

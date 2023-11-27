@@ -417,6 +417,13 @@ class Menu(MultiSiteMixin, TranslatableMixin, ClusterableModel):
         null=True,
         blank=True,
     )
+    promopage = models.ForeignKey(
+        Page,
+        on_delete=models.PROTECT,
+        related_name="menu_promo",
+        null=True,
+        blank=True,
+    )
     is_active = models.BooleanField(default=True)
 
     objects = I18nMultiSiteManager()

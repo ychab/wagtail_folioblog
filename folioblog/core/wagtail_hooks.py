@@ -112,20 +112,21 @@ class MenuSnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSet):
     model = Menu
     icon = "bars"
 
-    list_display = ["name", "homepage", "is_active", "locale", "site"]
+    list_display = ["name", "homepage", "promopage", "is_active", "locale", "site"]
     search_fields = ("name",)
     ordering = ("name",)
 
     panels = [
         FieldPanel("name"),
         FieldPanel("homepage"),
+        FieldPanel("promopage"),
         FieldPanel("is_active"),
         InlinePanel("links", label=_("Links")),
     ] + SnippetViewSetI18nMultiSiteMixin.panels
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs = qs.select_related("homepage")
+        qs = qs.select_related("homepage", "promopage")
         return qs
 
 

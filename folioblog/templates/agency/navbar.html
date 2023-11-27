@@ -16,6 +16,19 @@
                     <li class="nav-item"><a class="nav-link" href="#team">{% trans 'Équipe' %}</a></li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="#contact">{% trans 'Contact' %}</a></li>
+                {% if menu_promopage %}
+                    <li class="nav-item">
+                        <span class="badge bg-secondary position-relative">
+                            <a class="nav-link" href="{% pageurl menu_promopage %}">
+                                {% trans "Démo" as link_text %}
+                                {{ link_text }}
+                                <span class="position-absolute top-0 start-100 translate-middle p-1 badge rounded-pill bg-primary border border-light rounded-circle">
+                                    <span class="visually-hidden">{{ link_text }}</span>
+                                </span>
+                            </a>
+                        </span>
+                    </li>
+                {% endif %}
                 {% language_selector page=page %}
             </ul>
         </div>
