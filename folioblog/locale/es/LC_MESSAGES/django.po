@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-23 17:17+0100\n"
-"PO-Revision-Date: 2023-11-22 17:32+0100\n"
+"POT-Creation-Date: 2023-11-27 13:27+0100\n"
+"PO-Revision-Date: 2023-11-27 13:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -28,7 +28,7 @@ msgstr "Fecha de publicación"
 
 #: blog/models.py:126
 msgid "Blog information"
-msgstr ""
+msgstr "Blog información"
 
 #: blog/models.py:137
 msgid "Citation"
@@ -44,14 +44,8 @@ msgstr ""
 
 #: blog/templates/blog/blog_index_item.html:26
 #, python-format
-msgid ""
-"\n"
-"                                Publié le %(post_date)s\n"
-"                            "
-msgstr ""
-"\n"
-"                                Publicado el %(post_date)s\n"
-"                            "
+msgid "Publié le %(post_date)s"
+msgstr "Publicado el %(post_date)s"
 
 #: blog/templates/blog/blog_index_page.html:14
 #: video/templates/video/video_index_page.html:18
@@ -60,19 +54,9 @@ msgstr "Filtrar por categoría"
 
 #: blog/templates/blog/blog_page.html:39
 #: video/templates/video/video_page.html:27
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                                Par %(author)s, le %(date)s\n"
-#| "                                "
-msgid ""
-"\n"
-"                                        Par %(author)s, le %(date)s\n"
-"                                    "
-msgstr ""
-"\n"
-"                                Por %(author)s, el %(date)s\n"
-"                                "
+#, python-format
+msgid "Par %(author)s, le %(date)s"
+msgstr "Por %(author)s, el %(date)s"
 
 #: blog/templates/blog/blog_page.html:43 blog/tests/units/test_blog_page.py:68
 #: video/templates/video/video_page.html:31
@@ -88,85 +72,45 @@ msgstr "Haz clic en la imagen, ¡es mágica!"
 msgid "Publié le"
 msgstr "Publicado el"
 
-#: core/models.py:269
-msgid "Google Analytics ID"
-msgstr ""
-
-#: core/models.py:284
+#: core/models.py:298
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:318
+#: core/models.py:332
 msgid "Or"
 msgstr ""
 
-#: core/models.py:318
+#: core/models.py:332
 msgid "And"
 msgstr ""
 
-#: core/models.py:332
-msgid "LinkedIn"
-msgstr ""
-
-#: core/models.py:334
-msgid "GitHub"
-msgstr ""
-
-#: core/models.py:336
-msgid "Instagram"
-msgstr ""
-
-#: core/models.py:339
-msgid "Facebook"
-msgstr ""
-
-#: core/models.py:344 core/models.py:346
+#: core/models.py:360 core/models.py:362
 msgid "Sans le @"
-msgstr ""
+msgstr "Sin la @"
 
-#: core/models.py:349
-msgid "Twitter"
-msgstr ""
-
-#: core/models.py:378
-msgid "Design"
-msgstr ""
-
-#: core/models.py:379
-msgid "SEO"
-msgstr ""
-
-#: core/models.py:380
+#: core/models.py:396
 msgid "Social"
 msgstr ""
 
-#: core/models.py:381 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:397 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
-#: core/models.py:382
+#: core/models.py:398
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
-#: core/models.py:383
-msgid "Video"
-msgstr ""
+#: core/models.py:399
+msgid "Vidéo"
+msgstr "Vídeo"
 
-#: core/models.py:384
-msgid "Gallery"
-msgstr ""
+#: core/models.py:400
+msgid "Gallerie"
+msgstr "Galería"
 
-#: core/models.py:385
-msgid "Search"
-msgstr ""
-
-#: core/models.py:386
-msgid "Cookies"
-msgstr ""
-
-#: core/models.py:387
-msgid "RSS"
-msgstr ""
+#: core/models.py:401 search/factories.py:11
+msgid "Recherche"
+msgstr "Búsqueda"
 
 #: core/templates/core/cookies_banner.html:13
 msgid "Non"
@@ -311,9 +255,9 @@ msgstr "Washington"
 
 #: core/wagtail_hooks.py:34
 msgid "Keyboard"
-msgstr ""
+msgstr "Teclado"
 
-#: core/wagtail_hooks.py:123
+#: core/wagtail_hooks.py:124
 msgid "Links"
 msgstr "Enlaces"
 
@@ -376,12 +320,12 @@ msgstr "Texto"
 msgid "Entête"
 msgstr "Cabecera"
 
-#: portfolio/models.py:171 templates/agency/navbar.html:11
+#: portfolio/models.py:171 templates/agency/navbar.html:17
 msgid "À propos"
 msgstr "Sobre me"
 
 #: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
-#: templates/agency/navbar.html:12
+#: templates/agency/navbar.html:11
 msgid "Services"
 msgstr "Servicios"
 
@@ -389,11 +333,11 @@ msgstr "Servicios"
 msgid "Skills"
 msgstr ""
 
-#: portfolio/models.py:196 templates/agency/navbar.html:14
+#: portfolio/models.py:196 templates/agency/navbar.html:13
 msgid "CV"
 msgstr ""
 
-#: portfolio/models.py:207 templates/agency/navbar.html:16
+#: portfolio/models.py:207 templates/agency/navbar.html:15
 msgid "Équipe"
 msgstr "Equipo"
 
@@ -411,13 +355,9 @@ msgid "Fermer"
 msgstr "Cerrar"
 
 #: portfolio/templates/portfolio/blocks/skills.html:5
-#: templates/agency/navbar.html:13
+#: templates/agency/navbar.html:12
 msgid "Expertises"
 msgstr "Conocimientos"
-
-#: search/factories.py:11
-msgid "Recherche"
-msgstr "Búsqueda"
 
 #: search/templates/search/search_form.html:2
 #: search/templates/search/search_form.html:56
@@ -487,6 +427,10 @@ msgstr "Mis servicios"
 msgid "Menu"
 msgstr "Menú"
 
+#: templates/agency/navbar.html:23
+msgid "Démo"
+msgstr "Demo"
+
 #: templates/cleanblog/footer.html:10
 msgid "Voir sur Linkedin"
 msgstr "Ver en Linkedin"
@@ -531,6 +475,18 @@ msgstr "Siguiente"
 msgid "Fin"
 msgstr "Fin"
 
+#: templates/cleanblog/password_required.html:29
+msgid "Mot de passe requis"
+msgstr "Contraseña obligatoria"
+
+#: templates/cleanblog/password_required.html:50
+msgid "Mot de passe"
+msgstr "Contraseña"
+
+#: templates/cleanblog/password_required.html:65
+msgid "Continuer"
+msgstr "Continuar"
+
 #: templates/cleanblog/spinner.html:5
 msgid "Chargement..."
 msgstr "Cargando..."
@@ -574,3 +530,37 @@ msgstr "Acepto"
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
 msgstr "Reproducir vídeo"
+
+#, fuzzy
+#~| msgid "Links"
+#~ msgid "LinkedIn"
+#~ msgstr "Enlaces"
+
+#, fuzzy
+#~| msgid "Compte Instagram"
+#~ msgid "Instagram"
+#~ msgstr "Cuenta Instagram"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "\n"
+#~| "                                Par %(author)s, le %(date)s\n"
+#~| "                                "
+#~ msgid ""
+#~ "\n"
+#~ "                                        Par %(author)s, le %(date)s\n"
+#~ "                                    "
+#~ msgstr ""
+#~ "\n"
+#~ "                                Por %(author)s, el %(date)s\n"
+#~ "                                "
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                                Publié le %(post_date)s\n"
+#~ "                            "
+#~ msgstr ""
+#~ "\n"
+#~ "                                Publicado el %(post_date)s\n"
+#~ "                            "

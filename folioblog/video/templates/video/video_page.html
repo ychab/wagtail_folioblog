@@ -24,7 +24,7 @@
                             </div>
                             <div class="meta">
                                 {% if page.author %}
-                                    {% blocktrans with author=page.author date=page.date|date:"SHORT_DATE_FORMAT" %}
+                                    {% blocktrans with author=page.author date=page.date|date:"SHORT_DATE_FORMAT" trimmed %}
                                         Par {{ author }}, le {{ date }}
                                     {% endblocktrans %}
                                 {% else %}

@@ -246,7 +246,7 @@ class BasicPageRelatedLink(Orderable):
 @register_setting(icon="cog")
 class FolioBlogSettings(BaseSiteSetting):
     # @see https://docs.wagtail.org/en/stable/reference/contrib/settings.html#utilising-select-related-to-improve-efficiency  # noqa
-    select_related = ["gallery_collection"]
+    select_related = ["gallery_collection", "image_password", "image_404"]
 
     favicon = models.ImageField(upload_to="favicons", blank=True, default="")
     image_password = models.ForeignKey(
@@ -274,7 +274,7 @@ class FolioBlogSettings(BaseSiteSetting):
     )
 
     google_analytics_id = models.CharField(
-        verbose_name=_("Google Analytics ID"),
+        verbose_name="Google Analytics ID",
         max_length=128,
         blank=True,
         default="",
@@ -345,14 +345,17 @@ class FolioBlogSettings(BaseSiteSetting):
     ]
     social_panels = [
         MultiFieldPanel(
-            [FieldPanel("linkedin_url", heading="URL")], heading=_("LinkedIn")
+            [FieldPanel("linkedin_url", heading="URL")],
+            heading="LinkedIn",
         ),
-        MultiFieldPanel([FieldPanel("github_url", heading="URL")], heading=_("GitHub")),
+        MultiFieldPanel([FieldPanel("github_url", heading="URL")], heading="GitHub"),
         MultiFieldPanel(
-            [FieldPanel("instagram_url", heading="URL")], heading=_("Instagram")
+            [FieldPanel("instagram_url", heading="URL")],
+            heading="Instagram",
         ),
         MultiFieldPanel(
-            [FieldPanel("facebook_url", heading="URL")], heading=_("Facebook")
+            [FieldPanel("facebook_url", heading="URL")],
+            heading="Facebook",
         ),
         MultiFieldPanel(
             [
@@ -362,7 +365,7 @@ class FolioBlogSettings(BaseSiteSetting):
                     "twitter_creator", heading="Creator", help_text=_("Sans le @")
                 ),
             ],
-            heading=_("Twitter"),
+            heading="Twitter",
         ),
     ]
     contact_panels = [
@@ -391,16 +394,16 @@ class FolioBlogSettings(BaseSiteSetting):
 
     edit_handler = TabbedInterface(
         [
-            ObjectList(design_panels, heading=_("Design")),
-            ObjectList(seo_panels, heading=_("SEO")),
+            ObjectList(design_panels, heading="Design"),
+            ObjectList(seo_panels, heading="SEO"),
             ObjectList(social_panels, heading=_("Social")),
             ObjectList(contact_panels, heading=_("Contact")),
             ObjectList(blog_panels, heading=_("Blog")),
-            ObjectList(video_panels, heading=_("Video")),
-            ObjectList(gallery_panels, heading=_("Gallery")),
-            ObjectList(search_panels, heading=_("Search")),
-            ObjectList(cookie_panels, heading=_("Cookies")),
-            ObjectList(rss_panels, heading=_("RSS")),
+            ObjectList(video_panels, heading=_("Vidéo")),
+            ObjectList(gallery_panels, heading=_("Gallerie")),
+            ObjectList(search_panels, heading=_("Recherche")),
+            ObjectList(cookie_panels, heading="Cookies"),
+            ObjectList(rss_panels, heading="RSS"),
         ]
     )
 

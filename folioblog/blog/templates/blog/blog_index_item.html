@@ -23,7 +23,7 @@
                     </a>
                     <p class="card-text my-0">
                         <small class="post-date text-muted">
-                            {% blocktrans with post_date=post.date|date:"SHORT_DATE_FORMAT" %}
+                            {% blocktrans with post_date=post.date|date:"SHORT_DATE_FORMAT" trimmed %}
                                 Publié le {{ post_date }}
                             {% endblocktrans %}
                         </small>

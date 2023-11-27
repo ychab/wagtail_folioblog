@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-23 17:17+0100\n"
+"POT-Creation-Date: 2023-11-27 13:27+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -44,10 +44,7 @@ msgstr ""
 
 #: blog/templates/blog/blog_index_item.html:26
 #, python-format
-msgid ""
-"\n"
-"                                Publié le %(post_date)s\n"
-"                            "
+msgid "Publié le %(post_date)s"
 msgstr ""
 
 #: blog/templates/blog/blog_index_page.html:14
@@ -58,10 +55,7 @@ msgstr ""
 #: blog/templates/blog/blog_page.html:39
 #: video/templates/video/video_page.html:27
 #, python-format
-msgid ""
-"\n"
-"                                        Par %(author)s, le %(date)s\n"
-"                                    "
+msgid "Par %(author)s, le %(date)s"
 msgstr ""
 
 #: blog/templates/blog/blog_page.html:43 blog/tests/units/test_blog_page.py:68
@@ -78,84 +72,44 @@ msgstr ""
 msgid "Publié le"
 msgstr ""
 
-#: core/models.py:269
-msgid "Google Analytics ID"
-msgstr ""
-
-#: core/models.py:284
+#: core/models.py:298
 msgid "Email address used for contact form submission."
 msgstr ""
 
-#: core/models.py:318
+#: core/models.py:332
 msgid "Or"
 msgstr ""
 
-#: core/models.py:318
+#: core/models.py:332
 msgid "And"
 msgstr ""
 
-#: core/models.py:332
-msgid "LinkedIn"
-msgstr ""
-
-#: core/models.py:334
-msgid "GitHub"
-msgstr ""
-
-#: core/models.py:336
-msgid "Instagram"
-msgstr ""
-
-#: core/models.py:339
-msgid "Facebook"
-msgstr ""
-
-#: core/models.py:344 core/models.py:346
+#: core/models.py:360 core/models.py:362
 msgid "Sans le @"
 msgstr ""
 
-#: core/models.py:349
-msgid "Twitter"
-msgstr ""
-
-#: core/models.py:378
-msgid "Design"
-msgstr ""
-
-#: core/models.py:379
-msgid "SEO"
-msgstr ""
-
-#: core/models.py:380
+#: core/models.py:396
 msgid "Social"
 msgstr ""
 
-#: core/models.py:381 portfolio/models.py:215 templates/agency/navbar.html:18
+#: core/models.py:397 portfolio/models.py:215 templates/agency/navbar.html:18
 msgid "Contact"
 msgstr ""
 
-#: core/models.py:382
+#: core/models.py:398
 msgid "Blog"
 msgstr ""
 
-#: core/models.py:383
-msgid "Video"
+#: core/models.py:399
+msgid "Vidéo"
 msgstr ""
 
-#: core/models.py:384
-msgid "Gallery"
+#: core/models.py:400
+msgid "Gallerie"
 msgstr ""
 
-#: core/models.py:385
-msgid "Search"
-msgstr ""
-
-#: core/models.py:386
-msgid "Cookies"
-msgstr ""
-
-#: core/models.py:387
-msgid "RSS"
+#: core/models.py:401 search/factories.py:11
+msgid "Recherche"
 msgstr ""
 
 #: core/templates/core/cookies_banner.html:13
@@ -303,7 +257,7 @@ msgstr ""
 msgid "Keyboard"
 msgstr ""
 
-#: core/wagtail_hooks.py:123
+#: core/wagtail_hooks.py:124
 msgid "Links"
 msgstr ""
 
@@ -366,12 +320,12 @@ msgstr ""
 msgid "Entête"
 msgstr ""
 
-#: portfolio/models.py:171 templates/agency/navbar.html:11
+#: portfolio/models.py:171 templates/agency/navbar.html:17
 msgid "À propos"
 msgstr ""
 
 #: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
-#: templates/agency/navbar.html:12
+#: templates/agency/navbar.html:11
 msgid "Services"
 msgstr ""
 
@@ -379,11 +333,11 @@ msgstr ""
 msgid "Skills"
 msgstr ""
 
-#: portfolio/models.py:196 templates/agency/navbar.html:14
+#: portfolio/models.py:196 templates/agency/navbar.html:13
 msgid "CV"
 msgstr ""
 
-#: portfolio/models.py:207 templates/agency/navbar.html:16
+#: portfolio/models.py:207 templates/agency/navbar.html:15
 msgid "Équipe"
 msgstr ""
 
@@ -401,12 +355,8 @@ msgid "Fermer"
 msgstr ""
 
 #: portfolio/templates/portfolio/blocks/skills.html:5
-#: templates/agency/navbar.html:13
+#: templates/agency/navbar.html:12
 msgid "Expertises"
-msgstr ""
-
-#: search/factories.py:11
-msgid "Recherche"
 msgstr ""
 
 #: search/templates/search/search_form.html:2
@@ -477,6 +427,10 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
+#: templates/agency/navbar.html:23
+msgid "Démo"
+msgstr ""
+
 #: templates/cleanblog/footer.html:10
 msgid "Voir sur Linkedin"
 msgstr ""
@@ -519,6 +473,18 @@ msgstr ""
 
 #: templates/cleanblog/pager.html:37 templates/cleanblog/pager.html:39
 msgid "Fin"
+msgstr ""
+
+#: templates/cleanblog/password_required.html:29
+msgid "Mot de passe requis"
+msgstr ""
+
+#: templates/cleanblog/password_required.html:50
+msgid "Mot de passe"
+msgstr ""
+
+#: templates/cleanblog/password_required.html:65
+msgid "Continuer"
 msgstr ""
 
 #: templates/cleanblog/spinner.html:5
