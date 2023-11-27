@@ -30,6 +30,7 @@ class MenuFactory(DjangoModelFactory):
         skip_postgeneration_save = True
 
     homepage = factory.SubFactory(PageFactory)
+    promopage = factory.SubFactory(PageFactory)
     site = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True))
 
     @post_generation
