@@ -5,7 +5,6 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import get_language
-from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import (
     FieldPanel,
@@ -170,7 +169,7 @@ class BaseIndexPage(SitemapPageMixin, Page):
                 FieldPanel("image"),
                 FieldPanel("image_alt"),
             ],
-            heading=_("Image"),
+            heading="Image",
         ),
     ]
 
@@ -210,7 +209,7 @@ class BasePage(BaseIndexPage):
                 FieldPanel("image"),
                 FieldPanel("image_alt"),
             ],
-            heading=_("Image"),
+            heading="Image",
         ),
     ]
 
@@ -226,7 +225,7 @@ class BasicPage(BasePage):
     subpage_types = []
 
     content_panels = BasePage.content_panels + [
-        InlinePanel("related_links", label=_("Related links")),
+        InlinePanel("related_links", label="Related links"),
     ]
 
 
@@ -295,7 +294,7 @@ class FolioBlogSettings(BaseSiteSetting):
     twitter_creator = models.CharField(max_length=255, blank=True, default="")
 
     email = models.EmailField(
-        help_text=_("Email address used for contact form submission."),
+        help_text="Adresse email utilisé Email address used for contact form submission.",
         blank=True,
         default="",
     )
@@ -329,7 +328,7 @@ class FolioBlogSettings(BaseSiteSetting):
     search_limit = models.PositiveSmallIntegerField(default=10)
     search_operator = models.CharField(
         max_length=3,
-        choices=[("or", _("Or")), ("and", _("And"))],
+        choices=[("or", "Or"), ("and", "And")],
         default="and",
     )
 
@@ -360,9 +359,11 @@ class FolioBlogSettings(BaseSiteSetting):
         MultiFieldPanel(
             [
                 FieldPanel("twitter_url", heading="URL"),
-                FieldPanel("twitter_site", heading="Site", help_text=_("Sans le @")),
+                FieldPanel("twitter_site", heading="Site", help_text="Without @"),
                 FieldPanel(
-                    "twitter_creator", heading="Creator", help_text=_("Sans le @")
+                    "twitter_creator",
+                    heading="Creator",
+                    help_text="Without @",
                 ),
             ],
             heading="Twitter",
@@ -396,12 +397,12 @@ class FolioBlogSettings(BaseSiteSetting):
         [
             ObjectList(design_panels, heading="Design"),
             ObjectList(seo_panels, heading="SEO"),
-            ObjectList(social_panels, heading=_("Social")),
-            ObjectList(contact_panels, heading=_("Contact")),
-            ObjectList(blog_panels, heading=_("Blog")),
-            ObjectList(video_panels, heading=_("Vidéo")),
-            ObjectList(gallery_panels, heading=_("Gallerie")),
-            ObjectList(search_panels, heading=_("Recherche")),
+            ObjectList(social_panels, heading="Social"),
+            ObjectList(contact_panels, heading="Contact"),
+            ObjectList(blog_panels, heading="Blog"),
+            ObjectList(video_panels, heading="Video"),
+            ObjectList(gallery_panels, heading="Gallery"),
+            ObjectList(search_panels, heading="Search"),
             ObjectList(cookie_panels, heading="Cookies"),
             ObjectList(rss_panels, heading="RSS"),
         ]

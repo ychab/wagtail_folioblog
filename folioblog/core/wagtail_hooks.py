@@ -1,5 +1,4 @@
 from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
 
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from wagtail import hooks
@@ -104,7 +103,7 @@ class BasePromoteSnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSet
     panels = [
         FieldPanel("title"),
         FieldPanel("link_more"),
-        InlinePanel("related_links", label=_("Related links")),
+        InlinePanel("related_links", label="Related links"),
     ] + SnippetViewSetI18nMultiSiteMixin.panels
 
 
@@ -121,7 +120,7 @@ class MenuSnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSet):
         FieldPanel("homepage"),
         FieldPanel("promopage"),
         FieldPanel("is_active"),
-        InlinePanel("links", label=_("Links")),
+        InlinePanel("links", label="Links"),
     ] + SnippetViewSetI18nMultiSiteMixin.panels
 
     def get_queryset(self, request):

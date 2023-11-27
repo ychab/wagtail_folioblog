@@ -1,6 +1,4 @@
-from django.utils.translation import get_language
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import to_locale
+from django.utils.translation import get_language, to_locale
 
 import factory
 import wagtail_factories
@@ -23,7 +21,7 @@ class PortfolioPageFactory(PageFactory):
         model = PortfolioPage
         skip_postgeneration_save = True
 
-    title = _("Portfolio")
+    title = "Portfolio"
     slug = "portfolio"
 
     header_heading = factory.Faker("sentence", nb_words=3, locale=current_locale)

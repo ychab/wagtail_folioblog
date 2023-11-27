@@ -4,7 +4,6 @@ from io import BytesIO
 from django.core.files.images import ImageFile
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.embeds import embeds
@@ -91,7 +90,7 @@ class VideoPageTag(TaggedItemBase):
 
 
 class VideoPage(BasePage):
-    date = models.DateField(_("Date de publication"))
+    date = models.DateField("Publish date")
     author = models.CharField(max_length=256, blank=True, default="")
 
     video_url = models.URLField()
@@ -134,7 +133,7 @@ class VideoPage(BasePage):
                 FieldPanel("category"),
                 FieldPanel("tags"),
             ],
-            heading=_("Video information"),
+            heading="Video information",
         ),
         FieldPanel("intro"),
         FieldPanel("body", classname="full"),
@@ -143,11 +142,11 @@ class VideoPage(BasePage):
                 FieldPanel("image"),
                 FieldPanel("image_alt"),
             ],
-            heading=_("Image"),
+            heading="Image",
         ),
         FieldPanel("video_url"),
         FieldPanel("thumbnail"),
-        InlinePanel("related_links", label=_("Related pages")),
+        InlinePanel("related_links", label="Related pages"),
     ]
 
     parent_page_types = ["video.VideoIndexPage"]

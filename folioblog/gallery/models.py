@@ -1,8 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.utils.translation import get_language
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext
+from django.utils.translation import get_language, pgettext
 
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import RichTextField
@@ -29,7 +27,7 @@ class GalleryPage(BaseIndexPage):
                 FieldPanel("gallery_title"),
                 FieldPanel("gallery_text"),
             ],
-            heading=_("Section"),
+            heading="Section",
         ),
     ]
 

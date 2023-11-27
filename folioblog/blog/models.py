@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.images import get_image_model
@@ -78,7 +77,7 @@ class BlogCategory(BaseCategory):
 
 
 class BlogPage(BasePage):
-    date = models.DateField(_("Date de publication"))
+    date = models.DateField("Publish date")
     author = models.CharField(max_length=256, blank=True, default="")
 
     image_body = models.ForeignKey(
@@ -123,7 +122,7 @@ class BlogPage(BasePage):
                 FieldPanel("tags"),
                 FieldPanel("category"),
             ],
-            heading=_("Blog information"),
+            heading="Blog information",
         ),
         FieldPanel("subheading"),
         FieldPanel("intro"),
@@ -134,7 +133,7 @@ class BlogPage(BasePage):
                 FieldPanel("blockquote_author"),
                 FieldPanel("blockquote_ref"),
             ],
-            heading=_("Citation"),
+            heading="Citation",
         ),
         MultiFieldPanel(
             [
@@ -142,9 +141,9 @@ class BlogPage(BasePage):
                 FieldPanel("image_body"),
                 FieldPanel("image_alt"),
             ],
-            heading=_("Image"),
+            heading="Image",
         ),
-        InlinePanel("related_links", label=_("Related links")),
+        InlinePanel("related_links", label="Related links"),
     ]
 
     parent_page_types = ["blog.BlogIndexPage"]

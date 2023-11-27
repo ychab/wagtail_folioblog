@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import RichTextField, StreamField
@@ -21,12 +20,12 @@ Image = get_image_model()
 class PortfolioPage(SitemapPageMixin, Page):
     # Header
     header_heading = models.CharField(
-        verbose_name=_("Titre"),
+        verbose_name="Title",
         max_length=128,
         default="",
     )
     header_lead = models.CharField(
-        verbose_name=_("Slogan"),
+        verbose_name="Slogan",
         max_length=255,
         blank=True,
         default="",
@@ -37,18 +36,18 @@ class PortfolioPage(SitemapPageMixin, Page):
         null=True,
         blank=True,
         on_delete=models.PROTECT,
-        verbose_name=_("Slide"),
+        verbose_name="Slide",
         related_name="+",
     )
 
     # About
     about_heading = models.CharField(
-        verbose_name=_("Titre"),
+        verbose_name="Title",
         max_length=128,
         default="",
     )
     about_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=128,
         blank=True,
         default="",
@@ -64,7 +63,7 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Service
     service_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=255,
         blank=True,
         default="",
@@ -78,7 +77,7 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Skills
     skill_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=512,
         blank=True,
         default="",
@@ -92,12 +91,12 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # CV
     cv_heading = models.CharField(
-        verbose_name=_("Titre"),
+        verbose_name="Title",
         max_length=128,
         default="",
     )
     cv_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=128,
         blank=True,
         default="",
@@ -111,18 +110,18 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Team
     team_heading = models.CharField(
-        verbose_name=_("Titre"),
+        verbose_name="Title",
         max_length=128,
         default="",
     )
     team_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=128,
         blank=True,
         default="",
     )
     team_text = models.CharField(
-        verbose_name=_("Texte"),
+        verbose_name="Text",
         max_length=512,
         blank=True,
         default="",
@@ -138,12 +137,12 @@ class PortfolioPage(SitemapPageMixin, Page):
 
     # Contact
     contact_heading = models.CharField(
-        verbose_name=_("Titre"),
+        verbose_name="Title",
         max_length=128,
         default="",
     )
     contact_subheading = models.CharField(
-        verbose_name=_("Sous-titre"),
+        verbose_name="Subtitle",
         max_length=128,
         blank=True,
         default="",
@@ -158,7 +157,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("header_heading"),
                 FieldPanel("header_slide"),
             ],
-            heading=_("Entête"),
+            heading="Header",
             classname="collapsible",
         ),
         MultiFieldPanel(
@@ -168,7 +167,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("about_text"),
                 FieldPanel("about_video"),
             ],
-            heading=_("À propos"),
+            heading="About",
             classname="collapsible",
         ),
         MultiFieldPanel(
@@ -176,7 +175,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("service_subheading"),
                 FieldPanel("services"),
             ],
-            heading=_("Services"),
+            heading="Services",
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
@@ -184,7 +183,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("skill_subheading"),
                 FieldPanel("skills"),
             ],
-            heading=_("Skills"),
+            heading="Skills",
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
@@ -193,7 +192,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("cv_subheading"),
                 FieldPanel("cv_experiences"),
             ],
-            heading=_("CV"),
+            heading="CV",
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
@@ -204,7 +203,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("team_active"),
                 FieldPanel("team_members"),
             ],
-            heading=_("Équipe"),
+            heading="Team",
             classname="collapsible collapsed",
         ),
         MultiFieldPanel(
@@ -212,7 +211,7 @@ class PortfolioPage(SitemapPageMixin, Page):
                 FieldPanel("contact_heading"),
                 FieldPanel("contact_subheading"),
             ],
-            heading=_("Contact"),
+            heading="Contact",
             classname="collapsible",
         ),
     ]

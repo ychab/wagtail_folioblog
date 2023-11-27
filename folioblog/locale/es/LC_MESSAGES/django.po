@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-27 13:27+0100\n"
-"PO-Revision-Date: 2023-11-27 13:32+0100\n"
+"POT-Creation-Date: 2023-11-27 17:33+0100\n"
+"PO-Revision-Date: 2023-11-27 17:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -17,30 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
-
-#: blog/factories.py:49
-msgid "Articles"
-msgstr "Artículos"
-
-#: blog/models.py:81 video/models.py:94
-msgid "Date de publication"
-msgstr "Fecha de publicación"
-
-#: blog/models.py:126
-msgid "Blog information"
-msgstr "Blog información"
-
-#: blog/models.py:137
-msgid "Citation"
-msgstr "Cita"
-
-#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:146
-msgid "Image"
-msgstr "Imagen"
-
-#: blog/models.py:147 core/models.py:229 core/wagtail_hooks.py:107
-msgid "Related links"
-msgstr ""
 
 #: blog/templates/blog/blog_index_item.html:26
 #, python-format
@@ -72,53 +48,13 @@ msgstr "Haz clic en la imagen, ¡es mágica!"
 msgid "Publié le"
 msgstr "Publicado el"
 
-#: core/models.py:298
-msgid "Email address used for contact form submission."
-msgstr ""
-
-#: core/models.py:332
-msgid "Or"
-msgstr ""
-
-#: core/models.py:332
-msgid "And"
-msgstr ""
-
-#: core/models.py:360 core/models.py:362
-msgid "Sans le @"
-msgstr "Sin la @"
-
-#: core/models.py:396
-msgid "Social"
-msgstr ""
-
-#: core/models.py:397 portfolio/models.py:215 templates/agency/navbar.html:18
-msgid "Contact"
-msgstr "Contacto"
-
-#: core/models.py:398
-msgid "Blog"
-msgstr "Blog"
-
-#: core/models.py:399
-msgid "Vidéo"
-msgstr "Vídeo"
-
-#: core/models.py:400
-msgid "Gallerie"
-msgstr "Galería"
-
-#: core/models.py:401 search/factories.py:11
-msgid "Recherche"
-msgstr "Búsqueda"
-
 #: core/templates/core/cookies_banner.html:13
 msgid "Non"
 msgstr "No"
 
 #: core/templates/core/cookies_banner.html:17
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: core/templates/core/credits.html:3
 msgid "Photos &copy; : "
@@ -253,21 +189,9 @@ msgctxt "collection"
 msgid "Washington"
 msgstr "Washington"
 
-#: core/wagtail_hooks.py:34
+#: core/wagtail_hooks.py:33
 msgid "Keyboard"
 msgstr "Teclado"
-
-#: core/wagtail_hooks.py:124
-msgid "Links"
-msgstr "Enlaces"
-
-#: gallery/factories.py:11
-msgid "Galerie"
-msgstr ""
-
-#: gallery/models.py:32
-msgid "Section"
-msgstr ""
 
 #: gallery/templates/gallery/gallery_grid_item.html:55
 msgid "Voir l'article"
@@ -285,65 +209,14 @@ msgstr "Mezclar"
 msgid "Déplacer"
 msgstr "Mover"
 
-#: home/factories.py:11 templates/cleanblog/navbar.html:4
-#: templates/cleanblog/navbar.html:5
-msgid "Accueil"
-msgstr "Inicio"
-
-#: portfolio/factories/pages.py:26 templates/agency/navbar.html:4
-msgid "Portfolio"
-msgstr ""
-
-#: portfolio/models.py:24 portfolio/models.py:46 portfolio/models.py:95
-#: portfolio/models.py:114 portfolio/models.py:141
-msgid "Titre"
-msgstr "Título"
-
-#: portfolio/models.py:29
-msgid "Slogan"
-msgstr "Eslogan"
-
-#: portfolio/models.py:40
-msgid "Slide"
-msgstr ""
-
-#: portfolio/models.py:51 portfolio/models.py:67 portfolio/models.py:81
-#: portfolio/models.py:100 portfolio/models.py:119 portfolio/models.py:146
-msgid "Sous-titre"
-msgstr "Subtítulo"
-
-#: portfolio/models.py:125
-msgid "Texte"
-msgstr "Texto"
-
-#: portfolio/models.py:161
-msgid "Entête"
-msgstr "Cabecera"
-
-#: portfolio/models.py:171 templates/agency/navbar.html:17
-msgid "À propos"
-msgstr "Sobre me"
-
-#: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
-#: templates/agency/navbar.html:11
-msgid "Services"
-msgstr "Servicios"
-
-#: portfolio/models.py:187
-msgid "Skills"
-msgstr ""
-
-#: portfolio/models.py:196 templates/agency/navbar.html:13
-msgid "CV"
-msgstr ""
-
-#: portfolio/models.py:207 templates/agency/navbar.html:15
-msgid "Équipe"
-msgstr "Equipo"
-
 #: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"
 msgstr "¡Sólo el tiempo<br />lo dirá!"
+
+#: portfolio/templates/portfolio/blocks/services.html:5
+#: templates/agency/navbar.html:11
+msgid "Services"
+msgstr "Servicios"
 
 #: portfolio/templates/portfolio/blocks/skill_modal.html:6
 msgid "Fermer la fenêtre"
@@ -423,9 +296,29 @@ msgstr "diseño con CMS"
 msgid "Mes services"
 msgstr "Mis servicios"
 
+#: templates/agency/navbar.html:4
+msgid "Portfolio"
+msgstr "Portfolio"
+
 #: templates/agency/navbar.html:6 templates/cleanblog/navbar.html:8
 msgid "Menu"
 msgstr "Menú"
+
+#: templates/agency/navbar.html:13
+msgid "CV"
+msgstr "CV"
+
+#: templates/agency/navbar.html:15
+msgid "Équipe"
+msgstr "Equipo"
+
+#: templates/agency/navbar.html:17
+msgid "À propos"
+msgstr "Sobre me"
+
+#: templates/agency/navbar.html:18
+msgid "Contact"
+msgstr "Contacto"
 
 #: templates/agency/navbar.html:23
 msgid "Démo"
@@ -454,6 +347,10 @@ msgstr "Ver en Instagram"
 #: templates/cleanblog/footer.html:33
 msgid "Compte Instagram"
 msgstr "Cuenta Instagram"
+
+#: templates/cleanblog/navbar.html:4 templates/cleanblog/navbar.html:5
+msgid "Accueil"
+msgstr "Inicio"
 
 #: templates/cleanblog/pager.html:3
 msgid "Navigation des pages"
@@ -499,21 +396,9 @@ msgstr "¡Oh no, ya ha terminado!"
 msgid "Oups ! On dirait bien qu'il y a un bug :/"
 msgstr "¡Uy! Parece que hay un error :/"
 
-#: video/factories.py:42
-msgid "Vidéos"
-msgstr "Vídeos"
-
-#: video/models.py:137
-msgid "Video information"
-msgstr "Información en vídeo"
-
-#: video/models.py:150
-msgid "Related pages"
-msgstr ""
-
 #: video/templates/video/snippets/video_promoted.html:30
-msgid "Carousel video item"
-msgstr ""
+msgid "Élément vidéo du carousel"
+msgstr "Elemento de vídeo en carrusel"
 
 #: video/templates/video/youtube_player.html:17
 msgid "Pour voir cette vidéo, vous devez accepter les cookies."
@@ -530,6 +415,60 @@ msgstr "Acepto"
 #: video/templates/video/youtube_player.html:23
 msgid "Lancer la vidéo"
 msgstr "Reproducir vídeo"
+
+#~ msgid "Articles"
+#~ msgstr "Artículos"
+
+#~ msgid "Date de publication"
+#~ msgstr "Fecha de publicación"
+
+#~ msgid "Blog information"
+#~ msgstr "Blog información"
+
+#~ msgid "Citation"
+#~ msgstr "Cita"
+
+#~ msgid "Image"
+#~ msgstr "Imagen"
+
+#~ msgid "Sans le @"
+#~ msgstr "Sin la @"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
+
+#~ msgid "Vidéo"
+#~ msgstr "Vídeo"
+
+#~ msgid "Gallerie"
+#~ msgstr "Galería"
+
+#~ msgid "Recherche"
+#~ msgstr "Búsqueda"
+
+#~ msgid "Links"
+#~ msgstr "Enlaces"
+
+#~ msgid "Titre"
+#~ msgstr "Título"
+
+#~ msgid "Slogan"
+#~ msgstr "Eslogan"
+
+#~ msgid "Sous-titre"
+#~ msgstr "Subtítulo"
+
+#~ msgid "Texte"
+#~ msgstr "Texto"
+
+#~ msgid "Entête"
+#~ msgstr "Cabecera"
+
+#~ msgid "Vidéos"
+#~ msgstr "Vídeos"
+
+#~ msgid "Video information"
+#~ msgstr "Información en vídeo"
 
 #, fuzzy
 #~| msgid "Links"

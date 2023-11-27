@@ -1,7 +1,5 @@
 from django.utils import timezone
-from django.utils.translation import get_language
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import to_locale
+from django.utils.translation import get_language, to_locale
 
 from wagtail.models import Site
 
@@ -46,7 +44,7 @@ class BlogIndexPageFactory(BaseIndexPageFactory):
     class Meta:
         model = BlogIndexPage
 
-    title = _("Articles")
+    title = "Posts"
     slug = "posts"
 
 

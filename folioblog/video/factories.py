@@ -1,9 +1,7 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from django.utils.translation import get_language
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import to_locale
+from django.utils.translation import get_language, to_locale
 
 from wagtail.embeds.embeds import get_embed_hash
 from wagtail.embeds.models import Embed
@@ -39,7 +37,7 @@ class VideoIndexPageFactory(BaseIndexPageFactory):
     class Meta:
         model = VideoIndexPage
 
-    title = _("Vidéos")
+    title = "Videos"
     slug = "videos"
 
 

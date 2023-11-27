@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-27 13:27+0100\n"
+"POT-Creation-Date: 2023-11-27 17:33+0100\n"
 "PO-Revision-Date: 2022-08-12 17:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,30 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
-
-#: blog/factories.py:49
-msgid "Articles"
-msgstr ""
-
-#: blog/models.py:81 video/models.py:94
-msgid "Date de publication"
-msgstr ""
-
-#: blog/models.py:126
-msgid "Blog information"
-msgstr ""
-
-#: blog/models.py:137
-msgid "Citation"
-msgstr ""
-
-#: blog/models.py:145 core/models.py:173 core/models.py:213 video/models.py:146
-msgid "Image"
-msgstr ""
-
-#: blog/models.py:147 core/models.py:229 core/wagtail_hooks.py:107
-msgid "Related links"
-msgstr ""
 
 #: blog/templates/blog/blog_index_item.html:26
 #, python-format
@@ -70,46 +46,6 @@ msgstr ""
 
 #: blog/tests/selenium/test_blog_index.py:54
 msgid "Publié le"
-msgstr ""
-
-#: core/models.py:298
-msgid "Email address used for contact form submission."
-msgstr ""
-
-#: core/models.py:332
-msgid "Or"
-msgstr ""
-
-#: core/models.py:332
-msgid "And"
-msgstr ""
-
-#: core/models.py:360 core/models.py:362
-msgid "Sans le @"
-msgstr ""
-
-#: core/models.py:396
-msgid "Social"
-msgstr ""
-
-#: core/models.py:397 portfolio/models.py:215 templates/agency/navbar.html:18
-msgid "Contact"
-msgstr ""
-
-#: core/models.py:398
-msgid "Blog"
-msgstr ""
-
-#: core/models.py:399
-msgid "Vidéo"
-msgstr ""
-
-#: core/models.py:400
-msgid "Gallerie"
-msgstr ""
-
-#: core/models.py:401 search/factories.py:11
-msgid "Recherche"
 msgstr ""
 
 #: core/templates/core/cookies_banner.html:13
@@ -253,20 +189,8 @@ msgctxt "collection"
 msgid "Washington"
 msgstr ""
 
-#: core/wagtail_hooks.py:34
+#: core/wagtail_hooks.py:33
 msgid "Keyboard"
-msgstr ""
-
-#: core/wagtail_hooks.py:124
-msgid "Links"
-msgstr ""
-
-#: gallery/factories.py:11
-msgid "Galerie"
-msgstr ""
-
-#: gallery/models.py:32
-msgid "Section"
 msgstr ""
 
 #: gallery/templates/gallery/gallery_grid_item.html:55
@@ -285,64 +209,13 @@ msgstr ""
 msgid "Déplacer"
 msgstr ""
 
-#: home/factories.py:11 templates/cleanblog/navbar.html:4
-#: templates/cleanblog/navbar.html:5
-msgid "Accueil"
-msgstr ""
-
-#: portfolio/factories/pages.py:26 templates/agency/navbar.html:4
-msgid "Portfolio"
-msgstr ""
-
-#: portfolio/models.py:24 portfolio/models.py:46 portfolio/models.py:95
-#: portfolio/models.py:114 portfolio/models.py:141
-msgid "Titre"
-msgstr ""
-
-#: portfolio/models.py:29
-msgid "Slogan"
-msgstr ""
-
-#: portfolio/models.py:40
-msgid "Slide"
-msgstr ""
-
-#: portfolio/models.py:51 portfolio/models.py:67 portfolio/models.py:81
-#: portfolio/models.py:100 portfolio/models.py:119 portfolio/models.py:146
-msgid "Sous-titre"
-msgstr ""
-
-#: portfolio/models.py:125
-msgid "Texte"
-msgstr ""
-
-#: portfolio/models.py:161
-msgid "Entête"
-msgstr ""
-
-#: portfolio/models.py:171 templates/agency/navbar.html:17
-msgid "À propos"
-msgstr ""
-
-#: portfolio/models.py:179 portfolio/templates/portfolio/blocks/services.html:5
-#: templates/agency/navbar.html:11
-msgid "Services"
-msgstr ""
-
-#: portfolio/models.py:187
-msgid "Skills"
-msgstr ""
-
-#: portfolio/models.py:196 templates/agency/navbar.html:13
-msgid "CV"
-msgstr ""
-
-#: portfolio/models.py:207 templates/agency/navbar.html:15
-msgid "Équipe"
-msgstr ""
-
 #: portfolio/templates/portfolio/blocks/experiences.html:14
 msgid "Seul l'avenir<br />nous le<br />dira !"
+msgstr ""
+
+#: portfolio/templates/portfolio/blocks/services.html:5
+#: templates/agency/navbar.html:11
+msgid "Services"
 msgstr ""
 
 #: portfolio/templates/portfolio/blocks/skill_modal.html:6
@@ -423,8 +296,28 @@ msgstr ""
 msgid "Mes services"
 msgstr ""
 
+#: templates/agency/navbar.html:4
+msgid "Portfolio"
+msgstr ""
+
 #: templates/agency/navbar.html:6 templates/cleanblog/navbar.html:8
 msgid "Menu"
+msgstr ""
+
+#: templates/agency/navbar.html:13
+msgid "CV"
+msgstr ""
+
+#: templates/agency/navbar.html:15
+msgid "Équipe"
+msgstr ""
+
+#: templates/agency/navbar.html:17
+msgid "À propos"
+msgstr ""
+
+#: templates/agency/navbar.html:18
+msgid "Contact"
 msgstr ""
 
 #: templates/agency/navbar.html:23
@@ -453,6 +346,10 @@ msgstr ""
 
 #: templates/cleanblog/footer.html:33
 msgid "Compte Instagram"
+msgstr ""
+
+#: templates/cleanblog/navbar.html:4 templates/cleanblog/navbar.html:5
+msgid "Accueil"
 msgstr ""
 
 #: templates/cleanblog/pager.html:3
@@ -499,20 +396,8 @@ msgstr ""
 msgid "Oups ! On dirait bien qu'il y a un bug :/"
 msgstr ""
 
-#: video/factories.py:42
-msgid "Vidéos"
-msgstr ""
-
-#: video/models.py:137
-msgid "Video information"
-msgstr ""
-
-#: video/models.py:150
-msgid "Related pages"
-msgstr ""
-
 #: video/templates/video/snippets/video_promoted.html:30
-msgid "Carousel video item"
+msgid "Élément vidéo du carousel"
 msgstr ""
 
 #: video/templates/video/youtube_player.html:17
