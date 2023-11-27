@@ -2,8 +2,6 @@
 {% load i18n static wagtailcore_tags %}
 
 {% block content %}
-    <!-- About -->
-    {% include 'portfolio/about.html' %}
     <!-- Services -->
     {% include_block page.services %}
     <!-- Skills -->
@@ -14,6 +12,8 @@
     <!-- Team -->
         {% include_block page.team_members %}
     {% endif %}
+    <!-- About -->
+    {% include 'portfolio/about.html' %}
     <!-- Contact -->
     {% include 'portfolio/contact.html' %}
 {% endblock %}
