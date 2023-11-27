@@ -249,6 +249,14 @@ class FolioBlogSettings(BaseSiteSetting):
     select_related = ["gallery_collection"]
 
     favicon = models.ImageField(upload_to="favicons", blank=True, default="")
+    image_password = models.ForeignKey(
+        FolioImage,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Image password",
+        related_name="folioblogsettings_pwd",
+    )
     image_404 = models.ForeignKey(
         FolioImage,
         on_delete=models.SET_NULL,
@@ -267,6 +275,12 @@ class FolioBlogSettings(BaseSiteSetting):
 
     google_analytics_id = models.CharField(
         verbose_name=_("Google Analytics ID"),
+        max_length=128,
+        blank=True,
+        default="",
+    )
+    author = models.CharField(
+        verbose_name="Meta author",
         max_length=128,
         blank=True,
         default="",
@@ -321,11 +335,13 @@ class FolioBlogSettings(BaseSiteSetting):
 
     design_panels = [
         FieldPanel("favicon"),
+        FieldPanel("image_password"),
         FieldPanel("image_404"),
         FieldPanel("text_404"),
     ]
     seo_panels = [
         FieldPanel("google_analytics_id"),
+        FieldPanel("author"),
     ]
     social_panels = [
         MultiFieldPanel(

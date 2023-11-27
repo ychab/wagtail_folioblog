@@ -1,5 +1,6 @@
-{% load i18n static wagtailuserbar wagtailimages_tags compress folioblog %}
+{% load i18n static wagtailuserbar wagtailcore_tags wagtailimages_tags compress folioblog %}
 {% get_current_language as LANGUAGE_CODE %}
+{% wagtail_site as current_site %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE|language_bidi %}dir="rtl"{% endif %}>
     <head>
@@ -7,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="robots" content="index, follow, archive">
         <meta name="description" content="{{ self.search_description }}">
-        <meta name="author" content="Yannick Chabbert">
+        <meta name="author" content="{% firstof settings.core.folioblogsettings.author current_site.site_name %}">
         {% block meta_og %}{% og_meta page image=page.header_slide embed=page.about_video.embed %}{% endblock %}
         {% block meta_twitter %}{% twitter_card page %}{% endblock %}
         <title>{{ self.seo_title|default:self.title }}</title>
