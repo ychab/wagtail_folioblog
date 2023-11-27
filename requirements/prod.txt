@@ -239,16 +239,16 @@ hiredis==2.2.3 ; python_version >= "3.10" and python_version < "4.0" \
 html5lib==1.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d \
     --hash=sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f
-idna==3.5 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:27009fe2735bf8723353582d48575b23c533cc2c2de7b5a68908d91b5eb18d08 \
-    --hash=sha256:79b8f0ac92d2351be5f6122356c9a592c96d81c9a79e4b488bf2a6a15f88057a
+idna==3.6 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca \
+    --hash=sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f
 l18n==2021.3 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:1956e890d673d17135cc20913253c154f6bc1c00266c22b7d503cc1a5a42d848 \
     --hash=sha256:78495d1df95b6f7dcc694d1ba8994df709c463a1cbac1bf016e1b9a5ce7280b9
 openpyxl==3.1.2 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:a6f5977418eff3b2d5500d54d9db50c8277a368436f4e4f8ddb1be3422870184 \
     --hash=sha256:f91456ead12ab3c6c2e9491cf33ba6d08357d802192379bb482f1033ade496f5
-pillow-heif==0.13.1 ; python_version >= "3.10" and python_version < "4.0" \
+pillow-heif==0.13.1 ; python_version < "4.0" and python_version >= "3.10" \
     --hash=sha256:023ec7a6f085be0cf33e1b4458575579e3952da36b9c32956dbb2749b53e63b3 \
     --hash=sha256:0d46adc8a8afb515297fd47fc0b15657b8927f7ec52ad1fb8d63250413d4c6ba \
     --hash=sha256:14787322b70e9cb02e599ef836f33181f981383f4848206f9fe5a272821806cb \
@@ -442,6 +442,6 @@ wagtail==5.2.1 ; python_version >= "3.10" and python_version < "4.0" \
 webencodings==0.5.1 ; python_version >= "3.10" and python_version < "4.0" \
     --hash=sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78 \
     --hash=sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923
-willow[heif]==1.6.2 ; python_version >= "3.10" and python_version < "4.0" \
-    --hash=sha256:957a4af8a7733e116a65eca34da11afe3fd52ffdb397494c8823901c25863787 \
-    --hash=sha256:e2d0450fd78ab19052d0478b888ef163e3264e8dcd1af002dd691458db98056f
+willow[heif]==1.6.3 ; python_version >= "3.10" and python_version < "4.0" \
+    --hash=sha256:143cefd30d3bb816cdff857c454da24991dda35a0315ea795101675e0b14262f \
+    --hash=sha256:f4b17a16c6315864604dadb6cdf2987d0b685e295cca74c6da28b94167a3126e
