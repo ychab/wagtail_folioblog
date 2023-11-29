@@ -1,4 +1,5 @@
 from io import StringIO
+from unittest import mock
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -13,6 +14,7 @@ from wagtail.models import Page, Site
 
 import requests
 import requests_mock
+from requests.cookies import RequestsCookieJar, cookiejar_from_dict, create_cookie
 from wagtail_factories import CollectionFactory, SiteFactory
 
 from folioblog.blog.factories import (
@@ -26,6 +28,7 @@ from folioblog.core.factories import (
     ImageFactory,
     LocaleFactory,
 )
+from folioblog.core.management.commands.loadcachepages import get_restriction_url
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.utils.tests.units import SiteRootPageSwitchTestCase
 from folioblog.gallery.factories import GalleryPageFactory
@@ -146,75 +149,56 @@ class LoadCachePagesCommandTestCase(SiteRootPageSwitchTestCase):
             + cls.videos
         )
 
-    @requests_mock.Mocker()
-    def test_load_all_pages(self, m):
+    def setUp(self):
+        self.mock_request = requests_mock.Mocker()
+        self.mock_request.start()
+
         for page in self.pages:
-            m.get(page.full_url, text="Ok")
+            self.mock_request.get(page.full_url, text="Ok")
 
-        for lang in dict(settings.LANGUAGES).keys():
+        for site in Site.objects.all():
             for view_name in ["javascript-catalog", "rss"]:
-                with translation.override(lang):
-                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
+                for lang in dict(settings.LANGUAGES).keys():
+                    with translation.override(lang):
+                        url = reverse(view_name)
+                    self.mock_request.get(f"{site.root_url}{url}", text="Ok")
 
-        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
+            self.mock_request.get(f"{site.root_url}/givemea404please", status_code=404)
 
+    def tearDown(self):
+        self.mock_request.stop()
+
+    def test_load_all_pages(self):
         out = StringIO()
         call_command("loadcachepages", stdout=out)
         self.assertIn("All page cache loaded", out.getvalue())
 
         for page in self.pages:
             self.assertIn(
-                f'Requesting: "{page.full_url}"',
+                f'Requesting: GET "{page.full_url}"',
                 out.getvalue(),
                 f"Page {page}({page.pk}) request check",
             )
 
-    @requests_mock.Mocker()
-    def test_load_request_exception(self, m):
-        url_exc = None
-
-        for page in Page.objects.all():
-            # Special handling for exception
-            if page.slug == "portfolio":
-                url_exc = page.full_url
-                m.get(url_exc, exc=requests.exceptions.HTTPError)
-            else:
-                m.get(page.full_url, text="Ok")
-
-        for lang in dict(settings.LANGUAGES).keys():
-            for view_name in ["javascript-catalog", "rss"]:
-                with translation.override(lang):
-                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
-
-        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
+    def test_load_request_exception(self):
+        self.mock_request.get(
+            self.portfolio.full_url, exc=requests.exceptions.HTTPError
+        )
 
         out = StringIO()
         call_command("loadcachepages", stdout=out)
+        self.assertIn(
+            f"Error on page {self.portfolio.full_url} with exc", out.getvalue()
+        )
 
-        self.assertIn(f"Error on page {url_exc} with exc", out.getvalue())
-
-    @requests_mock.Mocker()
-    def test_load_request_error(self, m):
-        url_error = None
-
-        for page in Page.objects.all():
-            if page.slug == "portfolio":
-                url_error = page.full_url
-                m.get(url_error, status_code=400)
-            else:
-                m.get(page.full_url, text="Ok")
-
-        for lang in dict(settings.LANGUAGES).keys():
-            for view_name in ["javascript-catalog", "rss"]:
-                with translation.override(lang):
-                    m.get(f"{self.site.root_url}{reverse(view_name)}", text="Ok")
-
-        m.get(f"{self.site.root_url}/givemea404please", text="Ok")
+    def test_load_request_error(self):
+        self.mock_request.get(self.portfolio.full_url, status_code=400)
 
         out = StringIO()
         call_command("loadcachepages", stdout=out)
-
-        self.assertIn(f"Error for page {url_error} with status 400", out.getvalue())
+        self.assertIn(
+            f"Error for page {self.portfolio.full_url} with status 400", out.getvalue()
+        )
 
 
 class LoadCachePagesMultiDomainCommandTestCase(TestCase):
@@ -243,6 +227,7 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
         )
 
         cls.pages = [
+            cls.home.get_parent(),
             cls.home,
             cls.blog_index,
             cls.post,
@@ -256,16 +241,24 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
             cls.other_video,
         ]
 
-    @requests_mock.Mocker()
-    def setUp(self, m):
-        for page in Page.objects.all():
-            m.get(page.full_url, text="Ok")
+    def setUp(self):
+        self.mock_request = requests_mock.Mocker()
+        self.mock_request.start()
+
+        for page in self.pages:
+            self.mock_request.get(page.full_url, text="Ok")
 
         for site in Site.objects.all():
             for view_name in ["javascript-catalog", "rss"]:
-                m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
+                for lang in dict(settings.LANGUAGES).keys():
+                    with translation.override(lang):
+                        url = reverse(view_name)
+                    self.mock_request.get(f"{site.root_url}{url}", text="Ok")
 
-            m.get(f"{site.root_url}/givemea404please", text="Ok")
+            self.mock_request.get(f"{site.root_url}/givemea404please", status_code=404)
+
+    def tearDown(self):
+        self.mock_request.stop()
 
     def test_multi_domains(self):
         out = StringIO()
@@ -277,7 +270,7 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
 
         for page in self.pages:
             self.assertIn(
-                f'Requesting: "{page.full_url}"',
+                f'Requesting: GET "{page.full_url}"',
                 out.getvalue(),
                 f"Page {page}({page.pk}) request check",
             )
@@ -330,9 +323,6 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
 class LoadCachePagesCollectionRootNoneCommandTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.locale_fr = LocaleFactory(language_code="fr")
-        cls.locale_en = LocaleFactory(language_code="en")
-
         cls.site = Site.objects.get(is_default_site=True)
         cls.home = HomePageFactory(parent=cls.site.root_page)
         FolioBlogSettingsFactory(site=cls.site, gallery_collection=None)
@@ -345,29 +335,150 @@ class LoadCachePagesCollectionRootNoneCommandTestCase(TestCase):
         cls.gallery = GalleryPageFactory(parent=cls.home)
 
         cls.pages = [
+            cls.home.get_parent(),
             cls.home,
             cls.index,
             cls.post,
+            cls.gallery,
         ]
 
-    @requests_mock.Mocker()
-    def setUp(self, m):
-        for page in Page.objects.all():
-            m.get(page.full_url, text="Ok")
+    def setUp(self):
+        self.mock_request = requests_mock.Mocker()
+        self.mock_request.start()
+
+        for page in self.pages:
+            self.mock_request.get(page.full_url, text="Ok")
 
         for site in Site.objects.all():
-            for locale in [self.locale_fr, self.locale_en]:
-                for view_name in ["javascript-catalog", "rss"]:
-                    with translation.override(locale.language_code):
-                        m.get(f"{site.root_url}{reverse(view_name)}", text="Ok")
+            for view_name in ["javascript-catalog", "rss"]:
+                for lang in dict(settings.LANGUAGES).keys():
+                    with translation.override(lang):
+                        url = reverse(view_name)
+                    self.mock_request.get(f"{site.root_url}{url}", text="Ok")
 
-            m.get(f"{site.root_url}/givemea404please", text="Ok")
+            self.mock_request.get(f"{site.root_url}/givemea404please", status_code=404)
+
+    def tearDown(self):
+        self.mock_request.stop()
 
     def test_collection_without_settings(self):
         out = StringIO()
         call_command("loadcachepages", stdout=out)
 
         self.assertIn(
-            f'Requesting: "{self.gallery.full_url}?ajax=1&collection={self.collection.pk}"',
+            f'Requesting: GET "{self.gallery.full_url}?ajax=1&collection={self.collection.pk}"',
+            out.getvalue(),
+        )
+
+
+class LoadCachePagesPrivateCommandTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.site = Site.objects.get(is_default_site=True)
+        FolioBlogSettingsFactory(site=cls.site)
+
+        cls.home = HomePageFactory(parent=cls.site.root_page)
+        cls.index = BlogIndexPageFactory(parent=cls.home, is_private=True)
+        cls.post = BlogPageFactory(parent=cls.index)
+
+        cls.restriction_url_index = get_restriction_url(
+            cls.index, cls.index.view_restrictions.first()
+        )
+        cls.restriction_url_post = get_restriction_url(
+            cls.post, cls.index.view_restrictions.first()
+        )
+
+        cls.pages = [
+            cls.home.get_parent(),
+            cls.home,
+            cls.index,
+            cls.post,
+        ]
+
+    def setUp(self):
+        self.requests_session = requests.session()
+
+        self.mock_patcher = mock.patch(
+            "folioblog.core.management.commands.loadcachepages.get_requests_session"
+        )
+        self.mock_session = self.mock_patcher.start()
+        self.mock_session.return_value = self.requests_session
+
+        self.mock_request = requests_mock.Mocker(session=self.requests_session)
+        self.mock_request.start()
+
+        for page in self.pages:
+            self.mock_request.get(page.full_url, text="Ok")
+        self.mock_request.post(self.restriction_url_index)
+        self.mock_request.post(self.restriction_url_post)
+
+        for site in Site.objects.all():
+            for view_name in ["javascript-catalog", "rss"]:
+                for lang in dict(settings.LANGUAGES).keys():
+                    with translation.override(lang):
+                        url = reverse(view_name)
+                    self.mock_request.get(f"{site.root_url}{url}", text="Ok")
+
+            self.mock_request.get(f"{site.root_url}/givemea404please", status_code=404)
+
+    def tearDown(self):
+        self.mock_patcher.stop()
+        self.mock_request.stop()
+
+    def test_private_page_csrf_fail(self):
+        self.requests_session.cookies = cookiejar_from_dict({})
+
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+        self.assertIn(
+            f"Unable to fetch CSRF token for private page {self.index}",
+            out.getvalue(),
+        )
+
+    def test_private_page_sessionid_fail(self):
+        cookiejar = RequestsCookieJar()
+        cookiejar.set_cookie(
+            create_cookie("csrftoken", "token", domain=self.site.hostname)
+        )
+        self.requests_session.cookies = cookiejar
+
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+        self.assertIn(
+            f'Requesting: GET "{self.index.full_url}"',
+            out.getvalue(),
+        )
+        self.assertIn(
+            f'Requesting: POST "{self.restriction_url_index}"',
+            out.getvalue(),
+        )
+        self.assertIn(
+            f"Unable to auth for private page {self.index}",
+            out.getvalue(),
+        )
+
+    def test_private_page(self):
+        cookiejar = RequestsCookieJar()
+        cookiejar.set_cookie(
+            create_cookie("csrftoken", "foo", domain=self.site.hostname)
+        )
+        cookiejar.set_cookie(
+            create_cookie("sessionid", "bar", domain=self.site.hostname)
+        )
+        self.requests_session.cookies = cookiejar
+
+        out = StringIO()
+        call_command("loadcachepages", stdout=out)
+
+        self.assertIn(
+            f'Requesting: GET "{self.index.full_url}"',
+            out.getvalue(),
+        )
+        self.assertIn(
+            f'Requesting: POST "{self.restriction_url_index}"',
+            out.getvalue(),
+        )
+        self.assertIn(
+            f'Requesting: GET "{self.post.full_url}"',
             out.getvalue(),
         )

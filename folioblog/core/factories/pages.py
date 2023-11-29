@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import get_language, to_locale
 
-from wagtail.models import Site
+from wagtail.models import PageViewRestriction, Site
 from wagtail.rich_text import RichText
 
 import factory
@@ -21,6 +21,16 @@ from folioblog.core.models import BasicPage, BasicPageRelatedLink
 User = get_user_model()
 current_locale = to_locale(get_language())
 fake = Faker(locale=current_locale)
+
+
+class PageViewRestrictionFactory(DjangoModelFactory):
+    class Meta:
+        model = PageViewRestriction
+        skip_postgeneration_save = True
+
+    restriction_type = PageViewRestriction.PASSWORD
+    password = factory.Faker("word", locale=current_locale)
+    page = factory.SubFactory(PageFactory)
 
 
 class BaseIndexPageFactory(wagtail_factories.PageFactory):
@@ -47,6 +57,15 @@ class BaseIndexPageFactory(wagtail_factories.PageFactory):
         start_dt=timezone.now() + timedelta(days=5),
         end_dt=timezone.now() + timedelta(days=10),
     )
+
+    @factory.post_generation
+    def is_private(obj, create, extracted, **kwargs):
+        if create and extracted:  # pragma: nobranch
+            PageViewRestrictionFactory(
+                restriction_type=PageViewRestriction.PASSWORD,
+                page=obj,
+                **kwargs,
+            )
 
 
 class BasePageFactory(BaseIndexPageFactory):
