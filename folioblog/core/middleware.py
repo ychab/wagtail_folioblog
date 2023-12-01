@@ -5,11 +5,22 @@ from django.middleware.cache import FetchFromCacheMiddleware, UpdateCacheMiddlew
 
 
 class AnonymousUpdateCacheMiddleware(UpdateCacheMiddleware):
+    def has_restriction(self, request, response):
+        page = getattr(response, "context_data", {}).get("page")
+        # Prevent useless queries if we already know that it couldn't be cached.
+        if page and self._should_update_cache(request, response):
+            return bool(page.get_view_restrictions())
+
+        return False
+
     def process_response(self, request, response):
-        # If we don't have the user, maybe we got a redirect or something else.
-        if hasattr(request, "user") and request.user.is_anonymous:
-            # Remove Vary (Cookie) added by AuthenticationMiddleware
+        is_anonymous = not hasattr(request, "user") or request.user.is_anonymous
+        has_restrictions = self.has_restriction(request, response)
+
+        if is_anonymous and not has_restrictions:
+            # Remove Vary (Cookie) added by SessionMiddleware
             # @see https://code.djangoproject.com/ticket/29971#comment:4
+            # BTW, remove Vary Accept-Language too (rely on path).
             response.headers.pop("Vary", None)
             return super().process_response(request, response)
 

@@ -1,5 +1,4 @@
 from io import StringIO
-from unittest import mock
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -14,7 +13,6 @@ from wagtail.models import Page, Site
 
 import requests
 import requests_mock
-from requests.cookies import RequestsCookieJar, cookiejar_from_dict, create_cookie
 from wagtail_factories import CollectionFactory, SiteFactory
 
 from folioblog.blog.factories import (
@@ -28,7 +26,6 @@ from folioblog.core.factories import (
     ImageFactory,
     LocaleFactory,
 )
-from folioblog.core.management.commands.loadcachepages import get_restriction_url
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.utils.tests.units import SiteRootPageSwitchTestCase
 from folioblog.gallery.factories import GalleryPageFactory
@@ -381,13 +378,6 @@ class LoadCachePagesPrivateCommandTestCase(TestCase):
         cls.index = BlogIndexPageFactory(parent=cls.home, is_private=True)
         cls.post = BlogPageFactory(parent=cls.index)
 
-        cls.restriction_url_index = get_restriction_url(
-            cls.index, cls.index.view_restrictions.first()
-        )
-        cls.restriction_url_post = get_restriction_url(
-            cls.post, cls.index.view_restrictions.first()
-        )
-
         cls.pages = [
             cls.home.get_parent(),
             cls.home,
@@ -396,21 +386,11 @@ class LoadCachePagesPrivateCommandTestCase(TestCase):
         ]
 
     def setUp(self):
-        self.requests_session = requests.session()
-
-        self.mock_patcher = mock.patch(
-            "folioblog.core.management.commands.loadcachepages.get_requests_session"
-        )
-        self.mock_session = self.mock_patcher.start()
-        self.mock_session.return_value = self.requests_session
-
-        self.mock_request = requests_mock.Mocker(session=self.requests_session)
+        self.mock_request = requests_mock.Mocker()
         self.mock_request.start()
 
         for page in self.pages:
             self.mock_request.get(page.full_url, text="Ok")
-        self.mock_request.post(self.restriction_url_index)
-        self.mock_request.post(self.restriction_url_post)
 
         for site in Site.objects.all():
             for view_name in ["javascript-catalog", "rss"]:
@@ -422,63 +402,20 @@ class LoadCachePagesPrivateCommandTestCase(TestCase):
             self.mock_request.get(f"{site.root_url}/givemea404please", status_code=404)
 
     def tearDown(self):
-        self.mock_patcher.stop()
         self.mock_request.stop()
 
-    def test_private_page_csrf_fail(self):
-        self.requests_session.cookies = cookiejar_from_dict({})
-
+    def test_private_page_not_fetched(self):
         out = StringIO()
         call_command("loadcachepages", stdout=out)
         self.assertIn(
-            f"Unable to fetch CSRF token for private page {self.index}",
+            f'Requesting: GET "{self.home.full_url}"',
             out.getvalue(),
         )
-
-    def test_private_page_sessionid_fail(self):
-        cookiejar = RequestsCookieJar()
-        cookiejar.set_cookie(
-            create_cookie("csrftoken", "token", domain=self.site.hostname)
-        )
-        self.requests_session.cookies = cookiejar
-
-        out = StringIO()
-        call_command("loadcachepages", stdout=out)
-        self.assertIn(
+        self.assertNotIn(
             f'Requesting: GET "{self.index.full_url}"',
             out.getvalue(),
         )
-        self.assertIn(
-            f'Requesting: POST "{self.restriction_url_index}"',
-            out.getvalue(),
-        )
-        self.assertIn(
-            f"Unable to auth for private page {self.index}",
-            out.getvalue(),
-        )
-
-    def test_private_page(self):
-        cookiejar = RequestsCookieJar()
-        cookiejar.set_cookie(
-            create_cookie("csrftoken", "foo", domain=self.site.hostname)
-        )
-        cookiejar.set_cookie(
-            create_cookie("sessionid", "bar", domain=self.site.hostname)
-        )
-        self.requests_session.cookies = cookiejar
-
-        out = StringIO()
-        call_command("loadcachepages", stdout=out)
-
-        self.assertIn(
-            f'Requesting: GET "{self.index.full_url}"',
-            out.getvalue(),
-        )
-        self.assertIn(
-            f'Requesting: POST "{self.restriction_url_index}"',
-            out.getvalue(),
-        )
-        self.assertIn(
+        self.assertNotIn(
             f'Requesting: GET "{self.post.full_url}"',
             out.getvalue(),
         )

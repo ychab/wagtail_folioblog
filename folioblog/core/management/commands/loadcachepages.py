@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from django.urls import reverse
 from django.utils import translation
 
-from wagtail.models import Collection, Page, PageViewRestriction, Site
+from wagtail.models import Collection, Page, Site
 
 import requests
 from requests import RequestException
@@ -18,25 +18,10 @@ from folioblog.gallery.models import GalleryPage
 from folioblog.video.models import VideoCategory, VideoIndexPage, VideoPage
 
 
-def get_requests_session():
-    """Exists just to be mock by tests"""
-    return requests.session()
-
-
-def get_restriction_url(page, restriction):
-    return page.get_site().root_url + reverse(
-        "wagtailcore_authenticate_with_password",
-        kwargs={
-            "page_view_restriction_id": restriction.pk,
-            "page_id": page.pk,
-        },
-    )
-
-
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.session = get_requests_session()
+        self.session = requests.session()
         self.requests_kwargs = {}
 
     def add_arguments(self, parser):
@@ -62,18 +47,11 @@ class Command(BaseCommand):
     def process_site(self, site, folio_settings):
         self.stdout.write(self.style.WARNING(f"About requesting pages of site {site}:"))
 
-        # Prevent duplicate restrictions already passed.
-        restriction_passed = []
-
         # Fetch pages with translations to build renditions and page cache.
-        qs = Page.objects.live().order_by("pk")
+        qs = Page.objects.live().public().order_by("pk")
         qs = qs_in_site_alt(qs, site)
         for page in qs:
-            # Check restriction first for private page.
-            is_private, is_passed = self.process_private_page(page, restriction_passed)
-            # Then fetch pages to build renditions and populate the cache!
-            if not is_private or is_passed:
-                self.process_page(page, folio_settings)
+            self.process_page(page, folio_settings)
 
         # Fetch views
         self.stdout.write(self.style.WARNING("About requesting views:"))
@@ -115,63 +93,6 @@ class Command(BaseCommand):
                 with translation.override(lang):
                     url = reverse(view_name)
                 self.request_page(f"{site.root_url}{url}")
-
-    def process_private_page(self, page, restriction_passed):
-        is_private = False
-        is_passed = False
-
-        for restriction in page.get_view_restrictions():
-            is_private = True
-            if (
-                restriction.restriction_type != PageViewRestriction.PASSWORD
-            ):  # pragma: no cover
-                continue
-
-            is_passed = restriction in restriction_passed
-            if not is_passed:
-                if self.auth_private_page(page, restriction):
-                    restriction_passed.append(restriction)
-                    is_passed = True
-
-        return is_private, is_passed
-
-    def auth_private_page(self, page, restriction):
-        # Build form POST url.
-        domain = page.get_site().hostname
-        url = get_restriction_url(page, restriction)
-
-        # First fetch page to get/refresh CSRF token from cookies.
-        self.request_page(page.full_url, method="get")
-
-        csrf_token = self.session.cookies.get("csrftoken", domain=domain)
-        if not csrf_token:
-            self.stdout.write(
-                self.style.WARNING(
-                    f"Unable to fetch CSRF token for private page {page}"
-                )
-            )
-            return False
-
-        # Then post the password to store cookie session.
-        self.request_page(
-            url=url,
-            method="post",
-            data={
-                "csrfmiddlewaretoken": csrf_token,
-                "password": restriction.password,
-                "return_url": page.url_path,
-            },
-            allow_redirects=False,  # No need to follow form redirection
-        )
-
-        session_id = self.session.cookies.get("sessionid", domain=domain)
-        if not session_id:
-            self.stdout.write(
-                self.style.ERROR(f"Unable to auth for private page {page}")
-            )
-            return False
-
-        return True
 
     def request_page(self, url, method="get", status=None, **kwargs):
         self.stdout.write(f'Requesting: {method.upper()} "{url}"')
