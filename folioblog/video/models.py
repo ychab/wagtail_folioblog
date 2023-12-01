@@ -3,6 +3,7 @@ from io import BytesIO
 
 from django.core.files.images import ImageFile
 from django.db import models
+from django.db.models import Prefetch
 from django.utils.functional import cached_property
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
@@ -59,7 +60,14 @@ class VideoIndexPage(BaseIndexPage):
             .live()
             .filter_language()
             .select_related("category")
-            .prefetch_related("image__renditions", "thumbnail__renditions")
+            .prefetch_related(
+                "image__renditions",
+                "thumbnail__renditions",
+                Prefetch(
+                    "tagged_items",
+                    queryset=VideoPageTag.objects.select_related("tag").all(),
+                ),
+            )
             .order_by("-date", "-pk")
         )
         if request.GET.get("category"):
