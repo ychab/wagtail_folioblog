@@ -43,6 +43,7 @@ class SearchIndexPage(BaseIndexPage):
             has_filters=has_filters,
             cleaned_data=cleaned_data,
             page=page,
+            site=folio_settings.site,
             limit=folio_settings.search_limit,
             operator=folio_settings.search_operator,
         )
@@ -66,14 +67,14 @@ class SearchIndexPage(BaseIndexPage):
         return context
 
     def get_search_results(
-        self, has_filters, cleaned_data, page, limit, operator="and"
+        self, has_filters, cleaned_data, page, site, limit, operator="and"
     ):
         search_results = BlogPage.objects.none()
 
         if has_filters:
             search_results = (
                 BlogPage.objects.live()
-                .in_site_localized(self.get_site())
+                .in_site_localized(site)
                 .filter_locale(self.locale)
                 .select_related("category", "image")
                 .prefetch_related(

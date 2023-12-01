@@ -58,8 +58,8 @@ class VideoIndexPage(BaseIndexPage):
             VideoPage.objects.child_of(self)
             .live()
             .filter_language()
-            .select_related("category", "image")
-            .prefetch_related("image__renditions")
+            .select_related("category")
+            .prefetch_related("image__renditions", "thumbnail__renditions")
             .order_by("-date", "-pk")
         )
         if request.GET.get("category"):
