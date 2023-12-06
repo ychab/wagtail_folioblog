@@ -1,33 +1,44 @@
 from django.core.management.base import BaseCommand
-from django.utils import timezone
 
 from wagtail.images import get_image_model
+from wagtail.models import Collection, Site
 
-from folioblog.gallery.templatetags.gallery import GALLERY_SPECS
+from folioblog.core.models import FolioBlogSettings
+from folioblog.gallery.templatetags.gallery import SPECS_LANDSCAPE, SPECS_PORTRAIT
 
 Image = get_image_model()
 
 
 class Command(BaseCommand):
-    DEFAULT_SPECS = list(GALLERY_SPECS.values()) + []
-
-    def add_arguments(self, parser):
-        parser.add_argument("--specs", nargs="*", default=self.DEFAULT_SPECS)
+    help = "Generate renditions for gallery page"
 
     def handle(self, *args, **options):
-        specs = options["specs"]
-        time_start = timezone.now()
+        sites = Site.objects.all()
+        for site in sites:
+            site_settings = FolioBlogSettings.for_site(site)
+            if not site_settings.gallery_collection:
+                self.stdout.write(
+                    self.style.WARNING(f"Skip generating renditions for site {site}")
+                )
+                continue
 
-        qs = Image.objects.all().order_by("pk")
-        count = qs.count()
-        self.stdout.write(f"About generating {count} renditions...")
+            self.stdout.write(f"About generating renditions for site {site}")
 
+            count = self.generate_site_renditions(site_settings.gallery_collection)
+
+            self.stdout.write(
+                self.style.SUCCESS(f"{count} renditions generated for site {site}")
+            )
+
+    def generate_site_renditions(self, root_collection):
+        collection_qs = Collection.objects.descendant_of(root_collection)
+        qs = Image.objects.filter(collection__in=collection_qs)
+
+        count = 0
         for image in qs:
-            for spec in specs:
+            specs = SPECS_PORTRAIT if image.is_portrait() else SPECS_LANDSCAPE
+            for spec in specs.values():
                 image.get_rendition(spec)
+                count += 1
 
-        time_end = timezone.now()
-        time_total = time_end - time_start
-        self.stdout.write(
-            self.style.SUCCESS(f"Specs renditions generated in {time_total}")
-        )
+        return count

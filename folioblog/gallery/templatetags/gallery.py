@@ -16,7 +16,6 @@ SPECS_LANDSCAPE = {
     "image_lg_1x_zoom": "fill-937x703",
     "image_full": "width-1920|format-jpeg",
 }
-GALLERY_SPECS = {**SPECS_PORTRAIT, **SPECS_LANDSCAPE}
 
 
 @register.inclusion_tag("gallery/gallery_grid_item.html")
