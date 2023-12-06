@@ -10,8 +10,6 @@ except ImportError:  # pragma: no cover
 else:
     is_prod = False
 
-current_locale = to_locale(get_language())
-
 
 def connect_cache_signal():
     from folioblog.core.signals import clear_cache_page
@@ -36,6 +34,8 @@ class CoreConfig(AppConfig):
         # Add custom faker providers per language
         if not is_prod:  # pragma: no branch
             from folioblog.core.providers import FolioBlogProvider, FolioBlogProviderFr
+
+            current_locale = to_locale(get_language())
 
             providers_default = [FolioBlogProvider]
             providers_locale = {
