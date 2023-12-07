@@ -1,3 +1,12 @@
+"""
+This template settings file must be copied and renamed to "local.py".
+
+It is imported at the end and is used for:
+- local dev
+- CI (github actions)
+
+It is untracked (git), so feel free to change it how you like!
+"""
 import os
 
 SECRET_KEY = os.getenv('FOLIOBLOG_SECRET_KEY', '')
@@ -5,11 +14,11 @@ SECRET_KEY = os.getenv('FOLIOBLOG_SECRET_KEY', '')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'folioblog',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': 5432,
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": os.getenv("FOLIOBLOG_POSTGRES_HOST", "127.0.0.1"),
+        "PORT": os.getenv("FOLIOBLOG_POSTGRES_PORT", 5432),
     }
 }
 
