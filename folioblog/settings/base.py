@@ -165,6 +165,8 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+CACHE_MIDDLEWARE_KEY_PREFIX = "ANONYMOUS"
+
 COMPRESS_ENABLED = False
 COMPRESS_OFFLINE = True
 COMPRESS_OUTPUT_DIR = "cache"
@@ -197,8 +199,10 @@ LOGGING["handlers"]["null"] = {
     "class": "logging.NullHandler",
 }
 LOGGING["handlers"]["stream"] = {
-    "level": "INFO",
     "class": "logging.StreamHandler",
+    "level": "DEBUG",
+    "formatter": "debug",
+    "stream": "ext://sys.stdout",
 }
 LOGGING["loggers"]["folioblog"] = {
     "handlers": ["console", "mail_admins"],

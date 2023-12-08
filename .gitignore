@@ -13,7 +13,18 @@ geckodriver.log
 roadmap.txt
 
 .python-version
+.venv
 venv
+poetry.toml
+
+.env
+.env.dev
+.env.prod
+
+deploy/deploy.conf.sh
+
+docker/prod/nginx/ssl/certs/*
+!/docker/prod/nginx/ssl/certs/.gitkeep
 
 node_modules
 
@@ -21,17 +32,11 @@ node_modules
 !/static/.gitkeep
 /media/*
 !/media/maintenance
-
 /folioblog/static/*
 !/folioblog/static/folioblog
 
-backup.sql
-
 /folioblog/settings/local.py
-/folioblog/settings/prod*
 
 .idea
 .vscode
 .history
-
-.env

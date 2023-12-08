@@ -1,0 +1,47 @@
+services:
+
+  postgres:
+    image: postgres:16.1
+    container_name: folioblog_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${FOLIOBLOG_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_passwd
+      POSTGRES_DB: ${FOLIOBLOG_POSTGRES_DB:-postgres}
+    ports:
+      - ${FOLIOBLOG_POSTGRES_PORT:-5432}:5432
+    healthcheck:
+      test: pg_isready -U ${FOLIOBLOG_POSTGRES_USER:-postgres} -d ${FOLIOBLOG_POSTGRES_DB:-postgres}
+      interval: 5s
+    secrets:
+      - pg_passwd
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2
+    container_name: folioblog_redis
+    restart: always
+    command: redis-server /etc/redis/redis.conf
+    environment:
+      REDIS_PASSWORD_FILE: /run/secrets/redis_passwd
+    ports:
+      - ${FOLIOBLOG_REDIS_PORT:-6379}:6379
+    secrets:
+      - redis_passwd
+    volumes:
+      - ./docker/local/redis:/etc/redis
+      - redis_data:/data
+    entrypoint: /etc/redis/entrypoint.sh
+
+volumes:
+  pg_data:
+    name: folioblog_pg
+  redis_data:
+    name: folioblog_redis
+
+secrets:
+  pg_passwd:
+    environment: FOLIOBLOG_POSTGRES_PASSWORD
+  redis_passwd:
+    environment: FOLIOBLOG_REDIS_PASSWORD

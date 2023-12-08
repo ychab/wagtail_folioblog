@@ -48,52 +48,169 @@ Integration / Automation:
 * [Tox](https://tox.wiki/en/latest/)
 * [Pre-commit](https://pre-commit.com/)
 * [GitHub Action](https://github.com/features/actions)
+* [Docker](https://www.docker.com/)
+* [Docker compose](https://docs.docker.com/compose/)
 
-## Requirements
+## Setup
 
-### Backend
+You can set up this project in multiple ways:
+* Local only: All services and Python code are on your local machine
+* Docker local: with Docker services, but keep Python app on your local machine
+* Docker dev: with Docker services, including a dev app container
+* Docker prod: with Docker services, but more close from production (gunicorn, nginx)
 
-* For development:
-  * you must first install [poetry](https://python-poetry.org/docs/#installation).
-  * Once installed, just run: `poetry install`
+If you plan to use [Docker compose](https://docs.docker.com/compose/install/),
+you **must** have Docker compose V2 on your local machine.
 
-* For testing (CI), no need to use poetry here, just do : `pip install -r requirements/test.txt`
+Please note that docker Compose has been tested only under Linux but *in theory*,
+it should work on MacOS and Windows too!
 
-* For production, do instead : `pip install -r requirements/prod.txt`
+Last but not the least, there is a lot of shortcuts commands which live in the
+**Makefile** of this project. You are strongly encourage to take a look if you
+want to save some time (or if you don't know well Docker yet)!
 
-*Note*: For now, only Python >= 3.10 is tested.
+### Deployment
 
-### Frontend
+To test various env build in another directory, you can use the
+``deploy/deploy.sh`` script. More information are available in the
+``README.md`` of that directory.
 
-* first install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+In any case, it is a good idea to take a look into it just to understand the
+following steps below.
+
+### Env files
+
+Because secrets **must not** be available into containers (production only),
+there is two env files, depending on your ENV:
+* ``.env`` : This file is used by the Makefile and Docker compose build
+* ``.env.dev | .env.prod``: This file is *mounted* into the container
+
+You can safely copy this 3 files at the root of the project if you want to use
+each env (local, dev, prod).
+
+### Docker local
+
+This setup is an hybrid: **only** services are docker containers (i.e: postgresql, redis)
+and everything else live on your local machine.
+
+You must first follow the "Local" section to meet all requirements needed:
+virtualenv, poetry, npm, precommit, etc.
+Then, you can setup the services with the following command:
+````
+cp env/.env.LOCAL .env # Edit it
+cp folioblog/settings/local.py.dist folioblog/settings/local.py  # Edit if needed
+make up
+poetry install
+pre-commit install
+npm install
+npm run dist
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+curl http://127.0.0.1:8000/admin
+````
+
+### Docker dev
+
+This setup include docker containers for services but also for the Python app.
+You still need git + pre-commit on your local machine, but that's it!
+
+Then, you can setup the services with the following command :
+````
+cp env/.env.LOCAL .env # Edit it
+cp env/.env.DEV .env.dev # Edit if needed
+cp folioblog/settings/local.py.dist folioblog/settings/local.py  # Edit if needed
+make up
+curl http://127.0.0.1:8000/admin  # Connect with admin/admin
+````
+
+All commands prefixed by "app" in the Makefile should interest you.
+
+### Docker prod
+
+This setup include Docker containers for services and the app, in a way more
+close to a production environment.
+
+The app is started by a WSGI server (gunicorn) behind a proxy webserver (nginx)
+which will serve static files as well as HTTPS requests.
+
+The connection is *secured* by a self-signed certificate (untrusted) that you
+have to generate locally with OpenSSL. Your browser should complain about it
+but you just have to accept it anyway.
+
+This setup is just an **incomplete** example and **cannot be used for production**.
+However, the docker image itself *should be* ready for production.
+
+You will have to:
+````
+cp env/.env.LOCAL .env # Edit it
+cp env/.env.PROD .env.prod # Edit if needed
+make certs
+make up
+curl https://folio.local/admin  # Connect with YOUR <FOLIOBLOG_ADMIN_USERNAME>/<FOLIOBLOG_ADMIN_PASSWD>
+````
+
+To play with multi-sites, the docker compose network add three aliases for the
+proxy server and the SSL certificate *secure* them:
+* folio.local
+* demo.folio.local
+* blog.folio.local
+
+To use them, first update the wagtail sites hostnames in DB to match with.
+To do so, go to: https://folio.local/admin/sites/
+
+Then in order to use these domain names from your hosting machine, you must
+edit your hosts file to add these entries to be forward to 127.0.0.1:
+* on Linux, edit ``/etc/hosts``
+* on Windows, edit ``c:\Windows\System32\Drivers\etc\hosts``
+
+to add lines like:
+````
+127.0.0.1	folio.local
+127.0.0.1	demo.folio.local
+127.0.0.1	blog.folio.local
+````
+
+Finally, you should be able to hit another site: ``curl https://demo.folio.local``
+
+### Local only
+
+You have choose the hard and old school way... congratulations!
+
+To locally get all the required tools, follow these next steps.
+
+#### Backend
+
+* Python 3.10 installed (virtualenv strongly recommanded)
+* Install [poetry](https://python-poetry.org/docs/#installation).
+* Run: `poetry install`
+
+#### Frontend
+
+* Install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * `npm install`: install node packages
 * `npm run dist`: copy node modules into django project
 
-### Databases
+#### Databases
 
-Having access with proper permissions for one of the [supported SGDB by Django](https://docs.djangoproject.com/en/dev/ref/databases/).
+For now, only PostgreSQL is tested. In theory, other SGBD supported by Django
+should work too.
 
-#### PostgreSQL
-
-For now, only this SGBD is tested. In theory, other supported SGBD should work.
-
-*tips*: for local dev, don't forgot to set proper permissions for the connected
-user (i.e: create and destroy DB testing).
+*tips: for testing, don't forgot to set proper permissions for the connected
+user (i.e: create and destroy DB testing).*
 
 #### Redis
 
 Redis could be used by [Django cache](https://docs.djangoproject.com/en/dev/topics/cache/).
 This is not mandatory but strongly recommanded.
 
-### Pre-commit
+#### Pre-commit
 
 Python binding package should be already installed by Poetry, so you just have
 to do:
 > pre-commit install
 
-That's it!
-
-### Selenium (end2end tests)
+#### Selenium (end2end tests)
 
 For end2end tests, download at least Chrome and its chromedriver (to put in PATH),
 which is the only one browser supported for now.
@@ -102,37 +219,33 @@ For more details, see:
 * [selenium doc](https://www.selenium.dev/documentation/)
 * [selenium python doc](https://selenium-python.readthedocs.io/installation.html)
 
-## Get started
+#### Local installation
 
-*Note*: For now, the setup is manual but a docker-compose setup is on the roadmap!
-
-### Local installation
-
-Once requirements are setup, do the following steps:
+Once requirements are set up, do the following steps:
 ````
 cp folioblog/settings/local.py.dist folioblog/settings/local.py
 vim folioblog/settings/local.py  # edit at least DATABASES and SECRET_KEY !
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py fixtures load  # ONLY if you add fixtures yourself
 ./manage.py runserver 127.0.0.1:8000
 google-chrome http://127.0.0.1:8000/admin &
 ````
 
-*Tips*: take a look at the Makefile ;-)
+## Cron
 
-### Page structures
+There is some cron tasks you may need to set up.
 
-By default, fixtures have been removed and thus, the database is empty.
+Wagtail cron tasks:
+````
+docker compose exec app python manage.py fixtree --full
+docker compose exec app python manage.py purge_revisions --days=30
+docker compose exec app python manage.py publish_scheduled_pages
+````
 
-Here is the pages tree per content type:
-* Root page
-  * PortFolio page
-  * Home index
-    * Blog index
-      * Blog pages
-    * Gallery
-    * Video index
-      * Video pages
-    * Search index
-    * some basic pages (cookies policy, disclaimer, presentation)
+FolioBlog cron tasks:
+````
+# To generate gallery image thumbnails (before viewing them)
+docker compose exec app python manage.py generaterenditions
+# To fetch all pages in cache (if enabled)
+docker compose exec app python manage.py loadcachepages
+````

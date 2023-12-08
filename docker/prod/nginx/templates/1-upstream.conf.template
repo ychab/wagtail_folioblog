@@ -1,0 +1,3 @@
+upstream folioblog_app {
+    server app:${NGINX_APP_PORT};
+}

@@ -1,0 +1,84 @@
+services:
+
+  nginx:
+    image: nginx:1.25
+    container_name: folioblog_nginx
+    restart: always
+    environment:
+      NGINX_HOST: ${FOLIOBLOG_NGINX_HOST}
+      NGINX_APP_PORT: ${FOLIOBLOG_APP_PORT:-8000}
+      NGINX_MEDIA: ${FOLIOBLOG_NGINX_MEDIA_ROOT:-/media}
+      NGINX_STATIC: ${FOLIOBLOG_NGINX_STATIC_ROOT:-/static}
+      NGINX_SSL_CERT: ${FOLIOBLOG_NGINX_SSL_CERT}
+      NGINX_SSL_KEY: ${FOLIOBLOG_NGINX_SSL_KEY}
+    ports:
+      - ${FOLIOBLOG_NGINX_PORT:-80}:80
+      - ${FOLIOBLOG_NGINX_PORT_SSL:-443}:443
+    networks:
+      default:
+        aliases:
+          - folio.local
+          - demo.folio.local
+          - blog.folio.local
+    volumes:
+      - ./docker/prod/nginx/templates:/etc/nginx/templates:ro
+      - ./docker/prod/nginx/ssl/certs:/etc/nginx/ssl:ro
+      - folioblog_media:${FOLIOBLOG_NGINX_MEDIA_ROOT:-/media}:ro
+      - folioblog_static:${FOLIOBLOG_NGINX_STATIC_ROOT:-/static}:ro
+
+  app:
+    image: folioblog:latest
+    container_name: folioblog_app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      nginx:
+        condition: service_started
+    build:
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+      args:
+        FOLIOBLOG_VERSION: ${FOLIOBLOG_VERSION:-main}
+        NODE_VERSION: ${FOLIOBLOG_NODE_VERSION:-v20.10.0}
+        MEDIA_ROOT: ${FOLIOBLOG_MEDIA_ROOT}
+        STATIC_ROOT: ${FOLIOBLOG_STATIC_ROOT}
+    environment:
+      FOLIOBLOG_POSTGRES_PASSWORD_FILE: /run/secrets/pg_passwd
+      FOLIOBLOG_REDIS_PASSWORD_FILE: /run/secrets/redis_passwd
+      FOLIOBLOG_SECRET_KEY_FILE: /run/secrets/secret_key
+      FOLIOBLOG_ADMIN_PASSWD_FILE: /run/secrets/admin_passwd
+      FOLIOBLOG_EMAIL_HOST_PASSWORD_FILE: /run/secrets/email_passwd
+    env_file:
+      - ./docker/prod/.env.prod
+      - ./.env.prod
+    ports:
+      - ${FOLIOBLOG_APP_PORT:-8000}:8000
+    volumes:
+      - folioblog_media:${FOLIOBLOG_MEDIA_ROOT}
+      - folioblog_static:${FOLIOBLOG_STATIC_ROOT}
+    secrets:
+      - pg_passwd
+      - redis_passwd
+      - secret_key
+      - admin_passwd
+      - email_passwd
+    healthcheck:
+      test: curl --fail http://127.0.0.1:8000/?healthcheck=1 || exit 1
+      interval: ${FOLIOBLOG_HEALTHCHECK_INTERVAL:-60s}
+
+volumes:
+  folioblog_media:
+    name: folioblog_media
+  folioblog_static:
+    name: folioblog_static
+
+secrets:
+  secret_key:
+    environment: FOLIOBLOG_SECRET_KEY
+  admin_passwd:
+    environment: FOLIOBLOG_ADMIN_PASSWD
+  email_passwd:
+    environment: FOLIOBLOG_EMAIL_HOST_PASSWORD

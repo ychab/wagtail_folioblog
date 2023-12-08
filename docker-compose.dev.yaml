@@ -1,0 +1,30 @@
+services:
+
+  app:
+    image: folioblog:dev
+    container_name: folioblog_dev
+    restart: no
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+      args:
+        UID: ${FOLIOBLOG_UID:-1000}
+        GID: ${FOLIOBLOG_GID:-1000}
+        NODE_VERSION: ${FOLIOBLOG_NODE_VERSION:-v20.10.0}
+        POETRY_VERSION: ${FOLIOBLOG_POETRY_VERSION:-1.6.1}
+    env_file:
+      - ./docker/dev/.env.dev
+      - ./.env.dev
+    ports:
+      - ${FOLIOBLOG_APP_PORT:-8000}:8000
+    tty: true
+    volumes:
+      - .:/app
+    healthcheck:
+      test: curl --fail http://127.0.0.1:8000/?healthcheck=1 || exit 1
+      interval: ${FOLIOBLOG_HEALTHCHECK_INTERVAL:-60s}

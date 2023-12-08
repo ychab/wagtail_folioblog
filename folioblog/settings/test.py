@@ -19,14 +19,14 @@ WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8000"
 WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 DEBUG_TEST = True
-DEBUG_LOG = False
+TEST_DEBUG_LOG = False
 
 try:
     from .local import *
 except ImportError:  # pragma: no cover
     pass
 
-if DEBUG_LOG:  # pragma: no cover
+if TEST_DEBUG_LOG:  # pragma: no cover
     for logger in LOGGING["loggers"].values():
         logger["handlers"] = ["debug_file", "stream"]
         logger["level"] = "DEBUG"
