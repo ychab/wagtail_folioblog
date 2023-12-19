@@ -54,6 +54,8 @@ RUN useradd --uid=${UID} --gid=${GID} --create-home --shell /bin/bash appuser
 
 # Then install Poetry.
 RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN poetry self update --no-interaction
+RUN $POETRY_HOME/venv/bin/pip install poetry-plugin-export
 
 # Then install nodeJS with NPM.
 RUN wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
