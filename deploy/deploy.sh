@@ -154,7 +154,7 @@ deploy_prod() {
     sed -i 's,^# FOLIOBLOG_SECRET_KEY=.*,FOLIOBLOG_SECRET_KEY='"${FOLIOBLOG_SECRET_KEY:-bla-bla-bla}"',g' .env
     sed -i 's,^# FOLIOBLOG_ADMIN_PASSWD=.*,FOLIOBLOG_ADMIN_PASSWD='"${FOLIOBLOG_ADMIN_PASSWD:-admin}"',g' .env
     sed -i 's,^# FOLIOBLOG_EMAIL_HOST_PASSWORD=.*,FOLIOBLOG_EMAIL_HOST_PASSWORD='"${FOLIOBLOG_EMAIL_HOST_PASSWORD:-}"',g' .env
-    sed -i 's,^# FOLIOBLOG_VERSION=.*,FOLIOBLOG_VERSION='"$FOLIOBLOG_VERSION"',g' .env
+    sed -i 's,^# FOLIOBLOG_RELEASE=.*,FOLIOBLOG_RELEASE='"${FOLIOBLOG_RELEASE:-v1.7.0}"',g' .env
     sed -i 's,^# FOLIOBLOG_STATIC_ROOT=.*,FOLIOBLOG_STATIC_ROOT=/app/static,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_HOST=.*,FOLIOBLOG_NGINX_HOST=folio.local blog.folio.local demo.folio.local,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_MEDIA_ROOT=.*,FOLIOBLOG_NGINX_MEDIA_ROOT=/media,g' .env

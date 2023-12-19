@@ -1,7 +1,7 @@
 # Use the default Python image to have more reposities availables.
 FROM python:3.10-slim
 
-ARG FOLIOBLOG_VERSION
+ARG FOLIOBLOG_RELEASE
 ARG NODE_VERSION
 ARG MEDIA_ROOT
 ARG STATIC_ROOT
@@ -23,8 +23,7 @@ RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommend
     wget \
     curl \
     tar \
-    xz-utils \
-    git
+    xz-utils
 
 # Then install nodeJS with NPM.
 RUN wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
@@ -35,9 +34,12 @@ RUN rm /opt/node.tar.xz
 # Create an app user.
 RUN useradd --create-home --shell /bin/bash appuser
 
-# Fetch source code. For now, using GIT but later, better to download release tarball.
-RUN git clone --depth=1 --branch=${FOLIOBLOG_VERSION} https://github.com/ychab/wagtail_folioblog.git /app
+# Fetch source code from GitHub archives.
+RUN mkdir /app
+RUN wget -O /app/folioblog.tar.gz https://github.com/ychab/wagtail_folioblog/archive/refs/tags/${FOLIOBLOG_RELEASE}.tar.gz
+RUN tar xzf /app/folioblog.tar.gz -C /app/ --no-same-owner --strip-components=1
 RUN chown -R appuser:appuser /app
+RUN rm /app/folioblog.tar.gz
 
 # Create virtualenv and install backend dependencies with gunicorn.
 RUN python -m venv ${VIRTUAL_ENV}

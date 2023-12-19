@@ -41,7 +41,7 @@ services:
       context: .
       dockerfile: ./docker/prod/Dockerfile
       args:
-        FOLIOBLOG_VERSION: ${FOLIOBLOG_VERSION:-main}
+        FOLIOBLOG_RELEASE: ${FOLIOBLOG_RELEASE:-v1.7.0}
         NODE_VERSION: ${FOLIOBLOG_NODE_VERSION:-v20.10.0}
         MEDIA_ROOT: ${FOLIOBLOG_MEDIA_ROOT}
         STATIC_ROOT: ${FOLIOBLOG_STATIC_ROOT}
