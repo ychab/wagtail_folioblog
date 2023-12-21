@@ -2,6 +2,8 @@ import logging
 import os
 from tempfile import mkstemp
 
+from django.conf import settings
+
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
@@ -47,6 +49,14 @@ class BaseIndexWebPage:
             self.cookies_accept()
 
         return is_fetched
+
+    def set_language(self, lang):
+        self.selenium.add_cookie(
+            {
+                "name": settings.LANGUAGE_COOKIE_NAME,
+                "value": lang,
+            }
+        )
 
     def cookies_accept(self):
         if self.has_cookie_consent():

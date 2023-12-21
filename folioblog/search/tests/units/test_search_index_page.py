@@ -1,7 +1,8 @@
 from html import unescape
 
 from django.conf import settings
-from django.test import TestCase, override_settings
+from django.test import TestCase
+from django.utils import translation
 from django.utils.html import escape
 
 from wagtail.models import Site
@@ -41,9 +42,10 @@ class SearchIndexPageTestCase(TestCase):
         BlogCategory.objects.all().delete()
         Tag.objects.all().delete()
 
-    @override_settings(LANGUAGE_CODE="fr")
+        translation.activate(settings.LANGUAGE_CODE)
+
     def test_page_initial(self):
-        response = self.client.get(self.page.url)
+        response = self.client.get(self.page.url, headers={"accept-language": "fr"})
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context["has_filters"])
         self.assertFalse(response.context["search_results"])
@@ -72,7 +74,6 @@ class SearchIndexPageTestCase(TestCase):
             sorted([c.pk for c in [c1, c2]]),
         )
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_result_none(self):
         BlogPageFactory(
             parent=self.index, title="foo", subheading="", intro="", body=""
@@ -86,6 +87,7 @@ class SearchIndexPageTestCase(TestCase):
             data={
                 "query": "miraculous",
             },
+            headers={"accept-language": "fr"},
         )
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["has_filters"])
@@ -120,7 +122,6 @@ class SearchIndexPageTestCase(TestCase):
         self.assertFalse(response.context["has_filters"])
         self.assertTrue(response.context["form"].errors["categories"])
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_invalid_page_not_integer(self):
         p1 = BlogPageFactory(
             parent=self.index, title="foo", subheading="", intro="", body=""
@@ -135,6 +136,7 @@ class SearchIndexPageTestCase(TestCase):
                 "query": "foo",
                 "page": "foo",
             },
+            headers={"accept-language": "fr"},
         )
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["has_filters"])
@@ -145,7 +147,6 @@ class SearchIndexPageTestCase(TestCase):
         )
         self.assertEqual(response.context["search_results"].number, 1)
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_invalid_page_search(self):
         BlogPageFactory(
             parent=self.index, title="foo", subheading="", intro="", body=""
@@ -160,12 +161,12 @@ class SearchIndexPageTestCase(TestCase):
                 "query": "foo",
                 "page": 50,
             },
+            headers={"accept-language": "fr"},
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context["search_results"])
         self.assertContains(response, escape("Aucun résultat"))
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_invalid_page_filter(self):
         cat = BlogCategoryFactory(name="tech")
         BlogPageFactory(
@@ -191,6 +192,7 @@ class SearchIndexPageTestCase(TestCase):
                 "categories": [cat.slug],
                 "page": 50,
             },
+            headers={"accept-language": "fr"},
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context["search_results"])
@@ -224,7 +226,6 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(len(response.context["search_results"]), 1)
         self.assertEqual(response.context["search_results"][0].pk, p1.pk)
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_filter_query(self):
         p1 = BlogPageFactory(
             parent=self.index, title="foo", subheading="", intro="", body=""
@@ -238,6 +239,7 @@ class SearchIndexPageTestCase(TestCase):
             data={
                 "query": "foo",
             },
+            headers={"accept-language": "fr"},
         )
         html = unescape(response.content.decode())
         self.assertEqual(response.status_code, 200)
@@ -245,7 +247,6 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(response.context["search_results"][0].pk, p1.pk)
         self.assertIn("1 résultat", html)
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_filter_query_multiple(self):
         p1 = BlogPageFactory(
             parent=self.index, title="green lantern 1", subheading="", intro="", body=""
@@ -262,6 +263,7 @@ class SearchIndexPageTestCase(TestCase):
             data={
                 "query": "green lantern",
             },
+            headers={"accept-language": "fr"},
         )
         html = unescape(response.content.decode())
         self.assertEqual(response.status_code, 200)

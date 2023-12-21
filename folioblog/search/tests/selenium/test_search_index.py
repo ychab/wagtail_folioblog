@@ -1,4 +1,5 @@
-from django.test import override_settings
+from django.conf import settings
+from django.utils import translation
 
 from folioblog.blog.factories import (
     BlogCategoryFactory,
@@ -56,6 +57,10 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         self.webpage = SearchIndexWebPage(self.selenium)
         self.webpage.fetch_page(self.page.full_url)
+        self.webpage.set_language("fr")
+
+    def tearDown(self):
+        translation.activate(settings.LANGUAGE_CODE)
 
     def test_masthead_image(self):
         spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
@@ -78,7 +83,6 @@ class SearchIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         items = self.webpage.get_search_results()
         self.assertEqual(len(items), 2)
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_result_item(self):
         done = self.webpage.search("great")
         self.assertTrue(done)

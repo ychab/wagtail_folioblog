@@ -1,4 +1,5 @@
-from django.test import override_settings
+from django.conf import settings
+from django.utils import translation
 from django.utils.formats import date_format
 from django.utils.translation import gettext
 
@@ -32,6 +33,10 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         self.webpage = BlogIndexWebPage(self.selenium)
         self.webpage.fetch_page(self.page.full_url)
+        self.webpage.set_language("fr")
+
+    def tearDown(self):
+        translation.activate(settings.LANGUAGE_CODE)
 
     def test_masthead_image(self):
         spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
@@ -60,7 +65,6 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(item["intro"], post.intro)
         self.assertEqual(item["img_src"], rendition_url)
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_infinite_scroll(self):
         expected_count = self.foliosettings.blog_pager_limit * 2
         is_scrolled = self.webpage.scroll_down(expected_count)
@@ -88,7 +92,6 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(category.name, items[0]["category"])
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_categories_filter_and_scroll(self):
         category = self.categories[0]
 

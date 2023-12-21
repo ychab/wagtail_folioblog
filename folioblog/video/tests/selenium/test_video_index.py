@@ -1,4 +1,5 @@
-from django.test import override_settings
+from django.conf import settings
+from django.utils import translation
 
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.utils.tests import FolioBlogSeleniumServerTestCase
@@ -51,6 +52,10 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         self.webpage = VideoIndexWebPage(self.selenium)
         self.webpage.fetch_page(self.page.full_url)
+        self.webpage.set_language("fr")
+
+    def tearDown(self):
+        translation.activate(settings.LANGUAGE_CODE)
 
     def test_masthead_image(self):
         spec = "fill-1080x1380" if self.is_mobile else "fill-1905x560"
@@ -80,7 +85,6 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(item["category"], str(video.category))
         self.assertEqual(item["tags"], " ".join([t.name for t in video.tags.all()]))
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_infinite_scroll(self):
         expected_count = self.foliosettings.video_pager_limit * 2
         is_scrolled = self.webpage.scroll_down(expected_count)
@@ -108,7 +112,6 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), 1)
         self.assertEqual(category.name, items[0]["category"])
 
-    @override_settings(LANGUAGE_CODE="fr")
     def test_categories_filter_and_scroll(self):
         category = self.categories[0]
 
