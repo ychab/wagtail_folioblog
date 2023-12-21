@@ -5,12 +5,19 @@ from django.views.i18n import JavaScriptCatalog
 
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.contrib.sitemaps.views import sitemap
 from wagtail.documents import urls as wagtaildocs_urls
 
+from folioblog.blog.views import BlogPageAPIViewSet
 from folioblog.core.sitemap import Sitemap
 from folioblog.core.views import RssView
 from folioblog.search import views as search_views
+from folioblog.video.views import VideoPageAPIViewSet
+
+api_router = WagtailAPIRouter("folioblogapi")
+api_router.register_endpoint("posts", BlogPageAPIViewSet)
+api_router.register_endpoint("videos", VideoPageAPIViewSet)
 
 urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
@@ -18,6 +25,7 @@ urlpatterns = [
     path(
         "sitemap.xml", sitemap, kwargs={"sitemaps": {"i18n": Sitemap}}, name="sitemap"
     ),
+    path("api/v2/", api_router.urls),
 ]
 
 

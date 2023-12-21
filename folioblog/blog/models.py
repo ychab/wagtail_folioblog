@@ -1,6 +1,7 @@
 from django.db import models
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.api import APIField
 from wagtail.images import get_image_model
 from wagtail.models import Orderable, Page, TranslatableMixin
 from wagtail.search import index
@@ -96,6 +97,17 @@ class BlogPage(BasePage):
         BlogCategory, on_delete=models.PROTECT, related_name="blogpages"
     )
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+
+    api_fields = BasePage.api_fields + [
+        APIField("date"),
+        APIField("author"),
+        APIField("image_body"),
+        APIField("blockquote"),
+        APIField("blockquote_author"),
+        APIField("blockquote_ref"),
+        APIField("category"),
+        APIField("tags"),
+    ]
 
     search_fields = Page.search_fields + [
         index.AutocompleteField("subheading"),

@@ -16,7 +16,6 @@ STATIC_ROOT = os.path.join(gettempdir(), "folioblog", "static")
 MEDIA_ROOT = os.path.join(gettempdir(), "folioblog", "media")
 
 WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8000"
-WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 DEBUG_TEST = True
 TEST_DEBUG_LOG = False

@@ -29,7 +29,6 @@ for logger in LOGGING["loggers"].values():
 AUTH_PASSWORD_VALIDATORS = []
 
 WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8000"
-WAGTAILAPI_BASE_URL = WAGTAILADMIN_BASE_URL
 
 try:
     from .local import *

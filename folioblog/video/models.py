@@ -7,6 +7,7 @@ from django.db.models import Prefetch
 from django.utils.functional import cached_property
 
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.api import APIField
 from wagtail.embeds import embeds
 from wagtail.embeds.exceptions import EmbedException
 from wagtail.images import get_image_model
@@ -115,6 +116,15 @@ class VideoPage(BasePage):
         VideoCategory, on_delete=models.PROTECT, related_name="videopages"
     )
     tags = ClusterTaggableManager(through=VideoPageTag, blank=True)
+
+    api_fields = BasePage.api_fields + [
+        APIField("date"),
+        APIField("author"),
+        APIField("video_url"),
+        APIField("thumbnail"),
+        APIField("category"),
+        APIField("tags"),
+    ]
 
     search_fields = Page.search_fields + [
         index.AutocompleteField("subheading"),

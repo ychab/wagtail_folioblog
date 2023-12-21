@@ -3,11 +3,31 @@ from django.views.generic import TemplateView
 
 from wagtail.admin.forms.choosers import BaseFilterForm, LocaleFilterMixin
 from wagtail.admin.ui.tables import Column
+from wagtail.api.v2.views import PagesAPIViewSet
 from wagtail.models import Site
 
 from folioblog.blog.models import BlogIndexPage, BlogPage
+from folioblog.core.managers import qs_in_site_alt
 from folioblog.core.models import FolioBlogSettings
 from folioblog.core.utils import get_block_language
+
+
+class BasePageAPIViewSet(PagesAPIViewSet):
+    known_query_parameters = [
+        q for q in PagesAPIViewSet.known_query_parameters if q not in ["type", "site"]
+    ]
+
+    def get_base_queryset(self):
+        """
+        We must implement this method instead of get_queryset() because it is
+        used in context data serializer.
+        """
+        site = Site.find_for_request(self.request)
+
+        qs = self.model.objects.all().live().public()
+        qs = qs_in_site_alt(qs, site)
+        qs = qs.order_by("-pk")
+        return qs
 
 
 class RssView(TemplateView):

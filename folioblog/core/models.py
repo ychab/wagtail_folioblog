@@ -13,9 +13,11 @@ from wagtail.admin.panels import (
     ObjectList,
     TabbedInterface,
 )
+from wagtail.api import APIField
 from wagtail.contrib.settings.models import BaseSiteSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.fields import RichTextField, StreamField
+from wagtail.images.api.v2.serializers import ImageDownloadUrlField
 from wagtail.images.models import AbstractImage, AbstractRendition, Image, ImageQuerySet
 from wagtail.models import Collection, Orderable, Page, Site, TranslatableMixin
 
@@ -51,6 +53,11 @@ class Photographer(MultiSiteMixin, models.Model):
     name = models.CharField(max_length=255, blank=True)
     website = models.URLField(null=True, blank=True)
 
+    api_fields = [
+        APIField("name"),
+        APIField("website"),
+    ]
+
     def __str__(self):
         return self.name
 
@@ -67,6 +74,15 @@ class FolioImage(AbstractImage):
     )
 
     objects = ImageManager.from_queryset(ImageQuerySet)()
+
+    api_fields = [
+        APIField("title"),
+        APIField("width"),
+        APIField("height"),
+        APIField("caption"),
+        APIField("photographer"),
+        APIField("download_url", serializer=ImageDownloadUrlField(read_only=True)),
+    ]
 
     @property
     def default_alt_text(self):
@@ -131,6 +147,11 @@ class BaseCategory(MultiSiteMixin, TranslatableMixin, models.Model):
 
     objects = I18nMultiSiteManager()
 
+    api_fields = [
+        APIField("name"),
+        APIField("slug"),
+    ]
+
     class Meta(TranslatableMixin.Meta):
         abstract = True
         unique_together = TranslatableMixin.Meta.unique_together + [
@@ -161,6 +182,12 @@ class BaseIndexPage(SitemapPageMixin, Page):
         related_query_name="%(app_label)s_%(class)ss",
     )
     image_alt = models.CharField(max_length=512, blank=True, default="")
+
+    api_fields = [
+        APIField("subheading"),
+        APIField("image"),
+        APIField("image_alt"),
+    ]
 
     content_panels = Page.content_panels + [
         FieldPanel("subheading"),
@@ -199,6 +226,11 @@ class BaseIndexPage(SitemapPageMixin, Page):
 class BasePage(BaseIndexPage):
     intro = models.TextField(default="", blank=True)
     body = RichTextField(blank=True)
+
+    api_fields = BaseIndexPage.api_fields + [
+        APIField("intro"),
+        APIField("body"),
+    ]
 
     content_panels = Page.content_panels + [
         FieldPanel("subheading"),

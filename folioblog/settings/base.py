@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
     "wagtail.contrib.sitemaps",
+    "wagtail.api.v2",
+    "rest_framework",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
