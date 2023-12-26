@@ -7,6 +7,7 @@ from wagtail_factories import SiteFactory
 
 from folioblog.blog.factories import BlogIndexPageFactory, BlogPageFactory
 from folioblog.blog.models import BlogPage
+from folioblog.core.factories import LocaleFactory
 
 
 class BlogPageListAPIViewSetTestCase(TestCase):
@@ -76,16 +77,133 @@ class BlogPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["meta"]["total_count"], 1)
         self.assertEqual(response.data["items"][0]["id"], post.pk)
 
-    @override_settings(WAGTAILAPI_LIMIT_MAX=20)
     def test_list(self):
         total = 3
         for i in range(0, total):
             BlogPageFactory(parent=self.index)
 
-        response = self.client.get(self.url)
+        with self.settings(WAGTAILAPI_LIMIT_MAX=20):
+            response = self.client.get(self.url)
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["meta"]["total_count"], total)
         self.assertEqual(len(response.data["items"]), total)
+
+    def test_list_pagination(self):
+        total = 3
+        limit = 1
+        for i in range(0, total):
+            BlogPageFactory(parent=self.index)
+
+        with self.settings(WAGTAILAPI_LIMIT_MAX=limit):
+            response = self.client.get(
+                self.url,
+                data={
+                    "offset": 0,
+                    "limit": limit,
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], total)
+        self.assertEqual(len(response.data["items"]), limit)
+
+    def test_list_ordering_asc(self):
+        post1 = BlogPageFactory(parent=self.index, title="A")
+        post2 = BlogPageFactory(parent=self.index, title="B")
+        post3 = BlogPageFactory(parent=self.index, title="C")
+
+        response = self.client.get(
+            self.url,
+            data={
+                "order": "title",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 3)
+        self.assertEqual(response.data["items"][0]["id"], post1.pk)
+        self.assertEqual(response.data["items"][1]["id"], post2.pk)
+        self.assertEqual(response.data["items"][2]["id"], post3.pk)
+
+    def test_list_ordering_desc(self):
+        post1 = BlogPageFactory(parent=self.index, title="A")
+        post2 = BlogPageFactory(parent=self.index, title="B")
+        post3 = BlogPageFactory(parent=self.index, title="C")
+
+        response = self.client.get(
+            self.url,
+            data={
+                "order": "-title",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 3)
+        self.assertEqual(response.data["items"][0]["id"], post3.pk)
+        self.assertEqual(response.data["items"][1]["id"], post2.pk)
+        self.assertEqual(response.data["items"][2]["id"], post1.pk)
+
+    def test_list_filter_slug(self):
+        post = BlogPageFactory(parent=self.index, slug="foo")
+        BlogPageFactory(parent=self.index, slug="bar")
+
+        response = self.client.get(
+            self.url,
+            data={
+                "slug": "foo",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 1)
+        self.assertEqual(response.data["items"][0]["id"], post.pk)
+
+    def test_list_filter_locale(self):
+        post = BlogPageFactory(
+            parent=self.index, locale=LocaleFactory(language_code="fr")
+        )
+        BlogPageFactory(parent=self.index, locale=LocaleFactory(language_code="en"))
+
+        response = self.client.get(
+            self.url,
+            data={
+                "locale": "fr",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 1)
+        self.assertEqual(response.data["items"][0]["id"], post.pk)
+
+    @override_settings(WAGTAILAPI_SEARCH_ENABLED=True)
+    def test_list_search_and(self):
+        post = BlogPageFactory(parent=self.index, title="foo bar")
+        BlogPageFactory(parent=self.index, title="Viva la salsa")
+
+        response = self.client.get(
+            self.url,
+            data={
+                "search": "Foo+Bar",
+                "search_operator": "and",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 1)
+        self.assertEqual(response.data["items"][0]["id"], post.pk)
+
+    @override_settings(WAGTAILAPI_SEARCH_ENABLED=True)
+    def test_list_search_or(self):
+        post1 = BlogPageFactory(parent=self.index, title="foo")
+        post2 = BlogPageFactory(parent=self.index, title="bar")
+
+        response = self.client.get(
+            self.url,
+            data={
+                "search": "Foo Bar",
+                "search_operator": "or",
+                "order": "-title",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["meta"]["total_count"], 2)
+        self.assertEqual(response.data["items"][0]["id"], post1.pk)
+        self.assertEqual(response.data["items"][1]["id"], post2.pk)
 
     def test_list_extra_fields(self):
         post = BlogPageFactory(parent=self.index, tags__number=3)
@@ -254,3 +372,42 @@ class BlogPageDetailAPIViewSetTestCase(TestCase):
             sorted(response.data["tags"]),
             sorted([t.name for t in post.tags.all()]),
         )
+
+
+class BlogPageFindAPIViewSetTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.site = Site.objects.get(is_default_site=True)
+        cls.index = BlogIndexPageFactory(parent=cls.site.root_page)
+        cls.url = reverse("folioblogapi:posts:find")
+
+        Site.clear_site_root_paths_cache()
+
+    def tearDown(self):
+        BlogPage.objects.all().delete()
+
+    def test_find_by_id(self):
+        post = BlogPageFactory(parent=self.index)
+
+        response = self.client.get(
+            self.url,
+            data={
+                "id": post.pk,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        url = reverse("folioblogapi:posts:detail", kwargs={"pk": post.pk})
+        self.assertIn(url, response.url)
+
+    def test_find_by_html_path(self):
+        post = BlogPageFactory(parent=self.index)
+
+        response = self.client.get(
+            self.url,
+            data={
+                "html_path": post.url,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        url = reverse("folioblogapi:posts:detail", kwargs={"pk": post.pk})
+        self.assertIn(url, response.url)
