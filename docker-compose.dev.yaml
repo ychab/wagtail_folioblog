@@ -28,3 +28,4 @@ services:
     healthcheck:
       test: curl --fail http://127.0.0.1:8000/?healthcheck=1 || exit 1
       interval: ${FOLIOBLOG_HEALTHCHECK_INTERVAL:-60s}
+      retries: ${FOLIOBLOG_HEALTHCHECK_RETRIES:-3}

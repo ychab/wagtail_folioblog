@@ -59,6 +59,9 @@ build:
 up:
 	docker compose up -d
 
+up_wait:
+	FOLIOBLOG_HEALTHCHECK_INTERVAL=5s FOLIOBLOG_HEALTHCHECK_RETRIES=10 docker compose up --detach --wait
+
 down:
 	docker compose down --remove-orphans
 
