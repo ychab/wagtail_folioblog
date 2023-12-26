@@ -1,5 +1,5 @@
 import logging
-import os
+from pathlib import Path
 from tempfile import mkstemp
 
 from django.conf import settings
@@ -116,10 +116,7 @@ class BaseIndexWebPage:
 
     def save_screenshot(self, screenshot_dir, prefix="screenshot"):
         fd, filename = mkstemp(prefix=prefix + "-", suffix=".png")
-        filepath = os.path.join(
-            screenshot_dir,
-            os.path.basename(filename),
-        )
+        filepath = Path(screenshot_dir) / Path(filename).name
         return self.selenium.save_screenshot(filepath)
 
     def scroll_to(self, locator):

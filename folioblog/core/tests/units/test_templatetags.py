@@ -1,5 +1,5 @@
-import os
 from html import unescape
+from pathlib import Path
 
 from django.test import TestCase
 
@@ -47,7 +47,7 @@ class PhotoCreditTemplateTagTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         html = unescape(response.content.decode())
 
-        self.assertIn(os.path.basename(image.file.name), html)
+        self.assertIn(Path(image.file.name).name, html)
 
 
 class PhotoCreditMultiDomainTemplateTagTestCase(TestCase):

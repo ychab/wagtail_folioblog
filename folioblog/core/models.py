@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 from django.conf import settings
 from django.db import models
@@ -138,7 +138,7 @@ class FolioRendition(AbstractRendition):
             filename = f"{name}.{hash}.{ext}"
 
         filename = self.file.field.storage.get_valid_name(filename)
-        return os.path.join("images", slugify(self.image.collection), spec, filename)
+        return Path("images", slugify(self.image.collection), spec, filename)
 
 
 class BaseCategory(MultiSiteMixin, TranslatableMixin, models.Model):

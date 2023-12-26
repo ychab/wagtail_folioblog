@@ -1,5 +1,5 @@
-import os
 import tempfile
+from pathlib import Path
 
 from folioblog.core.factories import BasicPageFactory
 from folioblog.core.tests.selenium.webpages.dummy_page import DummyWebPage
@@ -19,7 +19,7 @@ class ScreenShotLiveTestCase(FolioBlogSeleniumServerTestCase):
 
     @staticmethod
     def get_screenshot_files(dir):
-        return [f for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
+        return [str(f) for f in Path(dir).iterdir() if f.is_file()]
 
     @skip_mobile()
     def test_screenshot(self):

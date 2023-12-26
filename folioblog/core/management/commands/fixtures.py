@@ -1,5 +1,3 @@
-import os
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -29,9 +27,9 @@ class Command(BaseCommand):
                 if app in ["auth", "contenttypes", "taggit", "wagtailcore"]:
                     app = "core"
 
-                basepath = os.path.join("folioblog", app, "fixtures", f"{fixture}.json")
-                filepath = os.path.join(settings.BASE_DIR, basepath)
-
+                # fmt: off
+                filepath = settings.BASE_DIR / "folioblog" / app / "fixtures" / f"{fixture}.json"
+                # fmt: on
                 kwargs = {
                     "indent": 4,
                     "output": filepath,
@@ -39,5 +37,5 @@ class Command(BaseCommand):
                 if fixture in ["pages", "blogpagetags"]:
                     kwargs["natural_foreign"] = True
 
-                self.stdout.write(f"Dump {model} > {basepath}")
+                self.stdout.write(f"Dump {model} > {filepath}")
                 call_command("dumpdata", model, **kwargs)

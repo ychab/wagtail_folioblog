@@ -12,8 +12,8 @@ EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 # Boost perf a little
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
 
-STATIC_ROOT = os.path.join(gettempdir(), "folioblog", "static")
-MEDIA_ROOT = os.path.join(gettempdir(), "folioblog", "media")
+STATIC_ROOT = Path(gettempdir(), "folioblog", "static")
+MEDIA_ROOT = Path(gettempdir(), "folioblog", "media")
 
 WAGTAILADMIN_BASE_URL = "http://127.0.0.1:8000"
 

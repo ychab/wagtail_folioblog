@@ -10,14 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+from pathlib import Path
 from tempfile import gettempdir
 
 from django.utils.log import DEFAULT_LOGGING
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = PROJECT_DIR.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -88,7 +87,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PROJECT_DIR, "templates"),
+            PROJECT_DIR / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -141,7 +140,7 @@ LANGUAGE_CODE = "fr"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-LOCALE_PATHS = (os.path.join(PROJECT_DIR, "locale"),)
+LOCALE_PATHS = (PROJECT_DIR / "locale",)
 FORMAT_MODULE_PATH = [
     "folioblog.formats",
 ]
@@ -157,13 +156,13 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, "static"),
+    PROJECT_DIR / "static",
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 CACHE_MIDDLEWARE_KEY_PREFIX = "ANONYMOUS"
@@ -192,7 +191,7 @@ LOGGING["formatters"]["debug"] = {
 LOGGING["handlers"]["debug_file"] = {
     "level": "DEBUG",
     "class": "logging.FileHandler",
-    "filename": os.path.join(gettempdir(), "folioblog-debug.log"),
+    "filename": Path(gettempdir(), "folioblog-debug.log"),
     "delay": True,
     "formatter": "debug",
 }
@@ -279,7 +278,7 @@ PASSWORD_REQUIRED_TEMPLATE = "cleanblog/password_required.html"
 
 TAGGIT_CASE_INSENSITIVE = True
 
-FOLIOBLOG_COMPRESSOR_UGLIFY_BINARY = os.path.join(
-    BASE_DIR, "node_modules", "uglify-js", "bin", "uglifyjs"
+FOLIOBLOG_COMPRESSOR_UGLIFY_BINARY = (
+    BASE_DIR / "node_modules" / "uglify-js" / "bin" / "uglifyjs"
 )
 FOLIOBLOG_COMPRESSOR_UGLIFY_ARGUMENTS = ""

@@ -1,6 +1,6 @@
-import os
 import shutil
 from io import StringIO
+from pathlib import Path
 from tempfile import gettempdir
 
 from django.conf import settings
@@ -15,13 +15,11 @@ Image = get_image_model()
 
 
 # To prevent collision with parallel test thread, use a specific dir for it.
-@override_settings(
-    MEDIA_ROOT=os.path.join(gettempdir(), "folioblog-orphanfiles", "media")
-)
+@override_settings(MEDIA_ROOT=Path(gettempdir(), "folioblog-orphanfiles", "media"))
 class CleanOrphanFilesCommandTestCase(TestCase):
     def tearDown(self):
         Image.objects.all().delete()
-        shutil.rmtree(os.path.join(settings.MEDIA_ROOT, "original_images"))
+        shutil.rmtree(settings.MEDIA_ROOT / "original_images")
 
     def test_image_used(self):
         ImageFactory()
