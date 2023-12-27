@@ -1,0 +1,35 @@
+[
+{
+    "model": "blog.blogpromote",
+    "pk": 3,
+    "fields": {
+        "translation_key": "acc6dd38-46bc-4b39-8c74-b52109dec804",
+        "locale": 1,
+        "site": 1,
+        "title": "Articles à la une",
+        "link_more": "Voir les articles"
+    }
+},
+{
+    "model": "blog.blogpromote",
+    "pk": 4,
+    "fields": {
+        "translation_key": "7b484009-4cfd-4608-9ee4-50854165e996",
+        "locale": 2,
+        "site": 1,
+        "title": "Promoted posts",
+        "link_more": "See all posts"
+    }
+},
+{
+    "model": "blog.blogpromote",
+    "pk": 5,
+    "fields": {
+        "translation_key": "ba61bf52-c4fe-4f02-977b-7261247bc8bc",
+        "locale": 3,
+        "site": 1,
+        "title": "Artículo destacado",
+        "link_more": "Ver todos los artículos"
+    }
+}
+]

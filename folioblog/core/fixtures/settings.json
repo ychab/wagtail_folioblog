@@ -1,0 +1,31 @@
+[
+{
+    "model": "core.folioblogsettings",
+    "pk": 3,
+    "fields": {
+        "site": 1,
+        "favicon": "favicons/demo-travel.ico",
+        "image_password": null,
+        "image_404": 278,
+        "text_404": "[{\"id\": \"45b61bb4-2748-4a94-a9bf-898cf7dfcd94\", \"type\": \"items\", \"value\": {\"text\": \"La page demand\\u00e9e n'existe pas, n'existe plus, ou n'a jamais exist\\u00e9...\", \"title\": \"Page introuvable\", \"language\": \"fr\", \"subtitle\": \"Oups !\", \"link_text\": \"Retour \\u00e0 l'accueil\"}}, {\"id\": \"a08ec77f-a3d7-45af-beac-60adfb5bff84\", \"type\": \"items\", \"value\": {\"text\": \"The requested page does not exist, no longer exists, or never existed...\", \"title\": \"Page not found\", \"language\": \"en\", \"subtitle\": \"Oops!\", \"link_text\": \"Go back to home\"}}, {\"id\": \"a51e78f4-a4f5-46d7-9cc8-3b1d3e9e323d\", \"type\": \"items\", \"value\": {\"text\": \"La p\\u00e1gina solicitada no existe, ya no existe o nunca existi\\u00f3...\", \"title\": \"P\\u00e1gina no encontrada\", \"language\": \"es\", \"subtitle\": \"\\u00a1Oops!\", \"link_text\": \"Volver a la p\\u00e1gina inicial\"}}]",
+        "google_analytics_id": "<CHANGE-IT>",
+        "author": "FolioBlog Demo",
+        "linkedin_url": "https://www.linkedin.com",
+        "github_url": "https://github.com/ychab/wagtail_folioblog",
+        "instagram_url": "",
+        "facebook_url": "",
+        "twitter_url": "",
+        "twitter_site": "",
+        "twitter_creator": "",
+        "email": "",
+        "phone": "",
+        "cookie_banner": "[{\"id\": \"5fbf8f34-33ab-4451-af26-b0b0f2d78191\", \"type\": \"banners\", \"value\": {\"page\": null, \"text\": \"Ce site demande votre consentement pour utiliser des cookies de Google Analytics. Acceptez-vous ?\", \"title\": \"Cookies\", \"language\": \"fr\", \"link_text\": \"\", \"button_accept_text\": \"Oui\", \"button_cancel_text\": \"Non\"}}, {\"id\": \"14ad40ff-7d5d-4e46-940c-3bc8afb5ee6b\", \"type\": \"banners\", \"value\": {\"page\": null, \"text\": \"This site requires your consent to use Google Analytics cookies. Do you agree?\", \"title\": \"Cookies\", \"language\": \"en\", \"link_text\": \"\", \"button_accept_text\": \"Yes\", \"button_cancel_text\": \"No\"}}, {\"id\": \"0336341f-1260-4005-9f99-9d5720a4ed0e\", \"type\": \"banners\", \"value\": {\"page\": null, \"text\": \"Este sitio solicita su consentimiento para utilizar cookies de Google Analytics. \\u00bfEst\\u00e1 de acuerdo?\", \"title\": \"Cookies\", \"language\": \"es\", \"link_text\": \"\", \"button_accept_text\": \"Si\", \"button_cancel_text\": \"No\"}}]",
+        "rss_feed": "[{\"id\": \"42803ff6-9a4e-4bb1-be62-020896c3a874\", \"type\": \"feeds\", \"value\": {\"limit\": 15, \"title\": \"D\\u00e9mo - voyages\", \"language\": \"fr\", \"description\": \"\"}}, {\"id\": \"8d4214aa-6a6b-4915-a6c5-1cbb7d9be660\", \"type\": \"feeds\", \"value\": {\"limit\": 15, \"title\": \"Demo - travels\", \"language\": \"en\", \"description\": \"\"}}, {\"id\": \"00f153ab-fc4c-4077-bbdb-fb23fda8e59b\", \"type\": \"feeds\", \"value\": {\"limit\": 15, \"title\": \"Demo - viajes\", \"language\": \"es\", \"description\": \"\"}}]",
+        "blog_pager_limit": 8,
+        "video_pager_limit": 10,
+        "gallery_collection": 28,
+        "search_limit": 10,
+        "search_operator": "and"
+    }
+}
+]

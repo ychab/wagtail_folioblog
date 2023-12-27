@@ -1,0 +1,35 @@
+[
+{
+    "model": "gallery.gallerypage",
+    "pk": 96,
+    "fields": {
+        "subheading": "Tous les articles en images",
+        "image": 273,
+        "image_alt": "Paysage",
+        "gallery_title": "",
+        "gallery_text": ""
+    }
+},
+{
+    "model": "gallery.gallerypage",
+    "pk": 139,
+    "fields": {
+        "subheading": "All articles in pictures",
+        "image": 273,
+        "image_alt": "Landscape",
+        "gallery_title": "",
+        "gallery_text": ""
+    }
+},
+{
+    "model": "gallery.gallerypage",
+    "pk": 163,
+    "fields": {
+        "subheading": "Todos los artículos en imágenes",
+        "image": 273,
+        "image_alt": "Paisaje",
+        "gallery_title": "",
+        "gallery_text": ""
+    }
+}
+]

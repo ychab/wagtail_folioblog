@@ -1,0 +1,29 @@
+[
+{
+    "model": "video.videotag",
+    "pk": 14,
+    "fields": {
+        "name": "colombia",
+        "slug": "colombia",
+        "site": 1
+    }
+},
+{
+    "model": "video.videotag",
+    "pk": 15,
+    "fields": {
+        "name": "united states",
+        "slug": "united-states",
+        "site": 1
+    }
+},
+{
+    "model": "video.videotag",
+    "pk": 16,
+    "fields": {
+        "name": "france",
+        "slug": "france",
+        "site": 1
+    }
+}
+]

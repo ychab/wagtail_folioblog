@@ -1,0 +1,41 @@
+[
+{
+    "model": "core.menu",
+    "pk": 4,
+    "fields": {
+        "translation_key": "57331463-153d-4747-9292-5570d9cae04e",
+        "locale": 1,
+        "site": 1,
+        "name": "Demo voyages",
+        "homepage": 93,
+        "promopage": null,
+        "is_active": true
+    }
+},
+{
+    "model": "core.menu",
+    "pk": 5,
+    "fields": {
+        "translation_key": "262a482b-d895-4bcb-98ec-b1591ad45a44",
+        "locale": 2,
+        "site": 1,
+        "name": "Demo travel",
+        "homepage": 117,
+        "promopage": null,
+        "is_active": true
+    }
+},
+{
+    "model": "core.menu",
+    "pk": 6,
+    "fields": {
+        "translation_key": "cb47728c-8315-4fb5-b802-af2e42db732b",
+        "locale": 3,
+        "site": 1,
+        "name": "Demo viajes",
+        "homepage": 141,
+        "promopage": null,
+        "is_active": true
+    }
+}
+]

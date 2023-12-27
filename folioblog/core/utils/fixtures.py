@@ -2,16 +2,21 @@ from collections import OrderedDict
 
 fixtures_map = OrderedDict(
     [
+        # Core
+        ("locales", "wagtailcore.Locale"),
+        ("pages", "wagtailcore.Page"),
         ("sites", "wagtailcore.Site"),
-        ("settings", "core.FolioBlogSettings"),
         ("collections", "wagtailcore.Collection"),
         ("photographers", "core.Photographer"),
         ("images", "core.FolioImage"),
+        ("renditions", "core.FolioRendition"),
+        ("settings", "core.FolioBlogSettings"),
         ("tags", "taggit.Tag"),
         ("taggeditems", "taggit.TaggedItem"),
-        ("pages", "wagtailcore.Page"),
-        ("portfolio", "portfolio.PortFolioPage"),
-        ("basicpages", "core.BasicPage"),
+        ("embeds", "wagtailembeds.Embed"),
+        # Home pages
+        ("homepage", "home.HomePage"),
+        # Blog pages
         ("blogcategories", "blog.BlogCategory"),
         ("blogindex", "blog.BlogIndexPage"),
         ("blogpages", "blog.BlogPage"),
@@ -19,19 +24,24 @@ fixtures_map = OrderedDict(
         ("blogpagetags", "blog.BlogPageTag"),
         ("blogpromote", "blog.BlogPromote"),
         ("blogpromotelink", "blog.BlogPromoteLink"),
-        ("searchindex", "search.SearchIndexPage"),
-        ("videoindex", "video.VideoIndexPage"),
+        # Video pages
         ("videocategories", "video.VideoCategory"),
+        ("videoindex", "video.VideoIndexPage"),
+        ("videopages", "video.VideoPage"),
         ("videotags", "video.VideoTag"),
         ("videopagetags", "video.VideoPageTag"),
-        ("videopages", "video.VideoPage"),
         ("videopromote", "video.VideoPromote"),
         ("videopromotelink", "video.VideoPromoteLink"),
+        # Basic pages
+        ("basicpages", "core.BasicPage"),
+        # Other page types
+        ("gallerypage", "gallery.GalleryPage"),
+        ("searchindex", "search.SearchIndexPage"),
+        # Page relationships
         ("basicpagerelatedlinks", "core.BasicPageRelatedLink"),
         ("blogpagerelatedlinks", "blog.BlogPageRelatedLink"),
         ("videopagerelatedlinks", "video.VideoPageRelatedLink"),
-        ("homepage", "home.HomePage"),
-        ("gallerypage", "gallery.GalleryPage"),
+        # Remaining stuff
         ("menu", "core.Menu"),
         ("menulink", "core.MenuLink"),
     ]

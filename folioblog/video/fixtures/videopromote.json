@@ -1,0 +1,35 @@
+[
+{
+    "model": "video.videopromote",
+    "pk": 3,
+    "fields": {
+        "translation_key": "a9f088ff-ace7-41cb-9921-8a24abf86829",
+        "locale": 1,
+        "site": 1,
+        "title": "Vidéos à la une",
+        "link_more": "Voir les vidéos"
+    }
+},
+{
+    "model": "video.videopromote",
+    "pk": 4,
+    "fields": {
+        "translation_key": "d03d8bd7-588c-4dfc-8909-b53ab5856547",
+        "locale": 2,
+        "site": 1,
+        "title": "Promoted videos",
+        "link_more": "See all videos"
+    }
+},
+{
+    "model": "video.videopromote",
+    "pk": 5,
+    "fields": {
+        "translation_key": "15908af8-3832-4543-975d-9afe0ec1f08d",
+        "locale": 3,
+        "site": 1,
+        "title": "Vídeos destacados",
+        "link_more": "Ver los vídeos"
+    }
+}
+]

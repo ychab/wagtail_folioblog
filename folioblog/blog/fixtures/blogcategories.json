@@ -1,0 +1,101 @@
+[
+{
+    "model": "blog.blogcategory",
+    "pk": 7,
+    "fields": {
+        "translation_key": "165b7f6f-25b4-414d-ace2-d4f0e9f58e07",
+        "locale": 1,
+        "site": 1,
+        "name": "France",
+        "slug": "france"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 8,
+    "fields": {
+        "translation_key": "52b6436e-ad06-49f7-8968-5a37ffc734a8",
+        "locale": 1,
+        "site": 1,
+        "name": "Colombie",
+        "slug": "colombie"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 9,
+    "fields": {
+        "translation_key": "ffe3e8c8-7a4b-4ef2-963f-649b1f9ab0a3",
+        "locale": 1,
+        "site": 1,
+        "name": "États-unis",
+        "slug": "etats-unis"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 10,
+    "fields": {
+        "translation_key": "a47a7b4c-7faa-4bf1-bd0a-70202106cc0a",
+        "locale": 2,
+        "site": 1,
+        "name": "France",
+        "slug": "france"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 11,
+    "fields": {
+        "translation_key": "41da8a72-62bf-48e3-b373-ea6a4c8e8764",
+        "locale": 2,
+        "site": 1,
+        "name": "United States",
+        "slug": "united-states"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 12,
+    "fields": {
+        "translation_key": "aae60c64-11a1-4b0c-ad6a-f51e0cdf866e",
+        "locale": 2,
+        "site": 1,
+        "name": "Colombia",
+        "slug": "colombia"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 13,
+    "fields": {
+        "translation_key": "ecb1f053-1023-440c-849f-7285ff184367",
+        "locale": 3,
+        "site": 1,
+        "name": "Colombia",
+        "slug": "colombia"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 14,
+    "fields": {
+        "translation_key": "a51f8b29-4b22-4a57-ab54-c312f50f4f30",
+        "locale": 3,
+        "site": 1,
+        "name": "Francia",
+        "slug": "francia"
+    }
+},
+{
+    "model": "blog.blogcategory",
+    "pk": 15,
+    "fields": {
+        "translation_key": "128348d4-0203-4ca6-a5d8-978c7b8fed14",
+        "locale": 3,
+        "site": 1,
+        "name": "Estados Unidos",
+        "slug": "estados-unidos"
+    }
+}
+]

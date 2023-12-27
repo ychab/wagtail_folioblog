@@ -23,6 +23,7 @@ RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommend
     wget \
     curl \
     tar \
+    git \
     xz-utils
 
 # Then install nodeJS with NPM.
@@ -34,12 +35,9 @@ RUN rm /opt/node.tar.xz
 # Create an app user.
 RUN useradd --create-home --shell /bin/bash appuser
 
-# Fetch source code from GitHub archives.
-RUN mkdir /app
-RUN wget -O /app/folioblog.tar.gz https://github.com/ychab/wagtail_folioblog/archive/refs/tags/${FOLIOBLOG_RELEASE}.tar.gz
-RUN tar xzf /app/folioblog.tar.gz -C /app/ --no-same-owner --strip-components=1
+# Fetch source with git for simplicity
+RUN git clone --depth=1 --branch=${FOLIOBLOG_RELEASE} https://github.com/ychab/wagtail_folioblog.git /app
 RUN chown -R appuser:appuser /app
-RUN rm /app/folioblog.tar.gz
 
 # Create virtualenv and install backend dependencies with gunicorn.
 RUN python -m venv ${VIRTUAL_ENV}

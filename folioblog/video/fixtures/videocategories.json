@@ -1,0 +1,68 @@
+[
+{
+    "model": "video.videocategory",
+    "pk": 7,
+    "fields": {
+        "translation_key": "afdb9af3-fb34-4c14-9f08-0a049dfdda09",
+        "locale": 1,
+        "site": 1,
+        "name": "Documentaire",
+        "slug": "documentaire"
+    }
+},
+{
+    "model": "video.videocategory",
+    "pk": 8,
+    "fields": {
+        "translation_key": "751af0e1-226a-4f50-b36f-346794dcf59b",
+        "locale": 2,
+        "site": 1,
+        "name": "Documentary",
+        "slug": "documentary"
+    }
+},
+{
+    "model": "video.videocategory",
+    "pk": 9,
+    "fields": {
+        "translation_key": "5ec79baf-3f2a-474e-aa42-ebe241f21ea3",
+        "locale": 3,
+        "site": 1,
+        "name": "Documental",
+        "slug": "documental"
+    }
+},
+{
+    "model": "video.videocategory",
+    "pk": 10,
+    "fields": {
+        "translation_key": "4251b85c-6737-4ad7-b2a6-d40aefb2ca60",
+        "locale": 1,
+        "site": 1,
+        "name": "Tourisme",
+        "slug": "tourisme"
+    }
+},
+{
+    "model": "video.videocategory",
+    "pk": 11,
+    "fields": {
+        "translation_key": "61956851-cb91-46e4-90ad-c9c61e686a0c",
+        "locale": 3,
+        "site": 1,
+        "name": "Turismo",
+        "slug": "turismo"
+    }
+},
+{
+    "model": "video.videocategory",
+    "pk": 12,
+    "fields": {
+        "translation_key": "68a5fe15-6c49-4bc7-98f0-283a5d1be9e4",
+        "locale": 2,
+        "site": 1,
+        "name": "Tourism",
+        "slug": "tourism"
+    }
+}
+]

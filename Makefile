@@ -3,6 +3,7 @@
 .EXPORT_ALL_VARIABLES:
 
 CURRENT_MAKEFILE := $(lastword $(MAKEFILE_LIST))
+FIXTURES_FILE_ID = 11smbQZPF-wib-aMRUgR_uPuBzR_7zd1t
 
 include .env
 
@@ -44,7 +45,7 @@ fixtures_dump:
 	sed -i -E 's/"latest_revision": (.+)/"latest_revision": null,/g' folioblog/core/fixtures/pages.json
 
 fixtures_load:
-	python manage.py fixtures load
+	python manage.py fixtures load --reset
 
 ################
 # Docker command
@@ -133,6 +134,15 @@ apptrans:
 	docker compose exec app bash -c 'cd folioblog && python ../manage.py makemessages -d djangojs -l en -l es -l fr'
 	docker compose exec app bash -c 'cd folioblog && python ../manage.py compilemessages -l en -l es -l fr'
 
+appfixturesdump:
+	docker compose exec app python manage.py fixtures dump
+	sed -i -E 's/"latest_revision_created_at": (.+)/"latest_revision_created_at": null,/g' folioblog/core/fixtures/pages.json
+	sed -i -E 's/"live_revision": (.+)/"live_revision": null,/g' folioblog/core/fixtures/pages.json
+	sed -i -E 's/"latest_revision": (.+)/"latest_revision": null,/g' folioblog/core/fixtures/pages.json
+
+appfixturesload:
+	docker compose exec app python manage.py fixtures load --reset
+
 apptest:
 	docker compose exec app bash -c 'DJANGO_SETTINGS_MODULE=folioblog.settings.test python manage.py test --noinput --exclude-tag=slow --parallel=4 folioblog'
 
@@ -145,6 +155,37 @@ appcron:
 	docker compose exec app python manage.py publish_scheduled_pages
 	docker compose exec app python manage.py generaterenditions
 	docker compose exec app python manage.py loadcachepages
+
+##############
+# Initial data
+##############
+
+initial_media:
+	rm -Rf media/favicons media/images media/original_images
+	wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=${FIXTURES_FILE_ID}' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=${FIXTURES_FILE_ID}" -O media.tar.gz && rm -rf /tmp/cookies.txt
+	tar xzf media.tar.gz
+	rm media.tar.gz
+
+initial_data: initial_media fixtures_load
+
+initial_data_dev: initial_media appfixturesload
+
+initial_data_prod: initial_media appfixturesload
+	docker compose cp media/. app:${FOLIOBLOG_MEDIA_ROOT}
+	docker compose exec app python manage.py updatesite --site=1 --hostname=folio.local --port 443
+
+#############
+# Certificate
+#############
+
+certs:
+	openssl req -x509 \
+		-nodes \
+		-days 365 \
+		-newkey rsa:2048 \
+		-keyout ./docker/prod/nginx/ssl/certs/folio-selfsigned.key \
+		-out ./docker/prod/nginx/ssl/certs/folio-selfsigned.crt \
+		-config ./docker/prod/nginx/ssl/csr.conf
 
 ###############
 # Restore tools
@@ -182,16 +223,3 @@ restore_prod: restore_media restore_db
 	docker compose exec app python manage.py updatesite --site=1 --hostname=folio.local --port 443
 	docker compose exec app python manage.py updatesite --site=2 --hostname=blog.folio.local --port 443
 	docker compose exec app python manage.py updatesite --site=3 --hostname=demo.folio.local --port 443
-
-#############
-# Certificate
-#############
-
-certs:
-	openssl req -x509 \
-		-nodes \
-		-days 365 \
-		-newkey rsa:2048 \
-		-keyout ./docker/prod/nginx/ssl/certs/folio-selfsigned.key \
-		-out ./docker/prod/nginx/ssl/certs/folio-selfsigned.crt \
-		-config ./docker/prod/nginx/ssl/csr.conf

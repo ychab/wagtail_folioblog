@@ -1,0 +1,83 @@
+[
+{
+    "model": "video.videopromotelink",
+    "pk": 12,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 3,
+        "related_page": 171
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 13,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 3,
+        "related_page": 174
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 14,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 3,
+        "related_page": 168
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 15,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 4,
+        "related_page": 175
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 16,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 4,
+        "related_page": 172
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 17,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 4,
+        "related_page": 169
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 18,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 5,
+        "related_page": 170
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 19,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 5,
+        "related_page": 176
+    }
+},
+{
+    "model": "video.videopromotelink",
+    "pk": 20,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 5,
+        "related_page": 173
+    }
+}
+]

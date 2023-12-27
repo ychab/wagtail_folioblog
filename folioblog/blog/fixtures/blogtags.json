@@ -1,0 +1,83 @@
+[
+{
+    "model": "blog.blogtag",
+    "pk": 161,
+    "fields": {
+        "name": "city",
+        "slug": "city",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 163,
+    "fields": {
+        "name": "capital",
+        "slug": "capital",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 164,
+    "fields": {
+        "name": "caraibe",
+        "slug": "caraïbe",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 165,
+    "fields": {
+        "name": "island",
+        "slug": "island",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 174,
+    "fields": {
+        "name": "castel",
+        "slug": "castel",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 175,
+    "fields": {
+        "name": "beach",
+        "slug": "beach",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 176,
+    "fields": {
+        "name": "montain",
+        "slug": "montain",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 177,
+    "fields": {
+        "name": "river",
+        "slug": "river",
+        "site": 1
+    }
+},
+{
+    "model": "blog.blogtag",
+    "pk": 178,
+    "fields": {
+        "name": "wine",
+        "slug": "wine",
+        "site": 1
+    }
+}
+]

@@ -1,0 +1,29 @@
+[
+{
+    "model": "home.homepage",
+    "pk": 93,
+    "fields": {
+        "subheading": "Site de démonstration du CMS Wagtail",
+        "image": 277,
+        "image_alt": "Paysage"
+    }
+},
+{
+    "model": "home.homepage",
+    "pk": 117,
+    "fields": {
+        "subheading": "Wagtail CMS demo site",
+        "image": 277,
+        "image_alt": "Landscape"
+    }
+},
+{
+    "model": "home.homepage",
+    "pk": 141,
+    "fields": {
+        "subheading": "Sitio de demostración de Wagtail CMS",
+        "image": 277,
+        "image_alt": "Paisaje"
+    }
+}
+]

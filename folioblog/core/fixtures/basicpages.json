@@ -1,0 +1,35 @@
+[
+{
+    "model": "core.basicpage",
+    "pk": 165,
+    "fields": {
+        "subheading": "Site de démonstration avec Wagtail",
+        "image": 275,
+        "image_alt": "Rizière au coeur des montagnes",
+        "intro": "Ce site est une démonstration avec le CMS Wagtail autour de la thématique du voyage et des grandes villes de France, Colombie et États-Unis.",
+        "body": "<p data-block-key=\"m8h0r\">L&#x27;ensemble des articles disponibles sur ce site ont été rédigés à l&#x27;aide de <a href=\"https://chat.openai.com/\">ChatGPT</a>. Par conséquent, la véracité des informations diffusées <b>n&#x27;a pas été vérifié</b>. En effet, la vocation de ce site n&#x27;est pas d&#x27;être une agence de tourisme, mais plutôt d&#x27;illustrer la mise en place d&#x27;un site internet avec le <a href=\"https://wagtail.org/\">CMS Wagtail</a>.</p><p data-block-key=\"9v19c\">Pour cela, il est préférable d&#x27;avoir du contenu pertinent afin de vérifier l&#x27;efficacité de la recherche, mais aussi des traductions (merci <a href=\"https://www.deepl.com/\">DeepL</a> !). De même, avoir des visuels de qualité libre de droit, provenant pour la plupart du site <a href=\"https://www.pexels.com/\">Pexels</a> pour les destinations encore non visitées, permet d&#x27;embellir <a href=\"https://startbootstrap.com/theme/clean-blog\">l&#x27;intégration graphique</a>.</p><p data-block-key=\"69b7c\">L&#x27;ensemble des éléments visibles sur ces pages sont entièrement configurables depuis le back-office, notamment la gestion :</p><ul><li data-block-key=\"92e7g\">du contenu (et ses traductions) : titre, texte (WYSIWYG), etc</li><li data-block-key=\"ei4b0\">des &quot;snippets&quot; : menu, catégories, étiquettes, blocs, etc</li><li data-block-key=\"1lgvb\">des images (bibliothèque)</li><li data-block-key=\"6q3m2\">des vidéos</li><li data-block-key=\"d1l0e\">du SEO</li><li data-block-key=\"5dsuo\">des multi-sites et leurs configurations</li></ul><p data-block-key=\"e1mbt\">Si vous souhaitez pouvoir tester par vous-même la solution, le code source est disponible sur <a href=\"https://github.com/ychab/wagtail_folioblog\">GitHub</a>.</p><p data-block-key=\"35t9t\">Si cette démonstration vous a plu et convaincu, n&#x27;hésitez pas à faire un tour sur mon <a id=\"2\" linktype=\"page\">portfolio</a> et à entrer en contact avec moi, je serai ravi de pouvoir échanger avec vous.</p>"
+    }
+},
+{
+    "model": "core.basicpage",
+    "pk": 166,
+    "fields": {
+        "subheading": "Demo site with Wagtail",
+        "image": 275,
+        "image_alt": "Rice fields in the heart of the mountains",
+        "intro": "This site is a demonstration with the Wagtail CMS based on the theme of travel and the major cities of France, Colombia and the United States.",
+        "body": "<p data-block-key=\"m8h0r\">All the articles available on this site were written using <a href=\"https://chat.openai.com/\">ChatGPT</a>. Consequently, the veracity of the information published has not been verified. Indeed, this site is not intended to be a tourism agency, but rather to illustrate how to set up a website using the <a href=\"https://wagtail.org/\">Wagtail CMS</a>.</p><p data-block-key=\"9savt\">For this, it&#x27;s best to have relevant content to check the effectiveness of the search, but also of the translations (thanks <a href=\"https://www.deepl.com/\">DeepL</a>!). Likewise, having quality royalty-free visuals, mostly from the <a href=\"https://www.pexels.com/\">Pexels</a> site for as yet unvisited destinations, helps to embellish the <a href=\"https://startbootstrap.com/theme/clean-blog\">graphic integration</a>.</p><p data-block-key=\"dd3r8\">All the elements visible on these pages are fully configurable from the back office, including management of:</p><ul><li data-block-key=\"3g99e\">content (and translations): title, text (WYSIWYG), etc.</li><li data-block-key=\"95k72\">snippets: menu, categories, labels, blocks, etc.</li><li data-block-key=\"a8g6o\">images (library)</li><li data-block-key=\"9cn49\">videos</li><li data-block-key=\"bkjfd\">SEO</li><li data-block-key=\"fbqkv\">multi-sites and their configurations</li></ul><p data-block-key=\"f6iit\">If you&#x27;d like to try out the solution for yourself, the source code is available on <a href=\"https://github.com/ychab/wagtail_folioblog\">GitHub</a>.</p><p data-block-key=\"2jnu6\">If this demonstration has convinced you, don&#x27;t hesitate to take a look at my <a id=\"2\" linktype=\"page\">portfolio</a> and get in touch with me. I&#x27;d be delighted to talk to you.</p>"
+    }
+},
+{
+    "model": "core.basicpage",
+    "pk": 167,
+    "fields": {
+        "subheading": "Sitio de demostración con Wagtail",
+        "image": 275,
+        "image_alt": "Arrozales en el corazón de las montañas",
+        "intro": "Este sitio es una demostración utilizando el CMS Wagtail basado en el tema de los viajes y las principales ciudades de Francia, Colombia y Estados Unidos.",
+        "body": "<p data-block-key=\"m8h0r\">Todos los artículos disponibles en este sitio se han escrito utilizando <a href=\"https://chat.openai.com/\">ChatGPT</a>. En consecuencia, <b>no se ha verificado</b> la veracidad de la información publicada. El objetivo de este sitio no es ser una agencia de turismo, sino ilustrar cómo montar un sitio web utilizando el <a href=\"https://wagtail.org/\">CMS Wagtail</a>.</p><p data-block-key=\"dj2l9\">Para ello, es preferible disponer de contenidos pertinentes para comprobar la eficacia de la búsqueda, pero también de las traducciones (¡gracias <a href=\"https://www.deepl.com/\">DeepL</a>!). Del mismo modo, disponer de elementos visuales de alta calidad y libres de derechos de autor, procedentes en su mayoría del sitio <a href=\"https://www.pexels.com/\">Pexels</a> para los destinos que aún no se han visitado, mejorará la <a href=\"https://startbootstrap.com/theme/clean-blog\">integración gráfica</a>.</p><p data-block-key=\"541el\">Todos los elementos visibles en estas páginas pueden configurarse completamente desde el back office, incluida la gestión de:</p><ul><li data-block-key=\"f5ulm\">contenido (y traducciones): título, texto (WYSIWYG), etc.</li><li data-block-key=\"56r6b\">&quot;snippets&quot;: menú, categorías, etiquetas, bloques, etc.</li><li data-block-key=\"1fsvh\">imágenes (biblioteca)</li><li data-block-key=\"5075i\">vídeos</li><li data-block-key=\"ds619\">SEO</li><li data-block-key=\"581nh\">multisitios y sus configuraciones</li></ul><p data-block-key=\"eoso0\">Si quieres probar la solución por ti mismo, el código fuente está disponible en <a href=\"https://github.com/ychab/wagtail_folioblog\">GitHub</a>.</p><p data-block-key=\"4vb53\">Si esta demostración le ha convencido, no dude en echar un vistazo a mi <a id=\"2\" linktype=\"page\">portfolio</a> y ponerse en contacto conmigo. Estaré encantado de hablar con usted.</p>"
+    }
+}
+]

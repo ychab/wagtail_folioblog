@@ -1,0 +1,3315 @@
+[
+{
+    "model": "wagtailcore.page",
+    "pk": 1,
+    "fields": {
+        "path": "0001",
+        "depth": 1,
+        "numchild": 3,
+        "translation_key": "310aa286-221c-46aa-8baf-919362fc4fd8",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": null,
+        "last_published_at": null,
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Root",
+        "draft_title": "Root",
+        "slug": "root",
+        "content_type": [
+            "wagtailcore",
+            "page"
+        ],
+        "url_path": "/",
+        "owner": null,
+        "seo_title": "",
+        "show_in_menus": false,
+        "search_description": "",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 93,
+    "fields": {
+        "path": "00010005",
+        "depth": 2,
+        "numchild": 5,
+        "translation_key": "34c013b9-6cfe-4c86-b0ff-023742556e4d",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:24.807Z",
+        "last_published_at": "2023-11-26T18:15:24.807Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Démo Voyages",
+        "draft_title": "Démo Voyages",
+        "slug": "demo-voyages",
+        "content_type": [
+            "home",
+            "homepage"
+        ],
+        "url_path": "/demo-voyages/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Démo voyages",
+        "show_in_menus": false,
+        "search_description": "Ceci est un site de démo, construit avec le CMS Wagtail",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 94,
+    "fields": {
+        "path": "000100050002",
+        "depth": 3,
+        "numchild": 19,
+        "translation_key": "3920412e-d21f-4b99-8d03-2d6775b6cff0",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.064Z",
+        "last_published_at": "2023-11-26T18:15:25.064Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Articles",
+        "draft_title": "Articles",
+        "slug": "articles",
+        "content_type": [
+            "blog",
+            "blogindexpage"
+        ],
+        "url_path": "/demo-voyages/articles/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Page d'accueil des articles de villes",
+        "show_in_menus": false,
+        "search_description": "Les plus belles villes de France, Colombie et USA par ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 95,
+    "fields": {
+        "path": "000100050003",
+        "depth": 3,
+        "numchild": 3,
+        "translation_key": "3e13dbb4-632a-46a8-a64e-331941016417",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.719Z",
+        "last_published_at": "2023-11-26T18:15:27.719Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Vidéos",
+        "draft_title": "Vidéos",
+        "slug": "videos",
+        "content_type": [
+            "video",
+            "videoindexpage"
+        ],
+        "url_path": "/demo-voyages/videos/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Page d'accueil des vidéos",
+        "show_in_menus": false,
+        "search_description": "Page d'accueil des vidéos des villes",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 96,
+    "fields": {
+        "path": "000100050004",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "642b5357-3c2c-417b-b3d1-1640f54bce8a",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.293Z",
+        "last_published_at": "2023-11-26T18:15:28.293Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Gallerie",
+        "draft_title": "Gallerie",
+        "slug": "gallerie",
+        "content_type": [
+            "gallery",
+            "gallerypage"
+        ],
+        "url_path": "/demo-voyages/gallerie/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Page de gallerie",
+        "show_in_menus": false,
+        "search_description": "Gallerie de toutes les images des articles de villes",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 97,
+    "fields": {
+        "path": "000100050005",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "200cbdb0-de04-47d5-b319-f254ed4d0ad7",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.372Z",
+        "last_published_at": "2023-11-26T18:15:28.372Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Recherche",
+        "draft_title": "Recherche",
+        "slug": "recherche",
+        "content_type": [
+            "search",
+            "searchindexpage"
+        ],
+        "url_path": "/demo-voyages/recherche/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Page de recherche des articles",
+        "show_in_menus": false,
+        "search_description": "Recherchez les articles rédigés par ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 98,
+    "fields": {
+        "path": "0001000500020007",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "24f8d241-ec5b-4942-b39a-1b808fc889e5",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.973Z",
+        "last_published_at": "2023-11-26T18:15:25.973Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Bogota",
+        "draft_title": "Bogota",
+        "slug": "bogota",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/bogota/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Bogota",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Bogota (Colombie), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 99,
+    "fields": {
+        "path": "0001000500020009",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a2d46991-950c-4a50-9d12-4e9c9648d3c0",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.226Z",
+        "last_published_at": "2023-11-26T18:15:26.226Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Carthagène des Indes",
+        "draft_title": "Carthagène des Indes",
+        "slug": "carthagene-des-indes",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/carthagene-des-indes/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ville de carthagène des Indes",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Carthagène des Indes (Colombie), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 100,
+    "fields": {
+        "path": "0001000500020008",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "c7e446fc-60c5-497c-9415-e9ef63997726",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.098Z",
+        "last_published_at": "2023-11-26T18:15:26.098Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Cali",
+        "draft_title": "Cali",
+        "slug": "cali",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/cali/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ville de Cali",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Cali (Colombie), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 101,
+    "fields": {
+        "path": "000100050002000B",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "38ba2bf6-f65a-433f-a96a-5710009b9da5",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.500Z",
+        "last_published_at": "2023-11-26T18:15:26.500Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Andrés",
+        "draft_title": "San Andrés",
+        "slug": "san-andres",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/san-andres/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "L'île de San Andrés",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur l'île de San Andrés (Colombie), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 102,
+    "fields": {
+        "path": "000100050002000A",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a78aebad-3ba9-426d-aa4b-ae13d8a141f2",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.373Z",
+        "last_published_at": "2023-11-26T18:15:26.373Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Medellin",
+        "draft_title": "Medellin",
+        "slug": "medellin",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/medellin/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ville de Medellin",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Medellin (Colombie), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 103,
+    "fields": {
+        "path": "0001000500020005",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "732bc8d0-845f-44d4-ac3d-1ea55dfe83af",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.701Z",
+        "last_published_at": "2023-11-26T18:15:25.701Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Paris",
+        "draft_title": "Paris",
+        "slug": "paris",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/paris/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ville de Paris",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Paris (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 104,
+    "fields": {
+        "path": "0001000500020002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e4442451-8044-4d67-b4f7-3af6b25d6025",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.314Z",
+        "last_published_at": "2023-11-26T18:15:25.314Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Carcassonne",
+        "draft_title": "Carcassonne",
+        "slug": "carcassonne",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/carcassonne/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ville de Carcassonne",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Carcassonne (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 105,
+    "fields": {
+        "path": "000100050002000E",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "97fc4204-7da1-4965-8d85-01230cb41586",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.884Z",
+        "last_published_at": "2023-11-26T18:15:26.884Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "New York",
+        "draft_title": "New York",
+        "slug": "new-york",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/new-york/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de New York",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de New York (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 106,
+    "fields": {
+        "path": "000100050002000D",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "aa6f05a0-4032-47e7-bbde-eac6c4402a8c",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.753Z",
+        "last_published_at": "2023-11-26T18:15:26.753Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Los Angeles",
+        "draft_title": "Los Angeles",
+        "slug": "los-angeles",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/los-angeles/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Los Angeles",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Los Angeles (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 107,
+    "fields": {
+        "path": "000100050002000F",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "f5e5ec9b-e2c9-413b-9278-e30b0d4586fe",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.011Z",
+        "last_published_at": "2023-11-26T18:15:27.011Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Miami",
+        "draft_title": "Miami",
+        "slug": "miami",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/miami/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Miami",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Miami (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 108,
+    "fields": {
+        "path": "000100050002000H",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "eabd1a3e-0798-4e57-a832-d0a9d5c97120",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.289Z",
+        "last_published_at": "2023-11-26T18:15:27.289Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Francisco",
+        "draft_title": "San Francisco",
+        "slug": "san-francisco",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/san-francisco/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de San Francisco",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de San Francisco (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 109,
+    "fields": {
+        "path": "000100050002000C",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "dcc2dbb5-8e69-4bea-8970-c80d55e33c13",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:26.626Z",
+        "last_published_at": "2023-11-26T18:15:26.626Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Chicago",
+        "draft_title": "Chicago",
+        "slug": "chicago",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/chicago/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Chicago",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Chicago (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 110,
+    "fields": {
+        "path": "000100050002000J",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "5c4e5c7c-429a-4b1c-8e2e-006313306be5",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.600Z",
+        "last_published_at": "2023-11-26T18:15:27.600Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Washington DC",
+        "draft_title": "Washington DC",
+        "slug": "washington",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/washington/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Washington",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Washington DC (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 111,
+    "fields": {
+        "path": "000100050002000G",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "7634ae2c-bedb-41dc-95ac-2f8f58760b0b",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.141Z",
+        "last_published_at": "2023-11-26T18:15:27.141Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Philadelphie",
+        "draft_title": "Philadelphie",
+        "slug": "philadelphie",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/philadelphie/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Philadelphie",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Philadelphie (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 112,
+    "fields": {
+        "path": "000100050002000I",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e346f383-8b8a-4425-84e8-db80d3b543d3",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.454Z",
+        "last_published_at": "2023-11-26T18:15:27.454Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Seattle",
+        "draft_title": "Seattle",
+        "slug": "seattle",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/seattle/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Seattle",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Seattle (USA), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 113,
+    "fields": {
+        "path": "0001000500020003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "73e799ef-c866-4a75-b090-05a260552fde",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.446Z",
+        "last_published_at": "2023-11-26T18:15:25.446Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Lyon",
+        "draft_title": "Lyon",
+        "slug": "lyon",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/lyon/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Lyon",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Lyon (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 114,
+    "fields": {
+        "path": "0001000500020001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "91283b18-ce62-4289-b014-b9e391665b6f",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.180Z",
+        "last_published_at": "2023-11-26T18:15:25.180Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Bordeaux",
+        "draft_title": "Bordeaux",
+        "slug": "bordeaux",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/bordeaux/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Bordeaux",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Bordeaux (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 115,
+    "fields": {
+        "path": "0001000500020004",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "baed1288-b97f-4a0f-ac9d-02db5b34bebf",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.570Z",
+        "last_published_at": "2023-11-26T18:15:25.570Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Marseille",
+        "draft_title": "Marseille",
+        "slug": "marseille",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/marseille/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Marseille",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Marseille (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 116,
+    "fields": {
+        "path": "0001000500020006",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "1cbdb526-cab1-4905-8a7b-2038853fbbd3",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:25.827Z",
+        "last_published_at": "2023-11-26T18:15:25.827Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Strasbourg",
+        "draft_title": "Strasbourg",
+        "slug": "strasbourg",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-voyages/articles/strasbourg/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Ville de Strasbourg",
+        "show_in_menus": false,
+        "search_description": "Un peu d'histoire sur la ville de Strasbourg (France), par ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 117,
+    "fields": {
+        "path": "00010006",
+        "depth": 2,
+        "numchild": 5,
+        "translation_key": "34c013b9-6cfe-4c86-b0ff-023742556e4d",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.448Z",
+        "last_published_at": "2023-11-26T18:15:28.448Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Demo Travels",
+        "draft_title": "Demo Travels",
+        "slug": "demo-travels",
+        "content_type": [
+            "home",
+            "homepage"
+        ],
+        "url_path": "/demo-travels/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Demo travels",
+        "show_in_menus": false,
+        "search_description": "This is a demo site, built with the Wagtail CMS",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 118,
+    "fields": {
+        "path": "000100060002",
+        "depth": 3,
+        "numchild": 19,
+        "translation_key": "3920412e-d21f-4b99-8d03-2d6775b6cff0",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.738Z",
+        "last_published_at": "2023-11-26T18:15:28.738Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Posts",
+        "draft_title": "Posts",
+        "slug": "posts",
+        "content_type": [
+            "blog",
+            "blogindexpage"
+        ],
+        "url_path": "/demo-travels/posts/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City articles home page",
+        "show_in_menus": false,
+        "search_description": "The most beautiful cities in France, Colombia and USA by ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 119,
+    "fields": {
+        "path": "0001000600020007",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "24f8d241-ec5b-4942-b39a-1b808fc889e5",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.676Z",
+        "last_published_at": "2023-11-26T18:15:29.676Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Bogotá",
+        "draft_title": "Bogotá",
+        "slug": "bogota",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/bogota/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Bogotá",
+        "show_in_menus": false,
+        "search_description": "A little history of the town of Bogotá (Colombia), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 120,
+    "fields": {
+        "path": "0001000600020009",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a2d46991-950c-4a50-9d12-4e9c9648d3c0",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.955Z",
+        "last_published_at": "2023-11-26T18:15:29.955Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Cartagena de Indias",
+        "draft_title": "Cartagena de Indias",
+        "slug": "cartagena-de-indias",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/cartagena-de-indias/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Cartagena de Indias",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Cartagena de Indias (Colombia), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 121,
+    "fields": {
+        "path": "0001000600020008",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "c7e446fc-60c5-497c-9415-e9ef63997726",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.818Z",
+        "last_published_at": "2023-11-26T18:15:29.818Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Cali",
+        "draft_title": "Cali",
+        "slug": "cali",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/cali/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Cali",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Cali (Colombia), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 122,
+    "fields": {
+        "path": "000100060002000B",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "38ba2bf6-f65a-433f-a96a-5710009b9da5",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.237Z",
+        "last_published_at": "2023-11-26T18:15:30.237Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Andrés",
+        "draft_title": "San Andrés",
+        "slug": "san-andres",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/san-andres/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "San Andrés Island",
+        "show_in_menus": false,
+        "search_description": "A little history of San Andrés Island (Colombia), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 123,
+    "fields": {
+        "path": "000100060002000A",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a78aebad-3ba9-426d-aa4b-ae13d8a141f2",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.101Z",
+        "last_published_at": "2023-11-26T18:15:30.101Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Medellín",
+        "draft_title": "Medellín",
+        "slug": "medellin",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/medellin/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Medellín",
+        "show_in_menus": false,
+        "search_description": "A little history of the town of Medellín (Colombia), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 124,
+    "fields": {
+        "path": "0001000600020005",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "732bc8d0-845f-44d4-ac3d-1ea55dfe83af",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.409Z",
+        "last_published_at": "2023-11-26T18:15:29.409Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Paris",
+        "draft_title": "Paris",
+        "slug": "paris",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/paris/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "The city of Paris",
+        "show_in_menus": false,
+        "search_description": "A little history about the city of Paris (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 125,
+    "fields": {
+        "path": "0001000600020002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e4442451-8044-4d67-b4f7-3af6b25d6025",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.996Z",
+        "last_published_at": "2023-11-26T18:15:28.996Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Carcassonne",
+        "draft_title": "Carcassonne",
+        "slug": "carcassonne",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/carcassonne/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "The town of Carcassonne",
+        "show_in_menus": false,
+        "search_description": "A little history of the town of Carcassonne (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 126,
+    "fields": {
+        "path": "000100060002000F",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "97fc4204-7da1-4965-8d85-01230cb41586",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.774Z",
+        "last_published_at": "2023-11-26T18:15:30.774Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "New York",
+        "draft_title": "New York",
+        "slug": "new-york",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/new-york/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of New York",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of New York (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 127,
+    "fields": {
+        "path": "000100060002000D",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "aa6f05a0-4032-47e7-bbde-eac6c4402a8c",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.502Z",
+        "last_published_at": "2023-11-26T18:15:30.502Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Los Angeles",
+        "draft_title": "Los Angeles",
+        "slug": "los-angeles",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/los-angeles/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Los Angeles",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Los Angeles (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 128,
+    "fields": {
+        "path": "000100060002000E",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "f5e5ec9b-e2c9-413b-9278-e30b0d4586fe",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.640Z",
+        "last_published_at": "2023-11-26T18:15:30.640Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Miami",
+        "draft_title": "Miami",
+        "slug": "miami",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/miami/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Miami",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Miami (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 129,
+    "fields": {
+        "path": "000100060002000H",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "eabd1a3e-0798-4e57-a832-d0a9d5c97120",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.063Z",
+        "last_published_at": "2023-11-26T18:15:31.063Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Francisco",
+        "draft_title": "San Francisco",
+        "slug": "san-francisco",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/san-francisco/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of San Francisco",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of San Francisco (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 130,
+    "fields": {
+        "path": "000100060002000C",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "dcc2dbb5-8e69-4bea-8970-c80d55e33c13",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.363Z",
+        "last_published_at": "2023-11-26T18:15:30.363Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Chicago",
+        "draft_title": "Chicago",
+        "slug": "chicago",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/chicago/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Chicago",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Chicago (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 131,
+    "fields": {
+        "path": "000100060002000J",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "5c4e5c7c-429a-4b1c-8e2e-006313306be5",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.335Z",
+        "last_published_at": "2023-11-26T18:15:31.335Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Washington DC",
+        "draft_title": "Washington DC",
+        "slug": "washington",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/washington/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Washington",
+        "show_in_menus": false,
+        "search_description": "A little history of Washington DC (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 132,
+    "fields": {
+        "path": "000100060002000G",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "7634ae2c-bedb-41dc-95ac-2f8f58760b0b",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:30.906Z",
+        "last_published_at": "2023-11-26T18:15:30.906Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Philadelphia",
+        "draft_title": "Philadelphia",
+        "slug": "philadelphia",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/philadelphia/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Philadelphia",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Philadelphia (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 133,
+    "fields": {
+        "path": "000100060002000I",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e346f383-8b8a-4425-84e8-db80d3b543d3",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.199Z",
+        "last_published_at": "2023-11-26T18:15:31.199Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Seattle",
+        "draft_title": "Seattle",
+        "slug": "seattle",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/seattle/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Seattle",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Seattle (USA), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 134,
+    "fields": {
+        "path": "0001000600020003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "73e799ef-c866-4a75-b090-05a260552fde",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.128Z",
+        "last_published_at": "2023-11-26T18:15:29.128Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Lyon",
+        "draft_title": "Lyon",
+        "slug": "lyon",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/lyon/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Lyon",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Lyon (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 135,
+    "fields": {
+        "path": "0001000600020001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "91283b18-ce62-4289-b014-b9e391665b6f",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.860Z",
+        "last_published_at": "2023-11-26T18:15:28.860Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Bordeaux",
+        "draft_title": "Bordeaux",
+        "slug": "bordeaux",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/bordeaux/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Bordeaux",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Bordeaux (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 136,
+    "fields": {
+        "path": "0001000600020004",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "baed1288-b97f-4a0f-ac9d-02db5b34bebf",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.276Z",
+        "last_published_at": "2023-11-26T18:15:29.276Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Marseille",
+        "draft_title": "Marseille",
+        "slug": "marseille",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/marseille/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Marseille",
+        "show_in_menus": false,
+        "search_description": "A little history of the city of Marseille (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 137,
+    "fields": {
+        "path": "0001000600020006",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "1cbdb526-cab1-4905-8a7b-2038853fbbd3",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:29.538Z",
+        "last_published_at": "2023-11-26T18:15:29.538Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Strasbourg",
+        "draft_title": "Strasbourg",
+        "slug": "strasbourg",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-travels/posts/strasbourg/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "City of Strasbourg",
+        "show_in_menus": false,
+        "search_description": "A little history about the city of Strasbourg (France), by ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 138,
+    "fields": {
+        "path": "000100060003",
+        "depth": 3,
+        "numchild": 3,
+        "translation_key": "3e13dbb4-632a-46a8-a64e-331941016417",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.466Z",
+        "last_published_at": "2023-11-26T18:15:31.466Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Videos",
+        "draft_title": "Videos",
+        "slug": "videos-en",
+        "content_type": [
+            "video",
+            "videoindexpage"
+        ],
+        "url_path": "/demo-travels/videos-en/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Video home page",
+        "show_in_menus": false,
+        "search_description": "City videos home page",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 139,
+    "fields": {
+        "path": "000100060004",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "642b5357-3c2c-417b-b3d1-1640f54bce8a",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.988Z",
+        "last_published_at": "2023-11-26T18:15:31.988Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Gallery",
+        "draft_title": "Gallery",
+        "slug": "gallery",
+        "content_type": [
+            "gallery",
+            "gallerypage"
+        ],
+        "url_path": "/demo-travels/gallery/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Gallery page",
+        "show_in_menus": false,
+        "search_description": "Gallery of all city article images",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 140,
+    "fields": {
+        "path": "000100060005",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "200cbdb0-de04-47d5-b319-f254ed4d0ad7",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.075Z",
+        "last_published_at": "2023-11-26T18:15:32.075Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Search",
+        "draft_title": "Search",
+        "slug": "search",
+        "content_type": [
+            "search",
+            "searchindexpage"
+        ],
+        "url_path": "/demo-travels/search/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Article search page",
+        "show_in_menus": false,
+        "search_description": "Search articles written by ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 141,
+    "fields": {
+        "path": "00010007",
+        "depth": 2,
+        "numchild": 5,
+        "translation_key": "34c013b9-6cfe-4c86-b0ff-023742556e4d",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.156Z",
+        "last_published_at": "2023-11-26T18:15:32.156Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Demo Viajes",
+        "draft_title": "Demo Viajes",
+        "slug": "demo-viajes",
+        "content_type": [
+            "home",
+            "homepage"
+        ],
+        "url_path": "/demo-viajes/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Demo viajes",
+        "show_in_menus": false,
+        "search_description": "Este es un sitio de demostración, construido con el CMS Wagtail",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 142,
+    "fields": {
+        "path": "000100070002",
+        "depth": 3,
+        "numchild": 19,
+        "translation_key": "3920412e-d21f-4b99-8d03-2d6775b6cff0",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.386Z",
+        "last_published_at": "2023-11-26T18:15:32.386Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Artículos",
+        "draft_title": "Artículos",
+        "slug": "articulos",
+        "content_type": [
+            "blog",
+            "blogindexpage"
+        ],
+        "url_path": "/demo-viajes/articulos/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Página de inicio de los artículos sobre la ciudad",
+        "show_in_menus": false,
+        "search_description": "Las ciudades más bellas de Francia, Colombia y EE.UU. por ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 143,
+    "fields": {
+        "path": "0001000700020007",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "24f8d241-ec5b-4942-b39a-1b808fc889e5",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.548Z",
+        "last_published_at": "2023-11-26T18:15:33.548Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Bogotá",
+        "draft_title": "Bogotá",
+        "slug": "bogota",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/bogota/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Bogotá",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Bogotá (Colombia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 144,
+    "fields": {
+        "path": "0001000700020009",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a2d46991-950c-4a50-9d12-4e9c9648d3c0",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.803Z",
+        "last_published_at": "2023-11-26T18:15:33.803Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Cartagena de Indias",
+        "draft_title": "Cartagena de Indias",
+        "slug": "cartagena-de-indias",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/cartagena-de-indias/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Cartagena de Indias",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Cartagena de Indias (Colombia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 145,
+    "fields": {
+        "path": "0001000700020008",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "c7e446fc-60c5-497c-9415-e9ef63997726",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.676Z",
+        "last_published_at": "2023-11-26T18:15:33.676Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Cali",
+        "draft_title": "Cali",
+        "slug": "cali",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/cali/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Cali",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Cali (Colombia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 146,
+    "fields": {
+        "path": "000100070002000B",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "38ba2bf6-f65a-433f-a96a-5710009b9da5",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.099Z",
+        "last_published_at": "2023-11-26T18:15:34.099Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Andrés",
+        "draft_title": "San Andrés",
+        "slug": "san-andres",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/san-andres/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La isla de San Andrés",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la isla de San Andrés (Colombia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 147,
+    "fields": {
+        "path": "000100070002000A",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "a78aebad-3ba9-426d-aa4b-ae13d8a141f2",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.954Z",
+        "last_published_at": "2023-11-26T18:15:33.954Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Medellín",
+        "draft_title": "Medellín",
+        "slug": "medellin",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/medellin/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Medellín",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Medellín (Colombia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 148,
+    "fields": {
+        "path": "0001000700020006",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "732bc8d0-845f-44d4-ac3d-1ea55dfe83af",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.407Z",
+        "last_published_at": "2023-11-26T18:15:33.407Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "París",
+        "draft_title": "París",
+        "slug": "paris",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/paris/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de París",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de París (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 149,
+    "fields": {
+        "path": "0001000700020002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e4442451-8044-4d67-b4f7-3af6b25d6025",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.762Z",
+        "last_published_at": "2023-11-26T18:15:32.762Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Carcasona",
+        "draft_title": "Carcasona",
+        "slug": "carcasona",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/carcasona/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Carcasona",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Carcasona (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 150,
+    "fields": {
+        "path": "000100070002000G",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "97fc4204-7da1-4965-8d85-01230cb41586",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.756Z",
+        "last_published_at": "2023-11-26T18:15:34.756Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Nueva York",
+        "draft_title": "Nueva York",
+        "slug": "nueva-york",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/nueva-york/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Nueva York",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Nueva York (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 151,
+    "fields": {
+        "path": "000100070002000E",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "aa6f05a0-4032-47e7-bbde-eac6c4402a8c",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.484Z",
+        "last_published_at": "2023-11-26T18:15:34.484Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Los Ángeles",
+        "draft_title": "Los Ángeles",
+        "slug": "los-angeles",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/los-angeles/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Los Ángeles",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Los Ángeles (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 152,
+    "fields": {
+        "path": "000100070002000F",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "f5e5ec9b-e2c9-413b-9278-e30b0d4586fe",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.616Z",
+        "last_published_at": "2023-11-26T18:15:34.616Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Miami",
+        "draft_title": "Miami",
+        "slug": "miami",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/miami/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Miami",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Miami (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 153,
+    "fields": {
+        "path": "000100070002000H",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "eabd1a3e-0798-4e57-a832-d0a9d5c97120",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.892Z",
+        "last_published_at": "2023-11-26T18:15:34.892Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "San Francisco",
+        "draft_title": "San Francisco",
+        "slug": "san-francisco",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/san-francisco/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de San Francisco",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de San Francisco (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 154,
+    "fields": {
+        "path": "000100070002000C",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "dcc2dbb5-8e69-4bea-8970-c80d55e33c13",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.230Z",
+        "last_published_at": "2023-11-26T18:15:34.230Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Chicago",
+        "draft_title": "Chicago",
+        "slug": "chicago",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/chicago/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Chicago",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Chicago (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 155,
+    "fields": {
+        "path": "000100070002000J",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "5c4e5c7c-429a-4b1c-8e2e-006313306be5",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.225Z",
+        "last_published_at": "2023-11-26T18:15:35.225Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Washington DC",
+        "draft_title": "Washington DC",
+        "slug": "washington",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/washington/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Washington",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Washington (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 156,
+    "fields": {
+        "path": "000100070002000D",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "7634ae2c-bedb-41dc-95ac-2f8f58760b0b",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:34.351Z",
+        "last_published_at": "2023-11-26T18:15:34.351Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Filadelfia",
+        "draft_title": "Filadelfia",
+        "slug": "filadelfia",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/filadelfia/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Filadelfia",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Filadelfia (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 157,
+    "fields": {
+        "path": "000100070002000I",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "e346f383-8b8a-4425-84e8-db80d3b543d3",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.062Z",
+        "last_published_at": "2023-11-26T18:15:35.062Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Seattle",
+        "draft_title": "Seattle",
+        "slug": "seattle",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/seattle/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Seattle",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Seattle (Estados Unidos), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 158,
+    "fields": {
+        "path": "0001000700020004",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "73e799ef-c866-4a75-b090-05a260552fde",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.121Z",
+        "last_published_at": "2023-11-26T18:15:33.121Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Lyon",
+        "draft_title": "Lyon",
+        "slug": "lyon",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/lyon/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Lyon",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Lyon (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 159,
+    "fields": {
+        "path": "0001000700020001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "91283b18-ce62-4289-b014-b9e391665b6f",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.508Z",
+        "last_published_at": "2023-11-26T18:15:32.508Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Burdeos",
+        "draft_title": "Burdeos",
+        "slug": "burdeos",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/burdeos/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Burdeos",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Burdeos (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 160,
+    "fields": {
+        "path": "0001000700020005",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "baed1288-b97f-4a0f-ac9d-02db5b34bebf",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:33.268Z",
+        "last_published_at": "2023-11-26T18:15:33.268Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Marsella",
+        "draft_title": "Marsella",
+        "slug": "marsella",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/marsella/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Marsella",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Marsella (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 161,
+    "fields": {
+        "path": "0001000700020003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "1cbdb526-cab1-4905-8a7b-2038853fbbd3",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.928Z",
+        "last_published_at": "2023-11-26T18:15:32.928Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Estrasburgo",
+        "draft_title": "Estrasburgo",
+        "slug": "estrasburgo",
+        "content_type": [
+            "blog",
+            "blogpage"
+        ],
+        "url_path": "/demo-viajes/articulos/estrasburgo/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "La ciudad de Estrasburgo",
+        "show_in_menus": false,
+        "search_description": "Un poco de historia de la ciudad de Estrasburgo (Francia), por ChatGPT.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 162,
+    "fields": {
+        "path": "000100070003",
+        "depth": 3,
+        "numchild": 3,
+        "translation_key": "3e13dbb4-632a-46a8-a64e-331941016417",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.335Z",
+        "last_published_at": "2023-11-26T18:15:35.335Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Vídeos",
+        "draft_title": "Vídeos",
+        "slug": "videos-es",
+        "content_type": [
+            "video",
+            "videoindexpage"
+        ],
+        "url_path": "/demo-viajes/videos-es/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Página de inicio del vídeo",
+        "show_in_menus": false,
+        "search_description": "Página de inicio de los vídeos urbanos",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 163,
+    "fields": {
+        "path": "000100070004",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "642b5357-3c2c-417b-b3d1-1640f54bce8a",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.844Z",
+        "last_published_at": "2023-11-26T18:15:35.844Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Galeria",
+        "draft_title": "Galeria",
+        "slug": "galeria",
+        "content_type": [
+            "gallery",
+            "gallerypage"
+        ],
+        "url_path": "/demo-viajes/galeria/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Página de la Galería",
+        "show_in_menus": false,
+        "search_description": "Galería de todas las imágenes de artículos sobre la ciudad",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 164,
+    "fields": {
+        "path": "000100070005",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "200cbdb0-de04-47d5-b319-f254ed4d0ad7",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.917Z",
+        "last_published_at": "2023-11-26T18:15:35.917Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Búsqueda",
+        "draft_title": "Búsqueda",
+        "slug": "busqueda",
+        "content_type": [
+            "search",
+            "searchindexpage"
+        ],
+        "url_path": "/demo-viajes/busqueda/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Página de búsqueda de artículos",
+        "show_in_menus": false,
+        "search_description": "Buscar artículos escritos por ChatGPT",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 165,
+    "fields": {
+        "path": "000100050001",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "c01da5ad-7fa5-4a92-9d34-a4f418f05f3f",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:24.985Z",
+        "last_published_at": "2023-11-26T18:15:24.985Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Présentation",
+        "draft_title": "Présentation",
+        "slug": "presentation",
+        "content_type": [
+            "core",
+            "basicpage"
+        ],
+        "url_path": "/demo-voyages/presentation/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Présentation",
+        "show_in_menus": false,
+        "search_description": "Présentation du site démonstration du CMS Wagtail autour du voyage.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 166,
+    "fields": {
+        "path": "000100060001",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "c01da5ad-7fa5-4a92-9d34-a4f418f05f3f",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.648Z",
+        "last_published_at": "2023-11-26T18:15:28.648Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Presentation",
+        "draft_title": "Presentation",
+        "slug": "presentation",
+        "content_type": [
+            "core",
+            "basicpage"
+        ],
+        "url_path": "/demo-travels/presentation/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Presentation",
+        "show_in_menus": false,
+        "search_description": "Presentation of the Wagtail CMS demonstration site.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 167,
+    "fields": {
+        "path": "000100070001",
+        "depth": 3,
+        "numchild": 0,
+        "translation_key": "c01da5ad-7fa5-4a92-9d34-a4f418f05f3f",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:32.305Z",
+        "last_published_at": "2023-11-26T18:15:32.305Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Presentación",
+        "draft_title": "Presentación",
+        "slug": "presentacion",
+        "content_type": [
+            "core",
+            "basicpage"
+        ],
+        "url_path": "/demo-viajes/presentacion/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Presentación",
+        "show_in_menus": false,
+        "search_description": "Presentación del sitio de demostración de Wagtail CMS.",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 168,
+    "fields": {
+        "path": "0001000500030001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "17594e57-83d6-470c-9317-1c1af6cc5360",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:27.832Z",
+        "last_published_at": "2023-11-26T18:15:27.832Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Magie sauvage de la Colombie",
+        "draft_title": "Magie sauvage de la Colombie",
+        "slug": "magie-sauvage-de-la-colombie",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-voyages/videos/magie-sauvage-de-la-colombie/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Magie sauvage de la Colombie",
+        "show_in_menus": false,
+        "search_description": "Exploration Cinématographique de la Biodiversité Colombienne",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 169,
+    "fields": {
+        "path": "0001000600030001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "17594e57-83d6-470c-9317-1c1af6cc5360",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.570Z",
+        "last_published_at": "2023-11-26T18:15:31.570Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Colombia Wild Magic",
+        "draft_title": "Colombia Wild Magic",
+        "slug": "colombia-wild-magic",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-travels/videos-en/colombia-wild-magic/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Colombia Wild Magic",
+        "show_in_menus": false,
+        "search_description": "Cinematic Exploration of Colombian Biodiversity",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 170,
+    "fields": {
+        "path": "0001000700030001",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "17594e57-83d6-470c-9317-1c1af6cc5360",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.456Z",
+        "last_published_at": "2023-11-26T18:15:35.456Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Colombia Magia Salvaje",
+        "draft_title": "Colombia Magia Salvaje",
+        "slug": "colombia-magia-salvaje",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-viajes/videos-es/colombia-magia-salvaje/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Colombia Magia Salvaje",
+        "show_in_menus": false,
+        "search_description": "Exploración cinematográfica de la biodiversidad colombiana",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 171,
+    "fields": {
+        "path": "0001000500030002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "35abaff0-b0a8-4806-add3-0e9d8e0fbc65",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.023Z",
+        "last_published_at": "2023-11-26T18:15:28.023Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Guide de voyage de la France",
+        "draft_title": "Guide de voyage de la France",
+        "slug": "guide-de-voyage-de-la-france",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-voyages/videos/guide-de-voyage-de-la-france/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Guide de voyage de la France",
+        "show_in_menus": false,
+        "search_description": "Un Voyage Enchanteur à Travers les Trésors de la France",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 172,
+    "fields": {
+        "path": "0001000600030002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "35abaff0-b0a8-4806-add3-0e9d8e0fbc65",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.720Z",
+        "last_published_at": "2023-11-26T18:15:31.720Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Travel guide to France",
+        "draft_title": "Travel guide to France",
+        "slug": "travel-guide-to-france",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-travels/videos-en/travel-guide-to-france/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Travel guide to France",
+        "show_in_menus": false,
+        "search_description": "An Enchanting Journey through the Treasures of France",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 173,
+    "fields": {
+        "path": "0001000700030002",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "35abaff0-b0a8-4806-add3-0e9d8e0fbc65",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.602Z",
+        "last_published_at": "2023-11-26T18:15:35.602Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Guía de viaje a Francia",
+        "draft_title": "Guía de viaje a Francia",
+        "slug": "guia-de-viaje-a-francia",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-viajes/videos-es/guia-de-viaje-a-francia/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Guía de viaje a Francia",
+        "show_in_menus": false,
+        "search_description": "Un viaje encantador por los tesoros de Francia",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 174,
+    "fields": {
+        "path": "0001000500030003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "d8737ae9-280b-4135-ba2a-13aa2975ee73",
+        "locale": 1,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:28.168Z",
+        "last_published_at": "2023-11-26T18:15:28.168Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Les meilleurs endroits à visiter aux États-Unis",
+        "draft_title": "Les meilleurs endroits à visiter aux États-Unis",
+        "slug": "les-meilleurs-endroits-a-visiter-aux-etats-unis",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-voyages/videos/les-meilleurs-endroits-a-visiter-aux-etats-unis/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Les meilleurs endroits à visiter aux États-Unis",
+        "show_in_menus": false,
+        "search_description": "Exploration Épique à Travers les Étendues Diversifiées des États-Unis",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 175,
+    "fields": {
+        "path": "0001000600030003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "d8737ae9-280b-4135-ba2a-13aa2975ee73",
+        "locale": 2,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:31.871Z",
+        "last_published_at": "2023-11-26T18:15:31.871Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Best Places to Visit in USA",
+        "draft_title": "Best Places to Visit in USA",
+        "slug": "best-places-to-visit-in-usa",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-travels/videos-en/best-places-to-visit-in-usa/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Best Places to Visit in USA",
+        "show_in_menus": false,
+        "search_description": "Epic Exploration Across America's Diverse Expanses",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+},
+{
+    "model": "wagtailcore.page",
+    "pk": 176,
+    "fields": {
+        "path": "0001000700030003",
+        "depth": 4,
+        "numchild": 0,
+        "translation_key": "d8737ae9-280b-4135-ba2a-13aa2975ee73",
+        "locale": 3,
+        "latest_revision": null,
+        "live": true,
+        "has_unpublished_changes": false,
+        "first_published_at": "2023-11-26T18:15:35.739Z",
+        "last_published_at": "2023-11-26T18:15:35.739Z",
+        "live_revision": null,
+        "go_live_at": null,
+        "expire_at": null,
+        "expired": false,
+        "locked": false,
+        "locked_at": null,
+        "locked_by": null,
+        "title": "Los mejores lugares que visitar en Estados Unidos",
+        "draft_title": "Los mejores lugares que visitar en Estados Unidos",
+        "slug": "los-mejores-lugares-que-visitar-en-estados-unidos",
+        "content_type": [
+            "video",
+            "videopage"
+        ],
+        "url_path": "/demo-viajes/videos-es/los-mejores-lugares-que-visitar-en-estados-unidos/",
+        "owner": [
+            "admin"
+        ],
+        "seo_title": "Los mejores lugares que visitar en Estados Unidos",
+        "show_in_menus": false,
+        "search_description": "Vídeo Youtube \"Pasaporte Viajero : Que Ver y Hacer en Estados Unidos\"",
+        "latest_revision_created_at": null,
+        "alias_of": null
+    }
+}
+]

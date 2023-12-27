@@ -1,0 +1,164 @@
+[
+{
+    "model": "blog.blogpromotelink",
+    "pk": 29,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 3,
+        "related_page": 103
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 30,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 3,
+        "related_page": 115
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 31,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 3,
+        "related_page": 98
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 32,
+    "fields": {
+        "sort_order": 3,
+        "snippet": 3,
+        "related_page": 99
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 33,
+    "fields": {
+        "sort_order": 4,
+        "snippet": 3,
+        "related_page": 105
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 34,
+    "fields": {
+        "sort_order": 5,
+        "snippet": 3,
+        "related_page": 106
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 35,
+    "fields": {
+        "sort_order": 4,
+        "snippet": 4,
+        "related_page": 124
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 36,
+    "fields": {
+        "sort_order": 5,
+        "snippet": 4,
+        "related_page": 136
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 37,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 4,
+        "related_page": 119
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 38,
+    "fields": {
+        "sort_order": 3,
+        "snippet": 4,
+        "related_page": 120
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 39,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 4,
+        "related_page": 126
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 40,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 4,
+        "related_page": 127
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 41,
+    "fields": {
+        "sort_order": 0,
+        "snippet": 5,
+        "related_page": 143
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 42,
+    "fields": {
+        "sort_order": 1,
+        "snippet": 5,
+        "related_page": 144
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 43,
+    "fields": {
+        "sort_order": 2,
+        "snippet": 5,
+        "related_page": 150
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 44,
+    "fields": {
+        "sort_order": 3,
+        "snippet": 5,
+        "related_page": 151
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 45,
+    "fields": {
+        "sort_order": 4,
+        "snippet": 5,
+        "related_page": 148
+    }
+},
+{
+    "model": "blog.blogpromotelink",
+    "pk": 46,
+    "fields": {
+        "sort_order": 5,
+        "snippet": 5,
+        "related_page": 160
+    }
+}
+]

@@ -1,0 +1,20 @@
+[
+{
+    "model": "core.photographer",
+    "pk": 8,
+    "fields": {
+        "site": 1,
+        "name": "Yannick Chabbert",
+        "website": null
+    }
+},
+{
+    "model": "core.photographer",
+    "pk": 12,
+    "fields": {
+        "site": 1,
+        "name": "Pexels",
+        "website": "https://www.pexels.com/"
+    }
+}
+]

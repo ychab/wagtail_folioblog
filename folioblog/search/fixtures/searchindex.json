@@ -1,0 +1,29 @@
+[
+{
+    "model": "search.searchindexpage",
+    "pk": 97,
+    "fields": {
+        "subheading": "Retrouver tous les articles des villes",
+        "image": 276,
+        "image_alt": "Paysage"
+    }
+},
+{
+    "model": "search.searchindexpage",
+    "pk": 140,
+    "fields": {
+        "subheading": "Find all city articles",
+        "image": 276,
+        "image_alt": "Landscape"
+    }
+},
+{
+    "model": "search.searchindexpage",
+    "pk": 164,
+    "fields": {
+        "subheading": "Encuentre todos los artículos de las ciudades",
+        "image": 276,
+        "image_alt": "Paisaje"
+    }
+}
+]

@@ -1,0 +1,59 @@
+[
+{
+    "model": "wagtailembeds.embed",
+    "pk": 6,
+    "fields": {
+        "url": "https://www.youtube.com/watch?v=2oojLvuHAXo",
+        "max_width": null,
+        "hash": "60b4a8a91c586c0337a68c634195f7d0",
+        "type": "video",
+        "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/2oojLvuHAXo?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen title=\"Colombia Magia Salvaje\"></iframe>",
+        "title": "Colombia Magia Salvaje",
+        "author_name": "Grupo Éxito Colombia",
+        "provider_name": "YouTube",
+        "thumbnail_url": "https://i.ytimg.com/vi/2oojLvuHAXo/hqdefault.jpg",
+        "width": 200,
+        "height": 113,
+        "last_updated": "2023-11-17T14:28:00.804Z",
+        "cache_until": null
+    }
+},
+{
+    "model": "wagtailembeds.embed",
+    "pk": 8,
+    "fields": {
+        "url": "https://www.youtube.com/watch?v=RHW2hwZ76ws",
+        "max_width": null,
+        "hash": "69516cf89fe22bde3d73ad0cdb7b2d8c",
+        "type": "video",
+        "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/RHW2hwZ76ws?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen title=\"►Guide de voyage de la France 🥐 les choses à voir absolument\"></iframe>",
+        "title": "►Guide de voyage de la France 🥐 les choses à voir absolument",
+        "author_name": "Voyage Prive France",
+        "provider_name": "YouTube",
+        "thumbnail_url": "https://i.ytimg.com/vi/RHW2hwZ76ws/hqdefault.jpg",
+        "width": 200,
+        "height": 113,
+        "last_updated": "2023-11-17T16:42:17.531Z",
+        "cache_until": null
+    }
+},
+{
+    "model": "wagtailembeds.embed",
+    "pk": 13,
+    "fields": {
+        "url": "https://www.youtube.com/watch?v=ZiJBTxRN4tE",
+        "max_width": null,
+        "hash": "2465a101edbafaa16dace20e1788f4d0",
+        "type": "video",
+        "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/ZiJBTxRN4tE?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen title=\"Amazing Places to Visit in the United States | Best Places to Visit in USA - Travel Video\"></iframe>",
+        "title": "Amazing Places to Visit in the United States | Best Places to Visit in USA - Travel Video",
+        "author_name": "Joyous Travel",
+        "provider_name": "YouTube",
+        "thumbnail_url": "https://i.ytimg.com/vi/ZiJBTxRN4tE/hqdefault.jpg",
+        "width": 200,
+        "height": 113,
+        "last_updated": "2023-11-17T17:24:29.628Z",
+        "cache_until": null
+    }
+}
+]

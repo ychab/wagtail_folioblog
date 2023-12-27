@@ -86,8 +86,11 @@ deploy_local() {
         echo -e "\n-> Restore DB and media\n"
         poetry run make restore_local
     else
-        echo -e "\n-> Up containers\n"
-        FOLIOBLOG_HEALTHCHECK_INTERVAL=10s docker compose up --detach --wait
+        echo -e "\n-> Up containers and restore initial data\n"
+        make up_wait
+        poetry run python manage.py migrate --noinput
+        poetry run python manage.py createadmin --username=admin --password=${FOLIOBLOG_ADMIN_PASSWD:-admin}
+        poetry run make initial_data
     fi
 
     echo -e "\nBUILD finished!\n"
@@ -117,9 +120,13 @@ deploy_dev() {
     echo -e "\n-> Cleanup containers\n"
     make down_clean
 
+    # Rebuild image just in case
+    echo -e "\n-> Rebuild DEV image\n"
+    make build
+
     # Create container and init it for the first time (NPM build)
     echo -e "\n-> Up containers\n"
-    FOLIOBLOG_HEALTHCHECK_INTERVAL=10s docker compose up --detach --wait
+    make up_wait
 
     # Restore containers
     if [ $HAS_RESTORE = 1 ]; then
@@ -129,6 +136,9 @@ deploy_dev() {
 
         echo -e "\n-> Restore DB and media\n"
         make restore_dev
+    else
+        echo -e "\n-> Restore initial data\n"
+        make initial_data_dev
     fi
 
     echo -e "\nBUILD finished!\n"
@@ -170,9 +180,13 @@ deploy_prod() {
     echo -e "\n-> Cleanup containers\n"
     make down_clean
 
+    # Rebuild image just in case
+    echo -e "\n-> Rebuild PROD image\n"
+    make build
+
     # Create container and init it (superuser & co).
     echo -e "\n-> Up containers\n"
-    FOLIOBLOG_HEALTHCHECK_INTERVAL=10s docker compose up --detach --wait
+    make up_wait
 
     # Restore containers OR up
     if [ $HAS_RESTORE = 1 ]; then
@@ -182,6 +196,9 @@ deploy_prod() {
 
         echo -e "\n-> Restore DB and media\n"
         make restore_prod
+    else
+        echo -e "\n-> Restore initial data\n"
+        make initial_data_prod
     fi
 
     echo -e "\nBUILD finished!\n"

@@ -1,0 +1,29 @@
+[
+{
+    "model": "blog.blogindexpage",
+    "pk": 94,
+    "fields": {
+        "subheading": "Exemple de villes par ChatGPT",
+        "image": 274,
+        "image_alt": "Paysage"
+    }
+},
+{
+    "model": "blog.blogindexpage",
+    "pk": 118,
+    "fields": {
+        "subheading": "Example of cities by ChatGPT",
+        "image": 274,
+        "image_alt": "Landscape"
+    }
+},
+{
+    "model": "blog.blogindexpage",
+    "pk": 142,
+    "fields": {
+        "subheading": "Ejemplo de ciudades por ChatGPT",
+        "image": 274,
+        "image_alt": "Paisaje"
+    }
+}
+]

@@ -1,0 +1,170 @@
+[
+{
+    "model": "taggit.tag",
+    "pk": 159,
+    "fields": {
+        "name": "bogota",
+        "slug": "bogota"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 160,
+    "fields": {
+        "name": "cartagena",
+        "slug": "cartagena"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 161,
+    "fields": {
+        "name": "cali",
+        "slug": "cali"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 162,
+    "fields": {
+        "name": "san andres",
+        "slug": "san-andres"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 163,
+    "fields": {
+        "name": "medellin",
+        "slug": "medellin"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 164,
+    "fields": {
+        "name": "paris",
+        "slug": "paris"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 165,
+    "fields": {
+        "name": "carcassonne",
+        "slug": "carcassonne"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 166,
+    "fields": {
+        "name": "new york",
+        "slug": "new-york"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 167,
+    "fields": {
+        "name": "los angeles",
+        "slug": "los-angeles"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 168,
+    "fields": {
+        "name": "miami",
+        "slug": "miami"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 169,
+    "fields": {
+        "name": "san francisco",
+        "slug": "san-francisco"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 170,
+    "fields": {
+        "name": "chicago",
+        "slug": "chicago"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 171,
+    "fields": {
+        "name": "washington",
+        "slug": "washington"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 172,
+    "fields": {
+        "name": "philadelphie",
+        "slug": "philadelphie"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 173,
+    "fields": {
+        "name": "seattle",
+        "slug": "seattle"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 174,
+    "fields": {
+        "name": "lyon",
+        "slug": "lyon"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 175,
+    "fields": {
+        "name": "bordeaux",
+        "slug": "bordeaux"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 176,
+    "fields": {
+        "name": "marseille",
+        "slug": "marseille"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 177,
+    "fields": {
+        "name": "strasbourg",
+        "slug": "strasbourg"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 178,
+    "fields": {
+        "name": "wallpaper",
+        "slug": "wallpaper"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 179,
+    "fields": {
+        "name": "Mont Saint-Michel",
+        "slug": "mont-saint-michel"
+    }
+}
+]

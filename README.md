@@ -106,6 +106,7 @@ npm install
 npm run dist
 python manage.py migrate
 python manage.py createsuperuser
+make initial_data  # OPTIONAL
 python manage.py runserver
 curl http://127.0.0.1:8000/admin
 ````
@@ -120,7 +121,8 @@ Then, you can setup the services with the following command :
 cp env/.env.LOCAL .env # Edit it
 cp env/.env.DEV .env.dev # Edit if needed
 cp folioblog/settings/local.py.dist folioblog/settings/local.py  # Edit if needed
-make up
+make up_wait
+make initial_data_dev  # OPTIONAL
 curl http://127.0.0.1:8000/admin  # Connect with admin/admin
 ````
 
@@ -146,7 +148,8 @@ You will have to:
 cp env/.env.LOCAL .env # Edit it
 cp env/.env.PROD .env.prod # Edit if needed
 make certs
-make up
+make up_wait
+make initial_data_prod  # OPTIONAL
 curl https://folio.local/admin  # Connect with YOUR <FOLIOBLOG_ADMIN_USERNAME>/<FOLIOBLOG_ADMIN_PASSWD>
 ````
 
@@ -171,7 +174,8 @@ to add lines like:
 127.0.0.1	blog.folio.local
 ````
 
-Finally, you should be able to hit another site: ``curl https://demo.folio.local``
+Finally, create a new site with hostname *demo.folio.local* and you should be
+able to hit it: ``curl https://demo.folio.local``
 
 ### Local only
 
@@ -229,6 +233,25 @@ python manage.py migrate
 python manage.py createsuperuser
 ./manage.py runserver 127.0.0.1:8000
 google-chrome http://127.0.0.1:8000/admin &
+````
+
+## Performance
+
+When you hit a new fresh page, it could be very slow due to the generation of
+images renditions.
+
+If you want to save some time, you could execute the following commands against
+a running instance locally:
+````
+python manage.py runserver
+python manage.py generaterenditions  # Generate rendtion for gallery full image
+python manage.py loadcachepages  # Fetch all pages to generate renditions (and BTW, cache page if active)
+````
+
+And of course, against a docker container:
+````
+docker compose exec app python manage.py generaterenditions
+docker compose exec app python manage.py loadcachepages
 ````
 
 ## Cron

@@ -1,0 +1,222 @@
+[
+{
+    "model": "wagtailcore.collection",
+    "pk": 1,
+    "fields": {
+        "path": "0001",
+        "depth": 1,
+        "numchild": 2,
+        "name": "Root"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 8,
+    "fields": {
+        "path": "00010004",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Video thumbnail"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 28,
+    "fields": {
+        "path": "00010002",
+        "depth": 2,
+        "numchild": 19,
+        "name": "Demo - travels"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 29,
+    "fields": {
+        "path": "000100020001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Bogota"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 30,
+    "fields": {
+        "path": "000100020005",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Carthagène des Indes"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 31,
+    "fields": {
+        "path": "000100020003",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Cali"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 32,
+    "fields": {
+        "path": "00010002000F",
+        "depth": 3,
+        "numchild": 0,
+        "name": "San Andrés"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 33,
+    "fields": {
+        "path": "00010002000A",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Medellin"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 34,
+    "fields": {
+        "path": "00010002000D",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Paris"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 35,
+    "fields": {
+        "path": "000100020004",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Carcassonne"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 36,
+    "fields": {
+        "path": "00010002000C",
+        "depth": 3,
+        "numchild": 0,
+        "name": "New York"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 37,
+    "fields": {
+        "path": "000100020007",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Los Angeles"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 38,
+    "fields": {
+        "path": "00010002000B",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Miami"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 39,
+    "fields": {
+        "path": "00010002000G",
+        "depth": 3,
+        "numchild": 0,
+        "name": "San Francisco"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 40,
+    "fields": {
+        "path": "000100020006",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Chicago"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 41,
+    "fields": {
+        "path": "00010002000J",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Washington"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 42,
+    "fields": {
+        "path": "00010002000E",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Philadelphia"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 43,
+    "fields": {
+        "path": "00010002000H",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Seattle"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 44,
+    "fields": {
+        "path": "000100020008",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Lyon"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 45,
+    "fields": {
+        "path": "000100020002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Bordeaux"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 46,
+    "fields": {
+        "path": "000100020009",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Marseille"
+    }
+},
+{
+    "model": "wagtailcore.collection",
+    "pk": 47,
+    "fields": {
+        "path": "00010002000I",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Strasbourg"
+    }
+}
+]
