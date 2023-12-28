@@ -22,23 +22,11 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.session = requests.session()
-        self.requests_kwargs = {}
-
-    def add_arguments(self, parser):
-        parser.add_argument("--auth-user")
-        parser.add_argument("--auth-passwd")
 
     def handle(self, *args, **options):
         # First clear the cache before rebuilding it!
         self.stdout.write(self.style.WARNING("WARNING: clearing cache...\n"))
         cache.clear()
-
-        # Prepare request options for HTTP auth if needed.
-        if options["auth_user"] and options["auth_passwd"]:  # pragma: no cover
-            self.requests_kwargs["auth"] = (
-                options["auth_user"],
-                options["auth_passwd"],
-            )
 
         # Then iterate over each sites to fetch their pages.
         for site in Site.objects.all():
@@ -97,9 +85,8 @@ class Command(BaseCommand):
     def request_page(self, url, method="get", status=None, **kwargs):
         self.stdout.write(f'Requesting: {method.upper()} "{url}"')
 
-        requests_kwargs = self.requests_kwargs | kwargs
         try:
-            response = getattr(self.session, method)(url, **requests_kwargs)
+            response = getattr(self.session, method)(url, **kwargs)
         except RequestException as e:
             self.stdout.write(self.style.ERROR(f"Error on page {url} with exc {e}\n"))
         else:
