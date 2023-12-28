@@ -202,7 +202,7 @@ restore_db:
 	# First drop the DB
 	docker compose down --volumes
 	# Then recreate the DB (and wait for it's ready!)
-	FOLIOBLOG_HEALTHCHECK_INTERVAL=10s docker compose up --detach --wait
+	FOLIOBLOG_HEALTHCHECK_INTERVAL=5s FOLIOBLOG_HEALTHCHECK_RETRIES=10 docker compose up --detach --wait
 	# Then fetch remote backup and restore it.
 	scp ${FOLIOBLOG_BACKUP_HOST}:${FOLIOBLOG_BACKUP_PATH_SQL}/*.sql.gz ./dump.sql.gz
 	gunzip < dump.sql.gz | docker compose exec --no-TTY postgres psql --quiet -U ${FOLIOBLOG_POSTGRES_USER} -d ${FOLIOBLOG_POSTGRES_DB}
@@ -211,11 +211,15 @@ restore_db:
 
 restore_local: restore_media restore_db
 	python manage.py createadmin --password=admin
-	python manage.py updatesite --site=1 --hostname=127.0.0.1 --port 8000
+	python manage.py updatesite --site=1 --hostname=folio.local --port 8000
+	python manage.py updatesite --site=2 --hostname=blog.folio.local --port 8000
+	python manage.py updatesite --site=3 --hostname=demo.folio.local --port 8000
 
 restore_dev: restore_media restore_db
 	docker compose exec app python manage.py createadmin --password=admin
-	docker compose exec app python manage.py updatesite --site=1 --hostname=127.0.0.1 --port 8000
+	docker compose exec app python manage.py updatesite --site=1 --hostname=folio.local --port 8000
+	docker compose exec app python manage.py updatesite --site=2 --hostname=blog.folio.local --port 8000
+	docker compose exec app python manage.py updatesite --site=3 --hostname=demo.folio.local --port 8000
 
 restore_prod: restore_media restore_db
 	docker compose cp media/. app:${FOLIOBLOG_MEDIA_ROOT}
