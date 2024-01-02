@@ -55,6 +55,9 @@ ps:
 	docker compose ps --all
 
 build:
+	docker compose build app
+
+rebuild:
 	docker compose build --no-cache app
 
 up:
@@ -126,6 +129,9 @@ apppoetry:
 appnpm:
 	docker compose exec app bash -c 'npm update; npm run dist'
 
+appadmin:
+	docker compose exec app python manage.py createadmin --username=${FOLIOBLOG_ADMIN_USERNAME} --password=${FOLIOBLOG_ADMIN_PASSWD}
+
 appmigrate:
 	docker compose exec app python manage.py migrate --noinput
 
@@ -171,7 +177,7 @@ initial_data: initial_media fixtures_load
 initial_data_dev: initial_media appfixturesload
 
 initial_data_prod: initial_media appfixturesload
-	docker compose cp media/. app:${FOLIOBLOG_MEDIA_ROOT}
+	docker compose cp media/. app:/app/media
 	docker compose exec app python manage.py updatesite --site=1 --hostname=folio.local --port 443
 
 #############
@@ -222,7 +228,7 @@ restore_dev: restore_media restore_db
 	docker compose exec app python manage.py updatesite --site=3 --hostname=demo.folio.local --port 8000
 
 restore_prod: restore_media restore_db
-	docker compose cp media/. app:${FOLIOBLOG_MEDIA_ROOT}
+	docker compose cp media/. app:/app/media
 	docker compose exec app python manage.py createadmin --username=${FOLIOBLOG_ADMIN_USERNAME} --password=${FOLIOBLOG_ADMIN_PASSWD}
 	docker compose exec app python manage.py updatesite --site=1 --hostname=folio.local --port 443
 	docker compose exec app python manage.py updatesite --site=2 --hostname=blog.folio.local --port 443

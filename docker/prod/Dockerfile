@@ -1,81 +1,88 @@
-# Use the default Python image to have more reposities availables.
-FROM python:3.10-slim
+######################
+# Frontend build stage
+######################
 
-ARG FOLIOBLOG_RELEASE
-ARG NODE_VERSION
-ARG MEDIA_ROOT
-ARG STATIC_ROOT
+FROM node:20.10.0 AS build_front
+WORKDIR /app
+COPY ./package* .
+COPY ./dist dist
+RUN mkdir -p folioblog/static && \
+    npm install --omit=dev && \
+    npm run dist
 
-# Force Python stdout and stderr streams to be unbuffered.
-ENV PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=off \
+#####################
+# Backend build stage
+#####################
+
+FROM python:3.10-slim-buster AS build_back
+ENV PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
-    VIRTUAL_ENV=/venv \
-    PATH=/venv/bin:/opt/node-${NODE_VERSION}-linux-x64/bin:$PATH \
+    NODE_VERSION=v20.10.0 \
     DJANGO_SETTINGS_MODULE="folioblog.settings.prod"
-
-# Install missing system dependencies first.
-RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommends \
-    libjpeg62-turbo-dev \
-    libpq-dev \
-    libwebp-dev \
-    zlib1g-dev \
-    wget \
-    curl \
-    tar \
-    git \
-    xz-utils
-
-# Then install nodeJS with NPM.
-RUN wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
-RUN tar xfJ /opt/node.tar.xz -C /opt/ --no-same-owner
-RUN npm install -g npm@latest
-RUN rm /opt/node.tar.xz
-
-# Create an app user.
-RUN useradd --create-home --shell /bin/bash appuser
-
-# Fetch source with git for simplicity
-RUN git clone --depth=1 --branch=${FOLIOBLOG_RELEASE} https://github.com/ychab/wagtail_folioblog.git /app
-RUN chown -R appuser:appuser /app
-
-# Create virtualenv and install backend dependencies with gunicorn.
-RUN python -m venv ${VIRTUAL_ENV}
-RUN pip install --upgrade pip setuptools
-RUN pip install --no-cache-dir -r /app/requirements/prod.txt
-RUN pip install --no-cache-dir gunicorn
-
-USER appuser
+ENV PATH=/venv/bin:/opt/node-${NODE_VERSION}-linux-x64/bin:$PATH
 
 WORKDIR /app
 
-# Install frontend dependencies and build final files.
-RUN npm install --omit=dev
-RUN npm run dist
+# Copy required source only
+COPY ./folioblog /app/folioblog
+COPY --from=build_front /app/node_modules /app/node_modules
+COPY --from=build_front /app/folioblog/static /app/folioblog/static
+COPY ./manage.py /app/
+COPY ./requirements/prod.txt /app/requirements.txt
+COPY ./docker/prod/local.py /app/folioblog/settings/local.py
+COPY ./docker/prod/gunicorn.py /app/
 
-# Prepare local settings from .env files
-RUN cp /app/docker/prod/local.py /app/folioblog/settings/local.py
-
-# Create files directories if not already exists.
-RUN mkdir -p $STATIC_ROOT
-RUN mkdir -p $MEDIA_ROOT
-
-# Collect static files.
-RUN FOLIOBLOG_LANGUAGE_CODE=en \
+RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommends \
+    libpq-dev \
+    wget \
+    tar \
+    xz-utils && \
+    # Install node (with npm) needed by Django Compressor (uglifyJS).
+    wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
+    tar xfJ /opt/node.tar.xz -C /opt/ --no-same-owner && \
+    npm install -g npm@latest && \
+    # Create virtualenv and install backend dependencies.
+    python -m venv /venv && \
+    pip install --upgrade pip setuptools && \
+    pip install --no-cache-dir -r /app/requirements.txt && \
+    pip install --no-cache-dir gunicorn && \
+    # Prepare directories \
+    mkdir /app/media /app/static && \
+    # Collect static files.
+    FOLIOBLOG_LANGUAGE_CODE=en \
     FOLIOBLOG_SECRET_KEY_DUMMY=dummy-key \
-    FOLIOBLOG_STATIC_ROOT=$STATIC_ROOT \
-    python manage.py collectstatic --noinput --clear
-
-# Then compress static files.
-RUN FOLIOBLOG_LANGUAGE_CODE=en \
+    python manage.py collectstatic --noinput --clear && \
+    # Compress static files.
+    FOLIOBLOG_LANGUAGE_CODE=en \
     FOLIOBLOG_SECRET_KEY_DUMMY=dummy-key \
-    FOLIOBLOG_STATIC_ROOT=$STATIC_ROOT \
-    python manage.py compress
+    python manage.py compress && \
+    # Cleanup sources for next copies.
+    rm -Rf node_modules
 
+###################
+# Final build stage
+###################
+
+FROM python:3.10-slim-buster
+ENV PYTHONUNBUFFERED=1 \
+    PATH=/venv/bin:$PATH \
+    DJANGO_SETTINGS_MODULE="folioblog.settings.prod"
+
+WORKDIR /app
+
+RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommends  \
+    libjpeg62-turbo-dev \
+    libpq-dev \
+    libwebp-dev \
+    zlib1g-dev && \
+    # Create an app user.
+    useradd --no-create-home --shell /bin/bash appuser
+
+# Only copy pre-build app and venv by next steps.
+COPY --chown=appuser:appuser --from=build_back /app /app
+COPY --chown=appuser:appuser --from=build_back /venv /venv
+
+USER appuser
 EXPOSE 8000
-
-# FOR PURPOSE ONLY, add a script to execute commands at container startup.
-# In theory, these commands must be executed elsewhere, depending on your infra.
-ENTRYPOINT ["docker/prod/entrypoint.sh"]
-
-CMD ["gunicorn", "folioblog.wsgi", "-c", "docker/prod/gunicorn.py"]
+VOLUME ["/app/media", "/app/static"]
+CMD ["gunicorn", "folioblog.wsgi", "-c", "gunicorn.py"]

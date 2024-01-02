@@ -89,7 +89,7 @@ deploy_local() {
         echo -e "\n-> Up containers and restore initial data\n"
         make up_wait
         poetry run python manage.py migrate --noinput
-        poetry run python manage.py createadmin --username=admin --password=${FOLIOBLOG_ADMIN_PASSWD:-admin}
+        poetry run python manage.py createadmin --username=admin --password=admin
         poetry run make initial_data
     fi
 
@@ -157,21 +157,15 @@ deploy_prod() {
     cp env/.env.LOCAL .env
     cp env/.env.PROD .env.prod
     sed -i 's,# COMPOSE_FILE=docker-compose.yaml:docker-compose.prod.yaml,COMPOSE_FILE=docker-compose.yaml:docker-compose.prod.yaml,g' .env
-    sed -i 's,^# FOLIOBLOG_MEDIA_ROOT=.*,FOLIOBLOG_MEDIA_ROOT=/app/media,g' .env
-    sed -i 's,^# FOLIOBLOG_ADMIN_USERNAME=.*,FOLIOBLOG_ADMIN_USERNAME=admin,g' .env
+    sed -i 's,^# FOLIOBLOG_ADMIN_USERNAME=.*,FOLIOBLOG_ADMIN_USERNAME='"${FOLIOBLOG_ADMIN_USERNAME:-admin}"',g' .env
+    sed -i 's,^# FOLIOBLOG_ADMIN_PASSWD=.*,FOLIOBLOG_ADMIN_PASSWD='"${FOLIOBLOG_ADMIN_PASSWD:-admin}"',g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_PORT=.*,FOLIOBLOG_NGINX_PORT=80,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_PORT_SSL=.*,FOLIOBLOG_NGINX_PORT_SSL=443,g' .env
     sed -i 's,^# FOLIOBLOG_SECRET_KEY=.*,FOLIOBLOG_SECRET_KEY='"${FOLIOBLOG_SECRET_KEY:-bla-bla-bla}"',g' .env
-    sed -i 's,^# FOLIOBLOG_ADMIN_PASSWD=.*,FOLIOBLOG_ADMIN_PASSWD='"${FOLIOBLOG_ADMIN_PASSWD:-admin}"',g' .env
     sed -i 's,^# FOLIOBLOG_EMAIL_HOST_PASSWORD=.*,FOLIOBLOG_EMAIL_HOST_PASSWORD='"${FOLIOBLOG_EMAIL_HOST_PASSWORD:-}"',g' .env
-    sed -i 's,^# FOLIOBLOG_RELEASE=.*,FOLIOBLOG_RELEASE='"${FOLIOBLOG_RELEASE:-v1.7.0}"',g' .env
-    sed -i 's,^# FOLIOBLOG_STATIC_ROOT=.*,FOLIOBLOG_STATIC_ROOT=/app/static,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_HOST=.*,FOLIOBLOG_NGINX_HOST=folio.local blog.folio.local demo.folio.local,g' .env
-    sed -i 's,^# FOLIOBLOG_NGINX_MEDIA_ROOT=.*,FOLIOBLOG_NGINX_MEDIA_ROOT=/media,g' .env
-    sed -i 's,^# FOLIOBLOG_NGINX_STATIC_ROOT=.*,FOLIOBLOG_NGINX_STATIC_ROOT=/static,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_SSL_CERT=.*,FOLIOBLOG_NGINX_SSL_CERT=folio-selfsigned.crt,g' .env
     sed -i 's,^# FOLIOBLOG_NGINX_SSL_KEY=.*,FOLIOBLOG_NGINX_SSL_KEY=folio-selfsigned.key,g' .env
-    sed -i 's,^FOLIOBLOG_ADMIN_USERNAME=.*,FOLIOBLOG_ADMIN_USERNAME=admin,g' .env.prod
 
     # Generate certs
     make certs
@@ -186,7 +180,7 @@ deploy_prod() {
 
     # Create container and init it (superuser & co).
     echo -e "\n-> Up containers\n"
-    make up_wait
+    make up
 
     # Restore containers OR up
     if [ $HAS_RESTORE = 1 ]; then
@@ -198,6 +192,8 @@ deploy_prod() {
         make restore_prod
     else
         echo -e "\n-> Restore initial data\n"
+        make appmigrate
+        make appadmin
         make initial_data_prod
     fi
 

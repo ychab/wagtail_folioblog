@@ -31,7 +31,7 @@ server {
         etag off;
         if_modified_since off;
         add_header Cache-Control "public, no-transform";
-        alias ${NGINX_MEDIA};
+        alias /media;
     }
 
     location /static {
@@ -40,7 +40,7 @@ server {
         etag off;
         if_modified_since off;
         add_header Cache-Control "public, no-transform";
-        alias ${NGINX_STATIC};
+        alias /static;
     }
 
     location / {

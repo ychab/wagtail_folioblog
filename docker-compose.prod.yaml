@@ -7,8 +7,6 @@ services:
     environment:
       NGINX_HOST: ${FOLIOBLOG_NGINX_HOST}
       NGINX_APP_PORT: ${FOLIOBLOG_APP_PORT:-8000}
-      NGINX_MEDIA: ${FOLIOBLOG_NGINX_MEDIA_ROOT:-/media}
-      NGINX_STATIC: ${FOLIOBLOG_NGINX_STATIC_ROOT:-/static}
       NGINX_SSL_CERT: ${FOLIOBLOG_NGINX_SSL_CERT}
       NGINX_SSL_KEY: ${FOLIOBLOG_NGINX_SSL_KEY}
     ports:
@@ -23,8 +21,8 @@ services:
     volumes:
       - ./docker/prod/nginx/templates:/etc/nginx/templates:ro
       - ./docker/prod/nginx/ssl/certs:/etc/nginx/ssl:ro
-      - folioblog_media:${FOLIOBLOG_NGINX_MEDIA_ROOT:-/media}:ro
-      - folioblog_static:${FOLIOBLOG_NGINX_STATIC_ROOT:-/static}:ro
+      - folioblog_media:/media:ro
+      - folioblog_static:/static:ro
 
   app:
     image: folioblog:latest
@@ -40,16 +38,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/prod/Dockerfile
-      args:
-        FOLIOBLOG_RELEASE: ${FOLIOBLOG_RELEASE:-v1.7.0}
-        NODE_VERSION: ${FOLIOBLOG_NODE_VERSION:-v20.10.0}
-        MEDIA_ROOT: ${FOLIOBLOG_MEDIA_ROOT}
-        STATIC_ROOT: ${FOLIOBLOG_STATIC_ROOT}
     environment:
       FOLIOBLOG_POSTGRES_PASSWORD_FILE: /run/secrets/pg_passwd
       FOLIOBLOG_REDIS_PASSWORD_FILE: /run/secrets/redis_passwd
       FOLIOBLOG_SECRET_KEY_FILE: /run/secrets/secret_key
-      FOLIOBLOG_ADMIN_PASSWD_FILE: /run/secrets/admin_passwd
       FOLIOBLOG_EMAIL_HOST_PASSWORD_FILE: /run/secrets/email_passwd
     env_file:
       - ./docker/prod/.env.prod
@@ -57,13 +49,12 @@ services:
     ports:
       - ${FOLIOBLOG_APP_PORT:-8000}:8000
     volumes:
-      - folioblog_media:${FOLIOBLOG_MEDIA_ROOT}
-      - folioblog_static:${FOLIOBLOG_STATIC_ROOT}
+      - folioblog_media:/app/media
+      - folioblog_static:/app/static
     secrets:
       - pg_passwd
       - redis_passwd
       - secret_key
-      - admin_passwd
       - email_passwd
     healthcheck:
       test: curl --fail http://127.0.0.1:8000/?healthcheck=1 || exit 1
@@ -79,7 +70,5 @@ volumes:
 secrets:
   secret_key:
     environment: FOLIOBLOG_SECRET_KEY
-  admin_passwd:
-    environment: FOLIOBLOG_ADMIN_PASSWD
   email_passwd:
     environment: FOLIOBLOG_EMAIL_HOST_PASSWORD

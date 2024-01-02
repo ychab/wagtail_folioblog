@@ -133,23 +133,25 @@ All commands prefixed by "app" in the Makefile should interest you.
 This setup include Docker containers for services and the app, in a way more
 close to a production environment.
 
-The app is started by a WSGI server (gunicorn) behind a proxy webserver (nginx)
-which will serve static files as well as HTTPS requests.
+The container's app is started by a WSGI server (gunicorn) behind a proxy
+webserver (nginx) which will serve static files as well as HTTPS requests.
 
 The connection is *secured* by a self-signed certificate (untrusted) that you
 have to generate locally with OpenSSL. Your browser should complain about it
 but you just have to accept it anyway.
 
-This setup is just an **incomplete** example and **cannot be used for production**.
-However, the docker image itself *should be* ready for production.
+This image is mainly intended to be built into CI pipelines but could also be
+build locally for testing purpose.
 
 You will have to:
 ````
 cp env/.env.LOCAL .env # Edit it
 cp env/.env.PROD .env.prod # Edit if needed
 make certs
-make up_wait
-make initial_data_prod  # OPTIONAL
+make up
+make appmigrate
+make appadmin
+# make initial_data_prod  # OPTIONAL
 curl https://folio.local/admin  # Connect with YOUR <FOLIOBLOG_ADMIN_USERNAME>/<FOLIOBLOG_ADMIN_PASSWD>
 ````
 

@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 
 def load_secret(filepath):
     try:
@@ -32,9 +34,6 @@ DATABASES = {
 LANGUAGE_CODE = os.getenv("FOLIOBLOG_LANGUAGE_CODE")
 TIME_ZONE = os.getenv("FOLIOBLOG_TIME_ZONE", "Europe/Paris")
 
-# Folio settings
-ADMIN_PASSWORD = load_secret(os.getenv("FOLIOBLOG_ADMIN_PASSWD_FILE"))
-
 # Wagtail settings
 WAGTAIL_SITE_NAME = os.getenv("FOLIOBLOG_SITE_NAME")
 WAGTAILADMIN_BASE_URL = os.getenv("FOLIOBLOG_BASE_URL")
@@ -45,8 +44,8 @@ ADMINS = eval(os.getenv("FOLIOBLOG_ADMINS", "()"))
 MANAGERS = ADMINS
 
 # Medias
-STATIC_ROOT = os.getenv("FOLIOBLOG_STATIC_ROOT")
-MEDIA_ROOT = os.getenv("FOLIOBLOG_MEDIA_ROOT")
+STATIC_ROOT = Path("/app", "static")
+MEDIA_ROOT = Path("/app", "media")
 
 # Emails
 DEFAULT_FROM_EMAIL = os.getenv("FOLIOBLOG_DEFAULT_FROM_EMAIL")
