@@ -49,37 +49,36 @@ RUN apt install --yes --no-install-recommends xvfb gnupg && \
 
 # Create an app user instead of playing with Docker compose "user" service attribute.
 # Indead, having a user on the fly without home is not enough for Poetry, NPM, chromedriver.
-RUN groupadd --gid=${GID} appuser
-RUN useradd --uid=${UID} --gid=${GID} --create-home --shell /bin/bash appuser
+RUN groupadd --gid=${GID} appuser && \
+    useradd --uid=${UID} --gid=${GID} --create-home --shell /bin/bash appuser
 
 # Then install Poetry.
-RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN poetry self update --no-interaction
-RUN $POETRY_HOME/venv/bin/pip install poetry-plugin-export
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    poetry self update --no-interaction && \
+    $POETRY_HOME/venv/bin/pip install poetry-plugin-export
 
 # Then install nodeJS with NPM.
-RUN wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz
-RUN tar xfJ /opt/node.tar.xz -C /opt/ --no-same-owner
-RUN npm install -g npm@latest
-RUN rm /opt/node.tar.xz
+RUN wget -O /opt/node.tar.xz https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.xz && \
+    tar xfJ /opt/node.tar.xz -C /opt/ --no-same-owner && \
+    npm install -g npm@latest && \
+    rm /opt/node.tar.xz
 
 # Just copy necessary files, local files would be mounted into container.
 COPY --chown=appuser:appuser pyproject.toml poetry.lock /app/
 
 # Prepare build directories for appuser.
-RUN mkdir ${VIRTUAL_ENV} && chown appuser:appuser ${VIRTUAL_ENV}
+RUN mkdir ${VIRTUAL_ENV} && \
+    chown appuser:appuser ${VIRTUAL_ENV}
 
 # Move to app dir and switch to user appuser.
 WORKDIR /app
 USER appuser
 
 # Create virtualenv and install into deps with Poetry as appuser.
-RUN python -m venv ${VIRTUAL_ENV}
-RUN pip install --upgrade pip setuptools
-RUN poetry install --no-interaction --no-cache
+RUN python -m venv ${VIRTUAL_ENV} && \
+    pip install --upgrade pip setuptools && \
+    poetry install --no-interaction --no-cache
 
 EXPOSE 8000
-
 ENTRYPOINT ["docker/dev/entrypoint.sh"]
-
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
