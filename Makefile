@@ -24,7 +24,7 @@ deps:
 poetry:
 	poetry update
 	poetry lock
-	poetry export -f requirements.txt --only main -o requirements/prod.txt
+	poetry export -f requirements.txt --with prod -o requirements/prod.txt
 	poetry export -f requirements.txt --with test -o requirements/test.txt
 	poetry export -f requirements.txt --with test,dev -o requirements/dev.txt
 
