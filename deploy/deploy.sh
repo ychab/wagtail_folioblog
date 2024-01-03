@@ -65,7 +65,7 @@ deploy_local() {
     source .venv/bin/activate
 
     # Poetry
-    poetry install --no-interaction
+    poetry install --no-interaction --without=prod
     poetry run pre-commit install
 
     # Node

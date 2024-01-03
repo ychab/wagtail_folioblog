@@ -100,67 +100,60 @@ nginxshell:
 	docker compose exec nginx /bin/bash
 
 appshell:
-	docker compose exec app /bin/bash
-
-appshellroot:
-	docker compose exec --user=root app /bin/bash
-
-apprun:
 	docker compose run --rm app /bin/bash
 
-apprunroot:
+appshellroot:
 	docker compose run --rm --user=root app /bin/bash
 
 applogs:
 	docker compose logs -f app
 
 appdeps:
-	docker compose exec app bash -c 'poetry show --outdated; npm outdated'
+	docker compose run --rm app bash -c 'poetry show --outdated; npm outdated'
 
 apppoetry:
 	@# Don't update packages while Python processes are still running so run another container!
 	docker compose run --rm app bash -c '\
 		poetry update; \
 		poetry lock; \
-		poetry export -f requirements.txt --only main -o requirements/prod.txt; \
+		poetry export -f requirements.txt --with prod -o requirements/prod.txt; \
 		poetry export -f requirements.txt --with test -o requirements/test.txt; \
 		poetry export -f requirements.txt --with test,dev -o requirements/dev.txt;'
 
 appnpm:
-	docker compose exec app bash -c 'npm update; npm run dist'
+	docker compose run --rm app bash -c 'npm update; npm run dist'
 
 appadmin:
-	docker compose exec app python manage.py createadmin --username=${FOLIOBLOG_ADMIN_USERNAME} --password=${FOLIOBLOG_ADMIN_PASSWD}
+	docker compose run --rm app python manage.py createadmin --username=${FOLIOBLOG_ADMIN_USERNAME} --password=${FOLIOBLOG_ADMIN_PASSWD}
 
 appmigrate:
-	docker compose exec app python manage.py migrate --noinput
+	docker compose run --rm app python manage.py migrate --noinput
 
 apptrans:
-	docker compose exec app bash -c 'cd folioblog && python ../manage.py makemessages -d django -l en -l es -l fr'
-	docker compose exec app bash -c 'cd folioblog && python ../manage.py makemessages -d djangojs -l en -l es -l fr'
-	docker compose exec app bash -c 'cd folioblog && python ../manage.py compilemessages -l en -l es -l fr'
+	docker compose run --rm app bash -c 'cd folioblog && python ../manage.py makemessages -d django -l en -l es -l fr'
+	docker compose run --rm app bash -c 'cd folioblog && python ../manage.py makemessages -d djangojs -l en -l es -l fr'
+	docker compose run --rm app bash -c 'cd folioblog && python ../manage.py compilemessages -l en -l es -l fr'
 
 appfixturesdump:
-	docker compose exec app python manage.py fixtures dump
+	docker compose run --rm app python manage.py fixtures dump
 	sed -i -E 's/"latest_revision_created_at": (.+)/"latest_revision_created_at": null,/g' folioblog/core/fixtures/pages.json
 	sed -i -E 's/"live_revision": (.+)/"live_revision": null,/g' folioblog/core/fixtures/pages.json
 	sed -i -E 's/"latest_revision": (.+)/"latest_revision": null,/g' folioblog/core/fixtures/pages.json
 
 appfixturesload:
-	docker compose exec app python manage.py fixtures load --reset
+	docker compose run --rm app python manage.py fixtures load --reset
 
 apptest:
-	docker compose exec app bash -c 'DJANGO_SETTINGS_MODULE=folioblog.settings.test python manage.py test --noinput --exclude-tag=slow --parallel=4 folioblog'
+	docker compose run --rm app bash -c 'DJANGO_SETTINGS_MODULE=folioblog.settings.test python manage.py test --noinput --exclude-tag=slow --parallel=4 folioblog'
 
 apptox:
-	docker compose exec app tox
+	docker compose run --rm app tox
 
 appcron:
-	docker compose exec app python manage.py fixtree --full
-	docker compose exec app python manage.py purge_revisions --days=30
-	docker compose exec app python manage.py publish_scheduled_pages
-	docker compose exec app python manage.py generaterenditions
-	docker compose exec app python manage.py loadcachepages
+	docker compose run --rm app python manage.py fixtree --full
+	docker compose run --rm app python manage.py purge_revisions --days=30
+	docker compose run --rm app python manage.py publish_scheduled_pages
+	docker compose run --rm app python manage.py generaterenditions
 
 ##############
 # Initial data

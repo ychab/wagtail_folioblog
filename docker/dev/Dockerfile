@@ -23,8 +23,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Install missing system dependencies first.
 RUN apt update --yes --quiet && apt install --yes --quiet --no-install-recommends \
-    libjpeg62-turbo-dev \
+    build-essential \
     libpq-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
     libwebp-dev \
     zlib1g-dev \
     gettext \
@@ -77,7 +79,7 @@ USER appuser
 # Create virtualenv and install into deps with Poetry as appuser.
 RUN python -m venv ${VIRTUAL_ENV} && \
     pip install --upgrade pip setuptools && \
-    poetry install --no-interaction --no-cache
+    poetry install --no-interaction --no-cache --without=prod
 
 EXPOSE 8000
 ENTRYPOINT ["docker/dev/entrypoint.sh"]

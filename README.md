@@ -94,13 +94,13 @@ This setup is an hybrid: **only** services are docker containers (i.e: postgresq
 and everything else live on your local machine.
 
 You must first follow the "Local" section to meet all requirements needed:
-virtualenv, poetry, npm, precommit, etc.
+virtualenv, poetry, npm, etc.
 Then, you can setup the services with the following command:
 ````
 cp env/.env.LOCAL .env # Edit it
 cp folioblog/settings/local.py.dist folioblog/settings/local.py  # Edit if needed
 make up
-poetry install
+poetry install --without=prod
 pre-commit install
 npm install
 npm run dist
