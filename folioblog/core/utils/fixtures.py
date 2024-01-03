@@ -44,5 +44,6 @@ fixtures_map = OrderedDict(
         # Remaining stuff
         ("menu", "core.Menu"),
         ("menulink", "core.MenuLink"),
+        ("referenceindex", "wagtailcore.ReferenceIndex"),
     ]
 )
