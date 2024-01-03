@@ -25,7 +25,7 @@ services:
       - folioblog_static:/static:ro
 
   app:
-    image: folioblog:latest
+    image: ychab/wagtail_folioblog:latest
     container_name: folioblog_app
     restart: unless-stopped
     depends_on:
