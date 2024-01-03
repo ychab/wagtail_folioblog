@@ -89,6 +89,7 @@ class GalleryPage(BaseIndexPage):
         for SpecificPage in [BasicPage, BlogPage, VideoPage]:
             page_qs = (
                 SpecificPage.objects.live()
+                .select_related("image__photographer")
                 .descendant_of(root_page)
                 .filter(
                     locale__language_code=get_language(),

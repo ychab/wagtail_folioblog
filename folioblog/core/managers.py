@@ -59,16 +59,6 @@ class ImageManager(models.Manager):
         return self._queryset_class(self.model).select_related("photographer")
 
 
-class ImagePageManager(PageManager):
-    def get_queryset(self):
-        return (
-            self._queryset_class(self.model)
-            .select_related("image__photographer")
-            .prefetch_related("image__renditions")
-        )
-
-
 MultiSiteManager = models.Manager.from_queryset(MultiSiteQuerySet)
 I18nMultiSiteManager = models.Manager.from_queryset(I18nMultiSiteQuerySet)
 I18nPageManager = PageManager.from_queryset(I18nPageQuerySet)
-I18nIndexPageManager = ImagePageManager.from_queryset(I18nPageQuerySet)

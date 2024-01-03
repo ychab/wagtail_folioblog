@@ -26,8 +26,8 @@ from modelcluster.models import ClusterableModel
 
 from folioblog.core.blocks import CookieBannersBlock, PageNotFoundsBlock, RssFeedsBlock
 from folioblog.core.managers import (
-    I18nIndexPageManager,
     I18nMultiSiteManager,
+    I18nPageManager,
     ImageManager,
     MultiSiteManager,
 )
@@ -200,7 +200,7 @@ class BaseIndexPage(SitemapPageMixin, Page):
         ),
     ]
 
-    objects = I18nIndexPageManager()
+    objects = I18nPageManager()
 
     class Meta:
         abstract = True
