@@ -1,3 +1,4 @@
+[![DockerHub](https://github.com/ychab/wagtail_folioblog/actions/workflows/dockerhub.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/dockerhub.yaml)
 [![build](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/build.yaml)
 [![lint](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml/badge.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/lint.yaml)
 [![units](https://raw.githubusercontent.com/ychab/wagtail_folioblog/badges/.badges/main/units.svg)](https://github.com/ychab/wagtail_folioblog/actions/workflows/units.yaml)
