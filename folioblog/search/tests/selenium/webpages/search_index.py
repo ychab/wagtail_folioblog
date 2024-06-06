@@ -26,9 +26,7 @@ class SearchIndexWebPage(BaseIndexWebPage):
         form = self.selenium.find_element(By.CSS_SELECTOR, "#search-form form")
         form.submit()
 
-        return WebDriverWait(self.selenium, 5).until(
-            EC.presence_of_element_located((By.ID, "search-results"))
-        )
+        return WebDriverWait(self.selenium, 5).until(EC.presence_of_element_located((By.ID, "search-results")))
 
     def search(self, query):
         input = self.selenium.find_element(By.ID, "search-query")
@@ -42,15 +40,11 @@ class SearchIndexWebPage(BaseIndexWebPage):
         input.send_keys(query)
 
         WebDriverWait(self.selenium, 5).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, "#autocomplete-results ul li")
-            )
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "#autocomplete-results ul li"))
         )
 
         items = []
-        elems = self.selenium.find_elements(
-            By.CSS_SELECTOR, "#autocomplete-results ul li"
-        )
+        elems = self.selenium.find_elements(By.CSS_SELECTOR, "#autocomplete-results ul li")
         for elem in elems:
             items.append(
                 {
@@ -113,17 +107,13 @@ class SearchIndexWebPage(BaseIndexWebPage):
         input.send_keys(Keys.ENTER)
 
         return WebDriverWait(self.selenium, 5).until(
-            EC.presence_of_element_located(
-                (By.XPATH, f'//tags/tag[@value="{expected_value}"]')
-            ),
+            EC.presence_of_element_located((By.XPATH, f'//tags/tag[@value="{expected_value}"]')),
         )
 
     def get_tag_items(self):
         items = []
 
-        list = self.selenium.find_element(
-            By.CLASS_NAME, "tagify__dropdown"
-        )  # needs to be reloaded
+        list = self.selenium.find_element(By.CLASS_NAME, "tagify__dropdown")  # needs to be reloaded
         elems = list.find_elements(By.CLASS_NAME, "tagify__dropdown__item")
         for elem in elems:
             items.append(
@@ -161,9 +151,7 @@ class SearchIndexWebPage(BaseIndexWebPage):
                     "title": elem.find_element(By.CLASS_NAME, "post-title").text,
                     "subtitle": elem.find_element(By.CLASS_NAME, "post-subtitle").text,
                     "intro": elem.find_element(By.CLASS_NAME, "post-intro").text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                     "tags": elem.find_element(By.CLASS_NAME, "post-tags").text,
                 }
             )

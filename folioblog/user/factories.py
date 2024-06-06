@@ -15,9 +15,7 @@ class UserFactory(DjangoModelFactory):
         skip_postgeneration_save = True
 
     username = factory.Sequence(lambda n: "user_{n}".format(n=n))
-    email = factory.LazyAttribute(
-        lambda o: "test+{o.username}@yannickchabbert.fr".format(o=o)
-    )
+    email = factory.LazyAttribute(lambda o: "test+{o.username}@yannickchabbert.fr".format(o=o))
     password = factory.django.Password("test")
     first_name = factory.Faker("first_name", locale=current_locale)
     last_name = factory.Faker("last_name", locale=current_locale)
@@ -28,9 +26,7 @@ class UserFactory(DjangoModelFactory):
         Ensure that sequence username generated is unique.
         """
         try:
-            u = User.objects.filter(username__startswith="user_").order_by("-username")[
-                :1
-            ][0]
+            u = User.objects.filter(username__startswith="user_").order_by("-username")[:1][0]
         except IndexError:
             return 1
         else:

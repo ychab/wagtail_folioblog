@@ -25,10 +25,7 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         # Connect signals only if cache page is enabled.
-        if (
-            "folioblog.core.middleware.AnonymousUpdateCacheMiddleware"
-            in settings.MIDDLEWARE
-        ):  # pragma: no cover
+        if "folioblog.core.middleware.AnonymousUpdateCacheMiddleware" in settings.MIDDLEWARE:  # pragma: no cover
             connect_cache_signal()
 
         # Add custom faker providers per language

@@ -10,9 +10,7 @@ class VideoPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         super().setUp()
 
         self.index = VideoIndexPageFactory(parent=self.site.root_page)
-        self.page = VideoPageFactory(
-            parent=self.index, tags__number=2, related_pages__number=1
-        )
+        self.page = VideoPageFactory(parent=self.index, tags__number=2, related_pages__number=1)
 
         self.webpage = VideoWebPage(self.selenium)
         self.webpage.fetch_page(self.page.full_url)

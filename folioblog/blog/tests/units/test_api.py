@@ -156,9 +156,7 @@ class BlogPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["items"][0]["id"], post.pk)
 
     def test_list_filter_locale(self):
-        post = BlogPageFactory(
-            parent=self.index, locale=LocaleFactory(language_code="fr")
-        )
+        post = BlogPageFactory(parent=self.index, locale=LocaleFactory(language_code="fr"))
         BlogPageFactory(parent=self.index, locale=LocaleFactory(language_code="en"))
 
         response = self.client.get(
@@ -217,9 +215,7 @@ class BlogPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["meta"]["total_count"], 1)
 
-        self.assertEqual(
-            response.data["items"][0]["meta"]["date"], post.date.isoformat()
-        )
+        self.assertEqual(response.data["items"][0]["meta"]["date"], post.date.isoformat())
         self.assertEqual(response.data["items"][0]["meta"]["author"], post.author)
 
         self.assertEqual(response.data["items"][0]["title"], post.title)
@@ -229,33 +225,19 @@ class BlogPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["items"][0]["intro"], post.intro)
         self.assertEqual(response.data["items"][0]["image_body"], post.image_body)
         self.assertEqual(response.data["items"][0]["blockquote"], post.blockquote)
-        self.assertEqual(
-            response.data["items"][0]["blockquote_author"], post.blockquote_author
-        )
-        self.assertEqual(
-            response.data["items"][0]["blockquote_ref"], post.blockquote_ref
-        )
+        self.assertEqual(response.data["items"][0]["blockquote_author"], post.blockquote_author)
+        self.assertEqual(response.data["items"][0]["blockquote_ref"], post.blockquote_ref)
 
         self.assertEqual(response.data["items"][0]["category"]["id"], post.category.pk)
-        self.assertEqual(
-            response.data["items"][0]["category"]["name"], post.category.name
-        )
-        self.assertEqual(
-            response.data["items"][0]["category"]["slug"], post.category.slug
-        )
+        self.assertEqual(response.data["items"][0]["category"]["name"], post.category.name)
+        self.assertEqual(response.data["items"][0]["category"]["slug"], post.category.slug)
 
         self.assertEqual(response.data["items"][0]["image"]["id"], post.image.pk)
         self.assertEqual(response.data["items"][0]["image"]["title"], post.image.title)
         self.assertEqual(response.data["items"][0]["image"]["width"], post.image.width)
-        self.assertEqual(
-            response.data["items"][0]["image"]["height"], post.image.height
-        )
-        self.assertEqual(
-            response.data["items"][0]["image"]["caption"], post.image.caption
-        )
-        self.assertEqual(
-            response.data["items"][0]["image"]["download_url"], post.image.file.url
-        )
+        self.assertEqual(response.data["items"][0]["image"]["height"], post.image.height)
+        self.assertEqual(response.data["items"][0]["image"]["caption"], post.image.caption)
+        self.assertEqual(response.data["items"][0]["image"]["download_url"], post.image.file.url)
         self.assertEqual(
             response.data["items"][0]["image"]["photographer"]["id"],
             post.image.photographer.pk,
@@ -298,9 +280,7 @@ class BlogPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No BlogPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No BlogPage matches the given query.")
 
     def test_detail_exclude_private(self):
         post = BlogPageFactory(parent=self.index, is_private=True)
@@ -308,9 +288,7 @@ class BlogPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No BlogPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No BlogPage matches the given query.")
 
     def test_detail_exclude_other_site(self):
         post = BlogPageFactory(parent=self.other_index)
@@ -318,9 +296,7 @@ class BlogPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No BlogPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No BlogPage matches the given query.")
 
     def test_detail_extra_fields(self):
         post = BlogPageFactory(parent=self.index, tags__number=3)
@@ -357,12 +333,8 @@ class BlogPageDetailAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["image"]["height"], post.image.height)
         self.assertEqual(response.data["image"]["caption"], post.image.caption)
         self.assertEqual(response.data["image"]["download_url"], post.image.file.url)
-        self.assertEqual(
-            response.data["image"]["photographer"]["id"], post.image.photographer.pk
-        )
-        self.assertEqual(
-            response.data["image"]["photographer"]["name"], post.image.photographer.name
-        )
+        self.assertEqual(response.data["image"]["photographer"]["id"], post.image.photographer.pk)
+        self.assertEqual(response.data["image"]["photographer"]["name"], post.image.photographer.name)
         self.assertEqual(
             response.data["image"]["photographer"]["website"],
             post.image.photographer.website,

@@ -278,7 +278,5 @@ PASSWORD_REQUIRED_TEMPLATE = "cleanblog/password_required.html"
 
 TAGGIT_CASE_INSENSITIVE = True
 
-FOLIOBLOG_COMPRESSOR_UGLIFY_BINARY = (
-    BASE_DIR / "node_modules" / "uglify-js" / "bin" / "uglifyjs"
-)
+FOLIOBLOG_COMPRESSOR_UGLIFY_BINARY = BASE_DIR / "node_modules" / "uglify-js" / "bin" / "uglifyjs"
 FOLIOBLOG_COMPRESSOR_UGLIFY_ARGUMENTS = ""

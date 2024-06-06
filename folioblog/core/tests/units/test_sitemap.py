@@ -38,10 +38,7 @@ class SitemapTestCase(TestCase):
         urls = bs.find_all(name="url")
         for url in urls:
             loc = url.find(name="loc").text
-            links = {
-                l.attrs["hreflang"]: l.attrs["href"]
-                for l in url.find_all(name="xhtml:link")  # noqa
-            }
+            links = {l.attrs["hreflang"]: l.attrs["href"] for l in url.find_all(name="xhtml:link")}  # noqa
             xml_parsed[loc] = links
 
         self.xml_parsed = xml_parsed
@@ -98,18 +95,12 @@ class SitemapI18nTestCase(SiteRootPageSwitchTestCase):
         super().setUpTestData()
 
         # Once site root page is updated, create contents.
-        cls.index_posts_fr = BlogIndexPageFactory(
-            parent=cls.portfolio_fr, locale=cls.locale_fr
-        )
-        cls.index_videos_fr = VideoIndexPageFactory(
-            parent=cls.portfolio_fr, locale=cls.locale_fr
-        )
+        cls.index_posts_fr = BlogIndexPageFactory(parent=cls.portfolio_fr, locale=cls.locale_fr)
+        cls.index_videos_fr = VideoIndexPageFactory(parent=cls.portfolio_fr, locale=cls.locale_fr)
 
         cls.basic_fr = BasicPageFactory(parent=cls.portfolio_fr, locale=cls.locale_fr)
         cls.post_fr = BlogPageFactory(parent=cls.index_posts_fr, locale=cls.locale_fr)
-        cls.video_fr = VideoPageFactory(
-            parent=cls.index_videos_fr, locale=cls.locale_fr
-        )
+        cls.video_fr = VideoPageFactory(parent=cls.index_videos_fr, locale=cls.locale_fr)
 
         cls.portfolio_en = CopyPageForTranslationAction(
             page=cls.portfolio_fr,
@@ -128,10 +119,7 @@ class SitemapI18nTestCase(SiteRootPageSwitchTestCase):
         urls = bs.find_all(name="url")
         for url in urls:
             loc = url.find(name="loc").text
-            links = {
-                l.attrs["hreflang"]: l.attrs["href"]
-                for l in url.find_all(name="xhtml:link")  # noqa
-            }
+            links = {l.attrs["hreflang"]: l.attrs["href"] for l in url.find_all(name="xhtml:link")}  # noqa
             xml_parsed[loc] = links
 
         self.xml_parsed = xml_parsed

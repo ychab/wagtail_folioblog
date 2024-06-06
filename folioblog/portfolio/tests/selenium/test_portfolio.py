@@ -51,9 +51,7 @@ class PortFolioPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), len(self.page.services))
         self.assertEqual(items[0]["name"], self.page.services[0].value["name"])
         self.assertEqual(items[0]["text"], self.page.services[0].value["text"])
-        self.assertEqual(
-            "\n".join(self.page.services[0].value["items"]), items[0]["items"]
-        )
+        self.assertEqual("\n".join(self.page.services[0].value["items"]), items[0]["items"])
 
     def test_skills(self):
         items = self.webpage.get_skill_items()
@@ -62,26 +60,18 @@ class PortFolioPageLiveTestCase(FolioBlogSeleniumServerTestCase):
 
         self.assertEqual(len(items), len(self.page.skills))
         self.assertEqual(items[0]["heading"], self.page.skills[0].value["heading"])
-        self.assertEqual(
-            items[0]["subheading"], self.page.skills[0].value["subheading"]
-        )
+        self.assertEqual(items[0]["subheading"], self.page.skills[0].value["subheading"])
         self.assertEqual(items[0]["img_src"], rendition_url)
 
     def test_experiences(self):
         items = self.webpage.get_experience_items()
-        rendition = (
-            self.page.cv_experiences[0].value["photo"].get_rendition("fill-156x156")
-        )
+        rendition = self.page.cv_experiences[0].value["photo"].get_rendition("fill-156x156")
         rendition_url = f"{self.live_server_url}{rendition.url}"
 
         self.assertEqual(len(items), len(self.page.cv_experiences))
         self.assertEqual(items[0]["date"], self.page.cv_experiences[0].value["date"])
-        self.assertEqual(
-            items[0]["company"], self.page.cv_experiences[0].value["company"]
-        )
-        self.assertEqual(
-            items[0]["text"], str(self.page.cv_experiences[0].value["text"])
-        )
+        self.assertEqual(items[0]["company"], self.page.cv_experiences[0].value["company"])
+        self.assertEqual(items[0]["text"], str(self.page.cv_experiences[0].value["text"]))
         self.assertEqual(items[0]["img_src"], rendition_url)
 
     def test_members(self):
@@ -102,9 +92,7 @@ class PortFolioPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         try:
             is_triggered, is_loaded = self.webpage.play_video()
         except TimeoutException:  # pragma: no cover
-            return unittest.SkipTest(
-                "@FIXME-WTF: viewport on mobile is 443 instead of 360?"
-            )
+            return unittest.SkipTest("@FIXME-WTF: viewport on mobile is 443 instead of 360?")
         else:
             self.assertTrue(is_triggered)
             self.assertTrue(is_loaded)

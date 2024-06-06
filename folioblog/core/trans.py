@@ -6,6 +6,7 @@ mimic native Collection model and of course, which would be translatable and
 custom Image model will use it instead...
 But to be honest, I don't have enough time to do it!
 """
+
 from django.utils.translation import pgettext
 
 

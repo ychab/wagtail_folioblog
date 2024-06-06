@@ -35,15 +35,7 @@ def gallery_grid_item(image, extra_class=None):
         renditions[name] = image.get_rendition(spec)
 
     context.update(renditions)
-    context["image_xs"] = (
-        context["image_xs_3x_zoom"]
-        if context["extra_class"]
-        else context["image_xs_3x"]
-    )
-    context["image_lg"] = (
-        context["image_lg_1x_zoom"]
-        if context["extra_class"]
-        else context["image_lg_1x"]
-    )
+    context["image_xs"] = context["image_xs_3x_zoom"] if context["extra_class"] else context["image_xs_3x"]
+    context["image_lg"] = context["image_lg_1x_zoom"] if context["extra_class"] else context["image_lg_1x"]
 
     return context

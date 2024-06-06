@@ -22,9 +22,7 @@ api_router.register_endpoint("videos", VideoPageAPIViewSet)
 urlpatterns = [
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
-    path(
-        "sitemap.xml", sitemap, kwargs={"sitemaps": {"i18n": Sitemap}}, name="sitemap"
-    ),
+    path("sitemap.xml", sitemap, kwargs={"sitemaps": {"i18n": Sitemap}}, name="sitemap"),
     path("api/v2/", api_router.urls),
 ]
 

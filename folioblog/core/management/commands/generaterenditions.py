@@ -17,18 +17,14 @@ class Command(BaseCommand):
         for site in sites:
             site_settings = FolioBlogSettings.for_site(site)
             if not site_settings.gallery_collection:
-                self.stdout.write(
-                    self.style.WARNING(f"Skip generating renditions for site {site}")
-                )
+                self.stdout.write(self.style.WARNING(f"Skip generating renditions for site {site}"))
                 continue
 
             self.stdout.write(f"About generating renditions for site {site}")
 
             count = self.generate_site_renditions(site_settings.gallery_collection)
 
-            self.stdout.write(
-                self.style.SUCCESS(f"{count} renditions generated for site {site}")
-            )
+            self.stdout.write(self.style.SUCCESS(f"{count} renditions generated for site {site}"))
 
     def generate_site_renditions(self, root_collection):
         collection_qs = Collection.objects.descendant_of(root_collection)

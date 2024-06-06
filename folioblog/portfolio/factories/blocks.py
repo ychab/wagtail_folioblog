@@ -35,9 +35,7 @@ class ServiceBlockFactory(wagtail_factories.StructBlockFactory):
 
     name = factory.Faker("sentence", nb_words=3, locale=current_locale)
     text = factory.Faker("paragraph", locale=current_locale)
-    items = factory.LazyFunction(
-        lambda: ListValue(ListBlock(CharBlock()), values=fake.words(nb=2))
-    )
+    items = factory.LazyFunction(lambda: ListValue(ListBlock(CharBlock()), values=fake.words(nb=2)))
     # If doing this, MUST specify a value while declaring the factory (wagtail <=4.0.4)
     # items = wagtail_factories.ListBlockFactory(wagtail_factories.CharBlockFactory)
     icon = factory.Faker("word", locale=current_locale)
@@ -66,9 +64,7 @@ class SkillBlockFactory(wagtail_factories.StructBlockFactory):
     heading = factory.Faker("sentence", nb_words=3, locale=current_locale)
     subheading = factory.Faker("sentence", nb_words=5, locale=current_locale)
     intro = factory.Faker("sentence", nb_words=8, locale=current_locale)
-    text = factory.LazyFunction(
-        lambda: RichText(fake.text())
-    )  # @todo use RichTextBlockFactory
+    text = factory.LazyFunction(lambda: RichText(fake.text()))  # @todo use RichTextBlockFactory
     links = wagtail_factories.ListBlockFactory(SkillLinkBlockFactory)
     image = factory.SubFactory(FolioBlogImageChooserBlockFactory)
 
@@ -86,9 +82,7 @@ class ExperienceBlockFactory(wagtail_factories.StructBlockFactory):
 
     date = factory.Faker("sentence", nb_words=2, locale=current_locale)
     company = factory.Faker("company", locale=current_locale)
-    text = factory.LazyFunction(
-        lambda: RichText(fake.paragraph())
-    )  # @todo use RichTextBlockFactory
+    text = factory.LazyFunction(lambda: RichText(fake.paragraph()))  # @todo use RichTextBlockFactory
     photo = factory.SubFactory(FolioBlogImageChooserBlockFactory)
 
 

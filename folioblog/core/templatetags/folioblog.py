@@ -65,9 +65,7 @@ def text_404(context, field, default=""):
 @register.inclusion_tag("core/cookies_banner.html", takes_context=True)
 def cookies_banner(context):
     langcode = context["LANGUAGE_CODE"]
-    banner_settings = get_block_language(
-        context["settings"]["core"]["folioblogsettings"].cookie_banner, langcode
-    )
+    banner_settings = get_block_language(context["settings"]["core"]["folioblogsettings"].cookie_banner, langcode)
     return {
         "settings": banner_settings,
     }
@@ -106,21 +104,13 @@ def social_links(context, page):
 
     page_full_url = page.get_full_url(request=context["request"])
 
-    extra_context["reddit_url"] = post_to_reddit(context, page.title, page_full_url)[
-        "reddit_url"
-    ]
-    extra_context["facebook_url"] = post_to_facebook(context, page_full_url)[
-        "facebook_url"
-    ]
-    extra_context["twitter_url"] = post_to_twitter(context, page.title, page_full_url)[
-        "tweet_url"
-    ]
+    extra_context["reddit_url"] = post_to_reddit(context, page.title, page_full_url)["reddit_url"]
+    extra_context["facebook_url"] = post_to_facebook(context, page_full_url)["facebook_url"]
+    extra_context["twitter_url"] = post_to_twitter(context, page.title, page_full_url)["tweet_url"]
     # Don't want ugly JS plugin which write cookies and force layout button!
     # Old way, but still working?? Because new (offline) doesn't seems to work...
     # @see https://stackoverflow.com/questions/33426752/linkedin-share-post-url
-    extra_context[
-        "linkedin_url"
-    ] = f"https://www.linkedin.com/shareArticle?url={tpl_urlencode(page_full_url)}"
+    extra_context["linkedin_url"] = f"https://www.linkedin.com/shareArticle?url={tpl_urlencode(page_full_url)}"
 
     return extra_context
 
@@ -139,8 +129,7 @@ def og_meta(context, page, image=None, embed=None):
         "embed": embed or getattr(page, "embed", None),
         "og_type": og_types.get(page._meta.label, "website"),
         "site": Site.find_for_request(request=context.get("request")),
-        "seo_description": getattr(page, "seo_description", None)
-        or page.search_description,
+        "seo_description": getattr(page, "seo_description", None) or page.search_description,
     }
 
 

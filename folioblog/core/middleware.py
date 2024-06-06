@@ -7,9 +7,7 @@ from django.middleware.cache import FetchFromCacheMiddleware, UpdateCacheMiddlew
 class AnonymousUpdateCacheMiddleware(UpdateCacheMiddleware):
     def has_restriction(self, request, response):
         context_data = getattr(response, "context_data", None)
-        page = (
-            context_data["page"] if context_data and context_data.get("page") else None
-        )
+        page = context_data["page"] if context_data and context_data.get("page") else None
 
         # Prevent useless queries if we already know that it couldn't be cached.
         if page and self._should_update_cache(request, response):
@@ -51,8 +49,6 @@ class CountQueriesMiddleware:
         count_after = len(connection.queries)
 
         count = count_after - count_before
-        self.logger.info(
-            "SQL QUERIES on {} ==> {}".format(request.build_absolute_uri(), count)
-        )
+        self.logger.info("SQL QUERIES on {} ==> {}".format(request.build_absolute_uri(), count))
 
         return response

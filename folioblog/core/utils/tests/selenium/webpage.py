@@ -34,9 +34,7 @@ class BaseIndexWebPage:
         # Then do implicit wait manually to don't mix with explicit wait.
         # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
         conditions = [
-            EC.invisibility_of_element_located(
-                (By.ID, "page-500-body")
-            ),  # check for 500 page
+            EC.invisibility_of_element_located((By.ID, "page-500-body")),  # check for 500 page
             is_document_ready(),
         ]
         if not skip_check_url:
@@ -80,9 +78,7 @@ class BaseIndexWebPage:
         )
         button.click()
 
-        return WebDriverWait(self.selenium, 5).until(
-            EC.invisibility_of_element_located((By.ID, "cookies-eu-banner"))
-        )
+        return WebDriverWait(self.selenium, 5).until(EC.invisibility_of_element_located((By.ID, "cookies-eu-banner")))
 
     def force_cookie_consent(self, value="true"):
         self.selenium.add_cookie(
@@ -121,9 +117,7 @@ class BaseIndexWebPage:
 
     def scroll_to(self, locator):
         # Wait for element if not yet loaded
-        elem = WebDriverWait(self.selenium, 5).until(
-            EC.presence_of_element_located(locator)
-        )
+        elem = WebDriverWait(self.selenium, 5).until(EC.presence_of_element_located(locator))
 
         # Scroll into view with JS! Beurk!! But whyyyy??
         # Because  we could ONLY check in JS if element is visible into the
@@ -169,9 +163,7 @@ class BaseIndexWebPage:
         button.click()
 
         link_locator = [By.XPATH, f'//a[@data-filter="category-{slug}"]']
-        link = WebDriverWait(self.selenium, 5).until(
-            EC.element_to_be_clickable(link_locator)
-        )
+        link = WebDriverWait(self.selenium, 5).until(EC.element_to_be_clickable(link_locator))
         link.click()
 
         return WebDriverWait(self.selenium, 5).until(
@@ -190,16 +182,12 @@ class BaseIndexWebPage:
         button.click()
 
         # First wait for thumbnail to disappear.
-        is_triggered = WebDriverWait(self.selenium, 2).until(
-            EC.invisibility_of_element_located(button)
-        )
+        is_triggered = WebDriverWait(self.selenium, 2).until(EC.invisibility_of_element_located(button))
 
         # Then wait for YouTube to insert the iframe.
         try:
             is_loaded = WebDriverWait(self.selenium, 5).until(
-                EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, ".video-youtube-player-wrapper iframe")
-                )
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".video-youtube-player-wrapper iframe"))
             )
         except TimeoutException:  # pragma: no cover
             # Because YouTube maybe very slow, we won't wait indefinitely...
@@ -222,9 +210,7 @@ class BaseIndexWebPage:
         """
         )
 
-        return WebDriverWait(self.selenium, 5).until(
-            all_of(*[videos_stopped(vid) for vid in video_ids])
-        )
+        return WebDriverWait(self.selenium, 5).until(all_of(*[videos_stopped(vid) for vid in video_ids]))
 
     def stop_video(self, locator=None):
         locator = locator or (By.CLASS_NAME, "video-youtube-player-wrapper")
@@ -245,10 +231,7 @@ class BaseIndexWebPage:
         )
 
         return WebDriverWait(self.selenium, 5).until(
-            lambda driver: driver.find_element(
-                By.ID, f"youtube-video-{video_id}"
-            ).tag_name
-            == "div"
+            lambda driver: driver.find_element(By.ID, f"youtube-video-{video_id}").tag_name == "div"
         )
 
     def get_url(self):
@@ -268,11 +251,7 @@ class BaseIndexWebPage:
 
     def get_masterhead_image(self):
         elem = self.selenium.find_element(By.CLASS_NAME, "masthead")
-        return (
-            elem.value_of_css_property("background-image")
-            .replace('url("', "")
-            .replace('")', "")
-        )
+        return elem.value_of_css_property("background-image").replace('url("', "").replace('")', "")
 
 
 class BaseWebPage(BaseIndexWebPage):
@@ -283,15 +262,9 @@ class BaseWebPage(BaseIndexWebPage):
         for elem in elems:
             data.append(
                 {
-                    "title": elem.find_element(
-                        By.CLASS_NAME, "related-page-title"
-                    ).text,
-                    "url": elem.find_element(
-                        By.CLASS_NAME, "related-page-link"
-                    ).get_attribute("href"),
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "title": elem.find_element(By.CLASS_NAME, "related-page-title").text,
+                    "url": elem.find_element(By.CLASS_NAME, "related-page-link").get_attribute("href"),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                 }
             )
 

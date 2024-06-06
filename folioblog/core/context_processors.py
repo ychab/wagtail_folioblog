@@ -35,8 +35,6 @@ def menu(request):
     if menu:
         context["menu_homepage"] = menu.homepage
         context["menu_promopage"] = menu.promopage
-        context["menu_links"] = OrderedDict(
-            [(link.related_page.slug, link.related_page) for link in menu.links.all()]
-        )
+        context["menu_links"] = OrderedDict([(link.related_page.slug, link.related_page) for link in menu.links.all()])
 
     return context

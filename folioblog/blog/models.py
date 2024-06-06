@@ -34,16 +34,10 @@ class BlogIndexPage(BaseIndexPage):
         folio_settings = FolioBlogSettings.for_request(request)
         context = super().get_context(request, *args, **kwargs)
 
-        categories = (
-            BlogCategory.objects.in_site(folio_settings.site)
-            .filter_language()
-            .order_by("slug")
-        )
+        categories = BlogCategory.objects.in_site(folio_settings.site).filter_language().order_by("slug")
 
         context["categories"] = categories
-        context["category_filters"] = [
-            {"name": str(c), "value": c.slug} for c in categories
-        ]
+        context["category_filters"] = [{"name": str(c), "value": c.slug} for c in categories]
         context["category_query"] = request.GET.get("category", "")
 
         qs = BlogPage.objects.live().child_of(self).filter_language()
@@ -64,12 +58,8 @@ class BlogTag(MultiSiteMixin, TagBase):
 
 
 class BlogPageTag(TaggedItemBase):
-    tag = models.ForeignKey(
-        BlogTag, on_delete=models.CASCADE, related_name="tagged_blogs"
-    )
-    content_object = ParentalKey(
-        "BlogPage", on_delete=models.CASCADE, related_name="tagged_items"
-    )
+    tag = models.ForeignKey(BlogTag, on_delete=models.CASCADE, related_name="tagged_blogs")
+    content_object = ParentalKey("BlogPage", on_delete=models.CASCADE, related_name="tagged_items")
 
 
 class BlogCategory(BaseCategory):
@@ -93,9 +83,7 @@ class BlogPage(BasePage):
     blockquote_author = models.CharField(max_length=128, blank=True, default="")
     blockquote_ref = models.CharField(max_length=128, blank=True, default="")
 
-    category = models.ForeignKey(
-        BlogCategory, on_delete=models.PROTECT, related_name="blogpages"
-    )
+    category = models.ForeignKey(BlogCategory, on_delete=models.PROTECT, related_name="blogpages")
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     api_fields = BasePage.api_fields + [

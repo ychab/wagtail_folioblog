@@ -71,38 +71,16 @@ class LoadCachePagesCommandTestCase(SiteRootPageSwitchTestCase):
             CollectionFactory(name=name, parent=root_collection)
 
         cls.home_blog = HomePageFactory(parent=cls.portfolio, locale=cls.locale_fr)
-        cls.gallery_page = GalleryPageFactory(
-            parent=cls.portfolio, locale=cls.locale_fr
-        )
-        cls.index_posts = BlogIndexPageFactory(
-            parent=cls.portfolio, locale=cls.locale_fr
-        )
-        cls.index_videos = VideoIndexPageFactory(
-            parent=cls.portfolio, locale=cls.locale_fr
-        )
-        cls.index_search = SearchIndexPageFactory(
-            parent=cls.portfolio, locale=cls.locale_fr
-        )
+        cls.gallery_page = GalleryPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
+        cls.index_posts = BlogIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
+        cls.index_videos = VideoIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
+        cls.index_search = SearchIndexPageFactory(parent=cls.portfolio, locale=cls.locale_fr)
 
         cls.basics = []
-        cls.basics.append(
-            BasicPageFactory(
-                parent=cls.portfolio, locale=cls.locale_fr, title="disclaimer"
-            )
-        )
-        cls.basics.append(
-            BasicPageFactory(
-                parent=cls.portfolio, locale=cls.locale_fr, title="presentation"
-            )
-        )
-        cls.basics.append(
-            BasicPageFactory(
-                parent=cls.portfolio, locale=cls.locale_fr, title="cookies-policy"
-            )
-        )
-        cls.basics.append(
-            BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="rgpd")
-        )
+        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="disclaimer"))
+        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="presentation"))
+        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="cookies-policy"))
+        cls.basics.append(BasicPageFactory(parent=cls.portfolio, locale=cls.locale_fr, title="rgpd"))
 
         category = BlogCategoryFactory(locale=cls.locale_fr)
         cls.posts = []
@@ -178,24 +156,18 @@ class LoadCachePagesCommandTestCase(SiteRootPageSwitchTestCase):
             )
 
     def test_load_request_exception(self):
-        self.mock_request.get(
-            self.portfolio.full_url, exc=requests.exceptions.HTTPError
-        )
+        self.mock_request.get(self.portfolio.full_url, exc=requests.exceptions.HTTPError)
 
         out = StringIO()
         call_command("loadcachepages", stdout=out)
-        self.assertIn(
-            f"Error on page {self.portfolio.full_url} with exc", out.getvalue()
-        )
+        self.assertIn(f"Error on page {self.portfolio.full_url} with exc", out.getvalue())
 
     def test_load_request_error(self):
         self.mock_request.get(self.portfolio.full_url, status_code=400)
 
         out = StringIO()
         call_command("loadcachepages", stdout=out)
-        self.assertIn(
-            f"Error for page {self.portfolio.full_url} with status 400", out.getvalue()
-        )
+        self.assertIn(f"Error for page {self.portfolio.full_url} with status 400", out.getvalue())
 
 
 class LoadCachePagesMultiDomainCommandTestCase(TestCase):
@@ -215,13 +187,9 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
         cls.other_site = SiteFactory(root_page=cls.other_home)
         FolioBlogSettingsFactory(site=cls.other_site)
         cls.other_blog_index = BlogIndexPageFactory(parent=cls.other_home)
-        cls.other_post = BlogPageFactory(
-            parent=cls.other_blog_index, category__slug="bar"
-        )
+        cls.other_post = BlogPageFactory(parent=cls.other_blog_index, category__slug="bar")
         cls.other_video_index = VideoIndexPageFactory(parent=cls.other_home)
-        cls.other_video = VideoPageFactory(
-            parent=cls.other_video_index, category__slug="bar"
-        )
+        cls.other_video = VideoPageFactory(parent=cls.other_video_index, category__slug="bar")
 
         cls.pages = [
             cls.home.get_parent(),
@@ -261,9 +229,7 @@ class LoadCachePagesMultiDomainCommandTestCase(TestCase):
         out = StringIO()
         call_command("loadcachepages", stdout=out)
         self.assertIn(f"About requesting pages of site {self.site}:", out.getvalue())
-        self.assertIn(
-            f"About requesting pages of site {self.other_site}:", out.getvalue()
-        )
+        self.assertIn(f"About requesting pages of site {self.other_site}:", out.getvalue())
 
         for page in self.pages:
             self.assertIn(

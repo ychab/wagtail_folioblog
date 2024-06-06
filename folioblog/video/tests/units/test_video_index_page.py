@@ -129,26 +129,20 @@ class VideoIndexPageMultiDomainTestCase(TestCase):
         cls.index_other = VideoIndexPageFactory(slug="video-other")
         cls.site_other = SiteFactory(root_page=cls.index_other)
         cls.cat_other = VideoCategoryFactory(site=cls.site_other)
-        cls.video_other = VideoPageFactory(
-            parent=cls.index_other, category=cls.cat_other
-        )
+        cls.video_other = VideoPageFactory(parent=cls.index_other, category=cls.cat_other)
 
     def test_filter_site(self):
         response = self.client.get(self.root_page.url)
         self.assertEqual(response.status_code, 200)
 
         self.assertIn(self.video.pk, [p.pk for p in response.context["videos"]])
-        self.assertNotIn(
-            self.video_other.pk, [p.pk for p in response.context["videos"]]
-        )
+        self.assertNotIn(self.video_other.pk, [p.pk for p in response.context["videos"]])
 
     def test_categories(self):
         response = self.client.get(self.root_page.url)
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.cat.pk, [c.pk for c in response.context["categories"]])
-        self.assertNotIn(
-            self.cat_other.pk, [c.pk for c in response.context["categories"]]
-        )
+        self.assertNotIn(self.cat_other.pk, [c.pk for c in response.context["categories"]])
 
 
 class VideoIndexI18nPageTestCase(TestCase):

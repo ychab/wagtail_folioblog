@@ -17,9 +17,7 @@ class HomeWebPage(BaseIndexWebPage):
         return self.scroll_to((By.CLASS_NAME, "carousel-posts"))
 
     def promoted_posts_next(self):
-        elems = self.selenium.find_elements(
-            By.CSS_SELECTOR, ".carousel-posts .carousel-cell"
-        )
+        elems = self.selenium.find_elements(By.CSS_SELECTOR, ".carousel-posts .carousel-cell")
         next = self.selenium.find_element(By.CSS_SELECTOR, ".carousel-posts .next")
         for i in range(1, len(elems)):
             next.click()
@@ -35,9 +33,7 @@ class HomeWebPage(BaseIndexWebPage):
             )
 
     def promoted_posts_dragdrop(self):
-        elems = self.selenium.find_elements(
-            By.CSS_SELECTOR, ".carousel-posts .carousel-cell"
-        )
+        elems = self.selenium.find_elements(By.CSS_SELECTOR, ".carousel-posts .carousel-cell")
         for i, elem in enumerate(elems[1:]):
             ActionChains(self.selenium).drag_and_drop(elem, elems[i - 1]).perform()
 
@@ -76,9 +72,7 @@ class HomeWebPage(BaseIndexWebPage):
     def select_video(self, index, is_mobile):
         elem = self.click_video_thumbnail(index)
         expected_link = elem.get_attribute("data-page-url")
-        expected_src = elem.get_attribute(
-            "data-img-xs-url" if is_mobile else "data-img-lg-url"
-        )
+        expected_src = elem.get_attribute("data-img-xs-url" if is_mobile else "data-img-lg-url")
 
         return WebDriverWait(self.selenium, 2).until(
             all_of(
@@ -93,16 +87,12 @@ class HomeWebPage(BaseIndexWebPage):
         expected_link = elem.get_attribute("data-page-url")
 
         # First wait for thumbnail to disappear.
-        is_triggered = WebDriverWait(self.selenium, 2).until(
-            player_link_match(expected_link)
-        )
+        is_triggered = WebDriverWait(self.selenium, 2).until(player_link_match(expected_link))
 
         # Then wait for YouTube to insert the iframe.
         try:
             is_loaded = WebDriverWait(self.selenium, 5).until(
-                EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, f"iframe#youtube-video-{video_id}")
-                )
+                EC.presence_of_element_located((By.CSS_SELECTOR, f"iframe#youtube-video-{video_id}"))
             )
         except TimeoutException:  # pragma: no cover
             # Because YouTube maybe very slow, we won't wait indefinitely...

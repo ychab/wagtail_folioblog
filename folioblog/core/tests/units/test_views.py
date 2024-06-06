@@ -59,12 +59,8 @@ class RssViewTestCase(TestCase):
 
         self.assertEqual(response.context["feed_title"], self.settings_fr["title"])
         self.assertEqual(response.context["feed_title"], "Les derniers articles")
-        self.assertEqual(
-            response.context["feed_description"], self.settings_fr["description"]
-        )
-        self.assertLessEqual(
-            len(response.context["feed_items"]), self.settings_fr["limit"]
-        )
+        self.assertEqual(response.context["feed_description"], self.settings_fr["description"])
+        self.assertLessEqual(len(response.context["feed_items"]), self.settings_fr["limit"])
 
     def test_feed_en(self):
         with translation.override("en"):
@@ -75,12 +71,8 @@ class RssViewTestCase(TestCase):
 
         self.assertEqual(response.context["feed_title"], self.settings_en["title"])
         self.assertEqual(response.context["feed_title"], "The latest posts")
-        self.assertEqual(
-            response.context["feed_description"], self.settings_en["description"]
-        )
-        self.assertLessEqual(
-            len(response.context["feed_items"]), self.settings_en["limit"]
-        )
+        self.assertEqual(response.context["feed_description"], self.settings_en["description"])
+        self.assertLessEqual(len(response.context["feed_items"]), self.settings_en["limit"])
 
 
 class RssViewMissingSettingsTestCase(TestCase):
@@ -155,9 +147,7 @@ class RssViewMultiDomainTestCase(TestCase):
 
         site = SiteFactory()
         cls.other_index = BlogIndexPageFactory(parent=site.root_page)
-        cls.other_page_fr = BlogPageFactory(
-            parent=cls.other_index, locale=cls.locale_fr
-        )
+        cls.other_page_fr = BlogPageFactory(parent=cls.other_index, locale=cls.locale_fr)
         cls.other_page_en = cls.other_page_fr.copy_for_translation(
             locale=cls.locale_en,
             copy_parents=True,
@@ -171,9 +161,7 @@ class RssViewMultiDomainTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(
-            self.index.get_translation(self.locale_fr), response.context["blog_index"]
-        )
+        self.assertEqual(self.index.get_translation(self.locale_fr), response.context["blog_index"])
         self.assertEqual(len(response.context["feed_items"]), 1)
         self.assertEqual(self.page_fr.pk, response.context["feed_items"][0].pk)
 
@@ -190,9 +178,7 @@ class RssViewMultiDomainTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(
-            self.index.get_translation(self.locale_en), response.context["blog_index"]
-        )
+        self.assertEqual(self.index.get_translation(self.locale_en), response.context["blog_index"])
         self.assertEqual(len(response.context["feed_items"]), 1)
         self.assertEqual(self.page_en.pk, response.context["feed_items"][0].pk)
 

@@ -13,9 +13,7 @@ from folioblog.core.utils import get_block_language
 
 
 class BasePageAPIViewSet(PagesAPIViewSet):
-    known_query_parameters = [
-        q for q in PagesAPIViewSet.known_query_parameters if q not in ["type", "site"]
-    ]
+    known_query_parameters = [q for q in PagesAPIViewSet.known_query_parameters if q not in ["type", "site"]]
 
     def get_base_queryset(self):
         """
@@ -58,11 +56,7 @@ class RssView(TemplateView):
             context["feed_title"] = rss_feed.get("title", "RSS feed")
             context["feed_description"] = rss_feed.get("description", "")
             context["blog_index"] = (
-                BlogIndexPage.objects.live()
-                .public()
-                .descendant_of(root_page)
-                .filter_language()
-                .first()
+                BlogIndexPage.objects.live().public().descendant_of(root_page).filter_language().first()
             )
 
             context["feed_items"] = []

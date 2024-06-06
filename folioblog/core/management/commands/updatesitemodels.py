@@ -40,11 +40,7 @@ class Command(BaseCommand):
         for homepage in HomePage.objects.all():  # pragma: no cover
             revision = homepage.get_latest_revision()
             if revision and revision.content.get("menu_home"):
-                revision.content["menu_home"][0][
-                    "site"
-                ] = site.pk  # Menu require a site ID
+                revision.content["menu_home"][0]["site"] = site.pk  # Menu require a site ID
                 revision.save()
 
-        self.stdout.write(
-            f'Site ({options["site"]}) have been set to all instance models'
-        )
+        self.stdout.write(f'Site ({options["site"]}) have been set to all instance models')

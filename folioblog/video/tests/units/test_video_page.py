@@ -52,9 +52,7 @@ class VideoPageTestCase(TestCase):
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["related_links"]), 1)
-        self.assertEqual(
-            response.context["related_links"][0].related_page.specific, related_page
-        )
+        self.assertEqual(response.context["related_links"][0].related_page.specific, related_page)
 
     def test_related_pages_multiple(self):
         page = VideoPageFactory(parent=self.index, related_pages__number=2)
@@ -80,9 +78,7 @@ class VideoPageHTMLTestCase(TestCase):
         masthead_txt = self.htmlpage.get_masterhead_content().replace("\n", "")
 
         page_tags = " ".join([str(t) for t in self.page.tags.all()])
-        page_date = "{} {}".format(
-            gettext("Posté le"), date_format(self.page.date, "SHORT_DATE_FORMAT")
-        )
+        page_date = "{} {}".format(gettext("Posté le"), date_format(self.page.date, "SHORT_DATE_FORMAT"))
 
         self.assertIn(str(self.page.category), masthead_txt)
         self.assertIn(self.page.title, masthead_txt)

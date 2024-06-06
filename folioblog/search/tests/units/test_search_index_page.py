@@ -75,12 +75,8 @@ class SearchIndexPageTestCase(TestCase):
         )
 
     def test_result_none(self):
-        BlogPageFactory(
-            parent=self.index, title="foo", subheading="", intro="", body=""
-        )
-        BlogPageFactory(
-            parent=self.index, title="bar", subheading="", intro="", body=""
-        )
+        BlogPageFactory(parent=self.index, title="foo", subheading="", intro="", body="")
+        BlogPageFactory(parent=self.index, title="bar", subheading="", intro="", body="")
 
         response = self.client.get(
             self.page.url,
@@ -123,12 +119,8 @@ class SearchIndexPageTestCase(TestCase):
         self.assertTrue(response.context["form"].errors["categories"])
 
     def test_invalid_page_not_integer(self):
-        p1 = BlogPageFactory(
-            parent=self.index, title="foo", subheading="", intro="", body=""
-        )
-        p2 = BlogPageFactory(
-            parent=self.index, title="foo bar", subheading="", intro="", body=""
-        )
+        p1 = BlogPageFactory(parent=self.index, title="foo", subheading="", intro="", body="")
+        p2 = BlogPageFactory(parent=self.index, title="foo bar", subheading="", intro="", body="")
 
         response = self.client.get(
             self.page.url,
@@ -148,12 +140,8 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(response.context["search_results"].number, 1)
 
     def test_invalid_page_search(self):
-        BlogPageFactory(
-            parent=self.index, title="foo", subheading="", intro="", body=""
-        )
-        BlogPageFactory(
-            parent=self.index, title="bar", subheading="", intro="", body=""
-        )
+        BlogPageFactory(parent=self.index, title="foo", subheading="", intro="", body="")
+        BlogPageFactory(parent=self.index, title="bar", subheading="", intro="", body="")
 
         response = self.client.get(
             self.page.url,
@@ -227,12 +215,8 @@ class SearchIndexPageTestCase(TestCase):
         self.assertEqual(response.context["search_results"][0].pk, p1.pk)
 
     def test_filter_query(self):
-        p1 = BlogPageFactory(
-            parent=self.index, title="foo", subheading="", intro="", body=""
-        )
-        BlogPageFactory(
-            parent=self.index, title="bar", subheading="", intro="", body=""
-        )
+        p1 = BlogPageFactory(parent=self.index, title="foo", subheading="", intro="", body="")
+        BlogPageFactory(parent=self.index, title="bar", subheading="", intro="", body="")
 
         response = self.client.get(
             self.page.url,
@@ -248,15 +232,9 @@ class SearchIndexPageTestCase(TestCase):
         self.assertIn("1 résultat", html)
 
     def test_filter_query_multiple(self):
-        p1 = BlogPageFactory(
-            parent=self.index, title="green lantern 1", subheading="", intro="", body=""
-        )
-        p2 = BlogPageFactory(
-            parent=self.index, title="green lantern 2", subheading="", intro="", body=""
-        )
-        BlogPageFactory(
-            parent=self.index, title="superman", subheading="", intro="", body=""
-        )
+        p1 = BlogPageFactory(parent=self.index, title="green lantern 1", subheading="", intro="", body="")
+        p2 = BlogPageFactory(parent=self.index, title="green lantern 2", subheading="", intro="", body="")
+        BlogPageFactory(parent=self.index, title="superman", subheading="", intro="", body="")
 
         response = self.client.get(
             self.page.url,
@@ -466,18 +444,12 @@ class SearchIndexI18nPageTestCase(TestCase):
 
         self.assertEqual(response.context["search_counter"], 3)
         self.assertListEqual(
-            list(
-                set(p.locale.language_code for p in response.context["search_results"])
-            ),
+            list(set(p.locale.language_code for p in response.context["search_results"])),
             ["fr"],
         )
         self.assertEqual(len(response.context["category_options"]), 3)
         self.assertListEqual(
-            list(
-                set(
-                    c.locale.language_code for c in response.context["category_options"]
-                )
-            ),
+            list(set(c.locale.language_code for c in response.context["category_options"])),
             ["fr"],
         )
 
@@ -489,14 +461,10 @@ class SearchIndexI18nPageTestCase(TestCase):
         self.assertIn("/en/", response.context["autocomplete_url"])
 
         self.assertEqual(response.context["search_counter"], 1)
-        self.assertEqual(
-            response.context["search_results"][0].locale.language_code, "en"
-        )
+        self.assertEqual(response.context["search_results"][0].locale.language_code, "en")
 
         self.assertEqual(len(response.context["category_options"]), 1)
-        self.assertEqual(
-            response.context["category_options"][0].locale.language_code, "en"
-        )
+        self.assertEqual(response.context["category_options"][0].locale.language_code, "en")
 
 
 class SearchIndexMultiDomainTestCase(TestCase):
@@ -538,9 +506,7 @@ class SearchIndexMultiDomainTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertIn(self.blog.pk, [p.pk for p in response.context["search_results"]])
-        self.assertNotIn(
-            self.blog_other.pk, [p.pk for p in response.context["search_results"]]
-        )
+        self.assertNotIn(self.blog_other.pk, [p.pk for p in response.context["search_results"]])
 
     def test_filter_categories(self):
         response = self.client.get(
@@ -552,9 +518,7 @@ class SearchIndexMultiDomainTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertFalse(response.context.get("errors"))
         self.assertEqual(len(response.context["category_options"]), 1)
-        self.assertEqual(
-            self.blog_cat.pk, response.context["category_options"].first().pk
-        )
+        self.assertEqual(self.blog_cat.pk, response.context["category_options"].first().pk)
 
     def test_filter_categories_errors(self):
         response = self.client.get(

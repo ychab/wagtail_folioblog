@@ -13,9 +13,7 @@ class VideoPageAPIViewSet(BasePageAPIViewSet):
 
     def get_queryset(self):
         qs = self.get_base_queryset()
-        qs = qs.select_related(
-            "category", "image__photographer", "thumbnail__photographer"
-        )
+        qs = qs.select_related("category", "image__photographer", "thumbnail__photographer")
         qs = qs.prefetch_related(
             Prefetch("tagged_items", VideoPageTag.objects.select_related("tag").all()),
         )

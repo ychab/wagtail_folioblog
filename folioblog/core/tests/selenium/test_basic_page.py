@@ -7,9 +7,7 @@ class BasicPageLiveTestCase(FolioBlogSeleniumServerTestCase):
     def setUp(self):
         super().setUp()
 
-        self.page = BasicPageFactory(
-            parent=self.site.root_page, related_pages__number=1
-        )
+        self.page = BasicPageFactory(parent=self.site.root_page, related_pages__number=1)
 
         self.webpage = BasicWebPage(self.selenium)
         self.webpage.fetch_page(self.page.full_url)

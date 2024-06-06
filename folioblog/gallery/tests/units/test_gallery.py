@@ -118,9 +118,7 @@ class GalleryPageTestCase(TestCase):
         image = ImageFactory(collection=self.collections["post"])
         ImageFactory(collection=self.collections["video"])
 
-        response = self.client.get(
-            self.page.url, data={"collection": self.collections["post"].pk}
-        )
+        response = self.client.get(self.page.url, data={"collection": self.collections["post"].pk})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["images"]), 1)
 

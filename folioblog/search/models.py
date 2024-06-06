@@ -48,9 +48,7 @@ class SearchIndexPage(BaseIndexPage):
             operator=folio_settings.search_operator,
         )
         search_counter = (
-            search_results.paginator.count
-            if has_filters and hasattr(search_results, "paginator")
-            else None
+            search_results.paginator.count if has_filters and hasattr(search_results, "paginator") else None
         )  # noqa
 
         context.update(
@@ -66,9 +64,7 @@ class SearchIndexPage(BaseIndexPage):
         )
         return context
 
-    def get_search_results(
-        self, has_filters, cleaned_data, page, site, limit, operator="and"
-    ):
+    def get_search_results(self, has_filters, cleaned_data, page, site, limit, operator="and"):
         search_results = BlogPage.objects.none()
 
         if has_filters:
@@ -79,9 +75,7 @@ class SearchIndexPage(BaseIndexPage):
                 .select_related("category", "image")
                 .prefetch_related(
                     "image__renditions",
-                    Prefetch(
-                        "tagged_items", BlogPageTag.objects.select_related("tag").all()
-                    ),
+                    Prefetch("tagged_items", BlogPageTag.objects.select_related("tag").all()),
                 )
                 .order_by("-date")
             )
@@ -93,14 +87,10 @@ class SearchIndexPage(BaseIndexPage):
                 search_results = search_results.filter(pk__in=tag_qs)
 
             if cleaned_data.get("categories"):
-                search_results = search_results.filter(
-                    category__in=cleaned_data["categories"]
-                )
+                search_results = search_results.filter(category__in=cleaned_data["categories"])
 
             if cleaned_data.get("query"):
-                search_results = search_results.search(
-                    cleaned_data["query"], operator=operator
-                )
+                search_results = search_results.search(cleaned_data["query"], operator=operator)
 
         # Pagination
         paginator = FolioBlogPaginator(search_results, limit)
@@ -111,13 +101,7 @@ class SearchIndexPage(BaseIndexPage):
         # No other choices than returning all tags for all languages...
         # Indeed, tag are unique by their slug and thus, make no sense to
         # translate them... @see TagBase.fields
-        return [
-            t["slug"]
-            for t in BlogTag.objects.in_site(site)
-            .values("slug")
-            .order_by("slug")
-            .distinct()
-        ]
+        return [t["slug"] for t in BlogTag.objects.in_site(site).values("slug").order_by("slug").distinct()]
 
     def get_category_options(self, site):
         return BlogCategory.objects.in_site(site).filter_language().order_by("slug")

@@ -25,9 +25,7 @@ class PhotographerFactory(DjangoModelFactory):
 
 class ImageFactory(wagtail_factories.ImageFactory):
     file = factory.django.ImageField(filename="fake-image.webp", format="WEBP")
-    caption = factory.Faker(
-        "sentence", nb_words=5, variable_nb_words=False, locale=current_locale
-    )
+    caption = factory.Faker("sentence", nb_words=5, variable_nb_words=False, locale=current_locale)
     photographer = factory.SubFactory(PhotographerFactory)
 
     class Meta:

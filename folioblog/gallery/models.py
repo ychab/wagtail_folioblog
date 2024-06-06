@@ -41,16 +41,11 @@ class GalleryPage(BaseIndexPage):
         # First collect gallery collection.
         collection_qs = Collection.objects.all().order_by("name")
         if site_settings.gallery_collection:
-            collection_qs = collection_qs.descendant_of(
-                site_settings.gallery_collection
-            )
+            collection_qs = collection_qs.descendant_of(site_settings.gallery_collection)
 
         # Then build collection options, with ugly translation on the fly...
         collection_options = sorted(
-            [
-                {"name": pgettext("collection", str(c)), "value": c.pk}
-                for c in collection_qs
-            ],
+            [{"name": pgettext("collection", str(c)), "value": c.pk} for c in collection_qs],
             key=lambda x: x["name"],
         )
 
@@ -70,12 +65,8 @@ class GalleryPage(BaseIndexPage):
         )
 
         # Load image usages in bulk thanks to reference index.
-        content_type_image = ContentType.objects.get_by_natural_key(
-            Image._meta.app_label, Image._meta.model_name
-        )
-        content_type_page = ContentType.objects.get_by_natural_key(
-            Page._meta.app_label, Page._meta.model_name
-        )
+        content_type_image = ContentType.objects.get_by_natural_key(Image._meta.app_label, Image._meta.model_name)
+        content_type_page = ContentType.objects.get_by_natural_key(Page._meta.app_label, Page._meta.model_name)
 
         ref_qs = ReferenceIndex.objects.filter(
             to_content_type_id=content_type_image,

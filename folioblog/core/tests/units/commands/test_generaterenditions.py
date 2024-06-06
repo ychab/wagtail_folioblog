@@ -47,9 +47,5 @@ class GenerateRenditionsCommandTestCase(TestCase):
 
         out = StringIO()
         call_command("generaterenditions", stdout=out)
-        self.assertIn(
-            f"Skip generating renditions for site {self.site_other}", out.getvalue()
-        )
-        self.assertIn(
-            f"{count} renditions generated for site {self.site}", out.getvalue()
-        )
+        self.assertIn(f"Skip generating renditions for site {self.site_other}", out.getvalue())
+        self.assertIn(f"{count} renditions generated for site {self.site}", out.getvalue())

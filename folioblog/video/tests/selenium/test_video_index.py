@@ -32,16 +32,12 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
             "https://www.youtube.com/watch?v=ml9ahwz_oNA",
         ]
         self.foliosettings = FolioBlogSettings.for_site(self.site)
-        self.foliosettings.video_pager_limit = round(
-            (len(youtube_urls) / 2) - 1
-        )  # we got at least 2 pages
+        self.foliosettings.video_pager_limit = round((len(youtube_urls) / 2) - 1)  # we got at least 2 pages
         self.foliosettings.save()
 
         self.videos = []
         for i, video_url in enumerate(youtube_urls, start=1):
-            category = (
-                self.categories[0] if i < len(youtube_urls) else self.categories[1]
-            )
+            category = self.categories[0] if i < len(youtube_urls) else self.categories[1]
             self.videos.append(
                 VideoPageFactory(
                     parent=self.page,
@@ -71,9 +67,7 @@ class VideoIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         video = self.videos[-1]
 
         video_url = f"{self.live_server_url}{video.url}"
-        spec = (
-            "fill-940x710|format-webp" if self.is_mobile else "fill-700x530|format-webp"
-        )
+        spec = "fill-940x710|format-webp" if self.is_mobile else "fill-700x530|format-webp"
         rendition = video.thumbnail.get_rendition(spec)
         rendition_url = f"{self.live_server_url}{rendition.url}"
 

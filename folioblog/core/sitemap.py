@@ -39,13 +39,7 @@ class SitemapPageMixin:
 
 class Sitemap(WagtailSitemap):
     def items(self):
-        qs = (
-            Page.objects.live()
-            .public()
-            .order_by("path")
-            .defer_streamfields()
-            .specific()
-        )
+        qs = Page.objects.live().public().order_by("path").defer_streamfields().specific()
         qs = qs_in_site_alt(qs, self.get_wagtail_site())
 
         return qs

@@ -20,9 +20,7 @@ class GalleryWebPage(BaseIndexWebPage):
         elem.click()  # Click on button to display filter list
 
         elem = WebDriverWait(self.selenium, 5).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, f'a[data-filter="collection-{collection_pk}"]')
-            )
+            EC.visibility_of_element_located((By.CSS_SELECTOR, f'a[data-filter="collection-{collection_pk}"]'))
         )
         elem.click()  # Then click on filter!
 
@@ -74,29 +72,19 @@ class GalleryWebPage(BaseIndexWebPage):
         for elem in elems:
             try:
                 # Image without page?
-                elem.find_element(
-                    By.CLASS_NAME, "grid-item-link"
-                )  # unecessary timeout...
+                elem.find_element(By.CLASS_NAME, "grid-item-link")  # unecessary timeout...
             except NoSuchElementException:
                 items.append(
                     {
-                        "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                            "currentSrc"
-                        ),
+                        "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                     }
                 )
             else:
                 items.append(
                     {
-                        "title": elem.find_element(
-                            By.CLASS_NAME, "post-title"
-                        ).get_dom_attribute("data-post-title"),
-                        "href": elem.find_element(By.TAG_NAME, "a").get_attribute(
-                            "href"
-                        ),
-                        "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                            "currentSrc"
-                        ),
+                        "title": elem.find_element(By.CLASS_NAME, "post-title").get_dom_attribute("data-post-title"),
+                        "href": elem.find_element(By.TAG_NAME, "a").get_attribute("href"),
+                        "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                     }
                 )
 
@@ -116,6 +104,4 @@ class GalleryWebPage(BaseIndexWebPage):
         )
         button.click()
 
-        return WebDriverWait(self.selenium, 5).until(
-            has_css_class(elem, "grid-item--width2")
-        )
+        return WebDriverWait(self.selenium, 5).until(has_css_class(elem, "grid-item--width2"))

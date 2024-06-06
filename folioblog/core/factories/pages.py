@@ -38,9 +38,7 @@ class BaseIndexPageFactory(wagtail_factories.PageFactory):
         abstract = True
         skip_postgeneration_save = True
 
-    parent = factory.LazyFunction(
-        lambda: Site.objects.get(is_default_site=True).root_page
-    )
+    parent = factory.LazyFunction(lambda: Site.objects.get(is_default_site=True).root_page)
 
     title = factory.Sequence(lambda n: "page_{n}".format(n=n))
     slug = factory.LazyAttribute(lambda o: slugify(o.title))
@@ -74,9 +72,7 @@ class BasePageFactory(BaseIndexPageFactory):
 
     parent = None  # Children MUST set parent
     intro = factory.Faker("paragraph", locale=current_locale)
-    body = factory.LazyFunction(
-        lambda: RichText(fake.text())
-    )  # @todo - RickTextBlockFactory()
+    body = factory.LazyFunction(lambda: RichText(fake.text()))  # @todo - RickTextBlockFactory()
 
 
 class BasicPageRelatedLinkFactory(DjangoModelFactory):
@@ -100,10 +96,7 @@ class BasicPageFactory(BasePageFactory):
             if extracted:
                 related_pages = extracted
             elif kwargs.get("number", 0) > 0:
-                related_pages = [
-                    BasicPageFactory(parent=obj.get_parent())
-                    for i in range(0, kwargs["number"])
-                ]
+                related_pages = [BasicPageFactory(parent=obj.get_parent()) for i in range(0, kwargs["number"])]
 
             for page in related_pages:
                 BasicPageRelatedLinkFactory(page=obj, related_page=page)

@@ -124,17 +124,13 @@ class BlogIndexPageMultiDomainTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertIn(self.blog.pk, [p.pk for p in response.context["blogpages"]])
-        self.assertNotIn(
-            self.blog_other.pk, [p.pk for p in response.context["blogpages"]]
-        )
+        self.assertNotIn(self.blog_other.pk, [p.pk for p in response.context["blogpages"]])
 
     def test_categories(self):
         response = self.client.get(self.root_page.url)
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.cat.pk, [c.pk for c in response.context["categories"]])
-        self.assertNotIn(
-            self.cat_other.pk, [c.pk for c in response.context["categories"]]
-        )
+        self.assertNotIn(self.cat_other.pk, [c.pk for c in response.context["categories"]])
 
 
 class BlogIndexI18nPageTestCase(TestCase):

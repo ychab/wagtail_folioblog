@@ -15,9 +15,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("action", choices=["dump", "load"])
-        parser.add_argument(
-            "--reset", action="store_true", help="Just clean defaults pages and sites"
-        )
+        parser.add_argument("--reset", action="store_true", help="Just clean defaults pages and sites")
 
     def handle(self, action, *args, **options):
         if action == "load":

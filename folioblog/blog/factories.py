@@ -83,10 +83,7 @@ class BlogPageFactory(BasePageFactory):
             if extracted:
                 tags = extracted
             elif kwargs.get("number", 0) > 0:
-                tags = [
-                    BlogTagFactory(site=obj.get_site())
-                    for _ in range(0, kwargs["number"])
-                ]
+                tags = [BlogTagFactory(site=obj.get_site()) for _ in range(0, kwargs["number"])]
 
             for tag in tags:
                 BlogPageTagFactory(tag=tag, content_object=obj)
@@ -100,10 +97,7 @@ class BlogPageFactory(BasePageFactory):
             if extracted:
                 related_pages = extracted
             elif number:
-                related_pages = [
-                    BlogPageFactory(parent=obj.get_parent(), **kwargs)
-                    for _ in range(0, number)
-                ]
+                related_pages = [BlogPageFactory(parent=obj.get_parent(), **kwargs) for _ in range(0, number)]
 
             for page in related_pages:
                 BlogPageRelatedLinkFactory(page=obj, related_page=page)
@@ -149,9 +143,5 @@ class BlogPromoteLinkFactory(DjangoModelFactory):
         A better option would be to override _setup_next_sequence() but just for
         the example (and because we don't use it a lot), we keep it as it!
         """
-        link = (
-            BlogPromoteLink.objects.filter(snippet__title="blog")
-            .order_by("-sort_order")[:1]
-            .first()
-        )
+        link = BlogPromoteLink.objects.filter(snippet__title="blog").order_by("-sort_order")[:1].first()
         return link.sort_order + 1 if link else 0

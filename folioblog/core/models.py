@@ -64,9 +64,7 @@ class Photographer(MultiSiteMixin, models.Model):
 
 class FolioImage(AbstractImage):
     caption = models.CharField(max_length=255, blank=True)
-    photographer = models.ForeignKey(
-        Photographer, on_delete=models.SET_NULL, null=True, blank=True
-    )
+    photographer = models.ForeignKey(Photographer, on_delete=models.SET_NULL, null=True, blank=True)
 
     admin_form_fields = Image.admin_form_fields + (
         "caption",
@@ -119,9 +117,7 @@ class FolioImage(AbstractImage):
 
 
 class FolioRendition(AbstractRendition):
-    image = models.ForeignKey(
-        FolioImage, on_delete=models.CASCADE, related_name="renditions"
-    )
+    image = models.ForeignKey(FolioImage, on_delete=models.CASCADE, related_name="renditions")
 
     class Meta:
         unique_together = (("image", "filter_spec", "focal_point_key"),)

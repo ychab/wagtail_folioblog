@@ -55,9 +55,7 @@ class BlogIndexPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         spec = "fill-1010x675" if self.is_mobile else "fill-460x310"
         rendition = post.image.get_rendition(spec)
         rendition_url = f"{self.live_server_url}{rendition.url}"
-        page_date = "{} {}".format(
-            gettext("Publié le"), date_format(post.date, "SHORT_DATE_FORMAT")
-        )
+        page_date = "{} {}".format(gettext("Publié le"), date_format(post.date, "SHORT_DATE_FORMAT"))
 
         self.assertEqual(item["title"], self.posts[-1].title)
         self.assertEqual(item["link"], post_url)

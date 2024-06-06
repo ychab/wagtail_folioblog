@@ -27,12 +27,8 @@ class PortFolioWebPage(BaseIndexWebPage):
             items.append(
                 {
                     "heading": elem.find_element(By.CLASS_NAME, "skill-heading").text,
-                    "subheading": elem.find_element(
-                        By.CLASS_NAME, "skill-subheading"
-                    ).text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "subheading": elem.find_element(By.CLASS_NAME, "skill-subheading").text,
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                 }
             )
 
@@ -46,13 +42,9 @@ class PortFolioWebPage(BaseIndexWebPage):
             items.append(
                 {
                     "date": elem.find_element(By.CLASS_NAME, "experience-date").text,
-                    "company": elem.find_element(
-                        By.CLASS_NAME, "experience-company"
-                    ).text,
+                    "company": elem.find_element(By.CLASS_NAME, "experience-company").text,
                     "text": elem.find_element(By.CLASS_NAME, "experience-text").text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                 }
             )
 
@@ -67,9 +59,7 @@ class PortFolioWebPage(BaseIndexWebPage):
                 {
                     "name": elem.find_element(By.CLASS_NAME, "team-member-name").text,
                     "job": elem.find_element(By.CLASS_NAME, "team-member-job").text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                 }
             )
 

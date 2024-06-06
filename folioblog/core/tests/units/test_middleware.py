@@ -184,9 +184,7 @@ class AnonymousCachePrivateMiddlewareTestCase(TestCase):
         self.assertNotIn("max-age=", response.headers.get("cache-control", ""))
 
 
-@modify_settings(
-    MIDDLEWARE={"prepend": "folioblog.core.middleware.CountQueriesMiddleware"}
-)
+@modify_settings(MIDDLEWARE={"prepend": "folioblog.core.middleware.CountQueriesMiddleware"})
 class CountQueriesMiddlewareTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):

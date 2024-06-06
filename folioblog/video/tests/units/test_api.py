@@ -156,9 +156,7 @@ class VideoPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["items"][0]["id"], post.pk)
 
     def test_list_filter_locale(self):
-        post = VideoPageFactory(
-            parent=self.index, locale=LocaleFactory(language_code="fr")
-        )
+        post = VideoPageFactory(parent=self.index, locale=LocaleFactory(language_code="fr"))
         VideoPageFactory(parent=self.index, locale=LocaleFactory(language_code="en"))
 
         response = self.client.get(
@@ -217,9 +215,7 @@ class VideoPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["meta"]["total_count"], 1)
 
-        self.assertEqual(
-            response.data["items"][0]["meta"]["date"], video.date.isoformat()
-        )
+        self.assertEqual(response.data["items"][0]["meta"]["date"], video.date.isoformat())
         self.assertEqual(response.data["items"][0]["meta"]["author"], video.author)
 
         self.assertEqual(response.data["items"][0]["title"], video.title)
@@ -228,30 +224,18 @@ class VideoPageListAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["items"][0]["image_alt"], video.image_alt)
         self.assertEqual(response.data["items"][0]["intro"], video.intro)
         self.assertEqual(response.data["items"][0]["video_url"], video.video_url)
-        self.assertEqual(
-            response.data["items"][0]["thumbnail"]["id"], video.thumbnail.pk
-        )
+        self.assertEqual(response.data["items"][0]["thumbnail"]["id"], video.thumbnail.pk)
 
         self.assertEqual(response.data["items"][0]["category"]["id"], video.category.pk)
-        self.assertEqual(
-            response.data["items"][0]["category"]["name"], video.category.name
-        )
-        self.assertEqual(
-            response.data["items"][0]["category"]["slug"], video.category.slug
-        )
+        self.assertEqual(response.data["items"][0]["category"]["name"], video.category.name)
+        self.assertEqual(response.data["items"][0]["category"]["slug"], video.category.slug)
 
         self.assertEqual(response.data["items"][0]["image"]["id"], video.image.pk)
         self.assertEqual(response.data["items"][0]["image"]["title"], video.image.title)
         self.assertEqual(response.data["items"][0]["image"]["width"], video.image.width)
-        self.assertEqual(
-            response.data["items"][0]["image"]["height"], video.image.height
-        )
-        self.assertEqual(
-            response.data["items"][0]["image"]["caption"], video.image.caption
-        )
-        self.assertEqual(
-            response.data["items"][0]["image"]["download_url"], video.image.file.url
-        )
+        self.assertEqual(response.data["items"][0]["image"]["height"], video.image.height)
+        self.assertEqual(response.data["items"][0]["image"]["caption"], video.image.caption)
+        self.assertEqual(response.data["items"][0]["image"]["download_url"], video.image.file.url)
         self.assertEqual(
             response.data["items"][0]["image"]["photographer"]["id"],
             video.image.photographer.pk,
@@ -294,9 +278,7 @@ class VideoPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No VideoPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No VideoPage matches the given query.")
 
     def test_detail_exclude_private(self):
         video = VideoPageFactory(parent=self.index, is_private=True)
@@ -304,9 +286,7 @@ class VideoPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No VideoPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No VideoPage matches the given query.")
 
     def test_detail_exclude_other_site(self):
         video = VideoPageFactory(parent=self.other_index)
@@ -314,9 +294,7 @@ class VideoPageDetailAPIViewSetTestCase(TestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data["message"], "No VideoPage matches the given query."
-        )
+        self.assertEqual(response.data["message"], "No VideoPage matches the given query.")
 
     def test_detail_extra_fields(self):
         video = VideoPageFactory(parent=self.index, tags__number=3)
@@ -351,9 +329,7 @@ class VideoPageDetailAPIViewSetTestCase(TestCase):
         self.assertEqual(response.data["image"]["height"], video.image.height)
         self.assertEqual(response.data["image"]["caption"], video.image.caption)
         self.assertEqual(response.data["image"]["download_url"], video.image.file.url)
-        self.assertEqual(
-            response.data["image"]["photographer"]["id"], video.image.photographer.pk
-        )
+        self.assertEqual(response.data["image"]["photographer"]["id"], video.image.photographer.pk)
         self.assertEqual(
             response.data["image"]["photographer"]["name"],
             video.image.photographer.name,

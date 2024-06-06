@@ -24,14 +24,9 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.collection_alt = CollectionFactory(name="Alt test", parent=root_collection)
 
         self.images = [
-            ImageFactory(collection=self.collection, file__width=480, file__height=360)
-            for i in range(0, 3)
+            ImageFactory(collection=self.collection, file__width=480, file__height=360) for i in range(0, 3)
         ]
-        self.images_alt = [
-            ImageFactory(
-                collection=self.collection_alt, file__width=480, file__height=360
-            )
-        ]
+        self.images_alt = [ImageFactory(collection=self.collection_alt, file__width=480, file__height=360)]
         self.image_orphan = [ImageFactory(file__width=480, file__height=360)]
 
         self.posts = []
@@ -74,9 +69,7 @@ class GalleryPageLiveTestCase(FolioBlogSeleniumServerTestCase):
         self.assertEqual(len(items), expected_count)
 
         expected_count = len(self.images_alt)
-        is_filtered = self.webpage.filter_collection(
-            self.collection_alt.pk, expected_count
-        )
+        is_filtered = self.webpage.filter_collection(self.collection_alt.pk, expected_count)
         self.assertTrue(is_filtered)
         items = self.webpage.get_layout_items()
         self.assertEqual(len(items), len(self.images_alt))

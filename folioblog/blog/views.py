@@ -13,9 +13,7 @@ class BlogPageAPIViewSet(BasePageAPIViewSet):
 
     def get_queryset(self):
         qs = self.get_base_queryset()
-        qs = qs.select_related(
-            "category", "image__photographer", "image_body__photographer"
-        )
+        qs = qs.select_related("category", "image__photographer", "image_body__photographer")
         qs = qs.prefetch_related(
             Prefetch("tagged_items", BlogPageTag.objects.select_related("tag").all()),
         )

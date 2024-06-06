@@ -31,9 +31,7 @@ class BlogIndexWebPage(BaseIndexWebPage):
                     "category": elem.find_element(By.CLASS_NAME, "post-category").text,
                     "date": elem.find_element(By.CLASS_NAME, "post-date").text,
                     "intro": elem.find_element(By.CLASS_NAME, "post-intro").text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                 }
             )
 

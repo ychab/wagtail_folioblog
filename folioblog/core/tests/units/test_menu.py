@@ -69,9 +69,7 @@ class MenuI18nTestCase(TestCase):
             alias=True,
         )
 
-        cls.menu_fr = MenuFactory(
-            locale=locale_fr, homepage=PageFactory(locale=locale_fr)
-        )
+        cls.menu_fr = MenuFactory(locale=locale_fr, homepage=PageFactory(locale=locale_fr))
         cls.menu_en = cls.menu_fr.copy_for_translation(locale=locale_en)
         cls.menu_en.homepage = PageFactory(locale=locale_en)
         cls.menu_en.save()
@@ -104,6 +102,4 @@ class MenuMultiDomainTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(self.root_page, response.context["menu_homepage"].specific)
-        self.assertNotEqual(
-            self.index_other, response.context["menu_homepage"].specific
-        )
+        self.assertNotEqual(self.index_other, response.context["menu_homepage"].specific)

@@ -49,14 +49,10 @@ class VideoIndexWebPage(BaseIndexWebPage):
                     "elem": elem,
                     "title": elem.find_element(By.CLASS_NAME, "video-title").text,
                     "subtitle": elem.find_element(By.CLASS_NAME, "video-subtitle").text,
-                    "link": elem.find_element(
-                        By.CLASS_NAME, "video-link"
-                    ).get_attribute("href"),
+                    "link": elem.find_element(By.CLASS_NAME, "video-link").get_attribute("href"),
                     "category": elem.find_element(By.CLASS_NAME, "video-category").text,
                     "intro": elem.find_element(By.CLASS_NAME, "video-intro").text,
-                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property(
-                        "currentSrc"
-                    ),
+                    "img_src": elem.find_element(By.TAG_NAME, "img").get_property("currentSrc"),
                     "tags": elem.find_element(By.CLASS_NAME, "video-tags").text,
                 }
             )

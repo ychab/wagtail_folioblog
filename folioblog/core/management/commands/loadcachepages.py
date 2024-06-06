@@ -48,9 +48,7 @@ class Command(BaseCommand):
         # Finally don't forgot 404 page for renditions ONLY (ie: not the url)
         self.request_page(f"{site.root_url}/givemea404please", status=404)
 
-        self.stdout.write(
-            self.style.SUCCESS(f"All page cache loaded for site {site}.\n")
-        )
+        self.stdout.write(self.style.SUCCESS(f"All page cache loaded for site {site}.\n"))
 
     def process_page(self, page, folio_settings):
         # First request page without parameters.
@@ -90,14 +88,8 @@ class Command(BaseCommand):
         except RequestException as e:
             self.stdout.write(self.style.ERROR(f"Error on page {url} with exc {e}\n"))
         else:
-            if (not status and not response.ok) or (
-                status and status != response.status_code
-            ):
-                self.stdout.write(
-                    self.style.WARNING(
-                        f"Error for page {url} with status {response.status_code}.\n"
-                    )
-                )
+            if (not status and not response.ok) or (status and status != response.status_code):
+                self.stdout.write(self.style.WARNING(f"Error for page {url} with status {response.status_code}.\n"))
             return response
 
     def request_pagination(self, page, limit):
@@ -128,12 +120,7 @@ class Command(BaseCommand):
         categories = BlogCategory.objects.in_site(site)
 
         for category in categories:
-            total = (
-                BlogPage.objects.descendant_of(page)
-                .live()
-                .filter(category=category)
-                .count()
-            )
+            total = BlogPage.objects.descendant_of(page).live().filter(category=category).count()
             num_pages = math.ceil(total / limit)
 
             for i in range(0, num_pages):
@@ -148,12 +135,7 @@ class Command(BaseCommand):
         categories = VideoCategory.objects.in_site(site)
 
         for category in categories:
-            total = (
-                VideoPage.objects.descendant_of(page)
-                .live()
-                .filter(category=category)
-                .count()
-            )
+            total = VideoPage.objects.descendant_of(page).live().filter(category=category).count()
             num_pages = math.ceil(total / limit)
 
             for i in range(0, num_pages):

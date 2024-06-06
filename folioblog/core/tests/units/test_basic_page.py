@@ -20,15 +20,11 @@ class BasicPageTestCase(TestCase):
 
     def test_related_pages(self):
         related_page = BasicPageFactory(parent=self.site.root_page)
-        page = BasicPageFactory(
-            parent=self.site.root_page, related_pages=[related_page]
-        )
+        page = BasicPageFactory(parent=self.site.root_page, related_pages=[related_page])
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["related_links"]), 1)
-        self.assertEqual(
-            response.context["related_links"][0].related_page.specific, related_page
-        )
+        self.assertEqual(response.context["related_links"][0].related_page.specific, related_page)
 
     def test_related_pages_not_live(self):
         rel1 = BasicPageFactory(parent=self.site.root_page)

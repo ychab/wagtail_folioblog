@@ -51,9 +51,7 @@ class VideoIndexPage(BaseIndexPage):
             .distinct()
         )
         context["categories"] = categories
-        context["category_filters"] = [
-            {"name": str(c), "value": c.slug} for c in categories
-        ]
+        context["category_filters"] = [{"name": str(c), "value": c.slug} for c in categories]
         context["category_query"] = request.GET.get("category", "")
 
         qs = (
@@ -90,12 +88,8 @@ class VideoTag(MultiSiteMixin, TagBase):
 
 
 class VideoPageTag(TaggedItemBase):
-    tag = models.ForeignKey(
-        VideoTag, on_delete=models.CASCADE, related_name="tagged_videos"
-    )
-    content_object = ParentalKey(
-        "VideoPage", on_delete=models.CASCADE, related_name="tagged_items"
-    )
+    tag = models.ForeignKey(VideoTag, on_delete=models.CASCADE, related_name="tagged_videos")
+    content_object = ParentalKey("VideoPage", on_delete=models.CASCADE, related_name="tagged_items")
 
 
 class VideoPage(BasePage):
@@ -112,9 +106,7 @@ class VideoPage(BasePage):
         related_name="videos",
     )
 
-    category = models.ForeignKey(
-        VideoCategory, on_delete=models.PROTECT, related_name="videopages"
-    )
+    category = models.ForeignKey(VideoCategory, on_delete=models.PROTECT, related_name="videopages")
     tags = ClusterTaggableManager(through=VideoPageTag, blank=True)
 
     api_fields = BasePage.api_fields + [
@@ -181,9 +173,7 @@ class VideoPage(BasePage):
         try:
             return embeds.get_embed(self.video_url)
         except EmbedException as exc:
-            logger.exception(
-                f"Embed error for page {self.pk} with src {self.video_url} and error msg: {exc}"
-            )
+            logger.exception(f"Embed error for page {self.pk} with src {self.video_url} and error msg: {exc}")
 
     def save_revision(self, *args, **kwargs):
         if self.thumbnail is None:
@@ -198,9 +188,7 @@ class VideoPage(BasePage):
             return
         else:
             if not r.ok:
-                logger.warning(
-                    f"Bad status thumbnail {r.status_code} for page {self.pk}"
-                )
+                logger.warning(f"Bad status thumbnail {r.status_code} for page {self.pk}")
                 return
 
         ext = self.embed.thumbnail_url.split(".")[-1]

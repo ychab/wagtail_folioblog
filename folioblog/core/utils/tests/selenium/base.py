@@ -93,9 +93,7 @@ class MetaSeleniumTestCase(SeleniumTestCaseBase):
 
 
 @tag("selenium", "slow")
-class FolioBlogSeleniumServerTestCase(
-    SeleniumTestCase, StaticLiveServerTestCase, metaclass=MetaSeleniumTestCase
-):
+class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase, metaclass=MetaSeleniumTestCase):
     # Mixin implicit and explicit wait is not recommended:
     # @see https://www.selenium.dev/documentation/webdriver/waits/#implicit-wait
     implicit_wait = 0
