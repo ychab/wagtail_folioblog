@@ -32,6 +32,9 @@ npm:
 	npm update
 	npm run dist
 
+precommit:
+	pre-commit autoupdate
+
 trans:
 	cd folioblog && python ../manage.py makemessages -d django -l en -l es -l fr
 	cd folioblog && python ../manage.py makemessages -d djangojs -l en -l es -l fr
