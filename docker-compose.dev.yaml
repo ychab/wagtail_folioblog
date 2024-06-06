@@ -16,7 +16,7 @@ services:
         UID: ${FOLIOBLOG_UID:-1000}
         GID: ${FOLIOBLOG_GID:-1000}
         NODE_VERSION: ${FOLIOBLOG_NODE_VERSION:-v20.10.0}
-        POETRY_VERSION: ${FOLIOBLOG_POETRY_VERSION:-1.6.1}
+        POETRY_VERSION: ${FOLIOBLOG_POETRY_VERSION:-1.8.3}
     env_file:
       - ./docker/dev/.env.dev
       - ./.env.dev
