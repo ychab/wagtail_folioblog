@@ -1,4 +1,4 @@
-minimum_pre_commit_version: 3.6.0
+minimum_pre_commit_version: 3.7.1
 default_language_version:
     python: python3.10
 
