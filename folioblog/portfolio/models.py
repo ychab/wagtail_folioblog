@@ -72,7 +72,6 @@ class PortfolioPage(SitemapPageMixin, Page):
         ServicesBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     # Skills
@@ -86,7 +85,6 @@ class PortfolioPage(SitemapPageMixin, Page):
         SkillsBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     # CV
@@ -105,7 +103,6 @@ class PortfolioPage(SitemapPageMixin, Page):
         ExperiencesBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     # Team
@@ -132,7 +129,6 @@ class PortfolioPage(SitemapPageMixin, Page):
         TeamMembersBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     # Contact

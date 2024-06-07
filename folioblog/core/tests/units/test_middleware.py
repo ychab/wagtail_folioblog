@@ -138,7 +138,7 @@ class AnonymousCachePrivateMiddlewareTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertGreater(count, 0)
         self.assertNotIn("max-age=", response.headers.get("cache-control", ""))
-        self.assertEqual(response.template_name, settings.PASSWORD_REQUIRED_TEMPLATE)
+        self.assertEqual(response.template_name, settings.WAGTAIL_PASSWORD_REQUIRED_TEMPLATE)
         self.assertIn("csrftoken", response.cookies)
         csrf_token = response.cookies["csrftoken"].value
 

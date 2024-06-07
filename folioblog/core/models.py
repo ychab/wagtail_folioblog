@@ -297,7 +297,6 @@ class FolioBlogSettings(BaseSiteSetting):
         verbose_name="Text page not found",
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     google_analytics_id = models.CharField(
@@ -332,14 +331,12 @@ class FolioBlogSettings(BaseSiteSetting):
         CookieBannersBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     rss_feed = StreamField(
         RssFeedsBlock(),
         null=True,
         blank=True,
-        use_json_field=True,
     )
 
     blog_pager_limit = models.PositiveSmallIntegerField(default=8)

@@ -274,7 +274,7 @@ WAGTAIL_DATE_FORMAT = "%d/%m/%Y"
 WAGTAIL_DATETIME_FORMAT = "%d/%m/%Y %H:%M"
 WAGTAIL_TIME_FORMAT = "%H:%M"
 
-PASSWORD_REQUIRED_TEMPLATE = "cleanblog/password_required.html"
+WAGTAIL_PASSWORD_REQUIRED_TEMPLATE = "cleanblog/password_required.html"
 
 TAGGIT_CASE_INSENSITIVE = True
 

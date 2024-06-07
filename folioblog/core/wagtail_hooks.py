@@ -7,11 +7,10 @@ from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
-from wagtail.admin.widgets.slug import SlugInput
 from wagtail.embeds.models import Embed
 from wagtail.models import Site
 from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet
+from wagtail.snippets.views.snippets import IndexView, SnippetViewSet
 
 import django_filters
 
@@ -49,9 +48,21 @@ def register_keyboard_feature(features):
 class MultiSiteFilterSet(WagtailFilterSet):
     site = django_filters.ModelChoiceFilter(queryset=Site.objects.all())
 
+    def __init__(self, *args, **kwargs):
+        self._meta.model = kwargs.pop("model", None)
+        super().__init__(*args, **kwargs)
+
+
+class SnippetMultiSiteIndexView(IndexView):
+    def get_filterset_kwargs(self):
+        kwargs = super().get_filterset_kwargs()
+        kwargs["model"] = self.model
+        return kwargs
+
 
 class SnippetViewSetMultiSiteMixin:
     filterset_class = MultiSiteFilterSet
+    index_view_class = SnippetMultiSiteIndexView
 
     panels = [
         FieldPanel("site"),
@@ -89,7 +100,7 @@ class BaseCategorySnippetViewSet(SnippetViewSetI18nMultiSiteMixin, SnippetViewSe
 
     panels = [
         FieldPanel("name"),
-        FieldPanel("slug", widget=SlugInput),  # @todo - broken feature?
+        FieldPanel("slug"),
     ] + SnippetViewSetI18nMultiSiteMixin.panels
 
 
