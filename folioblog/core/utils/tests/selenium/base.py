@@ -99,7 +99,6 @@ class FolioBlogSeleniumServerTestCase(SeleniumTestCase, StaticLiveServerTestCase
     implicit_wait = 0
 
     browser = "chrome"
-    headless = True
 
     has_mobile = True  # Should it have a child mobile testcase?
     is_mobile = False

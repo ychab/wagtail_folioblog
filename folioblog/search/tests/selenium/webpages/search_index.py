@@ -85,13 +85,12 @@ class SearchIndexWebPage(BaseIndexWebPage):
             EC.visibility_of_element_located((By.CLASS_NAME, "tagify__dropdown")),
         )
 
-    def tag_autocomplete_select(self, elem):
+    def tag_autocomplete_select(self, elem):  # pragma: no cover
+        WebDriverWait(self.selenium, 5).until(
+            EC.element_to_be_clickable(elem),
+        )
+        # @TODO - fixme: obvisouly, another element is receiving the click event?
         elem.click()
-        # @TODO - @FIXME since tagify 4.17.0, we obvisouly need to wait for an
-        # another stuff... but what?? Waste 3hrs and didn't find anything...
-        import time
-
-        time.sleep(0.1)  # noqa
 
         return WebDriverWait(self.selenium, 5, 1).until(
             all_of(
@@ -125,7 +124,7 @@ class SearchIndexWebPage(BaseIndexWebPage):
 
         return items
 
-    def filter_tag(self, category):
+    def filter_tag(self, category):  # pragma: no cover
         self.tag_autocomplete(category)
 
         items = self.get_tag_items()
