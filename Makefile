@@ -80,7 +80,7 @@ restart:
 
 prune: confirm
 	@# Be CAREFUL, would removed ALL unused stuff on your local machine!
-	@# Be sure to have all your compose services RUNNING before execting it!
+	@# Be sure to have all your compose services RUNNING before executing it!
 	docker system prune --all --force --volumes
 
 reload: down up

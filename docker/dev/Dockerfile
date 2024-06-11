@@ -44,7 +44,7 @@ RUN apt install --yes --no-install-recommends xvfb gnupg && \
     apt install --yes google-chrome-stable && \
     CHROME_VERSION=$(google-chrome --version | cut -f 3 -d ' ' | cut -d '.' -f 1) && \
     CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_${CHROME_VERSION}) && \
-    curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROMEDRIVER_RELEASE/linux64/chromedriver-linux64.zip" && \
+    curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_RELEASE/linux64/chromedriver-linux64.zip" && \
     unzip /tmp/chromedriver_linux64.zip && \
     mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && \
     chmod +x /usr/local/bin/chromedriver

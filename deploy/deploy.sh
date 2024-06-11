@@ -85,6 +85,7 @@ deploy_local() {
 
         echo -e "\n-> Restore DB and media\n"
         poetry run make restore_local
+        poetry run python manage.py migrate --noinput
     else
         echo -e "\n-> Up containers and restore initial data\n"
         make up_wait
@@ -122,7 +123,7 @@ deploy_dev() {
 
     # Rebuild image just in case
     echo -e "\n-> Rebuild DEV image\n"
-    make build
+    make rebuild
 
     # Create container and init it for the first time (NPM build)
     echo -e "\n-> Up containers\n"
@@ -176,7 +177,7 @@ deploy_prod() {
 
     # Rebuild image just in case
     echo -e "\n-> Rebuild PROD image\n"
-    make build
+    make rebuild
 
     # Create container and init it (superuser & co).
     echo -e "\n-> Up containers\n"
