@@ -79,6 +79,7 @@ RUN apk update && \
     # Install required system dependencies
     apk add --no-cache \
         bash \
+        curl \
         libpq-dev \
         libjpeg-turbo-dev \
         libpng-dev \
