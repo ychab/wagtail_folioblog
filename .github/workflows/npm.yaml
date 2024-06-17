@@ -20,21 +20,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Node JS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install NPM dependencies first
         run: npm ci
 
       - name: Check dependencies
-        uses: MeilCli/npm-update-check-action@v4
+        uses: MeilCli/npm-update-check-action@v5
         id: outdated
         with:
           output_text_style: 'short'
 
       - name: Make NPM deps badges
-        uses: action-badges/core@0.2.2
+        uses: action-badges/core@0.3.1
         with:
           label: NPM deps
           message: ${{ steps.outdated.outputs.has_npm_update == 'true' && 'outdated' || 'updated' }}

@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Make wagtail version badge
-        uses: action-badges/poetry-badges@0.2.2
+        uses: action-badges/poetry-badges@0.3.1
         with:
           file-name: poetry-wagtail-version.svg
           badge-branch: badges
