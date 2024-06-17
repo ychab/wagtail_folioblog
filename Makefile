@@ -201,15 +201,18 @@ restore_media:
 	rm -Rf media_old latest.tar.gz
 
 restore_db:
-	# First drop the DB
-	docker compose down --volumes
-	# Then recreate the DB (and wait for it's ready!)
-	FOLIOBLOG_HEALTHCHECK_INTERVAL=5s FOLIOBLOG_HEALTHCHECK_RETRIES=10 docker compose up --detach --wait
-	# Then fetch remote backup and restore it.
+	# first fetch remote backup file.
 	scp ${FOLIOBLOG_BACKUP_HOST}:${FOLIOBLOG_BACKUP_PATH_SQL}/*.sql.gz ./dump.sql.gz
+	# Then stop any services and drop the DBs (postgres + redis)
+	docker compose down --volumes
+	# Then recreate the DB only (and wait for it's ready!)
+	docker compose up --detach --wait postgres
+	# Import the DUMP
 	gunzip < dump.sql.gz | docker compose exec --no-TTY postgres psql --quiet -U ${FOLIOBLOG_POSTGRES_USER} -d ${FOLIOBLOG_POSTGRES_DB}
-	# Finally cleanup the room!
+	# Cleanup the room!
 	rm -f dump.sql.gz
+	# Finally restart all services
+	docker compose up --detach --wait
 
 restore_local: restore_media restore_db
 	python manage.py createadmin --password=admin

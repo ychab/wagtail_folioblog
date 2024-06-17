@@ -137,6 +137,7 @@ deploy_dev() {
 
         echo -e "\n-> Restore DB and media\n"
         make restore_dev
+        make appmigrate
     else
         echo -e "\n-> Restore initial data\n"
         make initial_data_dev
@@ -191,6 +192,7 @@ deploy_prod() {
 
         echo -e "\n-> Restore DB and media\n"
         make restore_prod
+        make appmigrate
     else
         echo -e "\n-> Restore initial data\n"
         make appmigrate
